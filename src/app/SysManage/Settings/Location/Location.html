@@ -1,0 +1,68 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">System</li>
+        <li class="breadcrumb-item active">Settings</li> 
+        <li class="breadcrumb-item active">Location</li>         
+    </ol>
+</nav> 
+<div class="tab-content" style="background-color: white;">
+    <div class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Location Entry</b> </span>
+                        <div class="right">
+                            <button type="button"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-inline">
+                            <div class="input-group">
+                                <span class="input-group-addon">Location Name </span>
+                                <input class="form-control" placeholder="Role Name" type="text"  >
+                            </div>
+                            
+                            <!-- <button *ngIf="RoleObj?.ID == 0" (click)="saveRole()" type="button"  class="btn btn-success ml-3"><i class="fa fa-plus"></i> Save</button>
+                            <button *ngIf="RoleObj?.ID > 0 " (click)="saveRole()" type="button" class="btn btn-success ml-3"><i class="fa fa-plus"></i> Update</button>
+                            <button type="button" (click)="ResetRoleModel()" class="btn btn-info ml-2"><i  class="fas fa-redo-alt"></i> Reset</button> -->
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        
+                        <span class="hoverlink"><b>System Role List</b> <i class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                        <!-- <a href="http://localhost:62600/SystemReport/UserRoleList" target="_blank"><span class="label label-default ml-4 hoverPointer">Report</span></a> -->
+                        <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
+                        <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
+                        <span class="label label-info ml-2 hoverPointer">INFO</span>
+                        <span class="label label-warning ml-2 hoverPointer">WARNING</span>
+                        <span class="label label-danger ml-2 hoverPointer">DANGER</span>
+
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                            <!-- <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button> -->
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+         
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div> 
+
+</div>  

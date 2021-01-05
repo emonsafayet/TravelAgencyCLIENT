@@ -1,0 +1,41 @@
+export class User{
+
+	public ID : number;
+	public ApplicationID : number;
+	public EmployeeCode : string;
+	public UserName : string;
+	public IsActive : boolean;
+	public UserPassword : string;
+	public RoleID : number;
+	public CreatedOn : string;
+	public CreatedBy : string;
+	public UpdatedBy : string;
+	public UpdatedOn : string;
+	public FullName : string;
+	public FName : string;
+	public MName : string;
+	public LName : string;
+	public FatherName : string;
+	public MotherName : string;
+	public Mobile : string;
+	public DOB : string;
+	public BloodGroup : string;
+	public Religion : string;
+	public Sex : string;
+	public MaritalStatus : string;
+	public Telephone : string;
+	public PresentAddress : string;
+	public PermanentAddress : string;
+	public NationalIDNo : string;
+	public Nationality : string;
+	public EPersonName : string;
+	public EPersonAddress : string;
+	public EPersonTelephone : string;
+	public EmployeeStatus : string;
+	public Department : string;
+	public Designation : string;
+	public DOJ : string;
+	public DOS : string;
+	public ConfirmationDate : string;
+	public Remarks : string;
+}

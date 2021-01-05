@@ -1,0 +1,115 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">System</li>
+        <li class="breadcrumb-item active">User</li> 
+        <li class="breadcrumb-item active">Role</li>         
+    </ol>
+</nav>
+<ul class="nav nav-tabs">
+    <li class="active "><a data-toggle="tab" class="hoverlink" href="#role" (click)="getroleList()">Role List</a></li>
+    <li><a data-toggle="tab" class="hoverlink" href="#roleaccess">Role Access</a></li>
+</ul>
+
+<div class="tab-content" style="background-color: white;">
+    <div id="role" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>System Role Entry</b> </span>
+                        <div class="right">
+                            <button type="button"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-inline">
+                            <div class="input-group">
+                                <span class="input-group-addon">Role Name </span>
+                                <input class="form-control" placeholder="Role Name" type="text" [(ngModel)]="RoleObj.Name">
+                            </div>
+                            
+                            <button *ngIf="RoleObj?.ID == 0" (click)="saveRole()" type="button"  class="btn btn-success ml-3"><i class="fa fa-plus"></i> Save</button>
+                            <button *ngIf="RoleObj?.ID > 0 " (click)="saveRole()" type="button" class="btn btn-success ml-3"><i class="fa fa-plus"></i> Update</button>
+                            <button type="button" (click)="ResetRoleModel()" class="btn btn-info ml-2"><i  class="fas fa-redo-alt"></i> Reset</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        
+                        <span class="hoverlink" (click)="getroleList()"><b>System Role List</b> <i class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                        <a href="http://localhost:62600/SystemReport/UserRoleList" target="_blank"><span class="label label-default ml-4 hoverPointer">Report</span></a>
+                        <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
+                        <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
+                        <span class="label label-info ml-2 hoverPointer">INFO</span>
+                        <span class="label label-warning ml-2 hoverPointer">WARNING</span>
+                        <span class="label label-danger ml-2 hoverPointer">DANGER</span>
+
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                            <!-- <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button> -->
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p4 custom-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5">
+                                            <input class="form-control form-control-sm" placeholder="Search" type="text" [(ngModel)]="SearchInRoleList">
+                                        </th>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-20p">Name</th>
+                                        <th class="width-4p text-center">Status</th>
+                                        <th class="width-2p text-center">Edit</th>
+                                        <th class="width-4p text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of roleList | searchFilter : SearchInRoleList; let i = index">
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left"> {{item?.Name}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.IsActive" class="text-success">Active</span>
+                                            <span *ngIf="! item?.IsActive" class="text-danger">In-Active</span>
+                                        </td>
+                                        <td (click)="EditItem(item)" title="Click to Edit the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        
+                                        <td class="text-center">
+                                            <span *ngIf="! item?.IsActive" (click)="ActiveInActiveRole(item, true)" title="Click to Active the Role."
+                                                class="label label-info hoverPointer">Active</span>
+                                            <span *ngIf="item?.IsActive" (click)="ActiveInActiveRole(item, false)"  title="Click to In-Active the Role."
+                                                class="label label-warning hoverPointer">In-Active</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="roleaccess" class="tab-pane fade">
+        <h1>Role Access</h1>
+    </div>
+
+</div>

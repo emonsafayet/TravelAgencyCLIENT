@@ -1,0 +1,160 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">System</li>
+        <li class="breadcrumb-item active">Menu</li> 
+        <li class="breadcrumb-item active">Setting</li>       
+    </ol>
+</nav>
+<ul class="nav nav-tabs">
+    <li class="active "><a data-toggle="tab" class="hoverlink" href="#tabMenuEntry">Menu </a></li>
+    <li><a data-toggle="tab" class="hoverlink" href="#tabTest">Tab Test</a></li>
+</ul>
+
+<div class="tab-content" style="background-color: white;">
+    <div id="tabMenuEntry" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Menu Entry</b> </span>
+                        <div class="right">
+                            <button type="button" ><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-group mt-4">
+                                    <span class="input-group-addon">Application </span>
+
+                                    <select class="form-control" [(ngModel)]="MenuObj.ApplicationID">
+                                        <option selected>SELECT..</option>
+                                        <ng-container *ngFor="let item of ApplicationList; let i = index">
+                                            <option value="{{item.ID}}">{{item?.ApplicationName}}</option>
+                                        </ng-container>
+
+                                    </select>
+                                </div>
+                                <div class="input-group mt-4">
+                                    <span class="input-group-addon">Menu Name </span>
+                                    <input class="form-control" placeholder="Menu Name" type="text"
+                                        [(ngModel)]="MenuObj.MenuNameEng">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group mt-4">
+
+                                    <span class="input-group-addon">Parent Menu </span>
+                                    <select class="form-control" [(ngModel)]="MenuObj.ParentMenuID">
+                                        <option selected>SELECT..</option>
+                                        <ng-container *ngFor="let item of AllMenuList; let i = index">
+                                            <option value="{{item.ParentMenu.ID}}">{{item?.ParentMenu.MenuNameEng}}
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                                <div class="input-group mt-4">
+                                    <span class="input-group-addon">Menu URL </span>
+                                    <input class="form-control" placeholder="Menu URL" type="text"
+                                        [(ngModel)]="MenuObj.MenuURL">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group mt-4">
+                                    <span class="input-group-addon">Display Order </span>
+                                    <input class="form-control" placeholder="Menu Order" type="number"
+                                        [(ngModel)]="MenuObj.DisplayOrder">
+
+
+                                </div>
+                                <div class="input-group mt-4">
+                                    <span class="input-group-addon">Ative </span>
+                                    <select class="form-control" [(ngModel)]="MenuObj.IsActive">
+
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-inline mt-3">
+                                <button type="button" class="btn btn-success ml-3" (click)="saveMenu()" *ngIf="! IsUpdate"><i
+                                        class="fa fa-plus"></i>
+                                    Save</button>
+                                <button type="button" class="btn btn-success ml-3" (click)="saveMenu()" *ngIf="IsUpdate"><i
+                                        class="fa fa-plus"></i>
+                                    Update</button>
+                                <button type="button" class="btn btn-info ml-2" (click)="ResetEntryForm()"><i
+                                        class="fas fa-redo-alt"></i>
+                                    Reset</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- LIST  -->
+                <div class="div-fixed">
+                    <ng-container *ngFor="let item of AllMenuList; let i = index">
+                        <div class="panel mb-1">
+                            <div class="panel-heading">
+                                <span><b> {{i+1}}. {{item?.ParentMenu.MenuNameEng}}</b> </span>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body" *ngIf="item?.ChildMenuList.length > 0 ">
+
+                                <div class="table-fixed">
+                                    <table class="table table-bordered table-p4 custom-table-hover">
+                                        <thead>
+                                           
+                                            <tr>
+                                                <th class="width-1p text-center">SN#</th>
+                                                <th class="width-20p">Name</th>
+                                                <th class="width-20p">URL</th>
+                                                <th class="width-2p">Order</th>
+                                                <th class="width-2p">STATUS</th>
+                                                <th class="width-2p">EDIT</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let ChildMenu of item?.ChildMenuList; let j = index">
+                                                <td class="text-right">{{j+1}}</td>
+                                                <td class="text-left">{{ChildMenu?.MenuNameEng}}</td>
+                                                <td class="text-left hoverlink">{{ChildMenu?.MenuURL}} </td>
+                                                <td class="text-left">{{ChildMenu?.DisplayOrder}}</td>
+
+                                                <td class="text-center">
+                                                    <span *ngIf="ChildMenu?.IsActive"
+                                                        class="label label-info">Active</span>
+                                                    <span *ngIf="! ChildMenu?.IsActive"
+                                                        class="label label-warning">In-Active</span>
+                                                </td>
+                                                <td class="text-center hoverPointer" (click)="EditMenuItem(ChildMenu);"><i
+                                                        class="lnr lnr-pencil"></i></td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </ng-container>
+                </div>
+                <!-- LIST  -->
+            </div>
+        </div>
+    </div>
+
+    <div id="tabTest" class="tab-pane fade">
+        <h1>Test Tab for User</h1>
+    </div>
+</div>

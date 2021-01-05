@@ -1,0 +1,102 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">System</li>
+        <li class="breadcrumb-item active">User</li> 
+        <li class="breadcrumb-item active">User Access</li>       
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-md-3">      
+        <div class="table-fixed-500">
+            <table class="table table-bordered table-p4 custom-table-hover">
+                <thead>
+                   
+                    <tr>
+                        <th>
+                            <input class="form-control" placeholder="Search" type="text" [(ngModel)]="searchInUserList">
+                        </th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container  *ngFor="let item of UserDetailList | searchFilter :searchInUserList ; let j = index">
+                        
+                        <tr (click)="selectUser(item)" [class.selecedRowItem] ="item.EmployeeCode == selectedUser?.EmployeeCode">
+                            <td class="text-left hoverPointer"><small>{{j+1}}. {{item?.FullName}} ({{item?.EmployeeCode}})</small></td>
+                        </tr>
+
+                    </ng-container>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="table-fixed-500">
+            
+            <table class="table table-bordered table-p3 custom-table-hover">
+                <thead>                   
+                    <tr>
+                        <th class="width-4p">Menu</th>
+
+                        <ng-container *ngFor="let item of AllMenuAccessList[0]?.ParentMenu.AccessList; let j = index">
+                           <th class="width-1p align-center-middle">{{item?.FieldName}}</th>
+                        </ng-container>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <ng-container *ngFor="let item of AllMenuAccessList; let j = index">
+
+                        <tr  class="selecedRowItem">
+
+                            <td class="text-left">
+                                <span>{{j+1}}. {{item?.ParentMenu.MenuNameEng}}</span>
+                            </td>
+                           
+                            <ng-container *ngFor="let Accessitem of item?.ParentMenu.AccessList; let k = index">
+                                
+                                <td  *ngIf="item?.ChildMenuList.length == 0" class="align-center-middle" (click)="saveAccess(item?.ParentMenu, Accessitem)">
+                                    <input *ngIf=" Accessitem?.FieldValue" class="hoverPointer" checked type="checkbox"/>
+                                    <input *ngIf="! Accessitem?.FieldValue" class="hoverPointer" type="checkbox"  />
+                                </td>
+                                
+                                <td *ngIf="item?.ChildMenuList.length > 0" class="align-center-middle" >
+                                        
+                                </td>
+
+                             </ng-container>
+                        </tr>
+
+                        <ng-container *ngFor="let ChildItem of item?.ChildMenuList; let i = index">
+                           
+                            <tr>
+                                <td class="text-left">
+                                    <span class="ml-4"> {{i+1}}. {{ChildItem?.MenuNameEng}}</span>
+                                </td>
+
+                                <ng-container *ngFor="let Accessitem of ChildItem?.AccessList; let k = index">
+
+                                    <td class="align-center-middle" (click)="saveAccess(ChildItem, Accessitem)">
+                                        <input *ngIf="Accessitem?.FieldValue" class="hoverPointer" checked type="checkbox"  />
+                                        <input *ngIf="! Accessitem?.FieldValue" class="hoverPointer" type="checkbox" />
+                                    </td>
+                                    
+
+                                 </ng-container>
+                            </tr>
+
+                        </ng-container>
+
+                    </ng-container>
+
+                  
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+

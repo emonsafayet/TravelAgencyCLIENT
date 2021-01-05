@@ -1,0 +1,107 @@
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">System</li>
+        <li class="breadcrumb-item active">User</li> 
+        <li class="breadcrumb-item active">Access</li>       
+        <li class="breadcrumb-item active">Type</li>       
+    </ol>
+
+<div class="tab-content" style="background-color: white;">
+    <div class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>User Access Entry</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-inline">
+                            <div class="input-group mt-3">
+                                <span class="input-group-addon">Access Type Name:</span>
+                                <input type="text" class="form-control" [(ngModel)]="AccessTypeObj.PermissionName" />
+                            </div>
+
+                            <div class="input-group ml-3 mt-3">
+                                <span class="input-group-addon">Is Active:</span>
+                                <i *ngIf="AccessTypeObj?.IsActive" (click)="AccessTypeObj.IsActive = false"
+                                    class="fa fa-check-square-o font-size-35 ml-3  text-success" aria-hidden="true"></i>
+                                <i *ngIf="! AccessTypeObj?.IsActive" (click)="AccessTypeObj.IsActive = true"
+                                    class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
+                            </div>
+
+                            <button *ngIf="AccessTypeObj?.ID == 0" (click)="userAccessSaveUpdate()" type="button"
+                                class="btn btn-success ml-5 mt-3"><i class="fa fa-plus"></i> Save</button>
+                            <button *ngIf="AccessTypeObj?.ID > 0 " (click)="userAccessSaveUpdate()" type="button"
+                                class="btn btn-success ml-3 mt-3 mt-3"><i class="fa fa-plus"></i> Update</button>
+                            <button type="button" (click)="ResetAccessTypeModel()" class="btn btn-info ml-2 mt-3"><i
+                                    class="fas fa-redo-alt"></i> Reset</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+
+                        <span class="hoverlink" (click)="getUserAccessTypeList()"><b>Access Type List</b> <i
+                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                        <span class="label label-default ml-4 hoverPointer">DEFAULT</span>
+                        <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
+                        <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
+                        <span class="label label-info ml-2 hoverPointer">INFO</span>
+                        <span class="label label-warning ml-2 hoverPointer">WARNING</span>
+                        <span class="label label-danger ml-2 hoverPointer">DANGER</span>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p4 custom-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5">
+                                            <input class="form-control form-control-sm" placeholder="Search" type="text"
+                                                [(ngModel)]="SearchInAccessTypeList">
+                                        </th>
+
+                                    </tr>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-20p">Type Name</th>
+                                        <th class="width-4p text-center">Status</th>
+                                        <th class="width-2p text-center">Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of UserAccessTypeList | searchFilter : SearchInAccessTypeList; let i = index">
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left"> {{item?.PermissionName}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.IsActive" class="label label-success ml-2">Active</span>
+                                            <span *ngIf="! item?.IsActive"class="label label-warning ml-2 ">In-Active</span>
+                                           
+                                        </td>
+                                        <td (click)="EditAccessType(item)" title="Click to Edit the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

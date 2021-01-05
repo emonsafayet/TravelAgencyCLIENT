@@ -1,0 +1,548 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">System</li>
+        <li class="breadcrumb-item active">Employee</li>
+    </ol>
+</nav>
+
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" class="hoverlink" href="#empEntry">Employee Entry</a></li>
+    <li><a data-toggle="tab" class="hoverlink" href="#empList" (click)="getEmployeeList()">Emmployee List </a></li>
+
+</ul>
+
+<div class="tab-content" style="background-color: white;">
+    <div id="empEntry" class="tab-pane fade in active">
+        <div class="panel">
+            <div class="panel-heading btn-toggle-collapse">
+                <span><b>Basic Info</b></span>
+                <div class="right">
+                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                </div>
+            </div>
+            <div class="panel-body">
+
+
+                <div class="row">
+                    <div class="col-md-2">                     
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Employee Code </span>
+                                <input type="text" class="form-control" readonly type="text"
+                                    [(ngModel)]="EmployeeObj.EmployeeCode">
+                            </div>    
+                                       
+                                   image       
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-12"> 
+                            
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">First Name </span>
+                                        <input type="text" class="form-control" placeholder="First Name" type="text"
+                                            [(ngModel)]="EmployeeObj.FName">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Middle Name </span>
+                                        <input class="form-control" placeholder="Middle Name" type="text"
+                                            [(ngModel)]="EmployeeObj.MName">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Last Name </span>
+                                        <input class="form-control" placeholder="Last Name" [(ngModel)]="EmployeeObj.LName">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Gender </span>
+                                        <select class="form-control" [(ngModel)]="EmployeeObj.Sex">
+                                            <option selected value="0">SELECT..</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>     
+                           
+                            </div>
+                        </div>
+                        <!-- ENd 1st row -->
+
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Father Name </span>
+                                        <input type="text" class="form-control" placeholder="Father Name" type="text"
+                                            [(ngModel)]="EmployeeObj.FatherName">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Mother Name </span>
+                                        <input type="text" class="form-control" placeholder="Mother Name" type="text"
+                                            [(ngModel)]="EmployeeObj.MotherName">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Email </span>
+                                        <input type="email" class="form-control" placeholder="Email" type="text"
+                                            [(ngModel)]="EmployeeObj.Email">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Mobile </span>
+                                        <input type="text" class="form-control" placeholder="Mobile" type="text"
+                                            [(ngModel)]="EmployeeObj.Mobile">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END 2nd Row -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Date Birth </span>
+                                        <input type="date" data-date="" [attr.data-date]="EmployeeObj.DOB"
+                                            data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="EmployeeObj.DOB" />
+        
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">National ID</span>
+                                        <input class="form-control" placeholder="National ID No" type="text"
+                                            [(ngModel)]="EmployeeObj.NationalIDNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Nationality</span>
+                                        <input class="form-control" placeholder="Nationality" type="text"
+                                            [(ngModel)]="EmployeeObj.Nationality">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Status</span>
+                                        <select class="form-control" [(ngModel)]="EmployeeObj.EmployeeStatusID">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of EmployeeStatusList; let i = index">
+                                                <option value="{{item.ID}}">{{item?.StatusName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--END 3rd row -->
+                        
+
+                        <div class="row">
+                            <div class="col-md-12">  
+                                                  
+                                <div class="col-md-3"> 
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Tele Phone </span>
+                                        <input class="form-control" placeholder="Tele Phone" type="text"
+                                            [(ngModel)]="EmployeeObj.Telephone">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Blood Group </span>
+                                        <select class="form-control">
+                                            <option selected value="">SELECT..</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Marital Status </span>
+                                        <select class="form-control" [(ngModel)]="EmployeeObj.MaritalStatus">
+                                            <option selected value="0">SELECT..</option>
+                                            <option value="Single">Single</option>
+                                            <option value="Married">Married</option>
+                                            <option value="Widow">Widow</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-3">
+                                    <div class="input-group mt-4">
+                                        <span class="input-group-addon">Location </span>
+                                        <select class="form-control" [(ngModel)]="EmployeeObj.EmployeeLocationID"> 
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of EmployeeStatusList; let i = index">
+                                                <option value="{{item.ID}}">{{item?.StatusName}}</option>
+                                            </ng-container>
+                                           
+                                        </select>
+
+                                      
+
+                                    </div>
+                                </div>     
+                               
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- --------------------------------------- -->
+
+
+
+
+
+
+
+           
+
+           
+               
+               
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                     
+                    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading btn-toggle-collapse">
+                <span><b>Office Info</b></span>
+                <div class="right">
+                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Department</span>
+                                <select class="form-control" [(ngModel)]="EmployeeObj.DepartmentID">
+                                    <option selected value="0">SELECT..</option>
+                                    <ng-container *ngFor="let item of DepartmentList; let i = index">
+                                        <option value="{{item.ID}}">{{item?.DepartmentName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Designation</span>
+                                <select class="form-control" [(ngModel)]="EmployeeObj.DesignationID">
+                                    <option selected value="0">SELECT..</option>
+                                    <ng-container *ngFor="let item of DesignationList; let i = index">
+                                        <option value="{{item.ID}}">{{item?.DesignationName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Date of Joining</span>
+                                <input type="date" data-date="" [attr.data-date]="EmployeeObj.DOJ"
+                                    data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
+                                    [(ngModel)]="EmployeeObj.DOJ" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Date of Confirmation</span>
+                                <input type="date" data-date="" [attr.data-date]="EmployeeObj.ConfirmationDate"
+                                    data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
+                                    [(ngModel)]="EmployeeObj.ConfirmationDate" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Date of DOS</span>
+                                <input type="date" data-date="" [attr.data-date]="EmployeeObj.DOS"
+                                    data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
+                                    [(ngModel)]="EmployeeObj.DOS" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading btn-toggle-collapse">
+                <span><b>Emergency Info</b></span>
+                <div class="right">
+                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">PersonName </span>
+                                <input class="form-control" placeholder="" type="text"
+                                    [(ngModel)]="EmployeeObj.EPersonName">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">PersonAddress </span>
+                                <input class="form-control" placeholder="" type="text"
+                                    [(ngModel)]="EmployeeObj.EPersonAddress">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">PersonTelephone </span>
+                                <input class="form-control" type="text" [(ngModel)]="EmployeeObj.EPersonTelephone">
+                            </div>
+                        </div>
+                     
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading btn-toggle-collapse">
+                <span><b>Other Info</b></span>
+                <div class="right">
+                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Remarks</span>
+                                <textarea class="form-control" name="" id="" cols="20" rows="5"
+                                    [(ngModel)]="EmployeeObj.Remarks">
+
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Present Address</span>
+                                <textarea class="form-control" name="" id="" cols="20" rows="5"
+                                    [(ngModel)]="EmployeeObj.PresentAddress">
+
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Permanent Address </span>
+                                <textarea class="form-control" cols="20" rows="5"
+                                    [(ngModel)]="EmployeeObj.PermanentAddress">
+
+                                </textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="input-group mt-4">
+                                <span class="input-group-addon">Employee Type</span>
+                                <select class="form-control" [(ngModel)]="EmployeeObj.EmployeeTypeID">
+                                    <option selected value="0">SELECT..</option>
+                                    <ng-container *ngFor="let item of EmployeeTypeList; let i = index">
+                                        <option value="{{item.ID}}">{{item?.EmployeeTypeName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                            <div class="input-group ml-3 mt-3">
+                                <span class="input-group-addon">Is Active:</span>
+                                <i *ngIf="EmployeeObj?.IsActive" (click)="EmployeeObj.IsActive = false"
+                                    class="fa fa-check-square-o font-size-35 ml-3  text-success" aria-hidden="true"></i>
+                                <i *ngIf="! EmployeeObj?.IsActive" (click)="EmployeeObj.IsActive = true"
+                                    class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button *ngIf="EmployeeObj?.ID == 0" (click)="saveUpdateEmployee()" type="button"
+                    class="btn btn-success ml-3"><i class="fa fa-plus"></i> Save</button>
+                <button *ngIf="EmployeeObj?.ID > 0 " (click)="saveUpdateEmployee()" type="button"
+                    class="btn btn-success ml-3"><i class="fa fa-plus"></i> Update</button>
+                <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i class="fas fa-redo-alt"></i>
+                    Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIST -->
+    <div id="empList" class="tab-pane fade">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+
+                    <span class="hoverlink" (click)="getEmployeeList()"><b>Employee List</b> <i
+                            class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                    <span class="label label-default ml-4 hoverPointer">DEFAULT</span>
+                    <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
+                    <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
+                    <span class="label label-info ml-2 hoverPointer">INFO</span>
+                    <span class="label label-warning ml-2 hoverPointer">WARNING</span>
+                    <span class="label label-danger ml-2 hoverPointer">DANGER</span>
+
+                    <div class="right">
+                        <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+                        <!-- <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button> -->
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-fixed">
+                        <table class="table table-bordered table-p4 custom-table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="5">
+                                        <input class="form-control form-control-sm" placeholder="Search" type="text"
+                                            [(ngModel)]="SearchInEmployeeList">
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th class="width-1p text-center">SN#</th>
+                                    <th class="width-30">SN</th>
+                                    <th class="width-4p text-left">ID</th>
+                                    <th class="width-p text-left">Employee Code</th>
+                                    <th class="width-p text-left">Employee Location ID</th>
+                                    <th class="width-p text-left">Employee Type ID</th>
+                                    <th class="width-p text-left">Full Name</th>
+                                    <th class="width-p text-left">FName</th>
+                                    <th class="width-p text-left">MName</th>
+                                    <th class="width-p text-left">LName</th>
+                                    <th class="width-p text-left">Father Name</th>
+                                    <th class="width-p text-left">Mother Name</th>
+                                    <th class="width-p text-left">Email</th>
+                                    <th class="width-p text-left">Mobile</th>
+                                    <th class="width-p text-left">DOB</th>
+                                    <th class="width-p text-left">Blood Group</th>
+                                    <th class="width-p text-left">Religion</th>
+                                    <th class="width-p text-left">Sex</th>
+                                    <th class="width-p text-left">Marital Status</th>
+                                    <th class="width-p text-left">Telephone</th>
+                                    <th class="width-p text-left">Present Address</th>
+                                    <th class="width-p text-left">Permanent Address</th>
+                                    <th class="width-p text-left">National IDNo</th>
+                                    <th class="width-p text-left">Nationality</th>
+                                    <th class="width-p text-left">EPerson Name</th>
+                                    <th class="width-p text-left">EPerson Address</th>
+                                    <th class="width-p text-left">EPerson Telephone</th>
+                                    <th class="width-p text-left">Employee Status ID</th>
+                                    <th class="width-p text-left">Department ID</th>
+                                    <th class="width-p text-left">Designation ID</th>
+                                    <th class="width-p text-left">DOJ</th>
+                                    <th class="width-p text-left">DOS</th>
+                                    <th class="width-p text-left">Confirmation Date</th>
+                                    <th class="width-p text-left">Remarks</th>
+                                    <th class="width-p text-left">Is Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of EmployeeList | searchFilter : SearchInEmployeeList; let i = index">
+                                    <td class="text-right"> {{i+1}} </td>
+                                    <td class="text-left"> {{item?.ID}} </td>
+                                    <td class="text-left"> {{item?.EmployeeCode}} </td>
+                                    <td class="text-left"> {{item?.EmployeeLocationID}} </td>
+                                    <td class="text-left"> {{item?.EmployeeTypeID}} </td>
+                                    <td class="text-left"> {{item?.FullName}} </td>
+                                    <td class="text-left"> {{item?.FName}} </td>
+                                    <td class="text-left"> {{item?.MName}} </td>
+                                    <td class="text-left"> {{item?.LName}} </td>
+                                    <td class="text-left"> {{item?.FatherName}} </td>
+                                    <td class="text-left"> {{item?.MotherName}} </td>
+                                    <td class="text-left"> {{item?.Email}} </td>
+                                    <td class="text-left"> {{item?.Mobile}} </td>
+                                    <td class="text-left"> {{item?.DOB | date: 'dd MMM yyyy' }} </td>
+                                    <td class="text-left"> {{item?.BloodGroup}} </td>
+                                    <td class="text-right"> {{item?.Religion | date: 'dd MMM yyyy' }} </td>
+                                    <td class="text-left"> {{item?.Sex}} </td>
+                                    <td class="text-left"> {{item?.MaritalStatus}} </td>
+                                    <td class="text-left"> {{item?.Telephone}} </td>
+                                    <td class="text-left"> {{item?.PresentAddress}} </td>
+                                    <td class="text-left"> {{item?.PermanentAddress}} </td>
+                                    <td class="text-left"> {{item?.NationalIDNo}} </td>
+                                    <td class="text-left"> {{item?.Nationality}} </td>
+                                    <td class="text-left"> {{item?.EPersonName}} </td>
+                                    <td class="text-left"> {{item?.EPersonAddress}} </td>
+                                    <td class="text-left"> {{item?.EPersonTelephone}} </td>
+                                    <td class="text-left"> {{item?.EmployeeStatusID}} </td>
+                                    <td class="text-left"> {{item?.DepartmentID}} </td>
+                                    <td class="text-left"> {{item?.DesignationID}} </td>
+                                    <td class="text-left"> {{item?.DOJ | date: 'dd MMM yyyy' }} </td>
+                                    <td class="text-left"> {{item?.DOS}} </td>
+                                    <td class="text-right"> {{item?.ConfirmationDate | date: 'dd MMM yyyy' }} </td>
+                                    <td class="text-left"> {{item?.Remarks}} </td>
+                                    <td class="text-left"> {{item?.IsActive}} </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
