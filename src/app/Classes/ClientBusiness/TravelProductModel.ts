@@ -4,6 +4,7 @@ export class TravelProductModel {
 	public ServiceCode : string;
 	public ServiceName : string;
 	public ServiceCharge_Percent : number;
+	public Remarks : string;
 	public CreatedBy : string;
 	public CreatedOn : string;
 	public UpdatedBy : string;
