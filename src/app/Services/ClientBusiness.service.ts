@@ -21,9 +21,12 @@ export class ClientBusinessService{
 	getTravelcountryList() { return this.masterService.get("client/business/travel/country/list"); }
 
 	saveUpdateTravelcountry(travelCountryObj: any) { return this.masterService.post(`client/business/travel/country/save/update`, travelCountryObj); }
-
-
-
 	/**END COUNTRY**/
+
+	/**START TOUR DESTINATION**/
+	getTravelDestinationList() { return this.masterService.get("client/business/travel/destination/list"); }
+
+	saveUpdateTravelDestination(travelDestinationObj: any) { return this.masterService.post(`client/business/travel/Destination/save/update`, travelDestinationObj); }
+	/**END TOUR DESTINATION**/
 
 }
