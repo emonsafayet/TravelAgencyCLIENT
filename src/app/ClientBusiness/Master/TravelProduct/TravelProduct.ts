@@ -71,12 +71,12 @@ export class TravelProduct implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getTravelProductServiceList()
 			.subscribe(
-				data => this.setgetTravelProductList(data),
+				data => this.setTravelProductList(data),
 				error => this.Notification.Error(error)
 			);
 	}
 
-	setgetTravelProductList(data) {
+	setTravelProductList(data) {
 		this.travelProductList = data;
 		this.Notification.LoadingRemove();
 	}

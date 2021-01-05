@@ -20,10 +20,10 @@ export class ClientBusinessService{
 
 	getTravelcountryList() { return this.masterService.get("client/business/travel/country/list"); }
 
-	saveUpdateTravelcountryList(travelCountryObj: any) { return this.masterService.post(`client/business/travel/country/save/update`, travelCountryObj); }
+	saveUpdateTravelcountry(travelCountryObj: any) { return this.masterService.post(`client/business/travel/country/save/update`, travelCountryObj); }
 
 
-	
+
 	/**END COUNTRY**/
 
 }
