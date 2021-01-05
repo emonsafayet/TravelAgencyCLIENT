@@ -22,6 +22,8 @@ export class ClientBusinessService{
 
 	saveUpdateTravelcountryList(travelCountryObj: any) { return this.masterService.post(`client/business/travel/country/save/update`, travelCountryObj); }
 
+
+	
 	/**END COUNTRY**/
 
 }
