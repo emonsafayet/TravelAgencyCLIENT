@@ -82,7 +82,9 @@ export class Destination implements OnInit {
 	EditItem(item) {
 		this.destinationObj = JSON.parse(JSON.stringify(item));
 	}
-	ResetModel() {
+	ResetModel() { 
+		debugger
+		this.destinationObj.CountryCode ='Select'
 		this.destinationObj = new DestinationModel();
 	}
 

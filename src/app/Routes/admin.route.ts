@@ -35,7 +35,7 @@ import { Customer } from "../ClientBusiness/Master/Customer/Customer";
 import { CutomerType} from "../ClientBusiness/Master/CutomerType/CutomerType";
 import { PaymentType } from "../ClientBusiness/Master/PaymentType/PaymentType";
 import { TourPackage } from "../ClientBusiness/Master/TourPackage/TourPackage";
-import { TravelAirline } from "../ClientBusiness/Master/TravelAirline/TravelAirline";
+import { Airline } from "../ClientBusiness/Master/Airline/Airline";
 import { Destination } from "../ClientBusiness/Master/Destination/Destination";
 import { TravelProduct } from "../ClientBusiness/Master/TravelProduct/TravelProduct";
 import { TravelProvider } from "../ClientBusiness/Master/TravelProvider/TravelProvider";
@@ -76,7 +76,7 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/customer/type', component: CutomerType },
 	{ path: 'client/business/travel/package', component: TourPackage },
 	{ path: 'client/business/travel/payment/type', component: PaymentType },
-	{ path: 'client/business/travel/airline', component: TravelAirline },
+	{ path: 'client/business/travel/airline', component: Airline },
 	{ path: 'client/business/travel/destination', component: Destination },
 	{ path: 'client/business/travel/product/service', component: TravelProduct },
 	{ path: 'client/business/travel/provider', component: TravelProvider },
