@@ -7,7 +7,6 @@
         <li class="breadcrumb-item active">Desitnation</li>
     </ol>
 </nav>
-
 <div class="tab-content" style="background-color: white;">
     <div class="tab-pane fade in active">
         <div class="row">
@@ -21,65 +20,63 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-12">                               
+                            <div class="col-md-12">
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Destination Code</span>
-                                        <input   class="form-control"
+                                        <input [(ngModel)]="destinationObj.DestinationCode" class="form-control"
                                             type="text" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Destination Name</span>
-                                        <input   class="form-control"
+                                        <input [(ngModel)]="destinationObj.DestinationName" class="form-control"
                                             placeholder="Designation Name" type="text">
                                     </div>
-                                </div>                                                           
+                                </div>
+
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
-                            <div class="col-md-12">  
-                                <div class="col-md-3"> 
+                            <div class="col-md-12">
+                                <div class="col-md-3">
                                     <div class="input-group mt-4">
                                         <span class="input-group-addon">Country</span>
-                                        <select class="form-control"  >
+                                        <select class="form-control">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of travelCountryList; let i = index">
                                                 <option value="{{item.CountryCode}}">{{item?.CountryName}}</option>
                                             </ng-container>
                                         </select>
                                     </div>
-                                </div>                               
+                                </div>
 
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Is Active:</span>
-                                        <i *ngIf="travelDestinationObj?.isActive"
-                                            (click)="travelDestinationObj.isActive = false"
+                                        <i *ngIf="destinationObj?.isActive" (click)="destinationObj.isActive = false"
                                             class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                             aria-hidden="true"></i>
-                                        <i *ngIf="! travelDestinationObj?.isActive"
-                                            (click)="travelDestinationObj.isActive = true"
+                                        <i *ngIf="! destinationObj?.isActive" (click)="destinationObj.isActive = true"
                                             class="fa fa-square-o font-size-35 ml-3 text-success"
                                             aria-hidden="true"></i>
                                     </div>
-                                </div>                                                             
+                                </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
-                            <div class="col-md-12">                                
+                            <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
-                                    <button *ngIf="travelDestinationObj?.ID == 0" (click)="saveDestination()" type="button"
+                                    <button *ngIf="destinationObj?.ID == 0" (click)="saveDestination()" type="button"
                                         class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
-                                    <button *ngIf="travelDestinationObj?.ID > 0" (click)="saveDestination()" type="button"
+                                    <button *ngIf="destinationObj?.ID > 0" (click)="saveDestination()" type="button"
                                         class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
                                     <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
                                             class="fas fa-redo-alt"></i> Reset</button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <!-- --list -->
@@ -99,6 +96,7 @@
                                     class="lnr lnr-chevron-up"></i></button>
                         </div>
                     </div>
+
                     <div class="panel-body">
                         <div class="table-fixed">
                             <table class="table table-bordered table-p4 custom-table-hover">
@@ -133,8 +131,10 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> 
+
                 </div>
+
             </div>
         </div>
     </div>

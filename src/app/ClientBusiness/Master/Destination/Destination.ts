@@ -13,15 +13,15 @@ import { DestinationModel } from '../../../Classes/ClientBusiness/DestinationMod
 
 
 @Component({
-	templateUrl: 'TravelDestination.html'
+	templateUrl: 'Destination.html'
 })
-export class TravelDestination implements OnInit {
+export class Destination implements OnInit {
 	user: any;
 
 	travelDestinationList: any[] = [];
 	travelCountryList: any[] = [];
 
-	travelDestinationObj: DestinationModel = new DestinationModel();
+	destinationObj: DestinationModel = new DestinationModel();
 	SearchtravelDestinationList: string = '';
 
 
@@ -37,20 +37,20 @@ export class TravelDestination implements OnInit {
 		this.getDestinationList();
 		this.getCountryList();
 
-		this.travelDestinationObj.CountryCode = "0";
+		this.destinationObj.CountryCode = "0";
 		this.Notification.LoadingRemove();
 	}
 
 	saveDestination() {
-		if (this.travelDestinationObj.ID > 0) this.travelDestinationObj.UpdatedBy = this.user.EmployeeCode;
-		else this.travelDestinationObj.CreatedBy = this.user.EmployeeCode;
+		if (this.destinationObj.ID > 0) this.destinationObj.UpdatedBy = this.user.EmployeeCode;
+		else this.destinationObj.CreatedBy = this.user.EmployeeCode;
 
 		//validation
 		if (!this.validateModel()) return;
 
 		this.Notification.LoadingWithMessage('Loading...');
 
-		this.clientBusinessService.saveUpdateTravelDestination(this.travelDestinationObj)
+		this.clientBusinessService.saveUpdateTravelDestination(this.destinationObj)
 			.subscribe(
 				data => this.setaveResult(data),
 				error => this.Notification.Error(error)
@@ -63,13 +63,13 @@ export class TravelDestination implements OnInit {
 			console.log(Data)
 		}
 
-		this.travelDestinationObj = new DestinationModel();
+		this.destinationObj = new DestinationModel();
 		this.getDestinationList();
 	}
 	//get travel Destination List
 	getDestinationList() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.clientBusinessService.getTravelDestinationList()
+		this.clientBusinessService.getDestinationList()
 			.subscribe(
 				data => this.setDestinationList(data),
 				error => this.Notification.Error(error)
@@ -80,15 +80,15 @@ export class TravelDestination implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	EditItem(item) {
-		this.travelDestinationObj = JSON.parse(JSON.stringify(item));
+		this.destinationObj = JSON.parse(JSON.stringify(item));
 	}
 	ResetModel() {
-		this.travelDestinationObj = new DestinationModel();
+		this.destinationObj = new DestinationModel();
 	}
 
 	validateModel() {
 		var result = true;
-		if (Library.isNuLLorUndefined(this.travelDestinationObj.DestinationName)) {
+		if (Library.isNuLLorUndefined(this.destinationObj.DestinationName)) {
 			this.Notification.Warning('Please Enter Destination Name.');
 			result = false;
 			return;
