@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
 // Components
+
+
 import { Airline } from "./ClientBusiness/Master/Airline/Airline";
 
 import { Destination } from "./ClientBusiness/Master/Destination/Destination"; 
@@ -25,8 +27,7 @@ import { CutomerType } from "./ClientBusiness/Master/CutomerType/CutomerType";
 import { PaymentType } from "./ClientBusiness/Master/PaymentType/PaymentType";
 import { TourPackage } from "./ClientBusiness/Master/TourPackage/TourPackage";
 import { TravelProduct } from "./ClientBusiness/Master/TravelProduct/TravelProduct";
-import { TravelProvider } from "./ClientBusiness/Master/TravelProvider/TravelProvider";
-
+import { Provider } from "./ClientBusiness/Master/Provider/Provider";
 import { NotiflixUI } from "./SysManage/template/NotiflixUI/NotiflixUI";
 
 import { EmployeeBasic } from "./SysManage/Employee/EmployeeBasic/EmployeeBasic";
@@ -106,7 +107,7 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   
@@ -115,7 +116,7 @@ import { MenuService } from "./Services/menu.service";
     //SysManage
     MenuService, UserService, MasterService, UserAccessService, EmployeeService,
     //Client Business
-    Currency, Customer, CutomerType, PaymentType, TourPackage, TravelProvider, ClientBusinessService
+    Currency, Customer, CutomerType, PaymentType, TourPackage, Provider, ClientBusinessService
 
   ],
   bootstrap: [AppComponent]
