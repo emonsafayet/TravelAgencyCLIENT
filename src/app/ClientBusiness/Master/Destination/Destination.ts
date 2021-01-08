@@ -19,9 +19,10 @@ export class Destination implements OnInit {
 	user: any;
 
 	travelDestinationList: any[] = [];
-	travelCountryList: any[] = [];
+	CountryList: any[] = [];
 
 	destinationObj: DestinationModel = new DestinationModel();
+	IsUpdate: boolean = false;
 	SearchtravelDestinationList: string = '';
 
 
@@ -36,17 +37,17 @@ export class Destination implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.getDestinationList();
 		this.getCountryList();
-
-		this.destinationObj.CountryCode = "0";
 		this.Notification.LoadingRemove();
 	}
 
 	saveDestination() {
+		//validation
+		if (!this.validateModel()) return;
+
 		if (this.destinationObj.ID > 0) this.destinationObj.UpdatedBy = this.user.EmployeeCode;
 		else this.destinationObj.CreatedBy = this.user.EmployeeCode;
 
-		//validation
-		if (!this.validateModel()) return;
+
 
 		this.Notification.LoadingWithMessage('Loading...');
 
@@ -80,12 +81,11 @@ export class Destination implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	EditItem(item) {
+		this.IsUpdate = true;
 		this.destinationObj = JSON.parse(JSON.stringify(item));
 	}
-	ResetModel() { 
-		debugger
-		this.destinationObj.CountryCode ='Select'
-		this.destinationObj = new DestinationModel();
+	ResetModel() {
+		this.destinationObj = new DestinationModel(); this.IsUpdate = false;
 	}
 
 	validateModel() {
@@ -98,17 +98,13 @@ export class Destination implements OnInit {
 		return result;
 	}
 
-	//get travel Product List
+	//get travel County List
 	getCountryList() {
-		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getTravelcountryList()
 			.subscribe(
-				data => this.setCountryList(data),
+				data => this.CountryList = data,
 				error => this.Notification.Error(error)
 			);
-	}
-	setCountryList(data) {
-		this.travelCountryList = data;
-		this.Notification.LoadingRemove();
+
 	}
 }
