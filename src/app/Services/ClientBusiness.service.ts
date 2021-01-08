@@ -4,7 +4,7 @@ import { MasterService } from './Master.service';
 
 
 @Injectable()
-export class ClientBusinessService{ 
+export class ClientBusinessService {
 
 	constructor(private masterService: MasterService) { }
 
@@ -55,5 +55,11 @@ export class ClientBusinessService{
 
 	getPaymentTypeList() { return this.masterService.get("client/business/travel/payment/type/list"); }
 	/*END TOUR Payment Type*/
+
+	/*START Currency*/
+	saveUpdateCurrency(customerTypeObj: any) { return this.masterService.post(`client/business/travel/currency/save/update`, customerTypeObj); }
+
+	getCurrencyList() { return this.masterService.get("client/business/travel/currency/list"); }
+	/*END Currency */
 
 }

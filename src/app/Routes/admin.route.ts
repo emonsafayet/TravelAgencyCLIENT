@@ -30,7 +30,7 @@ import { NotiflixUI } from "../SysManage/template/NotiflixUI/NotiflixUI";
 
 //ClientBusiness Master Pages
 import { Country } from "../ClientBusiness/Master/Country/Country";
-import { Currency } from "../ClientBusiness/Master/Currency/Currency";
+import { _Currency } from "../ClientBusiness/Master/_Currency/_Currency";
 import { Customer } from "../ClientBusiness/Master/Customer/Customer";
 import { TypPayment } from "../ClientBusiness/Master/TypPayment/TypPayment";
 import { TourPackage } from "../ClientBusiness/Master/TourPackage/TourPackage";
@@ -71,7 +71,7 @@ export const AdminRoutes: Routes = [
 	//ClientBusiness Master Routes
 
 	{ path: 'client/business/travel/country', component: Country },
-	{ path: 'client/business/travel/currency', component: Currency },
+	{ path: 'client/business/travel/currency', component: _Currency },
 	{ path: 'client/business/travel/customer', component: Customer },
 	{ path: 'client/business/travel/customer/type', component: TypCustomer },
 	{ path: 'client/business/travel/package', component: TourPackage },
