@@ -9,4 +9,5 @@ export class DestinationModel{
 	public UpdatedBy : string;
 	public UpdatedOn : string;
 	public isActive : boolean=true;
+	public IsUpdate : boolean;
 }

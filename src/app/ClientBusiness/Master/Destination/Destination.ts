@@ -50,7 +50,7 @@ export class Destination implements OnInit {
 
 
 		this.Notification.LoadingWithMessage('Loading...');
-
+			debugger
 		this.clientBusinessService.saveUpdateTravelDestination(this.destinationObj)
 			.subscribe(
 				data => this.setaveResult(data),
@@ -78,9 +78,11 @@ export class Destination implements OnInit {
 	}
 	setDestinationList(data) {
 		this.travelDestinationList = data;
+		console.log(data);
 		this.Notification.LoadingRemove();
 	}
 	EditItem(item) {
+		debugger
 		this.IsUpdate = true;
 		this.destinationObj = JSON.parse(JSON.stringify(item));
 	}

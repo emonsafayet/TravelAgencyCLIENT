@@ -29,4 +29,10 @@ export class ClientBusinessService{
 	saveUpdateTravelDestination(travelDestinationObj: any) { return this.masterService.post(`client/business/travel/Destination/save/update`, travelDestinationObj); }
 	/**END TOUR DESTINATION**/
 
+	/*START TOUR PROVIDER*/
+	saveUpdateProvider(providerObj: any) { return this.masterService.post(`client/business/travel/Provider/save/update`, providerObj); }
+
+	getProviderList() { return this.masterService.get("client/business/travel/provider/list"); }
+	/*END TOUR PROVIDER*/
+
 }
