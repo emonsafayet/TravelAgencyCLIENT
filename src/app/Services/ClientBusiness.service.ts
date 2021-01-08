@@ -35,4 +35,11 @@ export class ClientBusinessService{
 	getProviderList() { return this.masterService.get("client/business/travel/provider/list"); }
 	/*END TOUR PROVIDER*/
 
+
+	/*START TOUR AIRLINE*/
+	saveUpdateAirline(airlineObj: any) { return this.masterService.post(`client/business/travel/Airline/save/update`, airlineObj); }
+
+	getAirlineList() { return this.masterService.get("client/business/travel/Airline/list"); }
+	/*END TOUR AIRLINE*/
+
 }
