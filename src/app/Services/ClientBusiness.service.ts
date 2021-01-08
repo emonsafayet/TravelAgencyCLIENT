@@ -42,4 +42,18 @@ export class ClientBusinessService{
 	getAirlineList() { return this.masterService.get("client/business/travel/Airline/list"); }
 	/*END TOUR AIRLINE*/
 
+
+	/*START TOUR Customer Type*/
+	saveUpdateCustomerType(customerTypeObj: any) { return this.masterService.post(`client/business/travel/customer/type/save/update`, customerTypeObj); }
+
+	getCustomerTypeList() { return this.masterService.get("client/business/travel/customer/type/list"); }
+	/*END TOUR Customer Type*/
+
+
+	/*START TOUR Payment Type*/
+	saveUpdatePaymentType(customerTypeObj: any) { return this.masterService.post(`client/business/travel/payment/type/save/update`, customerTypeObj); }
+
+	getPaymentTypeList() { return this.masterService.get("client/business/travel/payment/type/list"); }
+	/*END TOUR Payment Type*/
+
 }

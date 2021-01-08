@@ -32,13 +32,13 @@ import { NotiflixUI } from "../SysManage/template/NotiflixUI/NotiflixUI";
 import { Country } from "../ClientBusiness/Master/Country/Country";
 import { Currency } from "../ClientBusiness/Master/Currency/Currency";
 import { Customer } from "../ClientBusiness/Master/Customer/Customer";
-import { CutomerType} from "../ClientBusiness/Master/CutomerType/CutomerType";
-import { PaymentType } from "../ClientBusiness/Master/PaymentType/PaymentType";
+import { TypPayment } from "../ClientBusiness/Master/TypPayment/TypPayment";
 import { TourPackage } from "../ClientBusiness/Master/TourPackage/TourPackage";
 import { Airline } from "../ClientBusiness/Master/Airline/Airline";
 import { Destination } from "../ClientBusiness/Master/Destination/Destination";
 import { TravelProduct } from "../ClientBusiness/Master/TravelProduct/TravelProduct";
 import { Provider } from "../ClientBusiness/Master/Provider/Provider";
+import {  TypCustomer } from "../ClientBusiness/Master/TypCustomer/TypCustomer";
 
 
 export const AdminRoutes: Routes = [
@@ -73,9 +73,9 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/country', component: Country },
 	{ path: 'client/business/travel/currency', component: Currency },
 	{ path: 'client/business/travel/customer', component: Customer },
-	{ path: 'client/business/travel/customer/type', component: CutomerType },
+	{ path: 'client/business/travel/customer/type', component: TypCustomer },
 	{ path: 'client/business/travel/package', component: TourPackage },
-	{ path: 'client/business/travel/payment/type', component: PaymentType },
+	{ path: 'client/business/travel/payment/type', component: TypPayment },
 	{ path: 'client/business/travel/airline', component: Airline },
 	{ path: 'client/business/travel/destination', component: Destination },
 	{ path: 'client/business/travel/product/service', component: TravelProduct },

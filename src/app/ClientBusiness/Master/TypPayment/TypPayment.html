@@ -1,0 +1,122 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Business</li>
+        <li class="breadcrumb-item active">Payment</li>
+        <li class="breadcrumb-item active">Type</li>
+    </ol>
+</nav>
+<div class="tab-content" style="background-color: white;">
+    <div class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Payment Type Entry</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Payment Type Code</span>
+                                        <input [(ngModel)]="PaymentTypeObj.PaymentTypeCode" class="form-control"
+                                            type="text" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Payment Type Name</span>
+                                        <input [(ngModel)]="PaymentTypeObj.PaymentTypeName" class="form-control"
+                                            placeholder="Payment Type Name" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="PaymentTypeObj?.isActive" (click)="PaymentTypeObj.isActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! PaymentTypeObj?.isActive" (click)="PaymentTypeObj.isActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <button *ngIf="PaymentTypeObj?.ID == 0" (click)="savePaymentType()" type="button"
+                                        class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                    <button *ngIf="PaymentTypeObj?.ID > 0" (click)="savePaymentType()" type="button"
+                                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                    <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                            class="fas fa-redo-alt"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- --list -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="hoverlink" (click)="getPaymentTypeList()"><b>Payment type List</b> <i
+                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                        <span class="label label-primary ml-2 hoverPointer">Report</span>
+                        <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
+                        <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
+                        <span class="label label-info ml-2 hoverPointer">INFO</span>
+                        <span class="label label-warning ml-2 hoverPointer">WARNING</span>
+                        <span class="label label-danger ml-2 hoverPointer">DANGER</span>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p4 custom-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="6">
+                                            <input class="form-control form-control-sm" placeholder="Search" type="text"
+                                                [(ngModel)]="SearchPaymentTypeList">
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-2p">Payment Type Code</th>
+                                        <th class="width-4p text-center">Payment Type</th>
+                                        <th class="width-2p text-center">Edit</th>
+                                        <th class="width-2p text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of PaymentTypeList | searchFilter : SearchPaymentTypeList; let i = index">
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left"> {{item?.PaymentTypeCode}} </td>
+                                        <td class="text-left"> {{item?.PaymentTypeName}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                        </td>
+                                        <td (click)="EditItem(item)" title="Click to Edit the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
