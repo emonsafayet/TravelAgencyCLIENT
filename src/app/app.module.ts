@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
 // Components
+import { _Customer } from "./ClientBusiness/Master/_Customer/_Customer";
+
 import { _Currency } from "./ClientBusiness/Master/_Currency/_Currency";
 
 import { TypPayment } from "./ClientBusiness/Master/TypPayment/TypPayment";
@@ -25,7 +27,6 @@ import { Airline } from "./ClientBusiness/Master/Airline/Airline";
 import { Destination } from "./ClientBusiness/Master/Destination/Destination"; 
 
 import { Country } from "./ClientBusiness/Master/Country/Country";
-import { Customer } from "./ClientBusiness/Master/Customer/Customer";
 import { TourPackage } from "./ClientBusiness/Master/TourPackage/TourPackage";
 import { TravelProduct } from "./ClientBusiness/Master/TravelProduct/TravelProduct";
 import { Provider } from "./ClientBusiness/Master/Provider/Provider";
@@ -95,6 +96,9 @@ import { MasterService } from "./Services/Master.service";
 import { UserService } from "./Services/User.service";
 import { MenuService } from "./Services/menu.service";
 
+
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -105,7 +109,7 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   
@@ -114,7 +118,7 @@ import { MenuService } from "./Services/menu.service";
     //SysManage
     MenuService, UserService, MasterService, UserAccessService, EmployeeService,
     //Client Business
-    Customer,   TourPackage, Provider, ClientBusinessService
+     TourPackage, Provider, ClientBusinessService
 
   ],
   bootstrap: [AppComponent]

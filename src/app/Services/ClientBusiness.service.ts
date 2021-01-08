@@ -62,4 +62,10 @@ export class ClientBusinessService {
 	getCurrencyList() { return this.masterService.get("client/business/travel/currency/list"); }
 	/*END Currency */
 
+	/*START Customer*/
+	saveUpdateCustomer(customerTypeObj: any) { return this.masterService.post(`client/business/travel/customer/save/update`, customerTypeObj); }
+
+	getcustomerList() { return this.masterService.get("client/business/travel/customer/list"); }
+	/*END Customer */
+
 }

@@ -44,7 +44,7 @@
                                     <div class="input-group mt-4">
                                         <span class="input-group-addon">Country</span>
                                         <select class="form-control" [(ngModel)]="destinationObj.CountryCode">
-                                            <option selected>SELECT..</option>
+                                            <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of CountryList; let i = index">
                                                 <option value="{{item.CountryCode}}">{{item?.CountryName}}</option>
                                             </ng-container>

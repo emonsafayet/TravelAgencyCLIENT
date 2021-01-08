@@ -50,6 +50,7 @@ export class Country implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
+
 	setaveResult(Data: any) {
 		if (Data.ID > 0) this.Notification.Success('Saved Successfully.');
 		else {
@@ -60,6 +61,7 @@ export class Country implements OnInit {
 		this.travelCountryObj = new CountryModel();
 		this.getCountryList();
 	}
+	
 	EditItem(item) {
 		this.travelCountryObj = JSON.parse(JSON.stringify(item));
 	}

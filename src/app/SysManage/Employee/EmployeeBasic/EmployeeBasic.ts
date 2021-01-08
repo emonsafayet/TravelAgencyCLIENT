@@ -38,6 +38,7 @@ export class EmployeeBasic implements OnInit {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 		
+		this.Notification.LoadingWithMessage('Loading...');
 		this.getDesignationList();
 		this.getDepartmentList();
 		this.getEmployeeStatusList();
@@ -48,14 +49,22 @@ export class EmployeeBasic implements OnInit {
 		this.EmployeeObj.DepartmentID=0;
 		this.EmployeeObj.DesignationID=0;
 		this.EmployeeObj.EmployeeTypeID=0;
+		this.EmployeeObj.EmployeeLocationID=0;
 
 		this.EmployeeObj.ConfirmationDate = moment().format(Common.SQLDateFormat);
     	this.EmployeeObj.DOB = moment().format(Common.SQLDateFormat);
-    	this.EmployeeObj.DOJ = moment().format(Common.SQLDateFormat); 
+		this.EmployeeObj.DOJ = moment().format(Common.SQLDateFormat); 
+		this.Notification.LoadingRemove();
 	}
 
 	ResetModel() {
 		this.EmployeeObj = new EmployeeModel();
+		this.EmployeeObj.MaritalStatus="0";
+		this.EmployeeObj.Sex="0";
+		this.EmployeeObj.DepartmentID=0;
+		this.EmployeeObj.DesignationID=0;
+		this.EmployeeObj.EmployeeTypeID=0;
+		this.EmployeeObj.EmployeeLocationID=0;
 	}
 
 	//save role
