@@ -33,7 +33,7 @@ import { Country } from "../ClientBusiness/Master/Country/Country";
 import { _Currency } from "../ClientBusiness/Master/_Currency/_Currency";
 import { _Customer } from "../ClientBusiness/Master/_Customer/_Customer";
 import { TypPayment } from "../ClientBusiness/Master/TypPayment/TypPayment";
-import { TourPackage } from "../ClientBusiness/Master/TourPackage/TourPackage";
+import {  _PackTour } from "../ClientBusiness/Master/_PackTour/_PackTour";
 import { Airline } from "../ClientBusiness/Master/Airline/Airline";
 import { Destination } from "../ClientBusiness/Master/Destination/Destination";
 import { TravelProduct } from "../ClientBusiness/Master/TravelProduct/TravelProduct";
@@ -74,7 +74,7 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/currency', component: _Currency },
 	{ path: 'client/business/travel/customer', component: _Customer },
 	{ path: 'client/business/travel/customer/type', component: TypCustomer },
-	{ path: 'client/business/travel/package', component: TourPackage },
+	{ path: 'client/business/travel/package', component: _PackTour },
 	{ path: 'client/business/travel/payment/type', component: TypPayment },
 	{ path: 'client/business/travel/airline', component: Airline },
 	{ path: 'client/business/travel/destination', component: Destination },

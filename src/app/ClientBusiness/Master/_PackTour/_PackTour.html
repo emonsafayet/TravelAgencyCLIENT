@@ -1,0 +1,173 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Business</li>
+        <li class="breadcrumb-item active">Tour</li>
+        <li class="breadcrumb-item active">Package</li>
+    </ol>
+</nav>
+<ul class="nav nav-tabs">
+    <li class="active "><a data-toggle="tab" class="hoverlink" href="#PackageEntry">Package Entry</a></li>
+    <li><a data-toggle="tab" class="hoverlink" href="#PackageList">Package Details</a></li>
+</ul>
+<div class="tab-content" style="background-color: white;">
+    <!-- TAB ENTRY ; 1st TAB-->
+    <div id="PackageEntry" class="tab-pane fade in active">
+        <div class="tab-pane fade in active">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel">
+                        <div class="panel-heading btn-toggle-collapse">
+                            <span><b>ENTRY</b> </span>
+                            <div class="right">
+                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Package Code</span>
+                                            <input [(ngModel)]="packageMasterObj.PackageCode" class="form-control"
+                                                placeholder="package code" type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Package Name</span>
+                                            <input [(ngModel)]="packageMasterObj.PackageName" class="form-control"
+                                                placeholder="Package Name" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Summary</span>
+                                            <textarea [(ngModel)]="packageMasterObj.Summary" class="form-control"
+                                                rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">No Of Day</span>
+                                            <input [(ngModel)]="packageMasterObj.NoOfDay" class="form-control"
+                                                placeholder="No Of Day" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">No Of Night</span>
+                                            <input [(ngModel)]="packageMasterObj.NoOfNight" class="form-control"
+                                                placeholder="No Of Nigh" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3  mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Total Package Price</span>
+                                            <input [(ngModel)]="packageMasterObj.TotalPackagePrice" class="form-control"
+                                                placeholder="Total Package Price" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Is Active:</span>
+                                            <i *ngIf="packageMasterObj?.isActive"
+                                                (click)="packageMasterObj.isActive = false"
+                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="! packageMasterObj?.isActive"
+                                                (click)="packageMasterObj.isActive = true"
+                                                class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading btn-toggle-collapse">
+                            <span><b>DETAILS</b> </span>
+                            <div class="right">
+                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="btn btn-success" (click)="addDetailsNew()"><i class="fa fa-plus"
+                                    aria-hidden="true"></i>Add NEW
+                            </div>
+                           <br/>
+                           <br/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-fixed">
+                                        <table class="table table-bordered table-p4 custom-table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="width-1p text-center">SN#</th>
+                                                    <th class="width-10p">Event Name</th>
+                                                    <th class="width-5p">Event Price</th>
+                                                    <th class="width-20p">Event Details</th>
+                                                    <th class="width-20p">Remarks</th>
+                                                    <th class="width-2p">Cancel</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of packageDetailObj; let i = index">
+                                                    <td class="text-right"> {{i+1}} </td>
+                                                    <!-- Event Name-->
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            [(ngModel)]="item.EventName">
+                                                    </td>
+                                                    <!-- Event Price-->
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            [(ngModel)]="item.EventPrice">
+                                                    </td>
+                                                    <!-- Event Details-->
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            [(ngModel)]="item.EventDetails">
+                                                    </td>
+                                                    <!-- Remarks-->
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.Remarks" (keyup.enter)="addDetailsNew()" >
+                                                    </td>
+
+                                                    <td class="text-center" (click)="removeDetails(i)"> <i class="fa fa-trash text-danger"
+                                                            aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">                                
+                                    <div class="col-md-3 mt-3">
+                                        <button (click)="savePackage()" type="button"
+                                            class="btn btn-success"><i class="fa fa-plus"></i> Save</button>                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- -----------TAB LIST; 2ND TAB--------------- -->
+    <div id="PackageList" class="tab-pane fade">
+        <h1>Package LIST</h1>
+    </div>
+
+</div>

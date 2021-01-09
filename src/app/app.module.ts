@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
 // Components
+import { _PackTour } from "./ClientBusiness/Master/_PackTour/_PackTour";
+
 import { _Customer } from "./ClientBusiness/Master/_Customer/_Customer";
 
 import { _Currency } from "./ClientBusiness/Master/_Currency/_Currency";
@@ -26,8 +28,7 @@ import { Airline } from "./ClientBusiness/Master/Airline/Airline";
 
 import { Destination } from "./ClientBusiness/Master/Destination/Destination"; 
 
-import { Country } from "./ClientBusiness/Master/Country/Country";
-import { TourPackage } from "./ClientBusiness/Master/TourPackage/TourPackage";
+import { Country } from "./ClientBusiness/Master/Country/Country"; 
 import { TravelProduct } from "./ClientBusiness/Master/TravelProduct/TravelProduct";
 import { Provider } from "./ClientBusiness/Master/Provider/Provider";
 import { NotiflixUI } from "./SysManage/template/NotiflixUI/NotiflixUI";
@@ -109,7 +110,7 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   
@@ -118,7 +119,7 @@ import { MenuService } from "./Services/menu.service";
     //SysManage
     MenuService, UserService, MasterService, UserAccessService, EmployeeService,
     //Client Business
-     TourPackage, Provider, ClientBusinessService
+     Provider, ClientBusinessService
 
   ],
   bootstrap: [AppComponent]

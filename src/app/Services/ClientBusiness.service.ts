@@ -68,4 +68,10 @@ export class ClientBusinessService {
 	getcustomerList() { return this.masterService.get("client/business/travel/customer/list"); }
 	/*END Customer */
 
+
+	/*START PACKAGE INFORMATIONS*/
+
+	
+	/*END PACKAGE INFORMATIONS*/
+
 }
