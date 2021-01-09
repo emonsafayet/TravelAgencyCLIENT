@@ -17,10 +17,10 @@ import { PackageMasterModel, PackageDetailsModel } from '../../../Classes/Client
 export class _PackTour implements OnInit {
 
 	user: any;
-
+	packageList: any = [];
 	packageDetailObj: PackageDetailsModel[] = [];
 	packageMasterObj: PackageMasterModel = new PackageMasterModel();
-
+	SearchPackageList:string ="";
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService) { }
 
@@ -31,8 +31,23 @@ export class _PackTour implements OnInit {
 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.setNewPackageDetails();
+		this.getPackageList();
 		this.Notification.LoadingRemove();
 	}
+	getPackageList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getPackageList()
+			.subscribe(
+				data =>this.setPackageList(data),
+				error => this.Notification.Error(error)
+			);		
+	}	
+	setPackageList(data) {
+		this.packageList = data;
+		console.log(this.packageList);
+		this.Notification.LoadingRemove();
+	}
+
 	setNewPackageDetails() {
 		this.packageDetailObj = [];
 		this.packageMasterObj = new PackageMasterModel();
@@ -44,8 +59,6 @@ export class _PackTour implements OnInit {
 			EventDetails: "",
 			EventPrice: 0,
 			Remarks: "",
-
-
 		});
 	}
 	addDetailsNew() {
@@ -62,27 +75,65 @@ export class _PackTour implements OnInit {
 		this.packageDetailObj.splice(index, 1);
 	}
 	savePackage() {
-		console.log(this.packageMasterObj);
-		console.log(this.packageDetailObj);
-
+		// console.log(this.packageMasterObj);
+		// console.log(this.packageDetailObj);
 
 		// Validation
-		// if(!this.validateModel()) return;
+		if (!this.validateModel()) return;
 
-		// var details = JSON.stringify(this.packageDetailObj);
+		var details = JSON.stringify(this.packageDetailObj);
 
-		// this.packageMasterObj.packageDetails = Library.getBase64(details);
-		// this.packageMasterObj.CreatedBy = ""
+		this.packageMasterObj.packageDetails = Library.getBase64(details);
+		this.packageMasterObj.CreatedBy = this.user.EmployeeCode;
 
-		// console.log(this.packageMasterObj.packageDetails);
-
-		// this.creditNoteService.saveCreditNote(this.creditNote)
-		// .subscribe(
-		// 	data => this.setSaveSuccess(data),
-		// 	error => AlertMessage.setError(error)
-		// );
-
-
+		this.clientBusinessService.savePackage(this.packageMasterObj)
+			.subscribe(
+				data => this.setaveResult(data),
+				error => this.Notification.Error(error)
+			);
 	}
+	setaveResult(Data: any) {
+		if (Data.ID > 0) {
+			this.Notification.Success('Saved Successfully.');
+			document.getElementById("PackageList_tab").click();
+		}
+		else {
+			this.Notification.Failure('Unable to save data.');
+			console.log(Data)
+		}
+	}
+	validateModel() {
+		debugger
+		try {
+			if (Library.isNullOrEmpty(this.packageMasterObj.PackageName)) {
+				this.Notification.Warning('Please package name.');
+				return false;
+			}
 
+			if (Library.isNuLLorUndefined(this.packageMasterObj.NoOfDay)) {
+				this.Notification.Warning('Please No Of Days.');
+				return false;
+			}
+			var validDetails = 0;
+			this.packageDetailObj.forEach(item => {
+
+				if (!Library.isNullOrZero(item.EventName)) {
+
+					if (Library.isNullOrZero(item.EventPrice)) {
+						this.Notification.Warning('Please Select Event Price.');
+						return false;
+					}
+					validDetails += 1;
+				}
+				else {
+					this.Notification.Warning('Please Select Event Name.');
+					return false;
+				}
+			});
+		}
+		catch (e) {
+			this.Notification.Warning('Please Select item.');
+			return false;
+		}
+	}
 }
