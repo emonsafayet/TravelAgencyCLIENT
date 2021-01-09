@@ -72,9 +72,8 @@ export class ClientBusinessService {
 	/*START PACKAGE INFORMATIONS*/
 
 	savePackage(packageMasterObj: any) { return this.masterService.post(`client/business/travel/package/save`, packageMasterObj); }
-	
-	getPackageList() { return this.masterService.get("client/business/travel/package/list"); }
-	
+
+	getPackageList() { return this.masterService.get("client/business/travel/package/list"); }	
 	/*END PACKAGE INFORMATIONS*/
 
 }

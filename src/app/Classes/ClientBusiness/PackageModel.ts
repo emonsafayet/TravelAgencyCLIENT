@@ -15,7 +15,6 @@ export class PackageMasterModel{
 	public isActive : boolean=true;
 	public packageDetails : string;
 }
-
 export class PackageDetailsModel {
 
 	public ID : number;

@@ -136,4 +136,5 @@ export class _PackTour implements OnInit {
 			return false;
 		}
 	}
+	
 }
