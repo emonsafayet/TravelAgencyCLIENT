@@ -163,15 +163,19 @@
                             <table class="table table-bordered table-p4 custom-table-hover">
                                 <thead>
                                     <tr>
-                                        <th colspan="6">
+                                        <th colspan="9">
                                             <input class="form-control form-control-sm" placeholder="Search" type="text"
                                                 [(ngModel)]="SearchCustomerList">
                                         </th>
                                     </tr>
                                     <tr>
                                         <th class="width-1p text-center">SN#</th>
-                                        <th class="width-2p">Country Code</th>
-                                        <th class="width-4p text-center">Country</th>
+                                        <th class="width-1p">Customer Code</th>
+                                        <th class="width-2p">Country Name</th>
+                                        <th class="width-2p">Mobile</th>
+                                        <th class="width-2p">NID</th>
+                                        <th class="width-2p">Customer Type</th>
+                                        <th class="width-2p">Address</th>
                                         <th class="width-2p text-center">Status</th>
                                         <th class="width-2p text-center">Action</th>
                                     </tr>
@@ -182,6 +186,10 @@
                                         <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left"> {{item?.CustomerCode}} </td>
                                         <td class="text-left"> {{item?.CustomerName}} </td>
+                                        <td class="text-left"> {{item?.MobileNo}} </td>
+                                        <td class="text-left"> {{item?.NID}} </td>
+                                        <td class="text-left"> {{item?.CustomerTypeName}} </td>
+                                        <td class="text-left"> {{item?.CustomerAddress}} </td>
                                         <td class="text-center">
                                             <span *ngIf="item?.isActive" class="text-success">Active</span>
                                             <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
