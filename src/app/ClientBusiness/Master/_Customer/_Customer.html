@@ -30,6 +30,17 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
+                                        <span class="input-group-addon">Customer Type</span>
+                                        <select class="form-control" [(ngModel)]="customerObj.CustomerTypeCode">
+                                            <option value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerTypeList; let i = index">
+                                                <option value="{{item.TypeCode}}">{{item?.TypeName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Customer Name</span>
                                         <input [(ngModel)]="customerObj.CustomerName" class="form-control"
                                             placeholder="Customer Name" type="text">
@@ -42,38 +53,26 @@
                                             placeholder="Mobile No" type="text">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Address</span>
+                                        <textarea [(ngModel)]="customerObj.CustomerAddress" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">EmergencyNo</span>
                                         <input [(ngModel)]="customerObj.EmergencyNo" class="form-control"
                                             placeholder="Emergency No" type="text">
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
-                                    <div class="input-group mt-4">
-                                        <span class="input-group-addon">Customer Type</span>
-                                        <select class="form-control" [(ngModel)]="customerObj.CustomerTypeCode">
-                                            <option value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerTypeList; let i = index">
-                                                <option value="{{item.TypeCode}}">{{item?.TypeName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3  mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">NID</span>
-                                        <input [(ngModel)]="customerObj.NID" class="form-control" placeholder="NID"
-                                            type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-3  mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Email</span>
                                         <input [(ngModel)]="customerObj.Email" class="form-control" placeholder="Email"
@@ -87,29 +86,28 @@
                                             placeholder="Contact Persion" type="text">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3  mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Passport</span>
-                                        <input [(ngModel)]="customerObj.Passport" class="form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-3  mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Address</span>
-                                        <textarea [(ngModel)]="customerObj.CustomerAddress" class="form-control"
-                                            rows="3"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-3  mt-3">
-                                    <div class="input-group">
                                         <span class="input-group-addon">Remarks</span>
                                         <textarea [(ngModel)]="customerObj.Remarks" class="form-control"
                                             rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3  mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">NID</span>
+                                        <input [(ngModel)]="customerObj.NID" class="form-control" placeholder="NID"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3  mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Passport</span>
+                                        <input [(ngModel)]="customerObj.Passport" class="form-control" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -125,7 +123,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div> 
                         <!-- ----------------------------------- -->
                         <div class="row">
                             <div class="col-md-12">
@@ -174,7 +172,7 @@
                                         <th class="width-1p text-center">SN#</th>
                                         <th class="width-2p">Country Code</th>
                                         <th class="width-4p text-center">Country</th>
-                                        <th class="width-2p text-center">Edit</th>
+                                        <th class="width-2p text-center">Status</th>
                                         <th class="width-2p text-center">Action</th>
                                     </tr>
                                 </thead>

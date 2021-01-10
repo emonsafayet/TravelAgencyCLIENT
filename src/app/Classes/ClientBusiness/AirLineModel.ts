@@ -9,5 +9,6 @@ export class AirLineModel {
 	public CreatedOn : string;
 	public UpdatedBy : string;
 	public UpdatedOn : string;
+	public isPrepaid : boolean;
 	public isActive : boolean=true;
 }

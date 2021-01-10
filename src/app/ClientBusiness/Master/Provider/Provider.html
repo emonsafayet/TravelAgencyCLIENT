@@ -36,18 +36,31 @@
                                             placeholder="Provider Name" type="text">
                                     </div>
                                 </div>  
-                                                                                         
-                            </div>
-                        </div> 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Opening Balace</span>
                                         <input [(ngModel)]="providerObj.OpeningBalance" class="form-control"
                                             placeholder="Opening Balance" type="text">
                                     </div>
                                 </div>
+                                                                                         
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-12">                             
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Prepaid</span>
+                                        <i *ngIf="providerObj?.isPrepaid"
+                                            (click)="providerObj.isPrepaid = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! providerObj?.isPrepaid"
+                                            (click)="providerObj.isPrepaid = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>  
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Is Active:</span>
@@ -99,7 +112,7 @@
                             <table class="table table-bordered table-p4 custom-table-hover">
                                 <thead>
                                     <tr>
-                                        <th colspan="6">
+                                        <th colspan="7">
                                             <input class="form-control form-control-sm" placeholder="Search" type="text"
                                                 [(ngModel)]="SearchProviderList">
                                         </th>
@@ -110,7 +123,8 @@
                                         <th class="width-4p text-center">Provider</th>
                                         <th class="width-4p text-center">Opening Balance</th>
                                         <th class="width-2p text-center">Edit</th>
-                                        <th class="width-2p text-center">Action</th>
+                                        <th class="width-2p text-center">Update Status</th>
+                                        <th class="width-2p text-center">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,6 +134,10 @@
                                         <td class="text-left"> {{item?.ProviderCode}} </td>
                                         <td class="text-left"> {{item?.ProviderName}} </td>
                                         <td class="text-left"> {{item?.OpeningBalance}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.isPrepaid" class="text-success">Prepaid</span>
+                                            <span *ngIf="! item?.isPrepaid" class="text-danger">Not Prepaid</span>
+                                        </td>
                                         <td class="text-center">
                                             <span *ngIf="item?.IsActive" class="text-success">Active</span>
                                             <span *ngIf="! item?.IsActive" class="text-danger">In-Active</span>

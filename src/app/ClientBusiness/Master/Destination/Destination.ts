@@ -35,6 +35,7 @@ export class Destination implements OnInit {
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 
 		this.Notification.LoadingWithMessage('Loading...');
+		this.destinationObj.CountryCode = "0";
 		this.getDestinationList();
 		this.getCountryList();
 		this.Notification.LoadingRemove();
@@ -46,9 +47,6 @@ export class Destination implements OnInit {
 
 		if (this.destinationObj.ID > 0) this.destinationObj.UpdatedBy = this.user.EmployeeCode;
 		else this.destinationObj.CreatedBy = this.user.EmployeeCode;
-
-
-
 		this.Notification.LoadingWithMessage('Loading...');
 			debugger
 		this.clientBusinessService.saveUpdateTravelDestination(this.destinationObj)
@@ -69,6 +67,7 @@ export class Destination implements OnInit {
 	}
 	//get travel Destination List
 	getDestinationList() {
+		this.ResetModel();
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getDestinationList()
 			.subscribe(
@@ -82,18 +81,26 @@ export class Destination implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	EditItem(item) {
-		debugger
+	 
 		this.IsUpdate = true;
 		this.destinationObj = JSON.parse(JSON.stringify(item));
 	}
 	ResetModel() {
 		this.destinationObj = new DestinationModel(); this.IsUpdate = false;
+		this.destinationObj.CountryCode = "0";
 	}
 
 	validateModel() {
+		debugger
 		var result = true;
 		if (Library.isNuLLorUndefined(this.destinationObj.DestinationName)) {
 			this.Notification.Warning('Please Enter Destination Name.');
+			result = false;
+			return;
+		}
+		
+		if (Library.isNullOrZero(this.destinationObj.CountryCode) && Library.isNuLLorUndefined(this.destinationObj.CountryCode)) {
+			this.Notification.Warning('Please Select Country.');
 			result = false;
 			return;
 		}

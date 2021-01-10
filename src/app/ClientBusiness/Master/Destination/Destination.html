@@ -112,7 +112,7 @@
                                         <th class="width-2p">Destination Code</th>
                                         <th class="width-4p text-center">Destination Name</th>
                                         <th class="width-4p text-center">Country</th>
-                                        <th class="width-2p text-center">Edit</th>
+                                        <th class="width-2p text-center">Status</th>
                                         <th class="width-2p text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -121,7 +121,7 @@
                                         <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left"> {{item?.DestinationCode}} </td>
                                         <td class="text-left"> {{item?.DestinationName}} </td>
-                                        <td class="text-left"> {{item?.CountryCode}} </td>
+                                        <td class="text-left"> {{item?.CountryName}} </td>
                                         <td class="text-center">
                                             <span *ngIf="item?.isActive" class="text-success">Active</span>
                                             <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>

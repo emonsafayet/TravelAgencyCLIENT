@@ -9,5 +9,6 @@ export class ProviderModel{
 	public CreatedOn : string;
 	public UpdatedBy : string;
 	public UpdatedOn : string;
+	public isPrepaid : boolean;
 	public IsActive : boolean=true;
 }
