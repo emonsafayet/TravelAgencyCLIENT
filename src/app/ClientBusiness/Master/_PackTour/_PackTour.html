@@ -197,7 +197,7 @@
                                                     </td>
                                                     <!-- Event Price-->
                                                     <td>
-                                                        <input type="text" class="form-control form-control-sm"
+                                                        <input type="number" class="form-control form-control-sm"
                                                             [(ngModel)]="item.EventPrice">
                                                     </td>
                                                     <!-- Event Details-->
@@ -225,6 +225,8 @@
                                     <div class="col-md-3 mt-3">
                                         <button (click)="savePackage()" type="button"
                                             class="btn btn-success"><i class="fa fa-plus"></i> Save</button>                                      
+                                            <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"> 
+                                                <i class="fa fa-eraser" aria-hidden="true"></i>Reset</button>    
                                     </div>
                                 </div>
                             </div>
