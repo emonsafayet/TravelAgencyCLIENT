@@ -99,7 +99,7 @@ export class Destination implements OnInit {
 			return;
 		}
 		
-		if (Library.isNullOrZero(this.destinationObj.CountryCode) && Library.isNuLLorUndefined(this.destinationObj.CountryCode)) {
+		if (this.destinationObj.CountryCode=="0" || Library.isNuLLorUndefined(this.destinationObj.CountryCode)) {
 			this.Notification.Warning('Please Select Country.');
 			result = false;
 			return;
