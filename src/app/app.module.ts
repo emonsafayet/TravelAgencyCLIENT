@@ -13,7 +13,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; 
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
-// Components
+// Componentsimport { CardMaster } from "./ClientBusiness/Master/CardMaster/CardMaster";
+
 import { _PackTour } from "./ClientBusiness/Master/_PackTour/_PackTour";
 
 import { _Customer } from "./ClientBusiness/Master/_Customer/_Customer";
@@ -97,8 +98,7 @@ import { MasterService } from "./Services/Master.service";
 import { UserService } from "./Services/User.service";
 import { MenuService } from "./Services/menu.service";
 
-
-
+
 
 @NgModule({
   declarations: [
@@ -110,7 +110,7 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   

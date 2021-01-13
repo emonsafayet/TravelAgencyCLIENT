@@ -76,4 +76,15 @@ export class ClientBusinessService {
 	getPackageList() { return this.masterService.get("client/business/travel/package/list"); }	
 	/*END PACKAGE INFORMATIONS*/
 
+	/* START Card INFORMATIONS*/
+	saveUpdateCard(cardObj: any) { return this.masterService.post(`client/business/travel/card/info/save/update`, cardObj); }
+
+	getcardList() { return this.masterService.get("client/business/travel/card/info/list"); }	
+	/* END Card INFORMATIONS*/ 
+
+	/* START Card TYPE INFORMATIONS*/
+	saveUpdateCardType(cardTypeObj: any) { return this.masterService.post(`client/business/travel/card/type/info/save/update`, cardTypeObj); }
+
+	getCardTypeList() { return this.masterService.get("client/business/travel/card/type/info/list"); }	
+	/* END Card TYPE INFORMATIONS*/ 
 }
