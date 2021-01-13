@@ -40,6 +40,7 @@ import { TravelProduct } from "../ClientBusiness/Master/TravelProduct/TravelProd
 import { Provider } from "../ClientBusiness/Master/Provider/Provider";
 import {  TypCustomer } from "../ClientBusiness/Master/TypCustomer/TypCustomer";
 import { CardMaster} from "../ClientBusiness/Master/CardMaster/CardMaster";
+import { CardType} from "../ClientBusiness/Master/CardType/CardType";
 
 
 export const AdminRoutes: Routes = [
@@ -82,5 +83,6 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/product/service', component: TravelProduct },
 	{ path: 'client/business/travel/provider', component: Provider },
 	{ path: 'client/business/travel/cardinfo', component: CardMaster },
+	{ path: 'client/business/travel/card/type', component: CardType },
 
 ];
