@@ -87,4 +87,5 @@ export class ClientBusinessService {
 
 	getCardTypeList() { return this.masterService.get("client/business/travel/card/type/info/list"); }	
 	/* END Card TYPE INFORMATIONS*/ 
+	
 }
