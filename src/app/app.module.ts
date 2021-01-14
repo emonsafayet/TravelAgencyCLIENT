@@ -13,7 +13,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; 
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
-// Componentsimport { CardType } from "./ClientBusiness/Master/CardType/CardType";
+// Components
+import { TopUp } from "./ClientBusiness/Transaction/TopUp/TopUp";
+import { CardType } from "./ClientBusiness/Master/CardType/CardType";
 import { CardMaster } from "./ClientBusiness/Master/CardMaster/CardMaster";
 
 import { _PackTour } from "./ClientBusiness/Master/_PackTour/_PackTour";
@@ -91,6 +93,7 @@ import { showInCrore } from "./pipes/showInCrore.pipe";
 import { ProductNameShorter } from "./pipes/ProductNameShorter.pipe";
 
 // Services 
+import {  TransactionCommonService} from "./Services/TransactionCommon.service";
 import { ClientBusinessService } from "./Services/ClientBusiness.service";
 import { NotificationService } from "./Services/Notification.service";
 import { EmployeeService } from "./Services/Employee.service";
@@ -99,7 +102,8 @@ import { MasterService } from "./Services/Master.service";
 import { UserService } from "./Services/User.service";
 import { MenuService } from "./Services/menu.service";
 
-
+
+
 
 
 @NgModule({
@@ -112,7 +116,7 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster, CardType],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster, CardType, TopUp],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   
@@ -121,9 +125,7 @@ import { MenuService } from "./Services/menu.service";
     //SysManage
     MenuService, UserService, MasterService, UserAccessService, EmployeeService,
     //Client Business
-     Provider, ClientBusinessService
-
-  ],
+     Provider, ClientBusinessService, TransactionCommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

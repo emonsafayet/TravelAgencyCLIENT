@@ -32,7 +32,7 @@ export class CardType implements OnInit {
 		this.Notification.LoadingRemove();
 		
 	}
-	//get Card Type List
+	 
 	getCardTypeList() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getCardTypeList()

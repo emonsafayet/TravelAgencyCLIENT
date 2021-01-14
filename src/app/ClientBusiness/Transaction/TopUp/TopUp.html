@@ -1,0 +1,124 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Business</li>
+        <li class="breadcrumb-item active">Travel</li>
+        <li class="breadcrumb-item active">Transaction</li>
+        <li class="breadcrumb-item active">TopUp</li>
+    </ol>
+</nav>
+<div class="tab-content" style="background-color: white;">
+    <div class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Top Up Entry</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Top Up Code</span>
+                                        <input readonly [(ngModel)]="topUpObj.TopUpCode" class="form-control" type="number">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Top Up Type</span>
+                                        <select class="form-control" [(ngModel)]="topUpObj.TopUpCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of topUpTypeList; let i = index">                                               
+                                                <option value="{{item.TopUpTypeCode}}">{{item?.TopUpTypeName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Provider</span>
+                                        <select class="form-control" [(ngModel)]="topUpObj.ProviderID">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of providerList; let i = index">                                               
+                                                <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">CARD ID</span>
+                                        <input [(ngModel)]="topUpObj.CardID" class="form-control" type="number">
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Airline ID</span> 
+                                        <select class="form-control" [(ngModel)]="topUpObj.AirlinesID">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of airlineList; let i = index">                                               
+                                                <option value="{{item.AirlinesCode}}">{{item?.AirlinesName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-3  mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Top Up Date</span>
+                                        <input [(ngModel)]="topUpObj.TopUpDate" class="form-control" type="number">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span> 
+                                        <textarea [(ngModel)]="topUpObj.Remarks" class="form-control"
+                                        rows="3"></textarea>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Description</span>
+                                        <textarea [(ngModel)]="topUpObj.Description" class="form-control"
+                                        rows="3"></textarea>
+                                    </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">                                                            
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">TopUp Amount</span>
+                                        <input [(ngModel)]="topUpObj.Amount" class="form-control" type="number">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="topUpObj?.isActive" (click)="topUpObj.isActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! topUpObj?.isActive" (click)="topUpObj.isActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

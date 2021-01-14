@@ -42,6 +42,9 @@ import {  TypCustomer } from "../ClientBusiness/Master/TypCustomer/TypCustomer";
 import { CardMaster} from "../ClientBusiness/Master/CardMaster/CardMaster";
 import { CardType} from "../ClientBusiness/Master/CardType/CardType";
 
+//Transaction Pages
+import { TopUp } from "../ClientBusiness/Transaction/TopUp/TopUp";
+
 
 export const AdminRoutes: Routes = [
 	{ path: '', component: Dashboard },
@@ -84,5 +87,8 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/provider', component: Provider },
 	{ path: 'client/business/travel/cardinfo', component: CardMaster },
 	{ path: 'client/business/travel/card/type', component: CardType },
+
+	//Transaction Routes
+	{ path: 'client/business/travel/transaction/topUp', component: TopUp },
 
 ];
