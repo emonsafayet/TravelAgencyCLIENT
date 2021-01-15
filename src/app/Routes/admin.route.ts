@@ -44,6 +44,7 @@ import { CardType} from "../ClientBusiness/Master/CardType/CardType";
 
 //Transaction Pages
 import { TopUp } from "../ClientBusiness/Transaction/TopUp/TopUp";
+import { OnlineRegistation } from "../ClientBusiness/Transaction/OnlineRegistation/OnlineRegistation";
 
 
 export const AdminRoutes: Routes = [
@@ -90,5 +91,6 @@ export const AdminRoutes: Routes = [
 
 	//Transaction Routes
 	{ path: 'client/business/travel/transaction/topUp', component: TopUp },
+	{ path: 'client/business/travel/transaction/onlineRegistation', component: OnlineRegistation },
 
 ];

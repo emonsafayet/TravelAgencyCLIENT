@@ -25,5 +25,13 @@ export class TransactionCommonService{
 
 	/**END  TOP UP TYPE Service**/
 
+	/**START Online Registation Service**/
+
+	GetOnlineRegisationList() { return this.masterService.get("client/business/travel/transaction/online/registation/list"); }
+
+	saveOnlineRegisationList(regObj: any) { return this.masterService.post(`client/business/travel/transaction/online/registation/save/update`, regObj); }
+
+	/**END  Online Registation Service**/
+
 
 }

@@ -1,0 +1,284 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Business</li>
+        <li class="breadcrumb-item active">Travel</li>
+        <li class="breadcrumb-item active">Transaction</li>
+        <li class="breadcrumb-item active">Online</li>
+        <li class="breadcrumb-item active">Registation</li>
+    </ol>
+</nav>
+<div class="tab-content" style="background-color: white;">
+    <div class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>ONLINE REGISTATION</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Registion No</span>
+                                        <input readonly [(ngModel)]="regObj.RegistrationCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Registion Date</span>
+                                        <input   [(ngModel)]="regObj.RegistationDate" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <input   [(ngModel)]="regObj.CustomerCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Company</span>
+                                        <input   [(ngModel)]="regObj.CompanyCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Website Link</span>
+                                        <input   [(ngModel)]="regObj.WebsiteLink" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Event Name</span>
+                                        <input   [(ngModel)]="regObj.EventName" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Even Date</span>
+                                        <input   [(ngModel)]="regObj.EvenDate" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> Destination</span>
+                                        <input   [(ngModel)]="regObj.TravelDestinationCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Registration Charge</span>
+                                        <input   [(ngModel)]="regObj.RegistrationCharge" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Service Charge</span>
+                                        <input   [(ngModel)]="regObj.ServiceCharge" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Card Code</span>
+                                        <input   [(ngModel)]="regObj.CardCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> Card Charge</span>
+                                        <input   [(ngModel)]="regObj.CardChargeAmount" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Total Payable</span>
+                                        <input   [(ngModel)]="regObj.TotalPayableAmt" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> Currency</span>
+                                        <input   [(ngModel)]="regObj.Currency" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div> 
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Sales Ref.Code</span>
+                                        <input   [(ngModel)]="regObj.SalesReferenceCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="regObj.Remark" class="form-control"
+                                        rows="3"></textarea> 
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Is Active:</span>
+                                    <i *ngIf="regObj?.isActive" (click)="regObj.isActive = false"
+                                        class="fa fa-check-square-o font-size-35 ml-3  text-success" aria-hidden="true"></i>
+                                    <i *ngIf="! regObj?.isActive" (click)="regObj.isActive = true"
+                                        class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mt-3">
+                                    <button *ngIf="regObj?.ID == 0" (click)="saveOnlineReg()" type="button"
+                                        class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                    <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
+                                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                    <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                            class="fas fa-redo-alt"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- --list -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="hoverlink" (click)="getOnlineRegistation()"><b>REGISTATION LIST</b> <i
+                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                        <span class="label label-primary ml-2 hoverPointer">Report</span>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p4 custom-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="12">
+                                            <input class="form-control form-control-sm" placeholder="Search" type="text"
+                                                [(ngModel)]="SearchRegList">
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-10p">REG </th>
+                                        <th class="width-10p">CUSTOMER</th>
+                                        <th class="width-10p">WEBSITE</th>
+                                        <th class="width-20p">EVENT </th>
+                                        <th class="width-20p">DESTINATION</th>
+                                        <th class="width-5p">CURRENCY</th>
+                                        <th class="width-10p">CARD INFO</th>
+                                        <th class="width-20p">SERVICE CHARGE</th> 
+                                        <th class="width-5p">TOTAL CHARGE</th> 
+                                        <th class="width-2p">SELL BY</th>
+                                        <th class="width-2p text-center">Status</th>
+                                        <th class="width-2p text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="font-size-12"  *ngFor="let item of registaionList | searchFilter : SearchRegList; let i = index">
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left width-10p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                      CODE: {{item?.RegistrationCode}}
+                                                    <br>  DATE: <i> {{item?.RegistationDate | date: 'dd MMM yyyy' }}
+                                                    </i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left  width-10p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Customer: {{item?.CustomerName}}
+                                                    <br>Company:<i> {{item?.COMPANYNAME}} </i>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td class="text-left width-10p"> {{item?.WebsiteLink}} </td>
+                                        <td class="text-left  width-20p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Event Name: {{item?.EventName}}
+                                                    <br>  Date:<i>    {{item?.EvenDate | date: 'dd MMM yyyy' }}</i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left width-20p"> {{item?.DestinationName}} </td>
+                                        <td class="text-left width-5p"> {{item?.Currency}} </td>
+                                        <td class="text-left width-20p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Card Name: {{item?.CardName}}
+                                                    <br>  Code: <i>  {{item?.CardCode}} </i>
+                                                </div>
+                                            </div>
+
+
+                                        </td>
+                                        <td class="text-left width-20p"> 
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Registation : {{item?.RegistrationCharge}} 
+                                                  <br>  Service:  {{item?.ServiceCharge}}
+                                                 <br>  Card : {{item?.CardChargeAmount}}  
+                                                </div>
+                                            </div>
+                                          
+                                        </td> 
+                                        <td class="text-left width-5p"> {{item?.TotalPayableAmt}} </td>
+                                        <td class="text-left width-10p"> {{item?.SALESEXCUTIVENAME}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                        </td>
+                                        <td (click)="EditItem(item)" title="Click to Edit the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
