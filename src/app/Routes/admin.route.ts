@@ -92,5 +92,4 @@ export const AdminRoutes: Routes = [
 	//Transaction Routes
 	{ path: 'client/business/travel/transaction/topUp', component: TopUp },
 	{ path: 'client/business/travel/transaction/onlineRegistation', component: OnlineRegistation },
-
 ];
