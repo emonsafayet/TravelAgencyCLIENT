@@ -3,13 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '../../../authGuard.guard';
 import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service";
-
+import { Library } from 'src/app/library/library';
 //Service   
 import {  TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import {  ClientBusinessService  } from '../../../Services/ClientBusiness.service';
 
 // classess
 import {  TopUpModel } from '../../../Classes/Transaction/TopUpModel';
+
 @Component({
 	templateUrl: 'TopUp.html'
 })
@@ -21,7 +22,7 @@ export class TopUp implements OnInit {
 	providerList: any[] = []; 
 	airlineList: any[] = []; 
 	topUpObj: TopUpModel = new TopUpModel();
-	SearchCardTypeList: string = '';
+	SearchTopUpList: string = '';
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private transactionCommonService: TransactionCommonService,private clientBusinessService:ClientBusinessService) { }
 
@@ -37,7 +38,54 @@ export class TopUp implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.Notification.LoadingRemove();
 	} 
-	 
+	saveUpdateTopUp(){
+		if (this.topUpObj.ID > 0)
+			this.topUpObj.UpdatedBy = this.user.EmployeeCode;
+		else this.topUpObj.CreatedBy = this.user.EmployeeCode;
+		console.log(this.topUpObj);
+		//validation
+		if (!this.validateModel()) return;
+
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.saveUpdateToUp(this.topUpObj).subscribe(
+			(data) => this.SETToUp(data),
+			(error) => this.Notification.Error(error)
+		);
+	}
+
+	SETToUp(Data: any) {
+		if (Data.ID > 0) this.Notification.Success('Saved Successfully.');
+		else {
+			this.Notification.LoadingRemove(); 
+		}
+		this.topUpObj = new TopUpModel();
+		this.getTopUpList();
+	}
+	validateModel() {
+		debugger;
+		var result = true	
+		if (this.topUpObj.TopUpTypeCode=="0") {
+			this.Notification.Warning('Please Select Top Up Type.');
+			result = false;
+			return;
+		}
+		if (this.topUpObj.ProviderID=="0") {
+			this.Notification.Warning('Please Select Provider.');
+			result = false;
+			return;
+		}
+		return result;
+	}
+	ResetModel() {
+		this.topUpObj = new TopUpModel();
+		this.topUpObj.ProviderID = "0";
+		this.topUpObj.TopUpTypeCode = "0";
+		this.topUpObj.AirlinesID = "0";
+	}
+
+	EditItem(item) {
+		this.topUpObj = JSON.parse(JSON.stringify(item)); 
+	}
 	getTopUpList() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.GetTopUpList()
