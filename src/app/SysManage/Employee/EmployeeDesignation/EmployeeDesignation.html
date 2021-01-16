@@ -23,19 +23,31 @@
                             <input [(ngModel)]="designationObj.DesignationName" class="form-control"
                                 placeholder="Designation Name" type="text">
                         </div>
-                        <div class="input-group ml-3 mt-3">
+                        <div class="input-group ml-3">
+                            <span class="input-group-addon">Is Sales Staff:</span>
+                            <i *ngIf="designationObj?.isSalesStaff" (click)="designationObj.isSalesStaff = false"
+                                class="fa fa-check-square-o font-size-35 ml-3  text-success" aria-hidden="true"></i>
+                            <i *ngIf="! designationObj?.isSalesStaff" (click)="designationObj.isSalesStaff = true"
+                                class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
+                        </div>
+                        <div class="input-group ml-3">
                             <span class="input-group-addon">Is Active:</span>
                             <i *ngIf="designationObj?.IsActive" (click)="designationObj.IsActive = false"
                                 class="fa fa-check-square-o font-size-35 ml-3  text-success" aria-hidden="true"></i>
                             <i *ngIf="! designationObj?.IsActive" (click)="designationObj.IsActive = true"
                                 class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
                         </div>
-                        <button *ngIf="designationObj?.ID == 0" (click)="saveUpdateDesignation()" type="button"
-                            class="btn btn-success ml-3"><i class="fa fa-plus"></i> Save</button>
-                        <button *ngIf="designationObj?.ID > 0 " (click)="saveUpdateDesignation()" type="button"
-                            class="btn btn-success ml-3"><i class="fa fa-plus"></i> Update</button>
-                        <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
-                                class="fas fa-redo-alt"></i> Reset</button>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mt-3">
+                            <button *ngIf="designationObj?.ID == 0" (click)="saveUpdateDesignation()" type="button"
+                                class="btn btn-success ml-3"><i class="fa fa-plus"></i> Save</button>
+                            <button *ngIf="designationObj?.ID > 0 " (click)="saveUpdateDesignation()" type="button"
+                                class="btn btn-success ml-3"><i class="fa fa-plus"></i> Update</button>
+                            <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                    class="fas fa-redo-alt"></i> Reset</button>
+                        </div>
                     </div>
 
                 </div>
@@ -71,7 +83,8 @@
                                 <tr>
                                     <th class="width-1p text-center">SN#</th>
                                     <th class="width-20p">Name</th>
-                                    <th class="width-4p text-center">Status</th>
+                                    <th class="width-10p">Is Sales Staff</th>
+                                    <th class="width-10p text-center">Status</th>
                                     <th class="width-2p text-center">Edit</th>
                                 </tr>
                             </thead>
@@ -79,6 +92,10 @@
                                 <tr *ngFor="let item of designationList  ; let i = index">
                                     <td class="text-right"> {{i+1}} </td>
                                     <td class="text-left"> {{item?.DesignationName}} </td>
+                                    <td class="text-center">
+                                        <span *ngIf="item?.isSalesStaff" class="text-success">Yes</span>
+                                        <span *ngIf="! item?.isSalesStaff" class="text-danger">No</span>
+                                    </td>
                                     <td class="text-center">
                                         <span *ngIf="item?.IsActive" class="text-success">Active</span>
                                         <span *ngIf="! item?.IsActive" class="text-danger">In-Active</span>
