@@ -33,24 +33,33 @@
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Registion Date</span>
-                                        <input   [(ngModel)]="regObj.RegistationDate" class="form-control"
-                                            type="text">
+                                        <input type="date" data-date="" [attr.data-date]="regObj.RegistationDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="regObj.RegistationDate" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Customer</span>
-                                        <input   [(ngModel)]="regObj.CustomerCode" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon">Customer</span> 
+                                        <select class="form-control" [(ngModel)]="regObj.CustomerCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Company</span>
-                                        <input   [(ngModel)]="regObj.CompanyCode" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon">Company</span> 
+                                        <select class="form-control" [(ngModel)]="regObj.CompanyCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of companyList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -58,31 +67,34 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Website Link</span>
-                                        <input   [(ngModel)]="regObj.WebsiteLink" class="form-control"
-                                            type="text">
+                                        <input [(ngModel)]="regObj.WebsiteLink" class="form-control" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Event Name</span>
-                                        <input   [(ngModel)]="regObj.EventName" class="form-control"
-                                            type="text">
+                                        <input [(ngModel)]="regObj.EventName" class="form-control" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Even Date</span>
-                                        <input   [(ngModel)]="regObj.EvenDate" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon">Even Date</span> 
+                                        <input type="date" data-date="" [attr.data-date]="regObj.EvenDate"
+                                        data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                        [(ngModel)]="regObj.EvenDate" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon"> Destination</span>
-                                        <input   [(ngModel)]="regObj.TravelDestinationCode" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon"> Destination</span>  
+                                            <select class="form-control" [(ngModel)]="regObj.TravelDestinationCode">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of destinationList; let i = index">
+                                                    <option value="{{item.DestinationCode}}">{{item?.DestinationName}}</option>
+                                                </ng-container>
+                                            </select>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -90,31 +102,27 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Registration Charge</span>
-                                        <input   [(ngModel)]="regObj.RegistrationCharge" class="form-control"
-                                            type="text">
+                                        <input [(ngModel)]="regObj.RegistrationCharge" class="form-control" type="text" (ngModelChange)="updateTotalPayable()">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Service Charge</span>
-                                        <input   [(ngModel)]="regObj.ServiceCharge" class="form-control"
-                                            type="text">
+                                        <input [(ngModel)]="regObj.ServiceCharge" class="form-control" type="number" (ngModelChange) ="updateTotalPayable()">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Card Code</span>
-                                        <input   [(ngModel)]="regObj.CardCode" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon">Card Number</span>
+                                        <input [(ngModel)]="regObj.CardCode" class="form-control" type="text" >
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon"> Card Charge</span>
-                                        <input   [(ngModel)]="regObj.CardChargeAmount" class="form-control"
-                                            type="text">
+                                        <input [(ngModel)]="regObj.CardChargeAmount" class="form-control" type="number" (ngModelChange)=  "updateTotalPayable()">
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -122,32 +130,38 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Total Payable</span>
-                                        <input   [(ngModel)]="regObj.TotalPayableAmt" class="form-control"
-                                            type="text">
+                                        <input [(ngModel)]="regObj.TotalPayableAmt" class="form-control" type="number" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon"> Currency</span>
-                                        <input   [(ngModel)]="regObj.Currency" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon"> Currency</span> 
+                                        <select class="form-control" [(ngModel)]="regObj.Currency">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of currencyList; let i = index">
+                                                <option value="{{item.CurrencyName}}">{{item?.CurrencyName}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Sales Ref.Code</span>
-                                        <input   [(ngModel)]="regObj.SalesReferenceCode" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon">Sales Reference</span> 
+                                        <select class="form-control" [(ngModel)]="regObj.SalesReferenceCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                <option value="{{item.EmployeeCode}}">{{item?.FullName}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Remarks</span>
-                                        <textarea [(ngModel)]="regObj.Remark" class="form-control"
-                                        rows="3"></textarea> 
+                                        <textarea [(ngModel)]="regObj.Remark" class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div class="row">
@@ -155,11 +169,12 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">Is Active:</span>
                                     <i *ngIf="regObj?.isActive" (click)="regObj.isActive = false"
-                                        class="fa fa-check-square-o font-size-35 ml-3  text-success" aria-hidden="true"></i>
+                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                        aria-hidden="true"></i>
                                     <i *ngIf="! regObj?.isActive" (click)="regObj.isActive = true"
                                         class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
                                 </div>
-                                
+
 
                             </div>
                             <div class="row">
@@ -193,7 +208,7 @@
                             <table class="table table-bordered table-p4 custom-table-hover">
                                 <thead>
                                     <tr>
-                                        <th colspan="12">
+                                        <th colspan="13">
                                             <input class="form-control form-control-sm" placeholder="Search" type="text"
                                                 [(ngModel)]="SearchRegList">
                                         </th>
@@ -207,21 +222,22 @@
                                         <th class="width-20p">DESTINATION</th>
                                         <th class="width-5p">CURRENCY</th>
                                         <th class="width-10p">CARD INFO</th>
-                                        <th class="width-20p">SERVICE CHARGE</th> 
-                                        <th class="width-5p">TOTAL CHARGE</th> 
+                                        <th class="width-20p">SERVICE CHARGE</th>
+                                        <th class="width-5p">TOTAL CHARGE</th>
                                         <th class="width-2p">SELL BY</th>
                                         <th class="width-2p text-center">Status</th>
                                         <th class="width-2p text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="font-size-12"  *ngFor="let item of registaionList | searchFilter : SearchRegList; let i = index">
+                                    <tr class="font-size-12"
+                                        *ngFor="let item of registaionList | searchFilter : SearchRegList; let i = index">
                                         <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                      CODE: {{item?.RegistrationCode}}
-                                                    <br>  DATE: <i> {{item?.RegistationDate | date: 'dd MMM yyyy' }}
+                                                    CODE: {{item?.RegistrationCode}}
+                                                    <br> DATE: <i> {{item?.RegistationDate | date: 'dd MMM yyyy' }}
                                                     </i>
                                                 </div>
                                             </div>
@@ -240,7 +256,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     Event Name: {{item?.EventName}}
-                                                    <br>  Date:<i>    {{item?.EvenDate | date: 'dd MMM yyyy' }}</i>
+                                                    <br> Date:<i> {{item?.EvenDate | date: 'dd MMM yyyy' }}</i>
                                                 </div>
                                             </div>
                                         </td>
@@ -250,22 +266,22 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     Card Name: {{item?.CardName}}
-                                                    <br>  Code: <i>  {{item?.CardCode}} </i>
+                                                    <br> Code: <i> {{item?.CardCode}} </i>
                                                 </div>
                                             </div>
 
 
                                         </td>
-                                        <td class="text-left width-20p"> 
+                                        <td class="text-left width-20p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Registation : {{item?.RegistrationCharge}} 
-                                                  <br>  Service:  {{item?.ServiceCharge}}
-                                                 <br>  Card : {{item?.CardChargeAmount}}  
+                                                    Registation : {{item?.RegistrationCharge}}
+                                                    <br> Service: {{item?.ServiceCharge}}
+                                                    <br> Card : {{item?.CardChargeAmount}}
                                                 </div>
                                             </div>
-                                          
-                                        </td> 
+
+                                        </td>
                                         <td class="text-left width-5p"> {{item?.TotalPayableAmt}} </td>
                                         <td class="text-left width-10p"> {{item?.SALESEXCUTIVENAME}} </td>
                                         <td class="text-center">

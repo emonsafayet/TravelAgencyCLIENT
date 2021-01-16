@@ -27,11 +27,18 @@ export class TransactionCommonService{
 
 	/**START Online Registation Service**/
 
+	//DROP DOWN
+	GETCompanyLIST() { return this.masterService.get("client/business/travel/transaction/company/list"); }
+	GETSalesStaffLIST() { return this.masterService.get("client/business/travel/transaction/sales/staff/list"); }
+	
+	
 	GetOnlineRegisationList() { return this.masterService.get("client/business/travel/transaction/online/registation/list"); }
 
 	saveOnlineRegisationList(regObj: any) { return this.masterService.post(`client/business/travel/transaction/online/registation/save/update`, regObj); }
 
 	/**END  Online Registation Service**/
+
+ 
 
 
 }

@@ -1,4 +1,4 @@
-export class OnlineRegistationModel  {
+export class CorporateCustomerModel {
 
 	public ID : number=0;
 	public RegistrationCode : string;
@@ -8,19 +8,18 @@ export class OnlineRegistationModel  {
 	public WebsiteLink : string;
 	public EventName : string;
 	public EvenDate : string;
-	public TravelDestinationCode : string="0";
-	public RegistrationCharge : number=0;
-	public ServiceCharge : number=0;
+	public TravelDestinationCode : string;
+	public RegistrationCharge : number;
+	public ServiceCharge : number;
 	public TotalPayableAmt : number;
 	public CardCode : string;
-	public CardChargeAmount : number=0;
+	public CardChargeAmount : number;
 	public Currency : string="0";
 	public SalesReferenceCode : string="0";
-	public Remark : string;	
-	public isActive : boolean=true;
+	public Remark : string;
 	public CreatedBy : string;
 	public CreatedOn : string;
 	public UpdatedBy : string;
-	public UpdatedOn : string; 
- 
+	public UpdatedOn : string;
+	public isActive : boolean=true;
 }
