@@ -5,9 +5,41 @@
         <li class="breadcrumb-item active">Dashboard</li> 
                
     </ol>
-</nav>
-<h2 class="hoverlink">Dashboard</h2>
-
-<button type="button"  class="btn btn-primary btn-toastr" data-context="info" data-message="This is general theme info" data-position="top-right">General Info</button>
-
-<button type="button" class="btn btn-primary" (click)="showTowster()" >BTN</button>
+</nav> 
+<div class="row">
+    <div class="col-md-3">
+        <!-- START CURRENCY -->
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Currency Coversation</h3>
+                <div class="right">
+                    <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+                    <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>SN#</th>
+                            <th>Currency</th>
+                            <th>Rate</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="font-size-12"
+                        *ngFor="let item of activeCurrencyRateList ; let i = index">
+                            <td><a href="#"> {{i+1}}</a></td>
+                            <td>{{item?.Currency}}</td>
+                            <td>{{item?.Rate}}</td> 
+                        </tr>  
+                    </tbody>
+                </table>
+            </div> 
+        </div>
+        <!-- END CURRENCY -->
+    </div>
+    <div class="col-md-6">
+        
+    </div>
+</div>

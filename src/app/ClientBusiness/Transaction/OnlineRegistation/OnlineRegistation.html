@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Customer</span> 
+                                        <span class="input-group-addon">Customer</span>
                                         <select class="form-control" [(ngModel)]="regObj.CustomerCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of customerList; let i = index">
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Company</span> 
+                                        <span class="input-group-addon">Company</span>
                                         <select class="form-control" [(ngModel)]="regObj.CompanyCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of companyList; let i = index">
@@ -78,21 +78,22 @@
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Even Date</span> 
+                                        <span class="input-group-addon">Even Date</span>
                                         <input type="date" data-date="" [attr.data-date]="regObj.EvenDate"
-                                        data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
-                                        [(ngModel)]="regObj.EvenDate" />
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="regObj.EvenDate" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon"> Destination</span>  
-                                            <select class="form-control" [(ngModel)]="regObj.TravelDestinationCode">
-                                                <option selected value="0">SELECT..</option>
-                                                <ng-container *ngFor="let item of destinationList; let i = index">
-                                                    <option value="{{item.DestinationCode}}">{{item?.DestinationName}}</option>
-                                                </ng-container>
-                                            </select>
+                                        <span class="input-group-addon"> Destination</span>
+                                        <select class="form-control" [(ngModel)]="regObj.TravelDestinationCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of destinationList; let i = index">
+                                                <option value="{{item.DestinationCode}}">{{item?.DestinationName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -102,25 +103,33 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Registration Charge</span>
-                                        <input [(ngModel)]="regObj.RegistrationCharge" class="form-control" type="text" (ngModelChange)="updateTotalPayable()">
+                                        <input [(ngModel)]="regObj.RegistrationCharge" class="form-control" type="text"
+                                            (ngModelChange)="updateTotalPayable()">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Service Charge</span>
-                                        <input [(ngModel)]="regObj.ServiceCharge" class="form-control" type="number" (ngModelChange) ="updateTotalPayable()">
+                                        <input [(ngModel)]="regObj.ServiceCharge" class="form-control" type="number"
+                                            (ngModelChange)="updateTotalPayable()">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Total Payable</span>
+                                        <input [(ngModel)]="regObj.TotalPayableAmt" class="form-control" type="number"
+                                            readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Card Number</span>
-                                        <input [(ngModel)]="regObj.CardCode" class="form-control" type="text" >
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"> Card Charge</span>
-                                        <input [(ngModel)]="regObj.CardChargeAmount" class="form-control" type="number" (ngModelChange)=  "updateTotalPayable()">
+                                        <select class="form-control" [(ngModel)]="regObj.CardCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of cardList; let i = index">
+                                                <option value="{{item.CardID}}">{{item?.CardName}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -129,13 +138,7 @@
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Total Payable</span>
-                                        <input [(ngModel)]="regObj.TotalPayableAmt" class="form-control" type="number" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"> Currency</span> 
+                                        <span class="input-group-addon"> Currency</span>
                                         <select class="form-control" [(ngModel)]="regObj.Currency">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of currencyList; let i = index">
@@ -146,7 +149,7 @@
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Sales Reference</span> 
+                                        <span class="input-group-addon">Sales Reference</span>
                                         <select class="form-control" [(ngModel)]="regObj.SalesReferenceCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of salesStaffList; let i = index">
@@ -161,31 +164,28 @@
                                         <textarea [(ngModel)]="regObj.Remark" class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="regObj?.isActive" (click)="regObj.isActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! regObj?.isActive" (click)="regObj.isActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Is Active:</span>
-                                    <i *ngIf="regObj?.isActive" (click)="regObj.isActive = false"
-                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                        aria-hidden="true"></i>
-                                    <i *ngIf="! regObj?.isActive" (click)="regObj.isActive = true"
-                                        class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
-                                </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 mt-3">
-                                    <button *ngIf="regObj?.ID == 0" (click)="saveOnlineReg()" type="button"
-                                        class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
-                                    <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
-                                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
-                                    <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
-                                            class="fas fa-redo-alt"></i> Reset</button>
-                                </div>
+                            <div class="col-md-3 mt-3">
+                                <button *ngIf="regObj?.ID == 0" (click)="saveOnlineReg()" type="button"
+                                    class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
+                                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                        class="fas fa-redo-alt"></i> Reset</button>
                             </div>
                         </div>
 

@@ -27,6 +27,7 @@ export class OnlineRegistation implements OnInit {
 	companyList: any[] = [];
 	currencyList: any[] = [];
 	salesStaffList: any[] = [];
+	cardList: any[] = [];
 	destinationList:any[]=[];
 	regObj: OnlineRegistationModel = new OnlineRegistationModel();
 	SearchRegList: string = '';
@@ -46,6 +47,7 @@ export class OnlineRegistation implements OnInit {
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST();
 		this.GETDestinationLIST(); 
+		this.GETCardLIST();
 		this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
 		this.Notification.LoadingRemove();
 	}
@@ -158,7 +160,7 @@ export class OnlineRegistation implements OnInit {
 	}
 	updateTotalPayable(){
 		debugger
-		this.regObj.TotalPayableAmt=Number(this.regObj.RegistrationCharge) +Number(this.regObj.ServiceCharge)+Number(this.regObj.CardChargeAmount);
+		this.regObj.TotalPayableAmt=Number(this.regObj.RegistrationCharge) +Number(this.regObj.ServiceCharge);
 	}
 	//DROP DOWN
 	GETCompanyLIST() {
@@ -223,6 +225,19 @@ export class OnlineRegistation implements OnInit {
 	}
 	setDestinationList(data) {
 		this.destinationList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCardLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getcardList()
+			.subscribe(
+				data => this.setcardList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setcardList(data) {
+		this.cardList = data;
 		this.Notification.LoadingRemove();
 
 	}
