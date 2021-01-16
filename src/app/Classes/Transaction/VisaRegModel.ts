@@ -1,4 +1,4 @@
-export class VisaRegModel {
+export class VisaRegModel{
 
 	public ID : number=0;
 	public VisaCode : string;
@@ -9,10 +9,11 @@ export class VisaRegModel {
 	public VisaFee : number=0;
 	public PassportNo : string;
 	public GovtTax : number;
-	public ServiceCharge : number;
-	public CardID : string="0"; 
-	public TotalPayable : number=0;
+	public ServiceCharge : number=0;
+	public CardID : string="0";
 	public Currency : string="0";
+	public CurrencyRate : number=0;
+	public TotalPayable : number=0;
 	public SalesStaffCode : string="0";
 	public Remark : string;
 	public isGroup : boolean;
