@@ -23,4 +23,5 @@ export class VisaRegModel{
 	public UpdatedBy : string;
 	public UpdatedOn : string;
 	public isActive : boolean=true;
+	
 }
