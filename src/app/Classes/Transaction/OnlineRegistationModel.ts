@@ -22,4 +22,5 @@ export class CorporateCustomerModel {
 	public UpdatedBy : string;
 	public UpdatedOn : string;
 	public isActive : boolean=true;
+	
 }
