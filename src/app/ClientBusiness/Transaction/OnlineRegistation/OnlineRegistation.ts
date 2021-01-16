@@ -20,13 +20,14 @@ declare var moment: any;
 	templateUrl: 'OnlineRegistation.html'
 })
 export class OnlineRegistation implements OnInit {
-	user: any;
+	user: any; 
 
 	registaionList: any[] = [];
 	customerList: any[] = [];
 	companyList: any[] = [];
 	currencyList: any[] = [];
 	salesStaffList: any[] = [];
+	activeCurrencyRateList: any[] = [];
 	cardList: any[] = [];
 	destinationList:any[]=[];
 	regObj: OnlineRegistationModel = new OnlineRegistationModel();
@@ -48,6 +49,7 @@ export class OnlineRegistation implements OnInit {
 		this.GETSalesStaffLIST();
 		this.GETDestinationLIST(); 
 		this.GETCardLIST();
+		this.GETActiveCurrencyRateLIST();
 		this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
 		this.Notification.LoadingRemove();
 	}
@@ -120,28 +122,30 @@ export class OnlineRegistation implements OnInit {
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.regObj.CardCode)) {
-			this.Notification.Warning('Please Enter CardCode.');
-			result = false;
-			return;
-		}
-		if (Library.isNuLLorUndefined(this.regObj.CardChargeAmount)) {
-			this.Notification.Warning('Please Enter Card Charge .');
-			result = false;
-			return;
-		}
-		if (Library.isNuLLorUndefined(this.regObj.Currency)) {
+		if (Library.isNuLLorUndefined(this.regObj.Currency) || this.regObj.Currency=="0") {
 			this.Notification.Warning('Please Select Currency .');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.regObj.SalesReferenceCode)) {
+		if (Library.isNuLLorUndefined(this.regObj.CardCode) || this.regObj.CardCode=="0") {
+			this.Notification.Warning('Please Enter CardCode.');
+			result = false;
+			return;
+		}	
+		
+		if (Library.isNuLLorUndefined(this.regObj.SalesReferenceCode) ||  this.regObj.SalesReferenceCode=="0") {
 			this.Notification.Warning('Please Select Sales Staff .');
 			result = false;
 			return;
 		}
+		if (Library.isNullOrZero(this.regObj.TotalPayableAmt)) {
+			this.Notification.Warning('Total Payable Amount Can Not Zero.');
+			result = false;
+			return;
+		} 
 		return result;
 	}
+	
 	ResetModel() {
 		this.regObj = new OnlineRegistationModel();
 		this.regObj.CompanyCode = "0";
@@ -149,6 +153,7 @@ export class OnlineRegistation implements OnInit {
 		this.regObj.Currency = "0";
 		this.regObj.SalesReferenceCode = "0";
 		this.regObj.TravelDestinationCode = "0";
+		this.regObj.CurrencyRate=0;
 		this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
 	}
 	 
@@ -157,11 +162,27 @@ export class OnlineRegistation implements OnInit {
 		if (Library.isNuLLorUndefined(item.SalesReferenceCode)) this.regObj.SalesReferenceCode = "0";
 		if (Library.isNuLLorUndefined(item.CompanyCode)) this.regObj.CompanyCode = "0";
 		if (Library.isNuLLorUndefined(item.TravelDestinationCode)) this.regObj.TravelDestinationCode = "0";
+		if (Library.isNuLLorUndefined(item.CardID)) this.regObj.CardCode = "0";
 	}
 	updateTotalPayable(){
-		debugger
-		this.regObj.TotalPayableAmt=Number(this.regObj.RegistrationCharge) +Number(this.regObj.ServiceCharge);
+		debugger 
+		var serviceCharge: any =0;
+		var regCharge =Number(this.regObj.RegistrationCharge) * Number(this.regObj.CurrencyRate);
+		serviceCharge=  (Number(regCharge))/100 *Number(this.regObj.ServiceCharge);		
+		this.regObj.TotalPayableAmt=Number(regCharge.toFixed(2)) +Number(serviceCharge.toFixed(2));
+	 
 	}
+	onCurrencyChange(item){
+		debugger 	
+		this.regObj.RegistrationCharge=0;
+		this.regObj.ServiceCharge=0;
+		this.regObj.TotalPayableAmt=0;	 
+
+		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
+		if(Library.isNullOrEmpty(RateItem)) this.regObj.CurrencyRate = 0 ;
+		else this.regObj.CurrencyRate =RateItem.Rate;	
+	}
+
 	//DROP DOWN
 	GETCompanyLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -238,6 +259,19 @@ export class OnlineRegistation implements OnInit {
 	}
 	setcardList(data) {
 		this.cardList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETActiveCurrencyRateLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETActiveCurrencyRateLIST()
+			.subscribe(
+				data => this.setActiveCurrencyRateList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setActiveCurrencyRateList(data) {
+		this.activeCurrencyRateList = data;
 		this.Notification.LoadingRemove();
 
 	}

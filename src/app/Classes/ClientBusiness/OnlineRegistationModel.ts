@@ -11,10 +11,10 @@ export class OnlineRegistationModel  {
 	public TravelDestinationCode : string="0";
 	public RegistrationCharge : number=0;
 	public ServiceCharge : number=0;
-	public TotalPayableAmt : number;
-	public CardCode : string;
-	public CardChargeAmount : number=0;
+	public TotalPayableAmt : number=0;
+	public CardCode : string="0"; 
 	public Currency : string="0";
+	public CurrencyRate : number=0;
 	public SalesReferenceCode : string="0";
 	public Remark : string;	
 	public isActive : boolean=true;
