@@ -7,7 +7,6 @@ import { MasterService } from './Master.service';
 export class TransactionCommonService{ 
 
 	constructor(private masterService: MasterService) { }
-
  
 	/**START TOP UP Service**/
 

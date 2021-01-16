@@ -22,5 +22,6 @@ export class OnlineRegistationModel  {
 	public CreatedOn : string;
 	public UpdatedBy : string;
 	public UpdatedOn : string; 
+	
  
 }

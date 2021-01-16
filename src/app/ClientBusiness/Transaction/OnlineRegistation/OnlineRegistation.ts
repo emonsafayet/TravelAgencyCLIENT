@@ -36,6 +36,7 @@ export class OnlineRegistation implements OnInit {
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
 
+		
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
