@@ -2,6 +2,7 @@ export class VisaRegModel{
 
 	public ID : number=0;
 	public VisaCode : string;
+	public VisaRegDate : string;
 	public CustomerCode : string="0";
 	public CompanyCode : string="0";
 	public VisaType : string="0";

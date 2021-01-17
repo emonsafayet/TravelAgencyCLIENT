@@ -43,6 +43,12 @@ export class TransactionCommonService{
 	GETActiveCurrencyRateLIST() { return this.masterService.get("client/business/travel/transaction/Active/Currency/Rate/list"); }	
 	/*END Currency Rate */ 
 
+	/*START VISA TYPE*/
+	GETVisaTypeLIST() { return this.masterService.get("client/business/travel/transaction/Visa/Type/list"); }	
+	
+	saveOrUpdateVisaType(visaTypeObj: any) { return this.masterService.post(`client/business/travel/transaction/Visa/Type/save/update`, visaTypeObj); }
+	/*END VISA TYPE*/
+
 	/*START VISA Registation */
 	GETVisaRegistationLIST() { return this.masterService.get("client/business/travel/transaction/Visa/Registation/list"); }	
 

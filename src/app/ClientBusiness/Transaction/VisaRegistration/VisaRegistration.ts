@@ -23,8 +23,10 @@ export class VisaRegistration implements OnInit {
 	customerList: any[] = [];
 	companyList: any[] = [];
 	currencyList: any[] = [];
+	visaTypeList: any[] = [];
 	salesStaffList: any[] = [];
 	activeCurrencyRateList: any[] = [];
+	countryList:any[]=[];
 	cardList: any[] = [];
 	SearchVisaRegList: string = '';
 
@@ -42,10 +44,40 @@ export class VisaRegistration implements OnInit {
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST(); 
 		this.GETCardLIST();
+		this.getCountryList();
 		this.GETActiveCurrencyRateLIST();
+		this.GETVisaTypeLIST();
+		this.GETVisaTegLIST();
 		this.Notification.LoadingRemove();
 	}
+	saveVisaReg(){
 
+	}
+	ResetModel(){
+
+	}
+	EditItem(item) {
+		this.visaRegObj = JSON.parse(JSON.stringify(item));
+		if (Library.isNuLLorUndefined(item.SalesStaffCode)) this.visaRegObj.SalesStaffCode = "0";
+		if (Library.isNuLLorUndefined(item.CompanyCode)) this.visaRegObj.CompanyCode = "0";
+		if (Library.isNuLLorUndefined(item.VisaTypeName)) this.visaRegObj.VisaType = "0";
+		if (Library.isNuLLorUndefined(item.CustomerCode)) this.visaRegObj.CustomerCode = "0"; 
+		if (Library.isNuLLorUndefined(item.CardID)) this.visaRegObj.CardID = "0";
+		if (Library.isNuLLorUndefined(item.CurrencyName)) this.visaRegObj.Currency = "0";
+	}
+	GETVisaTegLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETVisaRegistationLIST()
+			.subscribe(
+				data => this.setVisaRegLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setVisaRegLIST(data) {
+		this.visaRegList = data;
+		this.Notification.LoadingRemove();
+
+	}
 	//DROP DOWN
 	GETCompanyLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -124,6 +156,51 @@ export class VisaRegistration implements OnInit {
 		this.activeCurrencyRateList = data;
 		this.Notification.LoadingRemove();
 
+	}
+	GETVisaTypeLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETVisaTypeLIST()
+			.subscribe(
+				data => this.setVisaTypeLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setVisaTypeLIST(data) {
+		this.visaTypeList = data;
+		this.Notification.LoadingRemove();
+
+	} 
+	updateTotalPayable(){
+		debugger 
+		var serviceCharge: any =0;
+		var regCharge =Number(this.visaRegObj.VisaFee) * Number(this.visaRegObj.CurrencyRate);
+		serviceCharge=  (Number(regCharge))/100 *Number(this.visaRegObj.ServiceCharge);		
+		this.visaRegObj.TotalPayable=Number(regCharge.toFixed(2)) +Number(serviceCharge.toFixed(2));
+	 
+	}
+	onCurrencyChange(item){
+		debugger 	
+		this.visaRegObj.GovtTax=0;
+		this.visaRegObj.ServiceCharge=0;
+		this.visaRegObj.TotalPayable=0;	 
+		this.visaRegObj.VisaFee=0;	 
+
+		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
+		if(Library.isNullOrEmpty(RateItem)) this.visaRegObj.CurrencyRate = 0 ;
+		else this.visaRegObj.CurrencyRate =RateItem.Rate;	
+	}
+	//get travel Product List
+	getCountryList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getTravelcountryList()
+			.subscribe(
+				data => this.setCountryList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCountryList(data) {
+		this.countryList = data;
+		this.Notification.LoadingRemove();
 	}
 
 }
