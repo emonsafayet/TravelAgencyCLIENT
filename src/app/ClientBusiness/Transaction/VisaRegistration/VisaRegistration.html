@@ -133,13 +133,13 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Visa Fees</span>
-                                        <input [(ngModel)]="visaRegObj.VisaFee" type="text" class="form-control" />
+                                        <input [(ngModel)]="visaRegObj.VisaFee" type="text" class="form-control" (ngModelChange)="updateTotalPayable()" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Service Charge</span>
-                                        <input [(ngModel)]="visaRegObj.ServiceCharge" type="number"
+                                        <input [(ngModel)]="visaRegObj.ServiceCharge" type="number" (ngModelChange)="updateTotalPayable()"
                                             class="form-control" />
                                     </div>
                                 </div>
@@ -150,22 +150,22 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Govt. TAX</span>
-                                        <input [(ngModel)]="visaRegObj.GovtTax" type="number" class="form-control" />
+                                        <input [(ngModel)]="visaRegObj.GovtTax" type="number" class="form-control" (ngModelChange)="updateTotalPayable()" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Total Payable</span>
-                                        <input type="number" class="form-control" readonly />
+                                        <input [(ngModel)]="visaRegObj.TotalPayable" type="number" class="form-control" readonly/>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Sales Reference</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.CustomerCode">
+                                        <select class="form-control" [(ngModel)]="visaRegObj.SalesStaffCode">
                                             <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
+                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                <option value="{{item.EmployeeCode}}">{{item.EmployeeCode}}->{{item?.FullName}}</option>
                                             </ng-container>
                                         </select>
                                     </div>
@@ -296,13 +296,14 @@
                                         <td class="text-left"> {{item?.TotalPayable}} </td>
                                         <td class="text-left">{{item?.SalesStaffCode}}-{{item?.SalesStaffName}} </td>
                                         <td class="text-center">
-                                            <span *ngIf="item?.isActive" class="text-success">Yes</span>
-                                            <span *ngIf="! item?.isActive" class="text-danger">No</span>
+                                            <span *ngIf="item?.isGroup" class="text-success">Yes</span>
+                                            <span *ngIf="! item?.isGroup" class="text-danger">No</span>
                                         </td>
                                         <td class="text-center">
-                                            <span *ngIf="item?.isGroup" class="text-success">Active</span>
-                                            <span *ngIf="! item?.isGroup" class="text-danger">In-Active</span>
+                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
                                         </td>
+  
                                         <td (click)="EditItem(item)" title="Click to Edit the item."
                                             class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
                                     </tr>

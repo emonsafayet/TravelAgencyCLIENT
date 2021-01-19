@@ -9,7 +9,7 @@ export class VisaRegModel{
 	public VisaCountry : string="0";
 	public VisaFee : number=0;
 	public PassportNo : string;
-	public GovtTax : number;
+	public GovtTax : number=0;
 	public ServiceCharge : number=0;
 	public CardID : string="0";
 	public Currency : string="0";
