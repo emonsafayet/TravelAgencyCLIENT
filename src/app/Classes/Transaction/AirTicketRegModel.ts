@@ -1,0 +1,32 @@
+export class AirTicketRegModel  {
+
+	public ID : number=0;
+	public AirTicketTransCode : string;
+	public TravelDate : string;
+	public CustomerCode : string;
+	public CompanyCode : string;
+	public ArilineCode : string;
+	public Route : string;
+	public TicketNo : string;
+	public SeatTypeCode : string;
+	public TravelType : string;
+	public TravelProvider : string;
+	public ReturnDate : string;
+	public CardID : string;
+	public BaseFare : number;
+	public GovTax : number;
+	public ComissionAmount : number;
+	public ServiceCharge : number;
+	public TotalPayable : number;
+	public isConfirmed : boolean;
+	public isCancel : boolean;
+	public isForward : boolean;
+	public ChangeDate : string;
+	public Remarks : string;
+	public SalesStaffCode : string;
+	public CreatedBy : string;
+	public CreatedOn : string;
+	public UpdatedBy : string;
+	public UpdatedOn : string;
+	public isActive : boolean=true;
+}

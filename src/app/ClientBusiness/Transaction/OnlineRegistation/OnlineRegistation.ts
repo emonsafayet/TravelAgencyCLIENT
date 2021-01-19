@@ -42,7 +42,6 @@ export class OnlineRegistation implements OnInit {
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 
 		this.Notification.LoadingWithMessage('Loading...');
-		//this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
 		this.getOnlineRegistation();
 		this.GETCustomerLIST();
 		this.GETCompanyLIST();

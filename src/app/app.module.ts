@@ -13,7 +13,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; 
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
-// Componentsimport { VisaRegistration } from "./ClientBusiness/Transaction/VisaRegistration/VisaRegistration";
+// Componentsimport { AirTicketRegistration } from "./ClientBusiness/Transaction/AirTicketRegistration/AirTicketRegistration";
+import { VisaRegistration } from "./ClientBusiness/Transaction/VisaRegistration/VisaRegistration";
 import { OnlineRegistation } from "./ClientBusiness/Transaction/OnlineRegistation/OnlineRegistation";
 
 import { TopUp } from "./ClientBusiness/Transaction/TopUp/TopUp";
@@ -117,7 +118,7 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   
