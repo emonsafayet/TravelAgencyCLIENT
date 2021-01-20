@@ -85,12 +85,12 @@ footer {
 
 #wrapper #sidebar-nav,
 #wrapper .main {
-  padding-top: 80px; }
+  padding-top: 50px; }
 
 @media screen and (max-width: 767px) {
   #wrapper #sidebar-nav,
   #wrapper .main {
-    padding-top: 130px; } }
+    padding-top: 85px; } }
 
 .layout-fullwidth #wrapper .sidebar {
   left: -260px; }
@@ -173,7 +173,8 @@ html.fullscreen-bg #wrapper {
     background-color: #f8f8f8; }
   .navbar-default .brand {
     float: left;
-    padding: 30px 39px;
+    padding-left: 15px;
+    padding-top: 10px;
     background-color: #fff; }
   @media screen and (max-width: 1024px) {
     .navbar-default .brand {
@@ -188,7 +189,8 @@ html.fullscreen-bg #wrapper {
 
 .navbar-btn {
   float: left;
-  padding: 16px 0; }
+padding-left: 16px;  
+ }
   .navbar-btn button {
     font-size: 24px;
     padding: 4px 8px;
@@ -230,8 +232,8 @@ html.fullscreen-bg #wrapper {
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  padding-top: 28px;
-  padding-bottom: 28px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   position: relative; }
   .navbar-nav .icon-menu .badge {
     position: absolute;
@@ -239,7 +241,7 @@ html.fullscreen-bg #wrapper {
     right: 16px; }
 
 .navbar-nav > li > a {
-  padding: 28px 20px; }
+  padding: 10px 10px; }
   .navbar-nav > li > a > i {
     font-size: 22px;
     margin-right: 2px;
@@ -360,7 +362,7 @@ ul.notifications > li {
 .sidebar {
   z-index: 9; }
   .sidebar .nav > li > a {
-    padding: 18px 30px;
+    padding: 10px 6px;
     color: #AEB7C2;
     border-left: 5px solid transparent; }
     .sidebar .nav > li > a:hover, .sidebar .nav > li > a:focus, .sidebar .nav > li > a.active {
@@ -415,9 +417,9 @@ ul.notifications > li {
     .sidebar .nav .nav {
       background-color: #252c35; }
       .sidebar .nav .nav > li > a {
-        padding-left: 60px;
-        padding-top: 10px;
-        padding-bottom: 10px; }
+        padding-left: 30px;
+        padding-top: 6px;
+        padding-bottom: 6px; }
         .sidebar .nav .nav > li > a:focus, .sidebar .nav .nav > li > a.active {
           background-color: transparent;
           border-left-color: transparent; }
