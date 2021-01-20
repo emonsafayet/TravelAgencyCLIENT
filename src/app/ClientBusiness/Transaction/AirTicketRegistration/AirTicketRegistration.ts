@@ -62,7 +62,12 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 
+	saveAirTicketReg(){
 
+	}
+	ResetModel(){
+		
+	}
 
 		//DROP DOWN 
 		GetTravelProviderList() {

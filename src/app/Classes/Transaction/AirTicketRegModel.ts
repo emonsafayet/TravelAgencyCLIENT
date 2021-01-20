@@ -13,10 +13,11 @@ export class AirTicketRegModel  {
 	public TravelProvider : string="0";
 	public ReturnDate : string;
 	public CardID : string="0";
-	public BaseFare : number;
-	public GovTax : number;
-	public ComissionAmount : number;
-	public ServiceCharge : number;
+	public BaseFare : number=0;
+	public GovTax : number=0;
+	public ComissionAmount : number=0;
+	public ServiceCharge : number=0;
+	public  ChangePenalty : number=0;
 	public TotalPayable : number;
 	public isConfirmed : boolean;
 	public isCancel : boolean;

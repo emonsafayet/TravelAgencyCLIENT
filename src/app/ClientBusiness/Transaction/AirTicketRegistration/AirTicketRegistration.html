@@ -27,8 +27,8 @@
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Registion No</span>
-                                        <input readonly [(ngModel)]="airTicketregObj.AirTicketTransCode" class="form-control"
-                                            type="text">
+                                        <input readonly [(ngModel)]="airTicketregObj.AirTicketTransCode"
+                                            class="form-control" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -67,27 +67,28 @@
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Airline</span>                                      
-                                            <select class="form-control" [(ngModel)]="airTicketregObj.ArilineCode">
-                                                <option selected value="0">SELECT..</option>
-                                                <ng-container *ngFor="let item of airLineList; let i = index">
-                                                    <option value="{{item.AirlinesCode}}">{{item?.AirlinesName}}</option>
-                                                </ng-container>
-                                            </select>
+                                        <span class="input-group-addon">Airline</span>
+                                        <select class="form-control" [(ngModel)]="airTicketregObj.ArilineCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of airLineList; let i = index">
+                                                <option value="{{item.AirlinesCode}}">{{item?.AirlinesName}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Route</span>
-                                        <input type="text"  [(ngModel)]="airTicketregObj.Route" class="form-control"/>
+                                        <input type="text" [(ngModel)]="airTicketregObj.Route" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Ticket No</span>
-                                        <input type="text"  [(ngModel)]="airTicketregObj.TicketNo" class="form-control"/>
+                                        <input type="text" [(ngModel)]="airTicketregObj.TicketNo"
+                                            class="form-control" />
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Seat Type</span>
@@ -105,13 +106,13 @@
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Travel Type</span>                                      
-                                            <select class="form-control" [(ngModel)]="airTicketregObj.ArilineCode">
-                                                <option selected value="0">SELECT..</option>
-                                                <ng-container *ngFor="let item of travelTypeList; let i = index">
-                                                    <option value="{{item.VisaTypeCode}}">{{item?.VisaTypeName}}</option>
-                                                </ng-container>
-                                            </select>
+                                        <span class="input-group-addon">Travel Type</span>
+                                        <select class="form-control" [(ngModel)]="airTicketregObj.ArilineCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of travelTypeList; let i = index">
+                                                <option value="{{item.VisaTypeCode}}">{{item?.VisaTypeName}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -127,23 +128,181 @@
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Return Date</span> 
+                                        <span class="input-group-addon">Return Date</span>
                                         <input type="date" data-date="" [attr.data-date]="airTicketregObj.ReturnDate"
-                                        data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
-                                        [(ngModel)]="airTicketregObj.ReturnDate" />
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="airTicketregObj.ReturnDate" />
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Card</span>
                                         <select class="form-control" [(ngModel)]="airTicketregObj.CardID">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of cardList; let i = index">
-                                                <option value="{{item.CardID}}">{{item.CardID}}>>{{item?.CardName}}</option>
+                                                <option value="{{item.CardID}}">{{item.CardID}}>>{{item?.CardName}}
+                                                </option>
                                             </ng-container>
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Base Fare </span>
+                                        <input [(ngModel)]="airTicketregObj.BaseFare" type="number"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Govt Tax </span>
+                                        <input [(ngModel)]="airTicketregObj.GovTax" type="number"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Service Charge</span>
+                                        <input [(ngModel)]="airTicketregObj.ServiceCharge" type="number"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Comission Amount</span>
+                                        <input [(ngModel)]="airTicketregObj.ComissionAmount" type="number"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Total Payable</span>
+                                        <input [(ngModel)]="airTicketregObj.GovTax" type="number"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Sales Staff</span>
+                                        <select class="form-control" [(ngModel)]="airTicketregObj.SalesStaffCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                <option value="{{item.EmployeeCode}}">{{item?.FullName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Change Date</span>
+                                        <input type="date" data-date="" [attr.data-date]="airTicketregObj.ChangeDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="airTicketregObj.ChangeDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Change Penalty </span>
+                                        <input [(ngModel)]="airTicketregObj.ChangePenalty" type="number"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Is Confirmed</span>
+                                            <i *ngIf="airTicketregObj?.isConfirmed"
+                                                (click)="airTicketregObj.isConfirmed = false"
+                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="! airTicketregObj?.isConfirmed"
+                                                (click)="rairTicketregObjegObj.isConfirmed = true"
+                                                class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Is Forwar</span>
+                                            <i *ngIf="airTicketregObj?.isForward"
+                                                (click)="airTicketregObj.isForward = false"
+                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="! airTicketregObj?.isForward"
+                                                (click)="rairTicketregObjegObj.isForward = true"
+                                                class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Is Cancel</span>
+                                                    <i *ngIf="airTicketregObj?.isCancel"
+                                                        (click)="airTicketregObj.isCancel = false"
+                                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                        aria-hidden="true"></i>
+                                                    <i *ngIf="! airTicketregObj?.isCancel"
+                                                        (click)="rairTicketregObjegObj.isCancel = true"
+                                                        class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Is Active</span>
+                                                    <i *ngIf="airTicketregObj?.isActive"
+                                                        (click)="airTicketregObj.isActive = false"
+                                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                        aria-hidden="true"></i>
+                                                    <i *ngIf="! airTicketregObj?.isActive"
+                                                        (click)="rairTicketregObjegObj.isActive = true"
+                                                        class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="airTicketregObj.Remarks" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mt-3">
+                                <button *ngIf="airTicketregObj?.ID == 0" (click)="saveAirTicketReg()" type="button"
+                                    class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                <button *ngIf="airTicketregObj?.ID > 0" (click)="saveAirTicketReg()" type="button"
+                                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                        class="fas fa-redo-alt"></i> Reset</button>
                             </div>
                         </div>
                     </div>
