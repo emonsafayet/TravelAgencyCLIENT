@@ -19,6 +19,8 @@ export class AirTicketRegModel  {
 	public ServiceCharge : number=0;
 	public  ChangePenalty : number=0;
 	public TotalPayable : number;
+	public Currency : string="0";
+	public CurrencyRate : number;
 	public isConfirmed : boolean;
 	public isCancel : boolean;
 	public isForward : boolean;

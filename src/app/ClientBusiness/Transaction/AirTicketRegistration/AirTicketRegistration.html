@@ -135,15 +135,28 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Card</span>
-                                        <select class="form-control" [(ngModel)]="airTicketregObj.CardID">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of cardList; let i = index">
-                                                <option value="{{item.CardID}}">{{item.CardID}}>>{{item?.CardName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Currency</span>
+                                                    <select class="form-control" [(ngModel)]="airTicketregObj.Currency"
+                                                        (change)="onCurrencyChange($event.target.value)">
+                                                        <option selected value="0">SELECT..</option>
+                                                        <ng-container *ngFor="let item of currencyList; let i = index">
+                                                            <option value="{{item.CurrencyName}}">{{item?.CurrencyName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <input [(ngModel)]="airTicketregObj.CurrencyRate" type="number"
+                                                        class="form-control" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -153,28 +166,28 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Base Fare </span>
-                                        <input [(ngModel)]="airTicketregObj.BaseFare" type="number"
+                                        <input [(ngModel)]="airTicketregObj.BaseFare" type="number" (ngModelChange)="updateTotalPayable()"
                                             class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Govt Tax </span>
-                                        <input [(ngModel)]="airTicketregObj.GovTax" type="number"
+                                        <input [(ngModel)]="airTicketregObj.GovTax" type="number" (ngModelChange)="updateTotalPayable()"
                                             class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Service Charge</span>
-                                        <input [(ngModel)]="airTicketregObj.ServiceCharge" type="number"
+                                        <input [(ngModel)]="airTicketregObj.ServiceCharge" type="number" (ngModelChange)="updateTotalPayable()"
                                             class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Comission Amount</span>
-                                        <input [(ngModel)]="airTicketregObj.ComissionAmount" type="number"
+                                        <input [(ngModel)]="airTicketregObj.ComissionAmount" type="number" (ngModelChange)="updateTotalPayable()"
                                             class="form-control" />
                                     </div>
                                 </div>
@@ -211,7 +224,7 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Change Penalty </span>
-                                        <input [(ngModel)]="airTicketregObj.ChangePenalty" type="number"
+                                        <input [(ngModel)]="airTicketregObj.ChangePenalty" type="number" (ngModelChange)="updateTotalPayable()"
                                             class="form-control" />
                                     </div>
                                 </div>
@@ -219,36 +232,56 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Is Confirmed</span>
-                                            <i *ngIf="airTicketregObj?.isConfirmed"
-                                                (click)="airTicketregObj.isConfirmed = false"
-                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                aria-hidden="true"></i>
-                                            <i *ngIf="! airTicketregObj?.isConfirmed"
-                                                (click)="rairTicketregObjegObj.isConfirmed = true"
-                                                class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                aria-hidden="true"></i>
-                                        </div>
+                                        <span class="input-group-addon">Card</span>
+                                        <select class="form-control" [(ngModel)]="airTicketregObj.CardID">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of cardList; let i = index">
+                                                <option value="{{item.CardID}}">{{item.CardID}}>>{{item?.CardName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Is Forwar</span>
-                                            <i *ngIf="airTicketregObj?.isForward"
-                                                (click)="airTicketregObj.isForward = false"
-                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                aria-hidden="true"></i>
-                                            <i *ngIf="! airTicketregObj?.isForward"
-                                                (click)="rairTicketregObjegObj.isForward = true"
-                                                class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                aria-hidden="true"></i>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Is Confirmed</span>
+                                                        <i *ngIf="airTicketregObj?.isConfirmed"
+                                                            (click)="airTicketregObj.isConfirmed = false"
+                                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                            aria-hidden="true"></i>
+                                                        <i *ngIf="! airTicketregObj?.isConfirmed"
+                                                            (click)="rairTicketregObjegObj.isConfirmed = true"
+                                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                            aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">Is Forwar</span>
+                                                        <i *ngIf="airTicketregObj?.isForward"
+                                                            (click)="airTicketregObj.isForward = false"
+                                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                            aria-hidden="true"></i>
+                                                        <i *ngIf="! airTicketregObj?.isForward"
+                                                            (click)="rairTicketregObjegObj.isForward = true"
+                                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                            aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="col-md-3 mt-3">
 

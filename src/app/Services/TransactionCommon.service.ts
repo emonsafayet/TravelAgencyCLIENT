@@ -63,6 +63,14 @@ export class TransactionCommonService{
  
 	/*END Seat Type */ 
 
+
+	/*START Air ticket */
+	GETAirTicketLIST() { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/list"); }	
+
+	SaveUpdateAirTicketRegistration(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/save/update`, seattypeObj); }
+ 
+	/*END  Air ticket */ 
+
  
 
 

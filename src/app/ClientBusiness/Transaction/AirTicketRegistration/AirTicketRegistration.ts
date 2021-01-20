@@ -12,7 +12,7 @@ import { TransactionCommonService } from '../../../Services/TransactionCommon.se
 import { Common } from "../../../library/common";
 
 //Classes
-import {AirTicketRegModel } from '../../../Classes/Transaction/AirTicketRegModel';
+import { AirTicketRegModel } from '../../../Classes/Transaction/AirTicketRegModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 //
 declare var moment: any;
@@ -20,7 +20,7 @@ declare var moment: any;
 	templateUrl: 'AirTicketRegistration.html'
 })
 export class AirTicketRegistration implements OnInit {
-	user: any; 
+	user: any;
 	airTicketregistaionList: any[] = [];
 	customerList: any[] = [];
 	companyList: any[] = [];
@@ -31,19 +31,19 @@ export class AirTicketRegistration implements OnInit {
 	seatTypeList: any[] = [];
 	airLineList: any[] = [];
 	travelTypeList: any[] = [];
-	travelProviderList: any[] = []; 
+	travelProviderList: any[] = [];
 	airTicketregObj: AirTicketRegModel = new AirTicketRegModel();
 	SearchAirTicketRegList: string = '';
 
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
 
-		
+
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 
-		this.Notification.LoadingWithMessage('Loading...');
+		this.Notification.LoadingWithMessage('Loading...');		
 		this.GETCustomerLIST();
 		this.GETCompanyLIST();
 		this.GETCurrencyList();
@@ -52,155 +52,259 @@ export class AirTicketRegistration implements OnInit {
 		this.GetSeatTypeList();
 		this.GetAirLineList();
 		this.GetTravelTypeList();
-		this.GetTravelProviderList(); 
-
-		this.airTicketregObj.TravelDate = moment().format(Common.SQLDateFormat);
-		this.airTicketregObj.ReturnDate = moment().format(Common.SQLDateFormat);
-		this.airTicketregObj.ChangeDate = moment().format(Common.SQLDateFormat);
-		
+		this.GetTravelProviderList();
+		this.GETActiveCurrencyRateLIST();
+		this.airTicketregObj.TravelDate = moment().format(Common.SQLDateFormat); 
+		this.GetAirTicketList();
 		this.Notification.LoadingRemove();
 
 	}
 
-	saveAirTicketReg(){
+	saveAirTicketReg() {
+		if (this.airTicketregObj.ID > 0)
+			this.airTicketregObj.UpdatedBy = this.user.EmployeeCode;
+		else this.airTicketregObj.CreatedBy = this.user.EmployeeCode;
+
+		if (Library.isNullOrZero(this.airTicketregObj.TotalPayable)) this.airTicketregObj.TotalPayable = 0;
+		//validation
+		if (!this.validateModel()) return;
+
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.saveOnlineRegisationList(this.airTicketregObj).subscribe(
+			(data) => this.setAirticketReg(data),
+			(error) => this.Notification.Error(error)
+		);
+	}
+	setAirticketReg(Data: any) {
+		if (Data.ID > 0) this.Notification.Success('Saved Successfully.');
+		else {
+			this.Notification.LoadingRemove();
+		}
+		this.airTicketregObj = new AirTicketRegModel();
+		// this.getOnlineRegistation();
+	}
+	GetAirTicketList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETAirTicketLIST()
+			.subscribe(
+				data => this.settAirTicketList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	settAirTicketList(data) {
+		this.airTicketregistaionList = data;
+		this.Notification.LoadingRemove();
 
 	}
-	ResetModel(){
+	ResetModel() {
+		this.airTicketregObj.BaseFare = 0;
+		this.airTicketregObj.GovTax = 0;
+		this.airTicketregObj.ServiceCharge = 0;
+		this.airTicketregObj.ChangePenalty = 0;
+		this.airTicketregObj.CurrencyRate = 0;
+		this.airTicketregObj.CompanyCode = "0";
+		this.airTicketregObj.CustomerCode = "0";
+		this.airTicketregObj.Currency = "0";
+		this.airTicketregObj.SalesStaffCode = "0";
+	}
+	updateTotalPayable() {
+		debugger
+		var serviceCharge: any = 0;
+		this.airTicketregObj.CurrencyRate=1;
+		var BaseRate = Number(this.airTicketregObj.BaseFare) * Number(this.airTicketregObj.CurrencyRate);
+		serviceCharge = (Number(BaseRate)) / 100 * Number(this.airTicketregObj.ServiceCharge);
+		this.airTicketregObj.TotalPayable = Number(BaseRate.toFixed(2)) + Number(serviceCharge.toFixed(2))+
+											Number(this.airTicketregObj.ComissionAmount.toFixed(2))+Number(this.airTicketregObj.GovTax.toFixed(2))
+											- Number(this.airTicketregObj.ChangePenalty.toFixed(2));
+
+	}
+	onCurrencyChange(item) {
+		debugger
+		this.airTicketregObj.BaseFare = 0;
+		this.airTicketregObj.GovTax = 0;
+		this.airTicketregObj.ServiceCharge = 0;
+		this.airTicketregObj.ChangePenalty = 0;
+
+		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
+		if (Library.isNullOrEmpty(RateItem)) this.airTicketregObj.CurrencyRate = 0;
+		else this.airTicketregObj.CurrencyRate = RateItem.Rate;
+	}
+	
+	validateModel() {
+		debugger;
+		var result = true
+		if (this.airTicketregObj.CustomerCode == "0") {
+			this.Notification.Warning('Please Select Customer.');
+			result = false;
+			return;
+		}
+	 
+		if (this.airTicketregObj.BaseFare==0 || Library.isNuLLorUndefined(this.airTicketregObj.BaseFare)) {
+			this.Notification.Warning('Please Enter Resigtation Charge.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.airTicketregObj.ServiceCharge)) {
+			this.Notification.Warning('Please Enter ServiceCharge.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.airTicketregObj.Currency) || this.airTicketregObj.Currency=="0") {
+			this.Notification.Warning('Please Select Currency .');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.airTicketregObj.CardID) || this.airTicketregObj.CardID=="0") {
+			this.Notification.Warning('Please Enter CardCode.');
+			result = false;
+			return;
+		}	
 		
+		if (Library.isNuLLorUndefined(this.airTicketregObj.SalesStaffCode) ||  this.airTicketregObj.SalesStaffCode=="0") {
+			this.Notification.Warning('Please Select Sales Staff .');
+			result = false;
+			return;
+		}
+		if (Library.isNullOrZero(this.airTicketregObj.TotalPayable)) {
+			this.Notification.Warning('Total Payable Amount Can Not Zero.');
+			result = false;
+			return;
+		} 
+		return result;
+	}
+	//DROP DOWN 
+
+	GetTravelProviderList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getProviderList()
+			.subscribe(
+				data => this.setTravelProviderList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setTravelProviderList(data) {
+		this.travelProviderList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GetTravelTypeList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getAirlineList()
+			.subscribe(
+				data => this.setTravelTypeList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setTravelTypeList(data) {
+		this.travelTypeList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GetAirLineList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getAirlineList()
+			.subscribe(
+				data => this.setAirLineList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setAirLineList(data) {
+		this.airLineList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GetSeatTypeList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETSeatTypeLIST()
+			.subscribe(
+				data => this.setSeatTypeList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setSeatTypeList(data) {
+		this.seatTypeList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCompanyLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETCompanyLIST()
+			.subscribe(
+				data => this.setCompanyLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCompanyLIST(data) {
+		this.companyList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCustomerLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getcustomerList()
+			.subscribe(
+				data => this.setCustomerLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCustomerLIST(data) {
+		this.customerList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCurrencyList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getCurrencyList()
+			.subscribe(
+				data => this.setCurrencyList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCurrencyList(data) {
+		this.currencyList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETSalesStaffLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETSalesStaffLIST()
+			.subscribe(
+				data => this.setSalesStaffLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setSalesStaffLIST(data) {
+		this.salesStaffList = data;
+		this.Notification.LoadingRemove();
+
 	}
 
-		//DROP DOWN 
-		GetTravelProviderList() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.clientBusinessService.getProviderList()
-				.subscribe(
-					data => this.setTravelProviderList(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setTravelProviderList(data) {
-			this.travelProviderList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GetTravelTypeList() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.clientBusinessService.getAirlineList()
-				.subscribe(
-					data => this.setTravelTypeList(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setTravelTypeList(data) {
-			this.travelTypeList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GetAirLineList() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.clientBusinessService.getAirlineList()
-				.subscribe(
-					data => this.setAirLineList(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setAirLineList(data) {
-			this.airLineList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GetSeatTypeList() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.transactionCommonService.GETSeatTypeLIST()
-				.subscribe(
-					data => this.setSeatTypeList(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setSeatTypeList(data) {
-			this.seatTypeList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GETCompanyLIST() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.transactionCommonService.GETCompanyLIST()
-				.subscribe(
-					data => this.setCompanyLIST(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setCompanyLIST(data) {
-			this.companyList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GETCustomerLIST() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.clientBusinessService.getcustomerList()
-				.subscribe(
-					data => this.setCustomerLIST(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setCustomerLIST(data) {
-			this.customerList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GETCurrencyList() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.clientBusinessService.getCurrencyList()
-				.subscribe(
-					data => this.setCurrencyList(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setCurrencyList(data) {
-			this.currencyList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GETSalesStaffLIST() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.transactionCommonService.GETSalesStaffLIST()
-				.subscribe(
-					data => this.setSalesStaffLIST(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setSalesStaffLIST(data) {
-			this.salesStaffList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		 
-		GETCardLIST() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.clientBusinessService.getcardList()
-				.subscribe(
-					data => this.setcardList(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setcardList(data) {
-			this.cardList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-		GETActiveCurrencyRateLIST() {
-			this.Notification.LoadingWithMessage('Loading...');
-			this.transactionCommonService.GETActiveCurrencyRateLIST()
-				.subscribe(
-					data => this.setActiveCurrencyRateList(data),
-					error => this.Notification.Error(error)
-				);
-		}
-		setActiveCurrencyRateList(data) {
-			this.activeCurrencyRateList = data;
-			this.Notification.LoadingRemove();
-	
-		}
-	
+	GETCardLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getcardList()
+			.subscribe(
+				data => this.setcardList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setcardList(data) {
+		this.cardList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETActiveCurrencyRateLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETActiveCurrencyRateLIST()
+			.subscribe(
+				data => this.setActiveCurrencyRateList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setActiveCurrencyRateList(data) {
+		this.activeCurrencyRateList = data;
+		this.Notification.LoadingRemove();
+
+	}
+
 
 }
