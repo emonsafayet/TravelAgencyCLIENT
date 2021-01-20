@@ -54,7 +54,14 @@ export class TransactionCommonService{
 
 	saveOrUpdateVisaRegistation(visaRegObj: any) { return this.masterService.post(`client/business/travel/transaction/Visa/Registation/save/update`, visaRegObj); }
  
-	/*END Currency Rate */ 
+	/*END VISA Registation */ 
+
+	/*START Seat Type */
+	GETSeatTypeLIST() { return this.masterService.get("client/business/travel/transaction/Seat/Type/list"); }	
+
+	saveOrUpdateSeatType(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Seat/Type/save/update`, seattypeObj); }
+ 
+	/*END Seat Type */ 
 
  
 

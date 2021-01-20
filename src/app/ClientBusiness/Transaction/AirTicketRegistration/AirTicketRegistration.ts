@@ -28,7 +28,11 @@ export class AirTicketRegistration implements OnInit {
 	salesStaffList: any[] = [];
 	activeCurrencyRateList: any[] = [];
 	cardList: any[] = [];
-	AirTicketregObj: AirTicketRegModel = new AirTicketRegModel();
+	seatTypeList: any[] = [];
+	airLineList: any[] = [];
+	travelTypeList: any[] = [];
+	travelProviderList: any[] = []; 
+	airTicketregObj: AirTicketRegModel = new AirTicketRegModel();
 	SearchAirTicketRegList: string = '';
 
 	constructor(private userService: UserService, private authGuard: AuthGuard,
@@ -45,10 +49,14 @@ export class AirTicketRegistration implements OnInit {
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST();
 		this.GETCardLIST();
+		this.GetSeatTypeList();
+		this.GetAirLineList();
+		this.GetTravelTypeList();
+		this.GetTravelProviderList(); 
 
-		this.AirTicketregObj.TravelDate = moment().format(Common.SQLDateFormat);
-		this.AirTicketregObj.ReturnDate = moment().format(Common.SQLDateFormat);
-		this.AirTicketregObj.ChangeDate = moment().format(Common.SQLDateFormat);
+		this.airTicketregObj.TravelDate = moment().format(Common.SQLDateFormat);
+		this.airTicketregObj.ReturnDate = moment().format(Common.SQLDateFormat);
+		this.airTicketregObj.ChangeDate = moment().format(Common.SQLDateFormat);
 		
 		this.Notification.LoadingRemove();
 
@@ -56,7 +64,59 @@ export class AirTicketRegistration implements OnInit {
 
 
 
-		//DROP DOWN
+		//DROP DOWN 
+		GetTravelProviderList() {
+			this.Notification.LoadingWithMessage('Loading...');
+			this.clientBusinessService.getProviderList()
+				.subscribe(
+					data => this.setTravelProviderList(data),
+					error => this.Notification.Error(error)
+				);
+		}
+		setTravelProviderList(data) {
+			this.travelProviderList = data;
+			this.Notification.LoadingRemove();
+	
+		}
+		GetTravelTypeList() {
+			this.Notification.LoadingWithMessage('Loading...');
+			this.clientBusinessService.getAirlineList()
+				.subscribe(
+					data => this.setTravelTypeList(data),
+					error => this.Notification.Error(error)
+				);
+		}
+		setTravelTypeList(data) {
+			this.travelTypeList = data;
+			this.Notification.LoadingRemove();
+	
+		}
+		GetAirLineList() {
+			this.Notification.LoadingWithMessage('Loading...');
+			this.clientBusinessService.getAirlineList()
+				.subscribe(
+					data => this.setAirLineList(data),
+					error => this.Notification.Error(error)
+				);
+		}
+		setAirLineList(data) {
+			this.airLineList = data;
+			this.Notification.LoadingRemove();
+	
+		}
+		GetSeatTypeList() {
+			this.Notification.LoadingWithMessage('Loading...');
+			this.transactionCommonService.GETSeatTypeLIST()
+				.subscribe(
+					data => this.setSeatTypeList(data),
+					error => this.Notification.Error(error)
+				);
+		}
+		setSeatTypeList(data) {
+			this.seatTypeList = data;
+			this.Notification.LoadingRemove();
+	
+		}
 		GETCompanyLIST() {
 			this.Notification.LoadingWithMessage('Loading...');
 			this.transactionCommonService.GETCompanyLIST()
