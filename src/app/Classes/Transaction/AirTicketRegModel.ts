@@ -17,7 +17,7 @@ export class AirTicketRegModel  {
 	public GovTax : number=0;
 	public ComissionAmount : number=0;
 	public ServiceCharge : number=0;
-	public  ChangePenalty : number=0;
+	public ChangePenalty : number=0;
 	public TotalPayable : number;
 	public Currency : string="0";
 	public CurrencyRate : number;

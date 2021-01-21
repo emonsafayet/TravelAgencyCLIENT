@@ -70,7 +70,7 @@ export class AirTicketRegistration implements OnInit {
 		if (!this.validateModel()) return;
 
 		this.Notification.LoadingWithMessage('Loading...');
-		this.transactionCommonService.saveOnlineRegisationList(this.airTicketregObj).subscribe(
+		this.transactionCommonService.SaveUpdateAirTicketRegistration(this.airTicketregObj).subscribe(
 			(data) => this.setAirticketReg(data),
 			(error) => this.Notification.Error(error)
 		);
@@ -81,7 +81,7 @@ export class AirTicketRegistration implements OnInit {
 			this.Notification.LoadingRemove();
 		}
 		this.airTicketregObj = new AirTicketRegModel();
-		// this.getOnlineRegistation();
+	   this.GetAirTicketList();
 	}
 	GetAirTicketList() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -96,26 +96,22 @@ export class AirTicketRegistration implements OnInit {
 		this.Notification.LoadingRemove();
 
 	}
+	EditItem(item) {
+		this.airTicketregObj = JSON.parse(JSON.stringify(item)); 
+	}
 	ResetModel() {
-		this.airTicketregObj.BaseFare = 0;
-		this.airTicketregObj.GovTax = 0;
-		this.airTicketregObj.ServiceCharge = 0;
-		this.airTicketregObj.ChangePenalty = 0;
-		this.airTicketregObj.CurrencyRate = 0;
-		this.airTicketregObj.CompanyCode = "0";
-		this.airTicketregObj.CustomerCode = "0";
-		this.airTicketregObj.Currency = "0";
-		this.airTicketregObj.SalesStaffCode = "0";
+		this.airTicketregObj =  new AirTicketRegModel();
 	}
 	updateTotalPayable() {
 		debugger
 		var serviceCharge: any = 0;
-		this.airTicketregObj.CurrencyRate=1;
+		if(Library.isNuLLorUndefined(this.airTicketregObj.CurrencyRate))
+			this.airTicketregObj.CurrencyRate=1;
 		var BaseRate = Number(this.airTicketregObj.BaseFare) * Number(this.airTicketregObj.CurrencyRate);
 		serviceCharge = (Number(BaseRate)) / 100 * Number(this.airTicketregObj.ServiceCharge);
 		this.airTicketregObj.TotalPayable = Number(BaseRate.toFixed(2)) + Number(serviceCharge.toFixed(2))+
 											Number(this.airTicketregObj.ComissionAmount.toFixed(2))+Number(this.airTicketregObj.GovTax.toFixed(2))
-											- Number(this.airTicketregObj.ChangePenalty.toFixed(2));
+											+ Number(this.airTicketregObj.ChangePenalty.toFixed(2));
 
 	}
 	onCurrencyChange(item) {
@@ -124,6 +120,8 @@ export class AirTicketRegistration implements OnInit {
 		this.airTicketregObj.GovTax = 0;
 		this.airTicketregObj.ServiceCharge = 0;
 		this.airTicketregObj.ChangePenalty = 0;
+		this.airTicketregObj.ComissionAmount = 0;
+		this.airTicketregObj.TotalPayable = 0;
 
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
 		if (Library.isNullOrEmpty(RateItem)) this.airTicketregObj.CurrencyRate = 0;
@@ -138,7 +136,31 @@ export class AirTicketRegistration implements OnInit {
 			result = false;
 			return;
 		}
-	 
+		if (Library.isNuLLorUndefined(this.airTicketregObj.ArilineCode)) {
+			this.Notification.Warning('Please Select Airline.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.airTicketregObj.Route)) {
+			this.Notification.Warning('Please Enter Route.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.airTicketregObj.SeatTypeCode)) {
+			this.Notification.Warning('Please Select Seat Type.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.airTicketregObj.TravelType)) {
+			this.Notification.Warning('Please Select Travel Type.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.airTicketregObj.TravelProvider)) {
+			this.Notification.Warning('Please Select Travel Provider.');
+			result = false;
+			return;
+		}
 		if (this.airTicketregObj.BaseFare==0 || Library.isNuLLorUndefined(this.airTicketregObj.BaseFare)) {
 			this.Notification.Warning('Please Enter Resigtation Charge.');
 			result = false;
@@ -148,25 +170,14 @@ export class AirTicketRegistration implements OnInit {
 			this.Notification.Warning('Please Enter ServiceCharge.');
 			result = false;
 			return;
-		}
-		if (Library.isNuLLorUndefined(this.airTicketregObj.Currency) || this.airTicketregObj.Currency=="0") {
-			this.Notification.Warning('Please Select Currency .');
+		}  
+		if (this.airTicketregObj.TotalPayable==0 || Library.isNullOrZero(this.airTicketregObj.TotalPayable)) {
+			this.Notification.Warning('Total Payable Amount Can Not Zero.');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.airTicketregObj.CardID) || this.airTicketregObj.CardID=="0") {
-			this.Notification.Warning('Please Enter CardCode.');
-			result = false;
-			return;
-		}	
-		
 		if (Library.isNuLLorUndefined(this.airTicketregObj.SalesStaffCode) ||  this.airTicketregObj.SalesStaffCode=="0") {
 			this.Notification.Warning('Please Select Sales Staff .');
-			result = false;
-			return;
-		}
-		if (Library.isNullOrZero(this.airTicketregObj.TotalPayable)) {
-			this.Notification.Warning('Total Payable Amount Can Not Zero.');
 			result = false;
 			return;
 		} 
@@ -189,13 +200,14 @@ export class AirTicketRegistration implements OnInit {
 	}
 	GetTravelTypeList() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.clientBusinessService.getAirlineList()
+		this.transactionCommonService.GETVisaTypeLIST()
 			.subscribe(
 				data => this.setTravelTypeList(data),
 				error => this.Notification.Error(error)
 			);
 	}
 	setTravelTypeList(data) {
+		debugger
 		this.travelTypeList = data;
 		this.Notification.LoadingRemove();
 

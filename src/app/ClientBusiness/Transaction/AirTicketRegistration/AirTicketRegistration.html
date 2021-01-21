@@ -107,7 +107,7 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Travel Type</span>
-                                        <select class="form-control" [(ngModel)]="airTicketregObj.ArilineCode">
+                                        <select class="form-control" [(ngModel)]="airTicketregObj.TravelType">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of travelTypeList; let i = index">
                                                 <option value="{{item.VisaTypeCode}}">{{item?.VisaTypeName}}</option>
@@ -118,7 +118,7 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Travel Provider</span>
-                                        <select class="form-control" [(ngModel)]="airTicketregObj.ArilineCode">
+                                        <select class="form-control" [(ngModel)]="airTicketregObj.TravelProvider">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of travelProviderList; let i = index">
                                                 <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
@@ -166,29 +166,29 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Base Fare </span>
-                                        <input [(ngModel)]="airTicketregObj.BaseFare" type="number" (ngModelChange)="updateTotalPayable()"
-                                            class="form-control" />
+                                        <input [(ngModel)]="airTicketregObj.BaseFare" type="number"
+                                            (ngModelChange)="updateTotalPayable()" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Govt Tax </span>
-                                        <input [(ngModel)]="airTicketregObj.GovTax" type="number" (ngModelChange)="updateTotalPayable()"
-                                            class="form-control" />
+                                        <input [(ngModel)]="airTicketregObj.GovTax" type="number"
+                                            (ngModelChange)="updateTotalPayable()" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Service Charge</span>
-                                        <input [(ngModel)]="airTicketregObj.ServiceCharge" type="number" (ngModelChange)="updateTotalPayable()"
-                                            class="form-control" />
+                                        <input [(ngModel)]="airTicketregObj.ServiceCharge" type="number"
+                                            (ngModelChange)="updateTotalPayable()" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Comission Amount</span>
-                                        <input [(ngModel)]="airTicketregObj.ComissionAmount" type="number" (ngModelChange)="updateTotalPayable()"
-                                            class="form-control" />
+                                        <input [(ngModel)]="airTicketregObj.ComissionAmount" type="number"
+                                            (ngModelChange)="updateTotalPayable()" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Total Payable</span>
-                                        <input [(ngModel)]="airTicketregObj.GovTax" type="number"
+                                        <input [(ngModel)]="airTicketregObj.TotalPayable" type="number"
                                             class="form-control" />
                                     </div>
                                 </div>
@@ -224,8 +224,8 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Change Penalty </span>
-                                        <input [(ngModel)]="airTicketregObj.ChangePenalty" type="number" (ngModelChange)="updateTotalPayable()"
-                                            class="form-control" />
+                                        <input [(ngModel)]="airTicketregObj.ChangePenalty" type="number"
+                                            (ngModelChange)="updateTotalPayable()" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +257,7 @@
                                                             class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                                             aria-hidden="true"></i>
                                                         <i *ngIf="! airTicketregObj?.isConfirmed"
-                                                            (click)="rairTicketregObjegObj.isConfirmed = true"
+                                                            (click)="airTicketregObj.isConfirmed = true"
                                                             class="fa fa-square-o font-size-35 ml-3 text-success"
                                                             aria-hidden="true"></i>
                                                     </div>
@@ -272,7 +272,7 @@
                                                             class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                                             aria-hidden="true"></i>
                                                         <i *ngIf="! airTicketregObj?.isForward"
-                                                            (click)="rairTicketregObjegObj.isForward = true"
+                                                            (click)="airTicketregObj.isForward = true"
                                                             class="fa fa-square-o font-size-35 ml-3 text-success"
                                                             aria-hidden="true"></i>
                                                     </div>
@@ -295,7 +295,7 @@
                                                         class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                                         aria-hidden="true"></i>
                                                     <i *ngIf="! airTicketregObj?.isCancel"
-                                                        (click)="rairTicketregObjegObj.isCancel = true"
+                                                        (click)="airTicketregObj.isCancel = true"
                                                         class="fa fa-square-o font-size-35 ml-3 text-success"
                                                         aria-hidden="true"></i>
                                                 </div>
@@ -310,10 +310,11 @@
                                                         class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                                         aria-hidden="true"></i>
                                                     <i *ngIf="! airTicketregObj?.isActive"
-                                                        (click)="rairTicketregObjegObj.isActive = true"
+                                                        (click)="airTicketregObj.isActive = true"
                                                         class="fa fa-square-o font-size-35 ml-3 text-success"
                                                         aria-hidden="true"></i>
                                                 </div>
+
                                             </div>
 
                                         </div>
@@ -336,6 +337,157 @@
                                     class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
                                 <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
                                         class="fas fa-redo-alt"></i> Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- --list -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="hoverlink" (click)="GetAirTicketList()"><b>AIR TICKET REGISTRATION LIST</b> <i
+                                    class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                            <span class="label label-primary ml-2 hoverPointer">Report</span>
+                            <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
+                            <div class="right">
+                                <button type="button" class="btn-toggle-collapse"><i
+                                        class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p4 custom-table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="20">
+                                                <input class="form-control form-control-sm" placeholder="Search"
+                                                    type="text" [(ngModel)]="SearchAirTicketRegList">
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="width-1p text-center">SN#</th>
+                                            <th class="width-8p">Registration</th>
+                                            <th class="width-20p text-center">Customer</th>
+                                            <th class="width-15p text-center">Airline/Route</th>
+                                            <th class="width-10p text-center">Ticket/Seat Type</th>
+                                            <th class="width-10p text-center">Travel Type/Provider</th>
+                                            <th class="width-15p text-center">Card No</th>
+                                            <th class="width-10p text-center">Currency</th>
+                                            <th class="width-12p text-center">Fees</th>
+                                            <th class="width-2p text-center">Total Payable</th>
+                                            <th class="width-2p text-center">Change Date/Charge</th>
+                                            <th class="width-15p text-center">Sales Ref</th>
+                                            <th class="width-1p text-center">Is Confirmed</th>
+                                            <th class="width-1p text-center">Is Forwar</th>
+                                            <th class="width-1p text-center">Is Cancel</th>
+                                            <th class="width-2p text-center">Status</th>
+                                            <th class="width-2p text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="font-size-12"
+                                            *ngFor="let item of airTicketregistaionList | searchFilter : SearchAirTicketRegList; let i = index">
+                                            <td class="text-right"> {{i+1}} </td>
+                                            <td class="text-left">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        CODE: {{item?.AirTicketTransCode}}
+                                                        <br> Travel Date: <i>{{item?.TravelDate | date: 'dd MMM yyyy' }}
+                                                        </i>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Customer : {{item?.CustomerName}}
+                                                        <br>Company: <i> {{item?.CompanyName}}</i>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Airline : {{item?.AirlinesName}}
+                                                        <br>Route: {{item?.Route}}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Ticket : {{item?.TicketNo}}
+                                                        <br>Seat Type: {{item?.SeatType}}
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Travel Type : {{item?.TravelTypeName}}
+                                                        <br>Travel Provider: {{item?.ProviderName}}
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Card Name: {{item?.CardName}}
+                                                        <br> Card No: <i> {{item?.CardID}} </i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Currency: {{item?.CurrencyName}}
+                                                        <br> Rate <i>{{item?.CurrencyRate}} </i>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-left">
+                                                Base Fare: <b> {{item?.BaseFare}}</b> , Govt Fee: <i> <b>{{item?.GovTax}}
+                                                 <br>   </b> </i> Comission: <i> <b> {{item?.ComissionAmount}} </b> </i>
+                                                , Service Charge: <i> <b> {{item?.ServiceCharge}}% </b> </i>
+                                            </td>
+                                            <td class="text-left"> {{item?.TotalPayable}} </td>
+                                            <td class="text-left">  
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Chage Date: {{item?.ChangeDate | date: 'dd MMM yyyy' }}
+                                                        <br> Penalty: <i>{{item?.ChangePenalty}} </i>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-left">{{item?.SalesStaffCode}}-{{item?.SalesStaffName}}
+                                            </td>
+                                            <td class="text-center">
+                                                <span *ngIf="item?.isConfirmed" class="text-success">Yes</span>
+                                                <span *ngIf="! item?.isConfirmed" class="text-danger">No</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span *ngIf="item?.isForward" class="text-success">Yes</span>
+                                                <span *ngIf="! item?.isForward" class="text-danger">No</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span *ngIf="item?.isCancel" class="text-success">Active</span>
+                                                <span *ngIf="! item?.isCancel" class="text-danger">In-Active</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                                <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                            </td>
+
+                                            <td (click)="EditItem(item)" title="Click to Edit the item."
+                                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
