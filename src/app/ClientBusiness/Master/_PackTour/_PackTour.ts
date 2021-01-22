@@ -17,7 +17,8 @@ import { PackageMasterModel, PackageDetailsModel } from '../../../Classes/Client
 export class _PackTour implements OnInit {
 
 	user: any;
-	packageList: any = [];
+	packageList: PackageMasterModel [] = [];  
+
 	packageDetailObj: PackageDetailsModel[] = [];
 	packageMasterObj: PackageMasterModel = new PackageMasterModel();
 	SearchPackageList: string = "";
@@ -47,7 +48,19 @@ export class _PackTour implements OnInit {
 		console.log(this.packageList);
 		this.Notification.LoadingRemove();
 	}
+	EditItem(item){
 
+		this.packageMasterObj = JSON.parse(JSON.stringify(item)); 
+		
+		this.clientBusinessService.getPackageDetailsByPackCodeList(this.packageMasterObj.PackageCode)
+			.subscribe(
+				data => this.packageDetailObj = (data),
+				error => this.Notification.Error(error)
+			);
+
+			document.getElementById('PackageEntry_tab').click();
+
+	}
 	setNewPackageDetails() {
 		this.packageDetailObj = [];
 		this.packageMasterObj = new PackageMasterModel();

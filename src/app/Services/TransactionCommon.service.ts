@@ -24,12 +24,7 @@ export class TransactionCommonService{
 
 	/**END  TOP UP TYPE Service**/
 
-	/**START Online Registation Service**/
-
-	//DROP DOWN
-	GETCompanyLIST() { return this.masterService.get("client/business/travel/transaction/company/list"); }
-
-	GETSalesStaffLIST() { return this.masterService.get("client/business/travel/transaction/sales/staff/list"); }	
+	/**START Online Registation Service**/ 
 	
 	GetOnlineRegisationList() { return this.masterService.get("client/business/travel/transaction/online/registation/list"); }
 
@@ -54,15 +49,7 @@ export class TransactionCommonService{
 
 	saveOrUpdateVisaRegistation(visaRegObj: any) { return this.masterService.post(`client/business/travel/transaction/Visa/Registation/save/update`, visaRegObj); }
  
-	/*END VISA Registation */ 
-
-	/*START Seat Type */
-	GETSeatTypeLIST() { return this.masterService.get("client/business/travel/transaction/Seat/Type/list"); }	
-
-	saveOrUpdateSeatType(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Seat/Type/save/update`, seattypeObj); }
- 
-	/*END Seat Type */ 
-
+	/*END VISA Registation */   
 
 	/*START Air ticket */
 	GETAirTicketLIST() { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/list"); }	
@@ -70,6 +57,21 @@ export class TransactionCommonService{
 	SaveUpdateAirTicketRegistration(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/save/update`, seattypeObj); }
  
 	/*END  Air ticket */ 
+ 
+
+	/*START Hotel Booking  */
+	GETHotelBooking() { return this.masterService.get("client/business/travel/transaction/hotel/booking/list"); }	
+
+	SaveUpdateHotelBooking(hotelBookingObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/booking/save/update`, hotelBookingObj); }
+ 
+	/*END  Hotel Booking  */ 
+
+
+	// START COMMON DROP DOWN
+	GETCompanyLIST() { return this.masterService.get("client/business/travel/transaction/company/list"); }
+
+	GETSalesStaffLIST() { return this.masterService.get("client/business/travel/transaction/sales/staff/list"); }	
+   // END COMMON DROP DOWN
 
  
 

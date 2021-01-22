@@ -1,1 +1,62 @@
-<h2>HotelBooking</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Business</li>
+        <li class="breadcrumb-item active">Travel</li>
+        <li class="breadcrumb-item active">Transaction</li>
+        <li class="breadcrumb-item active">Hotel</li>
+        <li class="breadcrumb-item active">Booking</li>
+    </ol>
+</nav>
+<div class="tab-content" style="background-color: white;">
+    <div class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>HOTEL BOOKING</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Booking Code</span>
+                                        <input readonly [(ngModel)]="hotelBookingObj.BookingCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CustomerCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Company</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CompanyCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of companyList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -227,7 +227,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 	GetSeatTypeList() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.transactionCommonService.GETSeatTypeLIST()
+		this.clientBusinessService.GETSeatTypeLIST()
 			.subscribe(
 				data => this.setSeatTypeList(data),
 				error => this.Notification.Error(error)

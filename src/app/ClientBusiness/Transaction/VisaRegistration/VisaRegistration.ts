@@ -21,7 +21,7 @@ declare var moment: any;
 export class VisaRegistration implements OnInit {
 	user: any;
 
-	visaRegList: any = [];
+	visaRegList: any[] = [];
 	visaRegObj: VisaRegModel = new VisaRegModel();
 	customerList: any[] = [];
 	companyList: any[] = [];

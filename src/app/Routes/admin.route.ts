@@ -47,6 +47,7 @@ import { TopUp } from "../ClientBusiness/Transaction/TopUp/TopUp";
 import { OnlineRegistation } from "../ClientBusiness/Transaction/OnlineRegistation/OnlineRegistation";
 import { VisaRegistration } from "../ClientBusiness/Transaction/VisaRegistration/VisaRegistration";
 import { AirTicketRegistration } from "../ClientBusiness/Transaction/AirTicketRegistration/AirTicketRegistration";
+import { HotelBooking } from "../ClientBusiness/Transaction/HotelBooking/HotelBooking";
 
 
 export const AdminRoutes: Routes = [
@@ -96,5 +97,6 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/transaction/onlineRegistation', component: OnlineRegistation },
 	{ path: 'client/business/travel/transaction/visa/registration', component: VisaRegistration },
 	{ path: 'client/business/travel/transaction/air/ticket/registration', component: AirTicketRegistration },
+	{ path: 'client/business/travel/transaction/hotel/booking', component: HotelBooking },
 ];
  
