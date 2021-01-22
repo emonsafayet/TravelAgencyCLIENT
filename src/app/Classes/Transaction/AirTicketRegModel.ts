@@ -33,3 +33,14 @@ export class AirTicketRegModel  {
 	public UpdatedOn : string;
 	public isActive : boolean=true;
 }
+export class SeatTypeModel{
+
+	public ID : number;
+	public SeatTypeCode : string;
+	public SeatType : string;
+	public CreatedBy : string;
+	public CreatedOn : string;
+	public UpdatedBy : string;
+	public UpdatedOn : string;
+	public isActive : boolean;
+}
