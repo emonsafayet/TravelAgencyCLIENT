@@ -10,6 +10,7 @@ export class HotelTypeModel{
 	public isActive : boolean;
 }
 
+
 export class HotelBookingModel{
 
 	public ID : number;

@@ -11,3 +11,4 @@ export class HotelBooking implements OnInit {
 	}
 
 }
+

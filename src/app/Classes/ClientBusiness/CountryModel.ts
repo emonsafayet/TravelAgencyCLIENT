@@ -22,3 +22,4 @@ export class CityModel {
 	public isActive : boolean;
 }
 
+
