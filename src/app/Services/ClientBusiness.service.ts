@@ -28,6 +28,8 @@ export class ClientBusinessService {
 	saveUpdateCity(cityObj: any) { return this.masterService.post(`client/business/travel/city/save/update`, cityObj); }
 
 	getCityList() { return this.masterService.get("client/business/travel/city/info/list"); }	
+	getCityByCountryCodeList(countryCode:string) { return this.masterService.get("client/business/travel/city/info/list/by/country/code/"+countryCode); }	
+	
 	/* END CITY*/ 
 
 	/**START TOUR DESTINATION**/
@@ -40,15 +42,13 @@ export class ClientBusinessService {
 	saveUpdateProvider(providerObj: any) { return this.masterService.post(`client/business/travel/Provider/save/update`, providerObj); }
 
 	getProviderList() { return this.masterService.get("client/business/travel/provider/list"); }
-	/*END TOUR PROVIDER*/
-
+	/*END TOUR PROVIDER*/ 
 
 	/*START TOUR AIRLINE*/
 	saveUpdateAirline(airlineObj: any) { return this.masterService.post(`client/business/travel/Airline/save/update`, airlineObj); }
 
 	getAirlineList() { return this.masterService.get("client/business/travel/Airline/list"); }
-	/*END TOUR AIRLINE*/
-
+	/*END TOUR AIRLINE*/ 
 
 	/*START TOUR Customer Type*/
 	saveUpdateCustomerType(customerTypeObj: any) { return this.masterService.post(`client/business/travel/customer/type/save/update`, customerTypeObj); }

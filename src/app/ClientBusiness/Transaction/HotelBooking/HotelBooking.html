@@ -32,6 +32,14 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
+                                        <span class="input-group-addon">Booking Date</span>
+                                        <input [(ngModel)]="hotelBookingObj.BookingRegDate" class="form-control"
+                                        data-date-format="dd-MM-YYYY"  data-date="" [attr.data-date]="hotelBookingObj.BookingRegDate"
+                                            type="date">
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Customer</span>
                                         <select class="form-control" [(ngModel)]="hotelBookingObj.CustomerCode">
                                             <option selected value="0">SELECT..</option>
@@ -52,9 +60,330 @@
                                         </select>
                                     </div>
                                 </div>
+                              
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Country</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CountryCode"
+                                            (change)="filterCityByCountryCode()">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of countryList; let i = index">
+                                                <option value="{{item.CountryCode}}">{{item?.CountryName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">City</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CityCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of cityList; let i = index">
+                                                <option value="{{item.CityCode}}">{{item?.CityName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Provider</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.TravelProvider">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of providerList; let i = index">
+                                                <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Hotel Type</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.HotelType">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of hotelTypeList; let i = index">
+                                                <option value="{{item.HotelTypeCode}}">{{item?.HotelTypeName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Hotel Name</span>
+                                        <input [(ngModel)]="hotelBookingObj.HotelName" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Check-In-Date</span>
+                                        <input [(ngModel)]="hotelBookingObj.CheckInDate" class="form-control"
+                                        data-date-format="dd-MM-YYYY"  data-date="" [attr.data-date]="hotelBookingObj.CheckInDate"
+                                            type="date">
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Check-Out-Date</span>
+                                        <input [(ngModel)]="hotelBookingObj.CheckOutDate" class="form-control"
+                                        data-date-format="dd-MM-YYYY"  data-date="" [attr.data-date]="hotelBookingObj.CheckOutDate"
+                                            type="date">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">No Of Day(s)</span>
+                                        <input [(ngModel)]="hotelBookingObj.NoOfDay" class="form-control"
+                                        type="number">
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Card</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CardCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of cardList; let i = index">
+                                                <option value="{{item.CardID}}">
+                                                    {{item?.CardID}}>> {{item?.CardName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Currency</span>
+                                        <select (change)="onCurrencyChange($event.target.value)" class="form-control"
+                                            [(ngModel)]="hotelBookingObj.Currency">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of currencyList; let i = index">
+                                                <option value="{{item.CurrencyName}}"> {{item?.CurrencyName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                        <input [(ngModel)]="hotelBookingObj.CurrencyRate" class="form-control"
+                                            type="number" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Room Fare</span>
+                                        <input [(ngModel)]="hotelBookingObj.RoomFare" class="form-control" type="number"
+                                            (ngModelChange)="updateTotalPayable()">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Service Charge %</span>
+                                        <input [(ngModel)]="hotelBookingObj.ServiceCharge" class="form-control"
+                                            type="number" (ngModelChange)="updateTotalPayable()">
+                                    </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Total Payable</span>
+                                        <input [(ngModel)]="hotelBookingObj.TotalPayable" class="form-control"
+                                            type="number" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Sales Reference</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.SalesStaffCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                <option value="{{item.EmployeeCode}}">
+                                                    {{item.EmployeeCode}}->{{item?.FullName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="hotelBookingObj.Remark" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mt-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Is Airport PickUp:</span>
+                                                    <i *ngIf="hotelBookingObj?.isAirportPickUp"
+                                                        (click)="hotelBookingObj.isAirportPickUp = false"
+                                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                        aria-hidden="true"></i>
+                                                    <i *ngIf="! hotelBookingObj?.isAirportPickUp"
+                                                        (click)="hotelBookingObj.isAirportPickUp = true"
+                                                        class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Is Active:</span>
+                                                    <i *ngIf="hotelBookingObj?.isActive"
+                                                        (click)="hotelBookingObj.isActive = false"
+                                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                        aria-hidden="true"></i>
+                                                    <i *ngIf="! hotelBookingObj?.isActive"
+                                                        (click)="hotelBookingObj.isActive = true"
+                                                        class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mt-3">
+                                <button *ngIf="hotelBookingObj?.ID == 0" (click)="saveHotelBooking()" type="button"
+                                    class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                <button *ngIf="hotelBookingObj?.ID > 0" (click)="saveHotelBooking()" type="button"
+                                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                        class="fas fa-redo-alt"></i> Reset</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="hoverlink"><b>HOTEL BOOKING LIST</b> <i class="fa fa-refresh ml-2 text-success"
+                                aria-hidden="true"></i></span>
+
+                        <span class="label label-primary ml-2 hoverPointer">Report</span>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <!-- <div class="panel-body">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p4 custom-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="13">
+                                            <input class="form-control form-control-sm" placeholder="Search" type="text"
+                                                [(ngModel)]="SearchRegList">
+                                        </th>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-10p">REG </th>
+                                        <th class="width-10p">CUSTOMER</th>
+                                        <th class="width-10p">WEBSITE</th>
+                                        <th class="width-20p">EVENT </th>
+                                        <th class="width-20p">DESTINATION</th>
+                                        <th class="width-5p">CURRENCY</th> 
+                                        <th class="width-10p">CARD INFO</th>
+                                        <th class="width-20p">SERVICE CHARGE</th>
+                                        <th class="width-5p">TOTAL CHARGE</th>
+                                        <th class="width-2p">SELL BY</th>
+                                        <th class="width-2p text-center">Status</th>
+                                        <th class="width-2p text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="font-size-12"
+                                        *ngFor="let item of registaionList | searchFilter : SearchRegList; let i = index">
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left width-10p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    CODE: {{item?.BookingCode}}
+                                                    <br> DATE: <i> {{item?.RegistationDate | date: 'dd MMM yyyy' }}
+                                                    </i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left  width-10p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Customer: {{item?.CustomerName}}
+                                                    <br>Company:<i> {{item?.COMPANYNAME}} </i>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td class="text-left width-10p"> {{item?.WebsiteLink}} </td>
+                                        <td class="text-left  width-20p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Event Name: {{item?.EventName}}
+                                                    <br> Date:<i> {{item?.EvenDate | date: 'dd MMM yyyy' }}</i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left width-20p"> {{item?.DestinationName}} </td>
+                                        <td class="text-left width-5"> 
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Currency :{{item?.Currency}} 
+                                                    <br>Rate: <i>{{item?.CurrencyRate}} </i>
+                                                </div>
+                                            </div>
+                                            
+                                         </td> 
+                                        <td class="text-left width-20p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Card Name: {{item?.CardName}}
+                                                    <br> Code: <i> {{item?.CardCode}} </i>
+                                                </div>
+                                            </div>
+
+
+                                        </td>
+                                        <td class="text-left width-20p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Registation : {{item?.RegistrationCharge}}
+                                                    <br> Service: {{item?.ServiceCharge}}
+                                                    <br> Card : {{item?.CardChargeAmount}}
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td class="text-left width-5p"> {{item?.TotalPayableAmt}} </td>
+                                        <td class="text-left width-10p"> {{item?.SALESEXCUTIVENAME}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                        </td>
+                                        <td (click)="EditItem(item)" title="Click to Edit the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> -->
+
                 </div>
             </div>
         </div>

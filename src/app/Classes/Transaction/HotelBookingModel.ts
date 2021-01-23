@@ -15,6 +15,7 @@ export class HotelBookingModel{
 
 	public ID : number=0;
 	public BookingCode : string;
+	public BookingRegDate : string;
 	public CustomerCode : string="0";
 	public CompanyCode : string="0";
 	public CountryCode : string="0";
@@ -25,14 +26,15 @@ export class HotelBookingModel{
 	public RoomType : string="0";
 	public CheckInDate : string;
 	public CheckOutDate : string;
-	public NoOfDay : number;
+	public NoOfDay : number=0;
 	public isAirportPickUp : boolean;
-	public RoomFare : number;
-	public ServiceCharge : number;
-	public TotalPayable : number;
+	public RoomFare : number=0;
+	public ServiceCharge : number=0;
+	public TotalPayable : number=0;
 	public SalesStaffCode : string="0";
-	public CardCode : string;
-	public Currency : string;
+	public CardCode : string="0";
+	public Currency : string="0";
+	public CurrencyRate : number;
 	public Remark : string;
 	public CreatedBy : string;
 	public CreatedOn : string;
