@@ -60,7 +60,7 @@ export class TransactionCommonService{
  
 
 	/*START Hotel Booking  */
-	GETHotelBooking() { return this.masterService.get("client/business/travel/transaction/hotel/booking/list"); }	
+	GetHotelBooking() { return this.masterService.get("client/business/travel/transaction/hotel/booking/list"); }	
 
 	SaveUpdateHotelBooking(hotelBookingObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/booking/save/update`, hotelBookingObj); }
  

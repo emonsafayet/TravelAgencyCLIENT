@@ -55,12 +55,13 @@ export class HotelBooking implements OnInit {
 		this.GETHotelTypeLIST();
 		this.GETTravelProviderLIST();
 		this.getRoomTypeList();		
+		this.getHotelBookingList();
 		this.Notification.LoadingRemove();
 	}
 	//GET LIST
-	getHotelBooking() {
+	getHotelBookingList() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.transactionCommonService.GETHotelBooking()
+		this.transactionCommonService.GetHotelBooking()
 			.subscribe(
 				data => this.setHotelBookingList(data),
 				error => this.Notification.Error(error)
@@ -95,8 +96,10 @@ export class HotelBooking implements OnInit {
 			this.Notification.LoadingRemove();
 		}
 		this.hotelBookingObj = new HotelBookingModel();
-		//this.getOnlineRegistation();
+		this.getHotelBookingList();
 	}
+	 
+	
 	validateModel() {
 		debugger;
 		var result = true

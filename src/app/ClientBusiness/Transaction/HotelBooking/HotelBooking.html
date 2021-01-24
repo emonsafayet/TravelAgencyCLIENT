@@ -34,9 +34,9 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Booking Date</span>
                                         <input [(ngModel)]="hotelBookingObj.BookingRegDate" class="form-control"
-                                        data-date-format="dd-MM-YYYY"  data-date="" [attr.data-date]="hotelBookingObj.BookingRegDate"
-                                            type="date">
-                                    </div> 
+                                            data-date-format="dd-MM-YYYY" data-date=""
+                                            [attr.data-date]="hotelBookingObj.BookingRegDate" type="date">
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
@@ -60,7 +60,7 @@
                                         </select>
                                     </div>
                                 </div>
-                              
+
                             </div>
                         </div>
                         <div class="row">
@@ -110,7 +110,7 @@
                                         </select>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div class="row">
@@ -118,35 +118,33 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Hotel Name</span>
-                                        <input [(ngModel)]="hotelBookingObj.HotelName" class="form-control"
-                                            type="text">
+                                        <input [(ngModel)]="hotelBookingObj.HotelName" class="form-control" type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Check-In-Date</span>
                                         <input [(ngModel)]="hotelBookingObj.CheckInDate" class="form-control"
-                                        data-date-format="dd-MM-YYYY"  data-date="" [attr.data-date]="hotelBookingObj.CheckInDate"
-                                            type="date">
-                                      
+                                            data-date-format="dd-MM-YYYY" data-date=""
+                                            [attr.data-date]="hotelBookingObj.CheckInDate" type="date">
+
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Check-Out-Date</span>
                                         <input [(ngModel)]="hotelBookingObj.CheckOutDate" class="form-control"
-                                        data-date-format="dd-MM-YYYY"  data-date="" [attr.data-date]="hotelBookingObj.CheckOutDate"
-                                            type="date">
+                                            data-date-format="dd-MM-YYYY" data-date=""
+                                            [attr.data-date]="hotelBookingObj.CheckOutDate" type="date">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">No Of Day(s)</span>
-                                        <input [(ngModel)]="hotelBookingObj.NoOfDay" class="form-control"
-                                        type="number">
+                                        <input [(ngModel)]="hotelBookingObj.NoOfDay" class="form-control" type="number">
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div class="row">
@@ -205,7 +203,7 @@
                                             type="number" (ngModelChange)="updateTotalPayable()">
                                     </div>
                                 </div>
-                              
+
                             </div>
                         </div>
                         <div class="row">
@@ -294,74 +292,71 @@
                                     class="lnr lnr-chevron-up"></i></button>
                         </div>
                     </div>
-                    <!-- <div class="panel-body">
+                    <div class="panel-body">
                         <div class="table-fixed">
                             <table class="table table-bordered table-p4 custom-table-hover">
                                 <thead>
                                     <tr>
-                                        <th colspan="13">
+                                        <th colspan="14">
                                             <input class="form-control form-control-sm" placeholder="Search" type="text"
-                                                [(ngModel)]="SearchRegList">
+                                                [(ngModel)]="SearchHotelBookingList">
                                         </th>
-                                        
+
                                     </tr>
                                     <tr>
                                         <th class="width-1p text-center">SN#</th>
-                                        <th class="width-10p">REG </th>
-                                        <th class="width-10p">CUSTOMER</th>
-                                        <th class="width-10p">WEBSITE</th>
-                                        <th class="width-20p">EVENT </th>
-                                        <th class="width-20p">DESTINATION</th>
-                                        <th class="width-5p">CURRENCY</th> 
+                                        <th class="width-10p">REG</th>
+                                        <th class="width-20p">CUSTOMER</th>
+                                        <th class="width-10p">Country/City</th>
+                                        <th class="width-10p">TravelProvider </th>
+                                        <th class="width-20p">HOTEL</th>
+                                        <th class="width-5p">ROOM TYPE</th>
                                         <th class="width-10p">CARD INFO</th>
+                                        <th class="width-10p">CURRENCY</th>
                                         <th class="width-20p">SERVICE CHARGE</th>
                                         <th class="width-5p">TOTAL CHARGE</th>
-                                        <th class="width-2p">SELL BY</th>
-                                        <th class="width-2p text-center">Status</th>
-                                        <th class="width-2p text-center">Action</th>
+                                        <th class="width-10p">SELL BY</th>
+                                        <th class="width-2p text-center">STATUS</th>
+                                        <th class="width-2p text-center">ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="font-size-12"
-                                        *ngFor="let item of registaionList | searchFilter : SearchRegList; let i = index">
+                                        *ngFor="let item of hotelBookingList | searchFilter : SearchHotelBookingList; let i = index">
                                         <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     CODE: {{item?.BookingCode}}
-                                                    <br> DATE: <i> {{item?.RegistationDate | date: 'dd MMM yyyy' }}
+                                                    <br> DATE: <i> {{item?.BookingRegDate | date: 'dd MMM yyyy' }}
                                                     </i>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-left  width-10p">
+                                        <td class="text-left  width-20p">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     Customer: {{item?.CustomerName}}
-                                                    <br>Company:<i> {{item?.COMPANYNAME}} </i>
+                                                    <br>Company:<i> {{item?.CompanyName}} </i>
                                                 </div>
                                             </div>
 
                                         </td>
-                                        <td class="text-left width-10p"> {{item?.WebsiteLink}} </td>
                                         <td class="text-left  width-20p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Event Name: {{item?.EventName}}
-                                                    <br> Date:<i> {{item?.EvenDate | date: 'dd MMM yyyy' }}</i>
+                                                    Country: {{item?.CountryName}}
+                                                    <br> City:<i> {{item?.CityName}}</i>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-left width-20p"> {{item?.DestinationName}} </td>
-                                        <td class="text-left width-5"> 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Currency :{{item?.Currency}} 
-                                                    <br>Rate: <i>{{item?.CurrencyRate}} </i>
-                                                </div>
-                                            </div>
-                                            
-                                         </td> 
+                                        <td class="text-left width-10p"> {{item?.ProviderName}} </td>
+
+                                        <td class="text-left width-20p">
+                                            Hotel : {{item?.HotelName}}
+                                            <br> Hotel Type:<i> {{item?.HotelTypeName}} </i>
+                                        </td>
+                                        <td class="text-left width-5p">Room Type : {{item?.RoomType}}</td>
                                         <td class="text-left width-20p">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -369,21 +364,27 @@
                                                     <br> Code: <i> {{item?.CardCode}} </i>
                                                 </div>
                                             </div>
-
-
                                         </td>
+                                        <td class="text-left width-5">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Currency :{{item?.Currency}}
+                                                    <br>Rate: <i>{{item?.CurrencyRate}} </i>
+                                                </div>
+                                            </div> 
+                                        </td> 
                                         <td class="text-left width-20p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Registation : {{item?.RegistrationCharge}}
-                                                    <br> Service: {{item?.ServiceCharge}}
-                                                    <br> Card : {{item?.CardChargeAmount}}
+                                                    Room Fare : {{item?.RoomFare}}
+                                                    <br> Service Charge: <i>{{item?.ServiceCharge}} %  </i>
                                                 </div>
-                                            </div>
-
+                                            </div> 
                                         </td>
-                                        <td class="text-left width-5p"> {{item?.TotalPayableAmt}} </td>
-                                        <td class="text-left width-10p"> {{item?.SALESEXCUTIVENAME}} </td>
+                                        <td class="text-left width-5p"> {{item?.TotalPayable}} </td>
+                                        <td class="text-left width-10p"> Employee Code: {{item?.SalesStaffCode}}
+                                            <br> Name: <i> {{item?.FullName}} </i>
+                                        </td>
                                         <td class="text-center">
                                             <span *ngIf="item?.isActive" class="text-success">Active</span>
                                             <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
@@ -394,7 +395,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div> -->
+                    </div>
 
                 </div>
             </div>
