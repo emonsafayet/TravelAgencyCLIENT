@@ -33,6 +33,7 @@ export class HotelBooking implements OnInit {
 	cardList: any[] = [];
 	providerList: any[] = [];
 	hotelTypeList: any[] = [];
+	roomTypeList: any[] = [];
 	SearchHotelBookingList: string='';
 
 	constructor(private userService: UserService, private authGuard: AuthGuard,
@@ -52,7 +53,8 @@ export class HotelBooking implements OnInit {
 		this.GETActiveCurrencyRateLIST();
 		this.getCountryList();
 		this.GETHotelTypeLIST();
-		this.GETTravelProviderLIST();		
+		this.GETTravelProviderLIST();
+		this.getRoomTypeList();		
 		this.Notification.LoadingRemove();
 	}
 	//GET LIST
@@ -182,6 +184,18 @@ export class HotelBooking implements OnInit {
 	//DROP DOWN
 	//get travel Product List
 
+	getRoomTypeList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.GETHotelRoomTypeLIST()
+			.subscribe(
+				data => this.setRoomTypeList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setRoomTypeList(data) {
+		this.roomTypeList = data;
+		this.Notification.LoadingRemove();
+	}
 	getCityList(coutryCode:string) {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getCityByCountryCodeList(coutryCode)
