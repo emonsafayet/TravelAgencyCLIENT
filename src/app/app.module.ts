@@ -13,7 +13,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; 
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
-// Componentsimport { HotelBooking } from "./ClientBusiness/Transaction/HotelBooking/HotelBooking";
+// Componentsimport { GroupTour } from "./ClientBusiness/Transaction/GroupTour/GroupTour";
+import { HotelBooking } from "./ClientBusiness/Transaction/HotelBooking/HotelBooking";
 import { AirTicketRegistration } from "./ClientBusiness/Transaction/AirTicketRegistration/AirTicketRegistration";
 import { VisaRegistration } from "./ClientBusiness/Transaction/VisaRegistration/VisaRegistration";
 import { OnlineRegistation } from "./ClientBusiness/Transaction/OnlineRegistation/OnlineRegistation";
@@ -119,7 +120,7 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking, GroupTour],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   

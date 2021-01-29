@@ -1,0 +1,175 @@
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AuthGuard } from '../../../authGuard.guard';
+import { UserService } from '../../../Services/User.service';
+import { NotificationService } from "../../../Services/Notification.service";
+//Service  
+import { UserAccessService } from "../../../Services/UserAccess.service";
+import { Library } from 'src/app/library/library';
+import { ClientBusinessService } from '../../../Services/ClientBusiness.service';
+import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
+import { Common } from "../../../library/common";
+//Classes
+import { GroupTourInfoMasterModel, GroupTourInfoDetailModel } from '../../../Classes/Transaction/GroupTourModel';
+
+declare var moment: any;
+@Component({
+	templateUrl: 'GroupTour.html'
+})
+export class GroupTour implements OnInit {
+	user: any;
+
+	groupTourList:any[]=[];
+	groupTourInfoMasterObj: GroupTourInfoMasterModel = new GroupTourInfoMasterModel();
+	groupTourInfoDetailObj: GroupTourInfoDetailModel = new GroupTourInfoDetailModel();
+	
+	customerList: any[] = [];
+	companyList: any[] = [];
+	currencyList: any[] = [];
+	salesStaffList: any[] = [];
+	packageList: any[] = [];
+	packageDetailsInfos: any[] = [];
+	activeCurrencyRateList: any[] = []; 
+	cardList: any[] = []; 
+	packagename:string=""; 
+	constructor(private userService: UserService, private authGuard: AuthGuard,
+		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
+
+
+	ngOnInit() {
+		this.user = this.userService.getLoggedUser();
+		this.authGuard.hasUserThisMenuPrivilege(this.user);
+		this.groupTourInfoMasterObj.TourDate = moment().format(Common.SQLDateFormat);
+	    this.GETCustomerLIST();
+		this.GETCompanyLIST();
+		this.GETCurrencyList();
+		this.GETSalesStaffLIST();
+		this.GETCardLIST();
+		this.GETActiveCurrencyRateLIST();
+		this.GetPackageList();
+
+		this.Notification.LoadingRemove();
+	}
+
+	//DROP DOWN
+	GETCompanyLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETCompanyLIST()
+			.subscribe(
+				data => this.setCompanyLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCompanyLIST(data) {
+		this.companyList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCurrencyList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getCurrencyList()
+			.subscribe(
+				data => this.setCurrencyList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCurrencyList(data) { 
+		this.currencyList = data;
+		this.Notification.LoadingRemove(); 
+	}
+	GETSalesStaffLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETSalesStaffLIST()
+			.subscribe(
+				data => this.setSalesStaffLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setSalesStaffLIST(data) {
+		this.salesStaffList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCardLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getcardList()
+			.subscribe(
+				data => this.setcardList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setcardList(data) {
+		this.cardList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETActiveCurrencyRateLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GETActiveCurrencyRateLIST()
+			.subscribe(
+				data => this.setActiveCurrencyRateList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setActiveCurrencyRateList(data) {
+		this.activeCurrencyRateList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCustomerLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getcustomerList()
+			.subscribe(
+				data => this.setCustomerLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCustomerLIST(data) {
+		this.customerList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GetPackageList(){
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getPackageList()
+			.subscribe(
+				data => this.setPackageList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setPackageList(data) {
+		this.packageList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	//get packageName
+	onPackageChange(item){
+		debugger 
+		this.packagename="";
+		var packName = this.packageList.filter(p=>p.PackageCode == item)[0];
+		if(Library.isNullOrEmpty(packName)) 
+		this.groupTourInfoMasterObj.package = "";
+		this.packagename= packName.PackageName;
+
+	}
+	updateTotalPayable(){
+		debugger 
+		if(Number(this.groupTourInfoMasterObj.CurrencyRate)==0)   this.groupTourInfoMasterObj.CurrencyRate=1;
+		var serviceCharge: any =0; 
+		this.groupTourInfoMasterObj.TotalPayable=0;
+		var totalServiceCharge=this.groupTourInfoMasterObj.TotalServiceCharge;
+		serviceCharge =Number(totalServiceCharge) * Number(this.groupTourInfoMasterObj.CurrencyRate);		 
+		this.groupTourInfoMasterObj.TotalPayable=Number(serviceCharge);
+	 
+	}
+	onCurrencyChange(item){
+		debugger 	
+		this.groupTourInfoMasterObj.TotalServiceCharge=0;
+		this.groupTourInfoMasterObj.TotalPayable=0; 
+
+		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
+		if(Library.isNullOrEmpty(RateItem)) this.groupTourInfoMasterObj.CurrencyRate = 0 ;
+		else this.groupTourInfoMasterObj.CurrencyRate =RateItem.Rate;	
+	}
+
+}
