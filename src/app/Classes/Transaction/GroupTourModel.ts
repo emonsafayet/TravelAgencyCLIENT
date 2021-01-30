@@ -21,7 +21,7 @@ export class GroupTourInfoMasterModel {
 	public CreatedOn : string;
 	public UpdatedBy : string;
 	public UpdatedOn : string;
-    public isActive : boolean;
+    public isActive : boolean=true;
     public GroupTourInfoDetail:string;
 }
 export class GroupTourInfoDetailModel {

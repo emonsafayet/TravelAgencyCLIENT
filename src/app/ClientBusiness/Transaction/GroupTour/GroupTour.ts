@@ -19,19 +19,19 @@ declare var moment: any;
 export class GroupTour implements OnInit {
 	user: any;
 
-	groupTourList:any[]=[];
+	groupTourList: any[] = [];
 	groupTourInfoMasterObj: GroupTourInfoMasterModel = new GroupTourInfoMasterModel();
 	groupTourInfoDetailObj: GroupTourInfoDetailModel = new GroupTourInfoDetailModel();
-	
+
 	customerList: any[] = [];
 	companyList: any[] = [];
 	currencyList: any[] = [];
 	salesStaffList: any[] = [];
 	packageList: any[] = [];
 	packageDetailsInfos: any[] = [];
-	activeCurrencyRateList: any[] = []; 
-	cardList: any[] = []; 
-	packagename:string=""; 
+	activeCurrencyRateList: any[] = [];
+	cardList: any[] = [];
+	packagename: string = "";
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
 
@@ -40,7 +40,7 @@ export class GroupTour implements OnInit {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 		this.groupTourInfoMasterObj.TourDate = moment().format(Common.SQLDateFormat);
-	    this.GETCustomerLIST();
+		this.GETCustomerLIST();
 		this.GETCompanyLIST();
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST();
@@ -73,9 +73,9 @@ export class GroupTour implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
-	setCurrencyList(data) { 
+	setCurrencyList(data) {
 		this.currencyList = data;
-		this.Notification.LoadingRemove(); 
+		this.Notification.LoadingRemove();
 	}
 	GETSalesStaffLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -129,7 +129,7 @@ export class GroupTour implements OnInit {
 		this.Notification.LoadingRemove();
 
 	}
-	GetPackageList(){
+	GetPackageList() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getPackageList()
 			.subscribe(
@@ -143,33 +143,55 @@ export class GroupTour implements OnInit {
 
 	}
 	//get packageName
-	onPackageChange(item){
-		debugger 
-		this.packagename="";
-		var packName = this.packageList.filter(p=>p.PackageCode == item)[0];
-		if(Library.isNullOrEmpty(packName)) 
-		this.groupTourInfoMasterObj.package = "";
-		this.packagename= packName.PackageName;
+	onPackageChange(item) {
+		debugger
+		this.packagename = "";
+		var packName = this.packageList.filter(p => p.PackageCode == item)[0];
+		if (Library.isNullOrEmpty(packName))
+			this.groupTourInfoMasterObj.package = "";
+		this.packagename = packName.PackageName;
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getPackageDetailsByPackCodeList(packName.PackageCode)
+			.subscribe(
+				data => this.setPackageDetailsList(data),
+				error => this.Notification.Error(error)
+			);
+
 
 	}
-	updateTotalPayable(){
-		debugger 
-		if(Number(this.groupTourInfoMasterObj.CurrencyRate)==0)   this.groupTourInfoMasterObj.CurrencyRate=1;
-		var serviceCharge: any =0; 
-		this.groupTourInfoMasterObj.TotalPayable=0;
-		var totalServiceCharge=this.groupTourInfoMasterObj.TotalServiceCharge;
-		serviceCharge =Number(totalServiceCharge) * Number(this.groupTourInfoMasterObj.CurrencyRate);		 
-		this.groupTourInfoMasterObj.TotalPayable=Number(serviceCharge);
-	 
+	setPackageDetailsList(data) {
+		setTimeout(() => {
+			this.packageDetailsInfos = [];
+			this.packageDetailsInfos = data;
+			this.Notification.LoadingRemove();
+		}, 100); 
 	}
-	onCurrencyChange(item){
-		debugger 	
-		this.groupTourInfoMasterObj.TotalServiceCharge=0;
-		this.groupTourInfoMasterObj.TotalPayable=0; 
+	updateTotalPayable() {
+		setTimeout(() => {
+			debugger
+			if (Number(this.groupTourInfoMasterObj.CurrencyRate) == 0) this.groupTourInfoMasterObj.CurrencyRate = 1;
+			var serviceCharge: any = 0;
+
+			var totalServiceCharge = Number(this.groupTourInfoMasterObj.TotalServiceCharge);
+			serviceCharge = Number(totalServiceCharge) * Number(this.groupTourInfoMasterObj.CurrencyRate);
+			this.groupTourInfoMasterObj.TotalPayable = Number(serviceCharge);
+		}, 100);
+
+	}
+	onCurrencyChange(item) {
+
+		this.groupTourInfoMasterObj.TotalServiceCharge = 0;
+		this.groupTourInfoMasterObj.TotalPayable = 0;
 
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
-		if(Library.isNullOrEmpty(RateItem)) this.groupTourInfoMasterObj.CurrencyRate = 0 ;
-		else this.groupTourInfoMasterObj.CurrencyRate =RateItem.Rate;	
+		if (Library.isNullOrEmpty(RateItem)) this.groupTourInfoMasterObj.CurrencyRate = 0;
+		else this.groupTourInfoMasterObj.CurrencyRate = RateItem.Rate;
+	}
+	saveGroupInfo() {
+
+	}
+	ResetModel() {
+
 	}
 
 }

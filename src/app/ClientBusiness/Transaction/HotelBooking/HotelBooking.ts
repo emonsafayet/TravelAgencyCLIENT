@@ -11,7 +11,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { Common } from "../../../library/common";
 //Classes
-import { HotelBookingModel,HotelTypeModel,RoomTypeModel} from '../../../Classes/Transaction/HotelBookingModel'; 
+import { HotelBookingModel, HotelTypeModel, RoomTypeModel } from '../../../Classes/Transaction/HotelBookingModel';
 
 declare var moment: any;
 @Component({
@@ -19,9 +19,9 @@ declare var moment: any;
 })
 export class HotelBooking implements OnInit {
 	user: any;
- 
-	hotelBookingList:any[]=[];
-	hotelBookingObj:HotelBookingModel = new HotelBookingModel();
+
+	hotelBookingList: any[] = [];
+	hotelBookingObj: HotelBookingModel = new HotelBookingModel();
 	customerList: any[] = [];
 	companyList: any[] = [];
 	currencyList: any[] = [];
@@ -29,12 +29,12 @@ export class HotelBooking implements OnInit {
 	countryList: any[] = [];
 	cityList: any[] = [];
 	salesStaffList: any[] = [];
-	activeCurrencyRateList: any[] = []; 
+	activeCurrencyRateList: any[] = [];
 	cardList: any[] = [];
 	providerList: any[] = [];
 	hotelTypeList: any[] = [];
 	roomTypeList: any[] = [];
-	SearchHotelBookingList: string='';
+	SearchHotelBookingList: string = '';
 
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
@@ -48,13 +48,13 @@ export class HotelBooking implements OnInit {
 		this.GETCustomerLIST();
 		this.GETCompanyLIST();
 		this.GETCurrencyList();
-		this.GETSalesStaffLIST();  
+		this.GETSalesStaffLIST();
 		this.GETCardLIST();
 		this.GETActiveCurrencyRateLIST();
 		this.getCountryList();
 		this.GETHotelTypeLIST();
 		this.GETTravelProviderLIST();
-		this.getRoomTypeList();		
+		this.getRoomTypeList();
 		this.getHotelBookingList();
 		this.Notification.LoadingRemove();
 	}
@@ -67,19 +67,19 @@ export class HotelBooking implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
-	setHotelBookingList(data) { 
+	setHotelBookingList(data) {
 		this.hotelBookingList = data;
 		this.Notification.LoadingRemove();
 
 	}
 
 	//SAVE/UPDATE
-	saveHotelBooking(){
+	saveHotelBooking() {
 		if (this.hotelBookingObj.ID > 0)
 			this.hotelBookingObj.UpdatedBy = this.user.EmployeeCode;
 		else this.hotelBookingObj.CreatedBy = this.user.EmployeeCode;
-		
-		if(Library.isNullOrZero(this.hotelBookingObj.TotalPayable))this.hotelBookingObj.TotalPayable=0;
+
+		if (Library.isNullOrZero(this.hotelBookingObj.TotalPayable)) this.hotelBookingObj.TotalPayable = 0;
 		//validation
 		if (!this.validateModel()) return;
 
@@ -98,8 +98,8 @@ export class HotelBooking implements OnInit {
 		this.hotelBookingObj = new HotelBookingModel();
 		this.getHotelBookingList();
 	}
-	 
-	
+
+
 	validateModel() {
 		debugger;
 		var result = true
@@ -112,77 +112,81 @@ export class HotelBooking implements OnInit {
 			this.Notification.Warning('Please Select Customer.');
 			result = false;
 			return;
-		}  
+		}
 		if (this.hotelBookingObj.CountryCode == "0") {
 			this.Notification.Warning('Please Select Country.');
 			result = false;
 			return;
-		}  
+		}
 		if (this.hotelBookingObj.TravelProvider == "0") {
 			this.Notification.Warning('Please Select Travel Provider.');
 			result = false;
 			return;
-		}  
+		}
 		if (this.hotelBookingObj.HotelType == "0") {
 			this.Notification.Warning('Please Select Hotel Type.');
 			result = false;
 			return;
-		}  
-		if (this.hotelBookingObj.RoomFare==0 ||Library.isNuLLorUndefined(this.hotelBookingObj.RoomFare)) {
+		}
+		if (this.hotelBookingObj.RoomFare == 0 || Library.isNuLLorUndefined(this.hotelBookingObj.RoomFare)) {
 			this.Notification.Warning('Please Enter Room Charge.');
 			result = false;
 			return;
 		}
-		if (this.hotelBookingObj.ServiceCharge==0 ||Library.isNuLLorUndefined(this.hotelBookingObj.ServiceCharge)) {
+		if (this.hotelBookingObj.ServiceCharge == 0 || Library.isNuLLorUndefined(this.hotelBookingObj.ServiceCharge)) {
 			this.Notification.Warning('Please Enter ServiceCharge.');
 			result = false;
 			return;
 		}
-		if (this.hotelBookingObj.TotalPayable==0 || Library.isNullOrZero(this.hotelBookingObj.TotalPayable)) {
+		if (this.hotelBookingObj.TotalPayable == 0 || Library.isNullOrZero(this.hotelBookingObj.TotalPayable)) {
 			this.Notification.Warning('Total Payable Amount Can Not Zero.');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.hotelBookingObj.Currency) || this.hotelBookingObj.Currency=="0") {
+		if (Library.isNuLLorUndefined(this.hotelBookingObj.Currency) || this.hotelBookingObj.Currency == "0") {
 			this.Notification.Warning('Please Select Currency .');
 			result = false;
 			return;
 		}
-		
-		if (Library.isNuLLorUndefined(this.hotelBookingObj.SalesStaffCode) ||  this.hotelBookingObj.SalesStaffCode=="0") {
+
+		if (Library.isNuLLorUndefined(this.hotelBookingObj.SalesStaffCode) || this.hotelBookingObj.SalesStaffCode == "0") {
 			this.Notification.Warning('Please Select Sales Staff .');
 			result = false;
 			return;
 		}
-		 
+
 		return result;
 	}
 	EditItem(item) {
 		this.ResetModel();
-		this.hotelBookingObj = JSON.parse(JSON.stringify(item)); 
+		this.hotelBookingObj = JSON.parse(JSON.stringify(item));
 	}
-	ResetModel(){
+	ResetModel() {
 		this.hotelBookingObj = new HotelBookingModel();
 		this.hotelBookingObj.BookingRegDate = moment().format(Common.SQLDateFormat);
 	}
-	updateTotalPayable(){
-		debugger 
-		var serviceCharge: any =0;
-		var roomFare=0;
-		roomFare =Number(this.hotelBookingObj.RoomFare) * Number(this.hotelBookingObj.CurrencyRate);
-		serviceCharge=  (Number(roomFare))/100 *Number(this.hotelBookingObj.ServiceCharge);		
-		this.hotelBookingObj.TotalPayable=Number(roomFare.toFixed(2)) +Number(serviceCharge.toFixed(2));
-	 
+	updateTotalPayable() {
+		setTimeout(() => {
+			debugger
+			var serviceCharge: any = 0;
+			var roomFare = 0;
+			roomFare = Number(this.hotelBookingObj.RoomFare) * Number(this.hotelBookingObj.CurrencyRate);
+			serviceCharge = (Number(roomFare)) / 100 * Number(this.hotelBookingObj.ServiceCharge);
+			this.hotelBookingObj.TotalPayable = Number(roomFare.toFixed(2)) + Number(serviceCharge.toFixed(2));
+		}, 100);
 	}
-	onCurrencyChange(item){
-		debugger 	
-		this.hotelBookingObj.RoomFare=0;
-		this.hotelBookingObj.ServiceCharge=0;
-		this.hotelBookingObj.TotalPayable=0;	 
+	onCurrencyChange(item) {
+		setTimeout(() => {
+			debugger
+			this.hotelBookingObj.RoomFare = 0;
+			this.hotelBookingObj.ServiceCharge = 0;
+			this.hotelBookingObj.TotalPayable = 0;
 
-		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
-		if(Library.isNullOrEmpty(RateItem)) this.hotelBookingObj.CurrencyRate = 0 ;
-		else this.hotelBookingObj.CurrencyRate =RateItem.Rate;	
+			var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
+			if (Library.isNullOrEmpty(RateItem)) this.hotelBookingObj.CurrencyRate = 0;
+			else this.hotelBookingObj.CurrencyRate = RateItem.Rate;
+		}, 100);
+
 	}
 	//DROP DOWN
 	//get travel Product List
@@ -199,7 +203,7 @@ export class HotelBooking implements OnInit {
 		this.roomTypeList = data;
 		this.Notification.LoadingRemove();
 	}
-	getCityList(coutryCode:string) {
+	getCityList(coutryCode: string) {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getCityByCountryCodeList(coutryCode)
 			.subscribe(
@@ -211,10 +215,10 @@ export class HotelBooking implements OnInit {
 		this.cityList = data;
 		this.Notification.LoadingRemove();
 	}
-	filterCityByCountryCode(){
-	this.cityList  = []; // flush previous data
-	this.hotelBookingObj.CityCode="0";
-	this.getCityList(this.hotelBookingObj.CountryCode);
+	filterCityByCountryCode() {
+		this.cityList = []; // flush previous data
+		this.hotelBookingObj.CityCode = "0";
+		this.getCityList(this.hotelBookingObj.CountryCode);
 	}
 	getCountryList() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -262,9 +266,9 @@ export class HotelBooking implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
-	setCurrencyList(data) { 
+	setCurrencyList(data) {
 		this.currencyList = data;
-		this.Notification.LoadingRemove(); 
+		this.Notification.LoadingRemove();
 	}
 	GETSalesStaffLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
