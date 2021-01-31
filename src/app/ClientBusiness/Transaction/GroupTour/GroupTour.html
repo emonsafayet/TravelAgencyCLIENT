@@ -19,7 +19,7 @@
     <!-- TAB LIST ; 1st TAB-->
     <div id="GroupTourList" class="tab-pane fade in active">
         <div class="panel">
-            <div class="panel-heading">
+            <!-- <div class="panel-heading">
                 <span class="hoverlink"><b>List</b> <i class="fa fa-refresh ml-2 text-success"
                         aria-hidden="true"></i></span>
 
@@ -27,7 +27,7 @@
                 <div class="right">
                     <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
                 </div>
-            </div>
+            </div> -->
             <div class="panel-body">
                 <div class="table-fixed">
                     <table class="table table-bordered table-p4 custom-table-hover">
@@ -59,13 +59,13 @@
         </div>
     </div>
     <!-- TAB Entry ; 2nd TAB-->
-    <div id="GroupTourEntry" class="tab-pane fade">
-        <div class="tab-pane fade in active">
+    <div id="GroupTourEntry" class="tab-panel fade">
+        <div class="tab-panel fade in active">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel">
                         <div class="panel-heading btn-toggle-collapse">
-                            <span><b>ENTRY</b> </span>
+                            <span><strong>GROUP ENTRY</strong> </span>
                             <div class="right">
                                 <button type="button"><i class="lnr lnr-chevron-up"></i></button>
                             </div>
@@ -245,8 +245,8 @@
                     </div>
                     <div class="panel">
                         <div class="panel-heading">
-                            <span class="hoverlink"><b>Package Details</b> <i class="fa fa-refresh ml-2 text-success"
-                                    aria-hidden="true"></i></span>
+                            <span class="hoverlink"><strong>Package Details</strong> <i
+                                    class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
                             <div class="right">
                                 <button type="button" class="btn-toggle-collapse"><i
                                         class="lnr lnr-chevron-up"></i></button>
@@ -257,10 +257,14 @@
                                 <table class="table table-bordered table-p4 custom-table-hover">
                                     <thead>
                                         <tr>
-                                            <th colspan="12"> </th>
-                                        </tr>
-                                        <tr>
-                                            <th class="width-1p text-center">Select</th>
+                                            <th class="width-1p text-center"
+                                                (click)="selectAllPackage(packageDetailsInfos)"
+                                                title="Select/UnSelect All">
+                                                
+                                                <i *ngIf="isSelectAllpackage" class="fa fa-check-square-o font-size-30 text-success"></i>
+                                                <i *ngIf="! isSelectAllpackage" class="fa fa-square-o font-size-30 text-success"></i>
+
+                                            </th>
                                             <th class="width-5p text-center">PackageCode</th>
                                             <th class="width-10p text-center">Event Name</th>
                                             <th class="width-5p text-center">Event Price</th>
@@ -270,7 +274,16 @@
                                     </thead>
                                     <tbody>
                                         <tr class="font-size-12" *ngFor="let item of packageDetailsInfos">
-                                            <td class="text-right"> </td>
+                                            <td class="width-1p text-center">
+
+                                                <i *ngIf="item?.isSelected" (click)="item.isSelected = false"
+                                                    class="fa fa-check-square-o font-size-30  text-success"
+                                                    aria-hidden="true"></i>
+                                                <i *ngIf="! item?.isSelected" (click)="item.isSelected = true"
+                                                    class="fa fa-square-o font-size-30 text-success"
+                                                    aria-hidden="true"></i>
+
+                                            </td>
                                             <td class="text-left">
                                                 <input readonly type="text" class="form-control form-control-sm"
                                                     [(ngModel)]="item.PackageCode">

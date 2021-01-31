@@ -32,6 +32,7 @@ export class GroupTour implements OnInit {
 	activeCurrencyRateList: any[] = [];
 	cardList: any[] = [];
 	packagename: string = "";
+	isSelectAllpackage:boolean=false;
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
 
@@ -192,6 +193,29 @@ export class GroupTour implements OnInit {
 	}
 	ResetModel() {
 
+	}
+	selectSinglePackage(item){
+		if(item.isSelected ){
+			item.isSelected=false;
+		}else item.isSelected=true;
+	}
+	selectAllPackage(itemList){
+		if(this.isSelectAllpackage)
+		{
+			itemList.forEach(element => {
+				element.isSelected=false;
+			});
+
+			this.isSelectAllpackage = false;
+		}
+		else
+		{
+			itemList.forEach(element => {
+				element.isSelected=true;
+			});
+
+			this.isSelectAllpackage = true;
+		}
 	}
 
 }

@@ -33,4 +33,5 @@ export class GroupTourInfoDetailModel {
 	public EventDetail : string;
 	public EventRemark : string;
 	public EventCharge : number; 
+	public isSelected: boolean=true;
 }
