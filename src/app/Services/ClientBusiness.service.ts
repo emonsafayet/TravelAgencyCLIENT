@@ -7,7 +7,7 @@ import { MasterService } from './Master.service';
 export class ClientBusinessService {
 
 	constructor(private masterService: MasterService) { }
-	
+
 
 	/**START Travel Product Service**/
 
@@ -27,10 +27,11 @@ export class ClientBusinessService {
 	/* START CITY*/
 	saveUpdateCity(cityObj: any) { return this.masterService.post(`client/business/travel/city/save/update`, cityObj); }
 
-	getCityList() { return this.masterService.get("client/business/travel/city/info/list"); }	
-	getCityByCountryCodeList(countryCode:string) { return this.masterService.get("client/business/travel/city/info/list/by/country/code/"+countryCode); }	
-	
-	/* END CITY*/ 
+	getCityList() { return this.masterService.get("client/business/travel/city/info/list"); }
+
+	getCityByCountryCodeList(countryCode: string) { return this.masterService.get("client/business/travel/city/info/list/by/country/code/" + countryCode); }
+
+	/* END CITY*/
 
 	/**START TOUR DESTINATION**/
 	getDestinationList() { return this.masterService.get("client/business/travel/destination/list"); }
@@ -42,13 +43,13 @@ export class ClientBusinessService {
 	saveUpdateProvider(providerObj: any) { return this.masterService.post(`client/business/travel/Provider/save/update`, providerObj); }
 
 	getProviderList() { return this.masterService.get("client/business/travel/provider/list"); }
-	/*END TOUR PROVIDER*/ 
+	/*END TOUR PROVIDER*/
 
 	/*START TOUR AIRLINE*/
 	saveUpdateAirline(airlineObj: any) { return this.masterService.post(`client/business/travel/Airline/save/update`, airlineObj); }
 
 	getAirlineList() { return this.masterService.get("client/business/travel/Airline/list"); }
-	/*END TOUR AIRLINE*/ 
+	/*END TOUR AIRLINE*/
 
 	/*START TOUR Customer Type*/
 	saveUpdateCustomerType(customerTypeObj: any) { return this.masterService.post(`client/business/travel/customer/type/save/update`, customerTypeObj); }
@@ -80,42 +81,43 @@ export class ClientBusinessService {
 
 	savePackage(packageMasterObj: any) { return this.masterService.post(`client/business/travel/package/save`, packageMasterObj); }
 
-	getPackageList() { return this.masterService.get("client/business/travel/package/list"); }	
+	getPackageList() { return this.masterService.get("client/business/travel/package/list"); }
 
-	getPackageDetailsByPackCodeList(packageCode:any) { return this.masterService.get("client/business/travel/package/details/list/package/code/"+packageCode); }	
+	getPackageDetailsByPackCodeList(packageCode: any) { return this.masterService.get("client/business/travel/package/details/list/package/code/" + packageCode); }
 	/*END PACKAGE INFORMATIONS*/
 
 	/* START Card INFORMATIONS*/
 	saveUpdateCard(cardObj: any) { return this.masterService.post(`client/business/travel/card/info/save/update`, cardObj); }
 
-	getcardList() { return this.masterService.get("client/business/travel/card/info/list"); }	
-	/* END Card INFORMATIONS*/ 
+	getcardList() { return this.masterService.get("client/business/travel/card/info/list"); }
+	/* END Card INFORMATIONS*/
 
 	/* START Card TYPE INFORMATIONS*/
 	saveUpdateCardType(cardTypeObj: any) { return this.masterService.post(`client/business/travel/card/type/info/save/update`, cardTypeObj); }
 
-	getCardTypeList() { return this.masterService.get("client/business/travel/card/type/info/list"); }	
-	/* END Card TYPE INFORMATIONS*/  
+	getCardTypeList() { return this.masterService.get("client/business/travel/card/type/info/list"); }
+	/* END Card TYPE INFORMATIONS*/
 
 	/*START Seat Type */
-	GETSeatTypeLIST() { return this.masterService.get("client/business/travel/transaction/Seat/Type/list"); }	
+	GETSeatTypeLIST() { return this.masterService.get("client/business/travel/transaction/Seat/Type/list"); }
 
 	saveOrUpdateSeatType(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Seat/Type/save/update`, seattypeObj); }
- 
-	/*END Seat Type */ 
+
+	/*END Seat Type */
 
 	/*START ROOM TYPE */
-	GETHotelRoomTypeLIST() { return this.masterService.get("client/business/travel/transaction/hotel/Room/Type/list"); }	
+	GETHotelRoomTypeLIST() { return this.masterService.get("client/business/travel/transaction/hotel/Room/Type/list"); }
 
 	SaveUpdateHotelRoomType(roomObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/Room/type/save/update`, roomObj); }
- 
-	/*END Seat Type */ 
+
+	/*END Seat Type */
 
 	/*START Hotel TYPE */
-	GETHotelLIST() { return this.masterService.get("client/business/travel/transaction/hotel/type/list"); }	
+	GETHotelLIST() { return this.masterService.get("client/business/travel/transaction/hotel/type/list"); }
 
 	SaveUpdateHotelType(hotelTypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/type/save/update`, hotelTypeObj); }
- 
-	/*END Hotel Type */ 
-	
+
+	/*END Hotel Type */
+
+
 }

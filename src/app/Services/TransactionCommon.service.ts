@@ -73,6 +73,11 @@ export class TransactionCommonService{
 	GETSalesStaffLIST() { return this.masterService.get("client/business/travel/transaction/sales/staff/list"); }	
    // END COMMON DROP DOWN
 
+   //START GROUP TOUR 
+	saveUpdateGroupTour(groupTourObj: any) { return this.masterService.post(`client/business/travel/transaction/group/tour/save/update`, groupTourObj); }
+	GetGroupTourList() { return this.masterService.get("client/business/travel/transaction/group/tour/list"); }
+
+	// END GROUP TOUR 
  
 
 

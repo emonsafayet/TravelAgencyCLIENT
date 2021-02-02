@@ -439,6 +439,10 @@ export class Library{
         if(str == undefined || str == null || str < 0) return true;
         else return false;
     }
+    public static isUndefinedOrNullOrZero(str){
+        if(str == undefined || str == null || str == '0') return true;
+        else return false;
+    }
 
     public static isUndefinedOrNullOrEmpty(str: any){
         if(str == undefined || str == null || str == '') return true;

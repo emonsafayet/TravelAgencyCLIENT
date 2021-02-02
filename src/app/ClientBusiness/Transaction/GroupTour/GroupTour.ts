@@ -10,7 +10,8 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { Common } from "../../../library/common";
 //Classes
-import { GroupTourInfoMasterModel, GroupTourInfoDetailModel } from '../../../Classes/Transaction/GroupTourModel';
+import { GroupTourInfoMasterModel, GroupTourInfoDetailModel, GroupTourInfoModelDTO } from '../../../Classes/Transaction/GroupTourModel';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 declare var moment: any;
 @Component({
@@ -22,17 +23,19 @@ export class GroupTour implements OnInit {
 	groupTourList: any[] = [];
 	groupTourInfoMasterObj: GroupTourInfoMasterModel = new GroupTourInfoMasterModel();
 	groupTourInfoDetailObj: GroupTourInfoDetailModel = new GroupTourInfoDetailModel();
+	GroupTourInfoModelDTOObj: GroupTourInfoModelDTO = new GroupTourInfoModelDTO();
 
+	grouptourinfoList: any[] = [];
 	customerList: any[] = [];
 	companyList: any[] = [];
 	currencyList: any[] = [];
 	salesStaffList: any[] = [];
 	packageList: any[] = [];
-	packageDetailsInfos: any[] = [];
+	packageDetailsInfoObj: any[] = [];
 	activeCurrencyRateList: any[] = [];
 	cardList: any[] = [];
 	packagename: string = "";
-	isSelectAllpackage:boolean=false;
+	isSelectAllpackage: boolean = false;
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
 
@@ -48,10 +51,84 @@ export class GroupTour implements OnInit {
 		this.GETCardLIST();
 		this.GETActiveCurrencyRateLIST();
 		this.GetPackageList();
-
+		this.GETGroupTourLIST();
 		this.Notification.LoadingRemove();
 	}
 
+
+	saveGroupInfo() {
+		// Validation
+		if (!this.validateModel()) return;
+		this.groupTourInfoMasterObj.GroupTourInfoDetail = Library.encode(this.packageDetailsInfoObj.filter(i => i.isSelected == true));
+
+		this.groupTourInfoMasterObj.CreatedBy = this.user.EmployeeCode;
+
+		this.transactionCommonService.saveUpdateGroupTour(this.groupTourInfoMasterObj)
+			.subscribe(
+				data => this.setaveResult(data),
+				error => this.Notification.Error(error)
+			);
+
+	}
+	setaveResult(Data: any) {
+		if (Data.ID > 0) {
+			this.Notification.Success("Save Successfully");
+			this.ResetModel();
+			document.getElementById("GroupTourList_tab").click();
+			this.GETGroupTourLIST();
+
+		}
+	}
+	ResetModel() {
+		this.groupTourInfoMasterObj = new GroupTourInfoMasterModel();
+	}
+	validateModel() {
+		debugger
+		var result = true;
+		try {
+			if (Library.isUndefinedOrNullOrZero(this.groupTourInfoMasterObj.PackageName)) {
+				this.Notification.Warning('Select package name.');
+				result = false;
+			}
+
+			else if (this.groupTourInfoMasterObj.SalesStaffCode == "0") {
+				this.Notification.Warning('Please package name.');
+				result = false;
+			}
+			// if (Library.isNuLLorUndefined(this.groupTourInfoMasterObj.NoOfDay)) {
+			// 	this.Notification.Warning('Please No Of Days.');
+			// 	result = false;
+			// 	return
+			// }
+
+			if (this.packageDetailsInfoObj.filter(i => i.isSelected == true).length == 0) {
+				this.Notification.Warning('Please select at least One Event.');
+				result = false;
+			}
+		}
+		catch (e) {
+			this.Notification.Warning('Please Select item.');
+			return false;
+		}
+		return result;
+	}
+	GETGroupTourLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GetGroupTourList()
+			.subscribe(
+				data => this.setGroupTourLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setGroupTourLIST(data) {
+		debugger
+		this.grouptourinfoList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	EditItem() {
+
+	}
 	//DROP DOWN
 	GETCompanyLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -162,10 +239,10 @@ export class GroupTour implements OnInit {
 	}
 	setPackageDetailsList(data) {
 		setTimeout(() => {
-			this.packageDetailsInfos = [];
-			this.packageDetailsInfos = data;
+			this.packageDetailsInfoObj = [];
+			this.packageDetailsInfoObj = data;
 			this.Notification.LoadingRemove();
-		}, 100); 
+		}, 100);
 	}
 	updateTotalPayable() {
 		setTimeout(() => {
@@ -188,30 +265,23 @@ export class GroupTour implements OnInit {
 		if (Library.isNullOrEmpty(RateItem)) this.groupTourInfoMasterObj.CurrencyRate = 0;
 		else this.groupTourInfoMasterObj.CurrencyRate = RateItem.Rate;
 	}
-	saveGroupInfo() {
 
+	selectSinglePackage(item) {
+		if (item.isSelected) {
+			item.isSelected = false;
+		} else item.isSelected = true;
 	}
-	ResetModel() {
-
-	}
-	selectSinglePackage(item){
-		if(item.isSelected ){
-			item.isSelected=false;
-		}else item.isSelected=true;
-	}
-	selectAllPackage(itemList){
-		if(this.isSelectAllpackage)
-		{
+	selectAllPackage(itemList) {
+		if (this.isSelectAllpackage) {
 			itemList.forEach(element => {
-				element.isSelected=false;
+				element.isSelected = false;
 			});
 
 			this.isSelectAllpackage = false;
 		}
-		else
-		{
+		else {
 			itemList.forEach(element => {
-				element.isSelected=true;
+				element.isSelected = true;
 			});
 
 			this.isSelectAllpackage = true;

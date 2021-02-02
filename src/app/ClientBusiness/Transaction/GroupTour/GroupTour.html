@@ -19,15 +19,6 @@
     <!-- TAB LIST ; 1st TAB-->
     <div id="GroupTourList" class="tab-pane fade in active">
         <div class="panel">
-            <!-- <div class="panel-heading">
-                <span class="hoverlink"><b>List</b> <i class="fa fa-refresh ml-2 text-success"
-                        aria-hidden="true"></i></span>
-
-                <span class="label label-primary ml-2 hoverPointer">Report</span>
-                <div class="right">
-                    <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-                </div>
-            </div> -->
             <div class="panel-body">
                 <div class="table-fixed">
                     <table class="table table-bordered table-p4 custom-table-hover">
@@ -37,21 +28,54 @@
                             </tr>
                             <tr>
                                 <th class="width-1p text-center">SN#</th>
-                                <th class="width-1p text-center">Group Tour Code</th>
+                                <th class="width-15p text-left">Code | Tour Date</th> 
                                 <th class="width-2p text-center">No of Person</th>
-                                <th class="width-1p text-center">Customer Info</th>
-                                <th class="width-1p text-center">Package </th>
-                                <th class="width-1p text-center">Service Charge</th>
-                                <th class="width-2p text-center">Currency</th>
-                                <th class="width-2p text-center">Card Info</th>
-                                <th class="width-2p text-center">Sales Reference</th>
+                                <th class="width-15p text-center">Customer | Company</th>
+                                <th class="width-15p text-center">Package </th>
+                                <th class="width-10p text-center">Currency</th>
+                                <th class="width-1p text-center">Service Charge</th>                             
+                                <th class="width-15p text-center">Card </th>
+                                <th class="width-10p text-center">Sales Reference</th>
                                 <th class="width-2p text-center">Remarks</th>
-                                <th class="width-2p text-center">Edit</th>
+                                <th class="width-1p text-center">Status</th>
                                 <th class="width-2p text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr class="font-size-12"
+                             *ngFor="let item of grouptourinfoList; let i = index">
+                                <td class="width-1p text-right"> {{i+1}} </td>
+                                <td class="width-15p text-left"> {{item?.GRPCode}} 
+                                    <br> 
+                                   Tour Date {{item?.TourDate| date: 'dd MMM yyyy'}} 
+                                <td class="width-2p text-right"> {{item?.NoOfPerson}} </td>
+                                <td class="width-15p text-left">
+                                    Customer : {{item?.CustomerName}}
+                                    <br>
+                                    Company : {{item?.CompanyName}}
+                                </td>
+                                <td class="width-15p text-left"> {{item?.PackageNamee}} </td>
+                                <td class="width-10p text-left">
+                                    Currency: {{item?.Currency}} 
+                                      <br> Rate :{{item?.CurrencyRate}} 
+                               </td>
+                                <td class="width-2p text-right"> {{item?.TotalServiceCharge}} </td>
+                                
+                                <td class="width-15p text-left"> Card : {{item?.CardName}}
+                                    <br>    Code : {{item?.CardCode}}
+                                </td>
+                                <td class="width-10p text-left"> Name: {{item?.EmployeeName}}
+                                 <br>  <strong> Code: {{item?.SalesStaffCode}}    </strong> 
+                                </td>
+                                <td class="text-left"> {{item?.Remarks}} </td>
+                                <td class="width-1p text-center">
+                                    <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                    <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                </td>
 
+                                <td (click)="EditItem(item)" title="Click to Edit the item."
+                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -258,11 +282,13 @@
                                     <thead>
                                         <tr>
                                             <th class="width-1p text-center"
-                                                (click)="selectAllPackage(packageDetailsInfos)"
+                                                (click)="selectAllPackage(packageDetailsInfoObj)"
                                                 title="Select/UnSelect All">
-                                                
-                                                <i *ngIf="isSelectAllpackage" class="fa fa-check-square-o font-size-30 text-success"></i>
-                                                <i *ngIf="! isSelectAllpackage" class="fa fa-square-o font-size-30 text-success"></i>
+
+                                                <i *ngIf="isSelectAllpackage"
+                                                    class="fa fa-check-square-o font-size-30 text-success"></i>
+                                                <i *ngIf="!isSelectAllpackage"
+                                                    class="fa fa-square-o font-size-30 text-success"></i>
 
                                             </th>
                                             <th class="width-5p text-center">PackageCode</th>
@@ -273,13 +299,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="font-size-12" *ngFor="let item of packageDetailsInfos">
+                                        <tr class="font-size-12" *ngFor="let item of packageDetailsInfoObj">
                                             <td class="width-1p text-center">
 
                                                 <i *ngIf="item?.isSelected" (click)="item.isSelected = false"
                                                     class="fa fa-check-square-o font-size-30  text-success"
                                                     aria-hidden="true"></i>
-                                                <i *ngIf="! item?.isSelected" (click)="item.isSelected = true"
+                                                <i *ngIf="!item?.isSelected" (click)="item.isSelected = true"
                                                     class="fa fa-square-o font-size-30 text-success"
                                                     aria-hidden="true"></i>
 
