@@ -1,0 +1,321 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Business</li>
+        <li class="breadcrumb-item active">Travel</li>
+        <li class="breadcrumb-item active">Transaction</li>
+        <li class="breadcrumb-item active">Group</li>
+        <li class="breadcrumb-item active">Tour</li>
+    </ol>
+</nav>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" class="hoverlink" href="#HolidayTourList" id="HolidayTourList_tab">Holiday
+            Tour
+            List</a></li>
+    <li><a data-toggle="tab" class="hoverlink" href="#HolidayTourEntry" id="HolidayTourEntry_tab">Holiday Tour Entry</a>
+    </li>
+</ul>
+<div class="tab-content" style="background-color: white;">
+    <!-- TAB LIST ; 1st TAB-->
+    <div id="HolidayTourList" class="tab-pane fade in active">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="table-fixed">
+                    <table class="table table-bordered table-p4 custom-table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="12"> </th>
+                            </tr>
+                            <tr>
+                                <th class="width-1p text-center">SN#</th>
+                                <th class="width-15p text-left">Code | Tour Date</th> 
+                                <th class="width-2p text-center">No of Person</th>
+                                <th class="width-15p text-center">Customer | Company</th>
+                                <th class="width-15p text-center">Package </th>
+                                <th class="width-10p text-center">Currency</th>
+                                <th class="width-1p text-center">Service Charge</th>                             
+                                <th class="width-15p text-center">Card </th>
+                                <th class="width-10p text-center">Sales Reference</th>
+                                <th class="width-2p text-center">Remarks</th>
+                                <th class="width-1p text-center">Status</th>
+                                <th class="width-2p text-center">Action</th>
+                            </tr>
+                        </thead>                    
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TAB Entry ; 2nd TAB-->
+    <div id="HolidayTourEntry" class="tab-panel fade">
+        <div class="tab-panel fade in active">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel">
+                        <div class="panel-heading btn-toggle-collapse">
+                            <span><strong>HOLIDAY PACKAGE ENTRY</strong> </span>
+                            <div class="right">
+                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Tour Code</span>
+                                            <input [(ngModel)]="HolidayPackageMasterObj.HOPCode" class="form-control"
+                                                placeholder="package code" type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Group Tour Date</span>
+                                            <input [(ngModel)]="HolidayPackageMasterObj.TourDate" class="form-control"
+                                                data-date-format="dd-MM-YYYY" data-date=""
+                                                [attr.data-date]="HolidayPackageMasterObj.TourDate" type="date">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Package</span>
+                                            <select class="form-control" (change)="onPackageChange($event.target.value)"
+                                                [(ngModel)]="HolidayPackageMasterObj.PackageCode">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of packageList; let i = index">
+                                                    <option value="{{item.PackageCode}}">{{item?.PackageCode}}-
+                                                        {{item?.PackageName}}
+                                                    </option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Package Name</span>
+                                            <input value="{{packagename}}" class="form-control" type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">No Of Person</span>
+                                            <input [(ngModel)]="HolidayPackageMasterObj.NoOfPersonAdult" class="form-control"
+                                                type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Destination</span>
+                                            <input [(ngModel)]="HolidayPackageMasterObj.Destination" class="form-control"
+                                                type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Customer</span>
+                                            <select class="form-control"
+                                                [(ngModel)]="HolidayPackageMasterObj.CustomerCode">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of customerList; let i = index">
+                                                    <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
+                                                    </option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Company</span>
+                                            <select class="form-control"
+                                                [(ngModel)]="HolidayPackageMasterObj.CompanyCode">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of customerList; let i = index">
+                                                    <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
+                                                    </option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Currency</span>
+                                            <select (change)="onCurrencyChange($event.target.value)"
+                                                class="form-control" [(ngModel)]="HolidayPackageMasterObj.Currency">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of currencyList; let i = index">
+                                                    <option value="{{item.CurrencyName}}"> {{item?.CurrencyName}}
+                                                    </option>
+                                                </ng-container>
+                                            </select>
+                                            <input [(ngModel)]="HolidayPackageMasterObj.CurrencyRate"
+                                                class="form-control" type="number" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Total Service Charge</span>
+                                            <input (ngModelChange)="updateTotalPayable()"
+                                                [(ngModel)]="HolidayPackageMasterObj.TotalServiceCharge"
+                                                class="form-control" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Total Payable</span>
+                                            <input [(ngModel)]="HolidayPackageMasterObj.TotalPayable"
+                                                class="form-control" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Card</span>
+                                            <select class="form-control" [(ngModel)]="HolidayPackageMasterObj.CardCode">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of cardList; let i = index">
+                                                    <option value="{{item?.CardID}}">{{item?.CardID}}>>
+                                                        {{item?.CardName}}
+                                                    </option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Sales Reference</span>
+                                            <select class="form-control"
+                                                [(ngModel)]="HolidayPackageMasterObj.SalesStaffCode">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                    <option value="{{item.EmployeeCode}}">
+                                                        {{item.EmployeeCode}}->{{item?.FullName}}</option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Remarks</span>
+                                            <textarea [(ngModel)]="HolidayPackageMasterObj.Remark" class="form-control"
+                                                rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Is Active:</span>
+                                            <i *ngIf="HolidayPackageMasterObj?.isActive"
+                                                (click)="HolidayPackageMasterObj.isActive = false"
+                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="! HolidayPackageMasterObj?.isActive"
+                                                (click)="HolidayPackageMasterObj.isActive = true"
+                                                class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="hoverlink"><strong>Package Details</strong> <i
+                                    class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+                            <div class="right">
+                                <button type="button" class="btn-toggle-collapse"><i
+                                        class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p4 custom-table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="width-1p text-center"
+                                                (click)="selectAllPackage(packageDetailsInfoObj)"
+                                                title="Select/UnSelect All">
+
+                                                <i *ngIf="isSelectAllpackage"
+                                                    class="fa fa-check-square-o font-size-30 text-success"></i>
+                                                <i *ngIf="!isSelectAllpackage"
+                                                    class="fa fa-square-o font-size-30 text-success"></i>
+
+                                            </th>
+                                            <th class="width-5p text-center">PackageCode</th>
+                                            <th class="width-10p text-center">Event Name</th>
+                                            <th class="width-5p text-center">Event Price</th>
+                                            <th class="width-20p text-center">Event Details</th>
+                                            <th class="width-20p text-center">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="font-size-12" *ngFor="let item of packageDetailsInfoObj">
+                                            <td class="width-1p text-center">
+
+                                                <i *ngIf="item?.isSelected" (click)="item.isSelected = false"
+                                                    class="fa fa-check-square-o font-size-30  text-success"
+                                                    aria-hidden="true"></i>
+                                                <i *ngIf="!item?.isSelected" (click)="item.isSelected = true"
+                                                    class="fa fa-square-o font-size-30 text-success"
+                                                    aria-hidden="true"></i>
+
+                                            </td>
+                                            <td class="text-left">
+                                                <input readonly type="text" class="form-control form-control-sm"
+                                                    [(ngModel)]="item.PackageCode">
+                                            </td>
+                                            <!-- Event Name-->
+                                            <td>
+                                                <input readonly type="text" class="form-control form-control-sm"
+                                                    [(ngModel)]="item.EventName">
+                                            </td>
+                                            <!-- Event Price-->
+                                            <td>
+                                                <input readonly type="number" class="form-control form-control-sm"
+                                                    [(ngModel)]="item.EventPrice">
+                                            </td>
+                                            <!-- Event Details-->
+                                            <td>
+                                                <input readonly type="text" class="form-control form-control-sm"
+                                                    [(ngModel)]="item.EventDetails">
+                                            </td>
+                                            <!-- Remarks-->
+                                            <td>
+                                                <input readonly type="text" class="form-control form-control-sm"
+                                                    [(ngModel)]="item.Remarks">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mt-3">
+                            <button *ngIf="HolidayPackageMasterObj?.ID == 0" (click)="saveGroupInfo()" type="button"
+                                class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                            <button *ngIf="HolidayPackageMasterObj?.ID > 0" (click)="saveGroupInfo()" type="button"
+                                class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                            <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                    class="fas fa-redo-alt"></i> Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
