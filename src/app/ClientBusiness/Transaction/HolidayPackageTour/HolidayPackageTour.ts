@@ -24,8 +24,9 @@ export class HolidayPackageTour implements OnInit {
 	holidayTourList: any[] = [];
 	HolidayPackageMasterObj: HolidayPackageMasterModel = new HolidayPackageMasterModel();
 	holidayPackageDetailObj: HolidayPackageDetailModel = new HolidayPackageDetailModel();
-	// GroupTourInfoModelDTOObj: GroupTourInfoModelDTO = new GroupTourInfoModelDTO();
+ 
 
+	getpackageTourInfoList:any[]=[];
 	customerList: any[] = [];
 	companyList: any[] = [];
 	currencyList: any[] = [];
@@ -37,14 +38,15 @@ export class HolidayPackageTour implements OnInit {
 	packagename: string = "";
 	isSelectAllpackage: boolean = false;
 	constructor(private userService: UserService, private authGuard: AuthGuard,
-		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
+		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, 
+		private transactionCommonService: TransactionCommonService) { }
 
 
 
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
-
+		this.HolidayPackageMasterObj.TourDate = moment().format(Common.SQLDateFormat);
 		this.GETCustomerLIST();
 		this.GETCompanyLIST();
 		this.GETCurrencyList();
@@ -52,13 +54,79 @@ export class HolidayPackageTour implements OnInit {
 		this.GETCardLIST();
 		this.GETActiveCurrencyRateLIST();
 		this.GetPackageList();
+
+		this.GETHolidayPackageTourList();
+
 		this.Notification.LoadingRemove();
 	}
 
-	saveGroupInfo(){
+	GETHolidayPackageTourList() {
+		debugger
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.getholidayPackageTourList()
+			.subscribe(
+				data => this.setHolidayPackageTourLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setHolidayPackageTourLIST(data) {
+		debugger
+		this.getpackageTourInfoList = data;
+		this.Notification.LoadingRemove();
 
 	}
-	ResetModel(){
+
+	saveHolidayPackageInfo() {
+		// Validation
+		if (!this.validateModel()) return;
+		this.HolidayPackageMasterObj.HolidayPackageDetail = Library.encode(this.packageDetailsInfoObj.filter(i => i.isSelected == true));
+		this.HolidayPackageMasterObj.CreatedBy = this.user.EmployeeCode;
+
+		this.transactionCommonService.saveUpdateHolidayPackageTour(this.HolidayPackageMasterObj)
+			.subscribe(
+				data => this.setsaveResult(data),
+				error => this.Notification.Error(error)
+			);
+
+	}
+	setsaveResult(Data: any) {
+		if (Data.ID > 0) {
+			this.Notification.Success("Save Successfully");
+			this.ResetModel();
+			document.getElementById("HolidayTourList_tab").click();
+			// this.GETGroupTourLIST();
+
+		}
+	}
+	ResetModel() {
+		this.HolidayPackageMasterObj = new HolidayPackageMasterModel();
+	}
+	validateModel() {
+		debugger
+		var result = true;
+		try {
+			if (Library.isUndefinedOrNullOrZero(this.HolidayPackageMasterObj.PackageCode)) {
+				this.Notification.Warning('Select package name.');
+				result = false;
+			}
+
+			else if (this.HolidayPackageMasterObj.SalesStaffCode == "0") {
+				this.Notification.Warning('Please package name.');
+				result = false;
+			}  
+
+			if (this.packageDetailsInfoObj.filter(i => i.isSelected == true).length == 0) {
+				this.Notification.Warning('Please select at least One Event.');
+				result = false;
+			}
+		}
+		catch (e) {
+			this.Notification.Warning('Please Select item.');
+			return false;
+		}
+		return result;
+	}
+	EditItem() {
 
 	}
 	//DROP DOWN

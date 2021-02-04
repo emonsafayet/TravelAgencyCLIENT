@@ -75,9 +75,18 @@ export class TransactionCommonService{
 
    //START GROUP TOUR 
 	saveUpdateGroupTour(groupTourObj: any) { return this.masterService.post(`client/business/travel/transaction/group/tour/save/update`, groupTourObj); }
+	
 	GetGroupTourList() { return this.masterService.get("client/business/travel/transaction/group/tour/list"); }
 
 	// END GROUP TOUR 
+
+	//START HOLIDAY PACKAGE TOUR
+
+	saveUpdateHolidayPackageTour(holidayPackageTourObj: any) { return this.masterService.post(`client/business/travel/transaction/holiday/package/tour/save/update`, holidayPackageTourObj); }
+	
+	getholidayPackageTourList() { return this.masterService.get("client/business/travel/transaction/holiday/package/tour/list"); }
+
+	//END HOLIDAY PACKAGE TOUR
  
 
 

@@ -1,6 +1,6 @@
 export class HolidayPackageMasterModel{
 
-	public ID : number;
+	public ID : number=0;
 	public HOPCode : string;
 	public TourDate : string;
 	public NoOfPersonAdult : number;
@@ -21,7 +21,8 @@ export class HolidayPackageMasterModel{
 	public CreatedOn : string;
 	public UpdatedBy : string;
 	public UpdatedOn : string;
-	public isActive : boolean;
+	public isActive : boolean=true;
+	public HolidayPackageDetail:string;
 }
 
 export class HolidayPackageDetailModel{
@@ -34,3 +35,33 @@ export class HolidayPackageDetailModel{
 	public EventRemark : string;
 	public EventCharge : number;
 }
+// export class HolidayPackagInfoModel  {
+
+// 	public ID : number;
+// 	public HOPCode : string;
+// 	public TourDate : string;
+// 	public NoOfPersonAdult : number;
+// 	public NoOfPersonChild : number;
+// 	public CustomerCode : string;
+// 	public CompanyCode : string;
+// 	public Destination : string;
+// 	public PackageCode : string;
+// 	public NoOfDay : number;
+// 	public Currency : string;
+// 	public CurrencyRate : number;
+// 	public TotalServiceCharge : number;
+// 	public TotalPayable : number;
+// 	public CardCode : string;
+// 	public SalesStaffCode : string;
+// 	public Remark : string;
+// 	public CreatedBy : string;
+// 	public CreatedOn : string;
+// 	public UpdatedBy : string;
+// 	public UpdatedOn : string;
+// 	public isActive : boolean;
+// 	public CustomerName : string;
+// 	public CompanyName : string;
+// 	public CardName : string;
+// 	public PackageName : string;
+// 	public EmployeeName : string;
+// }

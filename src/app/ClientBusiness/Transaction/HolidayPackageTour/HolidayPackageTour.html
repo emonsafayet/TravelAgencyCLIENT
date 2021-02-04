@@ -41,7 +41,46 @@
                                 <th class="width-1p text-center">Status</th>
                                 <th class="width-2p text-center">Action</th>
                             </tr>
-                        </thead>                    
+                        </thead>   
+                        <tbody>
+                            <tr class="font-size-12"
+                             *ngFor="let item of getpackageTourInfoList; let i = index">
+                                <td class="width-1p text-right"> {{i+1}} </td>
+                                <td class="width-15p text-left"> {{item?.HOPCode}} 
+                                    <br> 
+                                   Tour Date {{item?.TourDate| date: 'dd MMM yyyy'}} 
+                                <td class="width-2p text-right"> 
+                                  Adult:  {{item?.NoOfPersonAdult}} 
+                                  <br>Child: {{item?.NoOfPersonAdult}} 
+                                </td>
+                                <td class="width-15p text-left">
+                                    Customer : {{item?.NoOfPersonChild}}
+                                    <br>
+                                    Company : {{item?.CompanyName}}
+                                </td>
+                                <td class="width-15p text-left"> {{item?.PackageName}} </td>
+                                <td class="width-10p text-left">
+                                    Currency: {{item?.Currency}} 
+                                      <br> Rate :{{item?.CurrencyRate}} 
+                               </td>
+                                <td class="width-2p text-right"> {{item?.TotalServiceCharge}} </td>
+                                
+                                <td class="width-15p text-left"> Card : {{item?.CardName}}
+                                    <br>    Code : {{item?.CardCode}}
+                                </td>
+                                <td class="width-10p text-left"> Name: {{item?.EmployeeName}}
+                                 <br>  <strong> Code: {{item?.SalesStaffCode}}    </strong> 
+                                </td>
+                                <td class="text-left"> {{item?.Remarks}} </td>
+                                <td class="width-1p text-center">
+                                    <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                    <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                </td>
+
+                                <td (click)="EditItem(item)" title="Click to Edit the item."
+                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                            </tr>
+                        </tbody>                 
                     </table>
                 </div>
             </div>
@@ -105,8 +144,15 @@
                                 <div class="col-md-12">
                                     <div class="col-md-3 mt-3">
                                         <div class="input-group">
-                                            <span class="input-group-addon">No Of Person</span>
+                                            <span class="input-group-addon">No Of Adult</span>
                                             <input [(ngModel)]="HolidayPackageMasterObj.NoOfPersonAdult" class="form-control"
+                                                type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">No Of Child</span>
+                                            <input [(ngModel)]="HolidayPackageMasterObj.NoOfPersonChild" class="form-control"
                                                 type="number">
                                         </div>
                                     </div>
@@ -130,6 +176,11 @@
                                             </select>
                                         </div>
                                     </div>
+                                   
+                                </div>
+                            </div>
+                            <div class="row">                                
+                                <div class="col-md-12">
                                     <div class="col-md-3 mt-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Company</span>
@@ -143,10 +194,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
                                     <div class="col-md-3 mt-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Currency</span>
@@ -176,7 +223,11 @@
                                             <input [(ngModel)]="HolidayPackageMasterObj.TotalPayable"
                                                 class="form-control" type="number">
                                         </div>
-                                    </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="col-md-3 mt-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Card</span>
@@ -190,10 +241,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
                                     <div class="col-md-3 mt-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Sales Reference</span>
@@ -306,9 +353,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 mt-3">
-                            <button *ngIf="HolidayPackageMasterObj?.ID == 0" (click)="saveGroupInfo()" type="button"
+                            <button *ngIf="HolidayPackageMasterObj?.ID == 0" (click)="saveHolidayPackageInfo()" type="button"
                                 class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
-                            <button *ngIf="HolidayPackageMasterObj?.ID > 0" (click)="saveGroupInfo()" type="button"
+                            <button *ngIf="HolidayPackageMasterObj?.ID > 0" (click)="saveHolidayPackageInfo()" type="button"
                                 class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
                             <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
                                     class="fas fa-redo-alt"></i> Reset</button>

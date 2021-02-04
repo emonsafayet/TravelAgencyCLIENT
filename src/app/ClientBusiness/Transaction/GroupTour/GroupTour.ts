@@ -65,12 +65,12 @@ export class GroupTour implements OnInit {
 
 		this.transactionCommonService.saveUpdateGroupTour(this.groupTourInfoMasterObj)
 			.subscribe(
-				data => this.setaveResult(data),
+				data => this.setsaveResult(data),
 				error => this.Notification.Error(error)
 			);
 
 	}
-	setaveResult(Data: any) {
+	setsaveResult(Data: any) {
 		if (Data.ID > 0) {
 			this.Notification.Success("Save Successfully");
 			this.ResetModel();
