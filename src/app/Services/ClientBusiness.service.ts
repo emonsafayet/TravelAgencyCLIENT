@@ -8,6 +8,12 @@ export class ClientBusinessService {
 
 	constructor(private masterService: MasterService) { }
 
+	/*START COMPANY PROFILE*/
+
+	saveUpdateCompanyProfile(companyObj: any) { return this.masterService.post(`client/business/company/profile/save/update`, companyObj); }
+
+	getCompanyProfileList() { return this.masterService.get("client/business/company/profile/list"); }
+	/*END COMPANY PROFILE*/
 
 	/**START Travel Product Service**/
 

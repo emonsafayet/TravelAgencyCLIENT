@@ -34,7 +34,8 @@ export class TypPayment implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	savePaymentType(){
-		if (this.PaymentTypeObj.ID > 0) this.PaymentTypeObj.UpdatedBy = this.user.EmployeeCode;
+		if (this.PaymentTypeObj.ID > 0) 
+		this.PaymentTypeObj.UpdatedBy = this.user.EmployeeCode;
 		else this.PaymentTypeObj.CreatedBy = this.user.EmployeeCode;
 
 		//validation
