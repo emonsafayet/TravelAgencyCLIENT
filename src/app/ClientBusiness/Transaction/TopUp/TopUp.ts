@@ -5,11 +5,11 @@ import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service";
 import { Library } from 'src/app/library/library';
 //Service   
-import {  TransactionCommonService } from '../../../Services/TransactionCommon.service';
-import {  ClientBusinessService  } from '../../../Services/ClientBusiness.service';
+import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
+import { ClientBusinessService } from '../../../Services/ClientBusiness.service';
 
 // classess
-import {  TopUpModel } from '../../../Classes/Transaction/TopUpModel';
+import { TopUpModel, TopUpTypeModel } from '../../../Classes/Transaction/TopUpModel';
 
 @Component({
 	templateUrl: 'TopUp.html'
@@ -17,19 +17,20 @@ import {  TopUpModel } from '../../../Classes/Transaction/TopUpModel';
 export class TopUp implements OnInit {
 	user: any;
 
-	topUpList: any[] = []; 
-	topUpTypeList: any[] = []; 
-	providerList: any[] = []; 
-	airlineList: any[] = []; 
+	topUpList: any[] = [];
+	topUpTypeList: any[] = [];
+	providerList: any[] = [];
+	airlineList: any[] = [];
 	topUpObj: TopUpModel = new TopUpModel();
+	topUpTypeObj: TopUpTypeModel = new TopUpTypeModel();
 	SearchTopUpList: string = '';
 	constructor(private userService: UserService, private authGuard: AuthGuard,
-		private Notification: NotificationService, private transactionCommonService: TransactionCommonService,private clientBusinessService:ClientBusinessService) { }
+		private Notification: NotificationService, private transactionCommonService: TransactionCommonService, private clientBusinessService: ClientBusinessService) { }
 
 
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
-		this.authGuard.hasUserThisMenuPrivilege(this.user); 
+		this.authGuard.hasUserThisMenuPrivilege(this.user);
 
 		this.getTopUpList();
 		this.GetTopUpTypeList();
@@ -37,8 +38,8 @@ export class TopUp implements OnInit {
 		this.GetAirlineList();
 		this.Notification.LoadingWithMessage('Loading...');
 		this.Notification.LoadingRemove();
-	} 
-	saveUpdateTopUp(){
+	}
+	saveUpdateTopUp() {
 		if (this.topUpObj.ID > 0)
 			this.topUpObj.UpdatedBy = this.user.EmployeeCode;
 		else this.topUpObj.CreatedBy = this.user.EmployeeCode;
@@ -56,20 +57,20 @@ export class TopUp implements OnInit {
 	SETToUp(Data: any) {
 		if (Data.ID > 0) this.Notification.Success('Saved Successfully.');
 		else {
-			this.Notification.LoadingRemove(); 
+			this.Notification.LoadingRemove();
 		}
 		this.topUpObj = new TopUpModel();
 		this.getTopUpList();
 	}
 	validateModel() {
 		debugger;
-		var result = true	
-		if (this.topUpObj.TopUpTypeCode=="0") {
+		var result = true
+		if (this.topUpObj.TopUpTypeCode == "0") {
 			this.Notification.Warning('Please Select Top Up Type.');
 			result = false;
 			return;
 		}
-		if (this.topUpObj.ProviderID=="0") {
+		if (this.topUpObj.ProviderID == "0") {
 			this.Notification.Warning('Please Select Provider.');
 			result = false;
 			return;
@@ -84,7 +85,7 @@ export class TopUp implements OnInit {
 	}
 
 	EditItem(item) {
-		this.topUpObj = JSON.parse(JSON.stringify(item)); 
+		this.topUpObj = JSON.parse(JSON.stringify(item));
 	}
 	getTopUpList() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -98,6 +99,8 @@ export class TopUp implements OnInit {
 		this.topUpList = data;
 		this.Notification.LoadingRemove();
 	}
+
+
 	GetTopUpTypeList() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.GetTopUpTypeList()
@@ -135,4 +138,42 @@ export class TopUp implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 
+	// ----------------Top Up Type -------------------------
+	saveUpdateTopUpType() {
+		if (this.topUpTypeObj.ID > 0)
+			this.topUpTypeObj.UpdatedBy = this.user.EmployeeCode;
+		else this.topUpTypeObj.CreatedBy = this.user.EmployeeCode; 
+		//validation
+		if (!this.validateTopUpTypeModel()) return;
+
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.saveUpdateTopUpType(this.topUpTypeObj).subscribe(
+			(data) => this.SETToUpType(data),
+			(error) => this.Notification.Error(error)
+		);
+
+	}
+	SETToUpType(Data: any) {
+		if (Data.ID > 0) this.Notification.Success('Saved Successfully.');
+		else {
+			this.Notification.LoadingRemove();
+		}
+		this.ResetTopUpTypeModel();
+		this.GetTopUpTypeList();
+	}
+	validateTopUpTypeModel() { 
+		var result = true
+		if (Library.isNullOrEmpty(this.topUpTypeObj.TopUpTypeName)) {
+			this.Notification.Warning('Please Enter Top Up Type Name.');
+			result = false;
+			return;
+		} 
+		return result;
+	}
+	ResetTopUpTypeModel() {
+		this.topUpTypeObj = new TopUpTypeModel();
+	}
+	EditTopUpType(item) {
+		this.topUpTypeObj = JSON.parse(JSON.stringify(item));
+	}
 }

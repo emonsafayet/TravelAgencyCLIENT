@@ -8,8 +8,17 @@
         <li class="breadcrumb-item active">TopUp</li>
     </ol>
 </nav>
+<ul class="nav nav-tabs">
+    <li (click)="getTopUpList()" class="active"><a data-toggle="tab" class="hoverlink" href="#topUp"
+            id="topUp_tab">Top-Up</a></li>
+    <li (click)="GetTopUpTypeList()"> <a data-toggle="tab" class="hoverlink" href="#topUpType" id="topUpType_tab">Top-Up
+            Type</a>
+    </li>
+</ul>
+
 <div class="tab-content" style="background-color: white;">
-    <div class="tab-pane fade in active">
+    <!-- TAB TOP UP | 1st TAB-->
+    <div id="topUp" class="tab-pane fade in active">
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel">
@@ -25,7 +34,8 @@
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Top Up Code</span>
-                                        <input readonly [(ngModel)]="topUpObj.TopUpCode" class="form-control" type="text">
+                                        <input readonly [(ngModel)]="topUpObj.TopUpCode" class="form-control"
+                                            type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -33,7 +43,7 @@
                                         <span class="input-group-addon">Top Up Type</span>
                                         <select class="form-control" [(ngModel)]="topUpObj.TopUpTypeCode">
                                             <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of topUpTypeList; let i = index">                                               
+                                            <ng-container *ngFor="let item of topUpTypeList; let i = index">
                                                 <option value="{{item.TopUpTypeCode}}">{{item?.TopUpTypeName}}</option>
                                             </ng-container>
                                         </select>
@@ -44,7 +54,7 @@
                                         <span class="input-group-addon">Provider</span>
                                         <select class="form-control" [(ngModel)]="topUpObj.ProviderID">
                                             <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of providerList; let i = index">                                               
+                                            <ng-container *ngFor="let item of providerList; let i = index">
                                                 <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
                                             </ng-container>
                                         </select>
@@ -55,50 +65,50 @@
                                         <span class="input-group-addon">CARD ID</span>
                                         <input [(ngModel)]="topUpObj.CardID" class="form-control" type="number">
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Airline ID</span> 
+                                        <span class="input-group-addon">Airline ID</span>
                                         <select class="form-control" [(ngModel)]="topUpObj.AirlinesID">
                                             <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of airlineList; let i = index">                                               
+                                            <ng-container *ngFor="let item of airlineList; let i = index">
                                                 <option value="{{item.AirlinesCode}}">{{item?.AirlinesName}}</option>
                                             </ng-container>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3  mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Top Up Date</span>
                                         <input type="date" data-date="" [attr.data-date]="topUpObj.TopUpDate"
-                                        data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
-                                        [(ngModel)]="topUpObj.TopUpDate" />
+                                            data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="topUpObj.TopUpDate" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Remarks</span> 
+                                        <span class="input-group-addon">Remarks</span>
                                         <textarea [(ngModel)]="topUpObj.Remarks" class="form-control"
-                                        rows="3"></textarea>
+                                            rows="3"></textarea>
                                     </div>
                                 </div>
-                            
+
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Description</span>
                                         <textarea [(ngModel)]="topUpObj.Description" class="form-control"
-                                        rows="3"></textarea>
+                                            rows="3"></textarea>
                                     </div>
                                 </div>
-                              
+
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">                                                            
+                            <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">TopUp Amount</span>
@@ -116,6 +126,7 @@
                                             aria-hidden="true"></i>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <!-- ----------Save-Update -->
@@ -132,66 +143,166 @@
                             </div>
                         </div>
                     </div>
-                     <!-- --list -->
-                <div class="panel">
-                    <div class="panel-heading">
-                        <span class="hoverlink" (click)="getTopUpList()"><b>Top-Up LIST</b> <i
-                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+                    <!-- --list -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="hoverlink" (click)="getTopUpList()"><b>Top-Up LIST</b> <i
+                                    class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
 
-                        <span class="label label-primary ml-2 hoverPointer">Report</span>
-                        <!-- <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
-                        <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
-                        <span class="label label-info ml-2 hoverPointer">INFO</span>
-                        <span class="label label-warning ml-2 hoverPointer">WARNING</span>
-                        <span class="label label-danger ml-2 hoverPointer">DANGER</span> -->
-                        <div class="right">
-                            <button type="button" class="btn-toggle-collapse"><i
-                                    class="lnr lnr-chevron-up"></i></button>
+                            <span class="label label-primary ml-2 hoverPointer">Report</span>
+                            <div class="right">
+                                <button type="button" class="btn-toggle-collapse"><i
+                                        class="lnr lnr-chevron-up"></i></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-fixed">
-                            <table class="table table-bordered table-p4 custom-table-hover">
-                                <thead>
-                                    <tr>
-                                        <th colspan="12">
-                                            <input class="form-control form-control-sm" placeholder="Search" type="text"
-                                                [(ngModel)]="SearchTopUpList">
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="width-1p text-center">SN#</th> 
-                                        <th class="width-1p text-center">Top-Up Code</th> 
-                                        <th class="width-1p">Top-Up Type</th>
-                                        <th class="width-2p">Provider Name</th>
-                                        <th class="width-2p">Airline Name</th>
-                                        <th class="width-2p">Amount</th>
-                                        <th class="width-2p">TopUp Date</th> 
-                                        <th class="width-2p text-center">Status</th>
-                                        <th class="width-2p text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of topUpList | searchFilter : SearchTopUpList; let i = index">
-                                        <td class="text-right"> {{i+1}} </td>
-                                        <td class="text-left"> {{item?.TopUpCode}} </td>
-                                        <td class="text-left"> {{item?.TopUpTypeName}} </td>
-                                        <td class="text-left"> {{item?.ProviderName}} </td>
-                                        <td class="text-left"> {{item?.AirlinesName}} </td>
-                                        <td class="text-left"> {{item?.Amount}} </td> 
-                                        <td class="text-left"> {{item?.TopUpDate | date: 'dd MMM yyyy' }} </td>
-                                        <td class="text-center">
-                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
-                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
-                                        </td>
-                                        <td (click)="EditItem(item)" title="Click to Edit the item."
-                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="panel-body">
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p4 custom-table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="12">
+                                                <input class="form-control form-control-sm" placeholder="Search"
+                                                    type="text" [(ngModel)]="SearchTopUpList">
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="width-1p text-center">SN#</th>
+                                            <th class="width-1p text-center">Top-Up Code</th>
+                                            <th class="width-1p">Top-Up Type</th>
+                                            <th class="width-2p">Provider Name</th>
+                                            <th class="width-2p">Airline Name</th>
+                                            <th class="width-2p">Amount</th>
+                                            <th class="width-2p">TopUp Date</th>
+                                            <th class="width-2p text-center">Status</th>
+                                            <th class="width-2p text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of topUpList | searchFilter : SearchTopUpList; let i = index">
+                                            <td class="text-right"> {{i+1}} </td>
+                                            <td class="text-left"> {{item?.TopUpCode}} </td>
+                                            <td class="text-left"> {{item?.TopUpTypeName}} </td>
+                                            <td class="text-left"> {{item?.ProviderName}} </td>
+                                            <td class="text-left"> {{item?.AirlinesName}} </td>
+                                            <td class="text-left"> {{item?.Amount}} </td>
+                                            <td class="text-left"> {{item?.TopUpDate | date: 'dd MMM yyyy' }} </td>
+                                            <td class="text-center">
+                                                <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                                <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                            </td>
+                                            <td (click)="EditItem(item)" title="Click to Edit the item."
+                                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- TAB TOP UP TYPE | 2nd TAB-->
+    <div id="topUpType" class="tab-pane fade">
+        <div class="tab-pane fade in active">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel">
+                        <div class="panel-heading btn-toggle-collapse">
+                            <span><b>Top Up Type Entry</b> </span>
+                            <div class="right">
+                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Top Up Type Code</span>
+                                            <input [(ngModel)]="topUpTypeObj.TopUpTypeCode" class="form-control"
+                                                type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Tou Up Name</span>
+                                            <input [(ngModel)]="topUpTypeObj.TopUpTypeName" class="form-control"
+                                                placeholder="Top Up Type Name" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Is Active:</span>
+                                            <i *ngIf="topUpTypeObj?.isActive" (click)="topUpTypeObj.isActive = false"
+                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="! topUpTypeObj?.isActive" (click)="topUpTypeObj.isActive = true"
+                                                class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3 mt-3">
+                                        <button *ngIf="topUpTypeObj?.ID == 0" (click)="saveUpdateTopUpType()"
+                                            type="button" class="btn btn-success"><i class="fa fa-plus"></i>
+                                            Save</button>
+                                        <button *ngIf="topUpTypeObj?.ID > 0" (click)="saveUpdateTopUpType()"
+                                            type="button" class="btn btn-success ml-2"><i class="fa fa-plus"></i>
+                                            Update</button>
+                                        <button type="button" (click)="ResetTopUpTypeModel()"
+                                            class="btn btn-info ml-2"><i class="fas fa-redo-alt"></i> Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Top Up Type list -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="hoverlink" (click)="GetTopUpTypeList()"><b>Top Up Type</b> <i
+                                    class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p4 custom-table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="9">
+                                                <input class="form-control form-control-sm" placeholder="Search"
+                                                    type="text">
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="width-1p text-center">SN#</th>
+                                            <th class="width-1p text-center">Top Up Type Code</th>
+                                            <th class="width-4p text-center">Top Up Type Name</th>
+                                            <th class="width-2p text-center">Status</th>
+                                            <th class="width-2p text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of topUpTypeList;let i=index">
+                                            <td class="text-right"> {{i+1}} </td>
+                                            <td class="text-left"> {{item?.TopUpTypeCode}} </td>
+                                            <td class="text-left"> {{item?.TopUpTypeName}} </td>
+                                            <td class="text-center">
+                                                <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                                <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                            </td>
+                                            <td (click)="EditTopUpType(item)" title="Click to Edit the item."
+                                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

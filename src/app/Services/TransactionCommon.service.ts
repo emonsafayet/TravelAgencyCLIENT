@@ -32,11 +32,9 @@ export class TransactionCommonService{
 
 	/**END  Online Registation Service**/
 
-	/*START Currency Rate */
-	GETCurrencyRateLIST() { return this.masterService.get("client/business/travel/transaction/Currency/Rate/list"); }	
-
+	/*START ACTIVE Currency Rate */ 
 	GETActiveCurrencyRateLIST() { return this.masterService.get("client/business/travel/transaction/Active/Currency/Rate/list"); }	
-	/*END Currency Rate */ 
+	/*END ACTIVE Currency Rate */ 
 
 	/*START VISA TYPE*/
 	GETVisaTypeLIST() { return this.masterService.get("client/business/travel/transaction/Visa/Type/list"); }	

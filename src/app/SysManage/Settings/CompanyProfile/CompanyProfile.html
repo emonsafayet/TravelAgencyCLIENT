@@ -45,6 +45,8 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Opening Date</span>
                                         <input [(ngModel)]="companyObj.OpeningDate" class="form-control" type="date">
+                                        <!-- <input class="form-control form-control-sm dateInput" data-date="" 
+                                        [attr.data-date]="companyObj.OpeningDate" data-date-format="MM/DD/YYYY" [(ngModel)]="companyObj.OpeningDate" type="date" > -->
                                     </div>
                                 </div>
                                 <div class="col-md-4 mt-3">
@@ -55,9 +57,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 mt-3">
+                                    <img [src]="imgFileBase64" height="100" width="100" *ngIf="imgFileBase64">
+                                    <img src={{url}} height="100" width="100"
+                                        *ngIf=" ! imgFileBase64">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Logo</span>
-                                        <input [(ngModel)]="companyObj.CompanyLogo" class="form-control" type="text">
+                                        <span class="input-group-addon">Photo</span>
+                                        <input #file type="file" class="form-control" accept='image/*'
+                                            (change)="Imagepreview(file.files)" />
                                     </div>
                                 </div>
                             </div>
@@ -75,38 +81,7 @@
 
                     </div>
                 </div>
-                <!-- --list -->
-                <div class="panel">
-                    <div class="panel-body">
-                        <div class="table-fixed">
-                            <table class="table table-bordered table-p4 custom-table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="width-15p">Company Name</th>
-                                        <th class="width-10p text-center">Established Date</th>
-                                        <th class="width-10p text-center">Trade Lic No</th>
-                                        <th class="width-10p text-center">Insurance No</th> 
-                                        <th class="width-25p">Head Office Address</th>                                 
-                                        <th class="width-25p text-center">Logo</th>
-                                        <th class="width-2p text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of companyList" >
-                                        <td class="width-15p text-left"> {{item?.CompanyName}} </td>
-                                        <td class="width-10p  text-left"> {{item?.OpeningDate | date: 'dd MMM yyyy'}} </td>
-                                        <td class="width-10p text-left"> {{item?.TradeLicNo}} </td>
-                                        <td class="width-10p text-left"> {{item?.InsuranceNo}} </td>
-                                        <td class="width-25p text-left"> {{item?.HoAddress}} </td>
-                                        <td class="width-25p text-left"> {{item?.CompanyLogo}} </td> 
-                                        <td (click)="EditItem(item)" title="Click to Edit the item."
-                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> 
+               
             </div>
         </div>
     </div>

@@ -7,8 +7,15 @@
         <li class="breadcrumb-item active">Currency</li>
     </ol>
 </nav>
+<ul class="nav nav-tabs">
+    <li (click)="getCurrencyList()" class="active" ><a data-toggle="tab" class="hoverlink" href="#Currency" id="Currency_tab">Currency</a></li>
+    <li (click)="getCurrencyRate()" ><a data-toggle="tab" class="hoverlink" href="#CurrencyRate" id="CurrencyRate_tab">Currency Rate Conversation</a>
+    </li>
+</ul>
+
 <div class="tab-content" style="background-color: white;">
-    <div class="tab-pane fade in active">
+    <!-- TAB Currency ; 1st TAB-->
+    <div id="Currency" class="tab-pane fade in active">
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel">
@@ -20,31 +27,29 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-12">    
+                            <div class="col-md-12">
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Currency</span>
                                         <input [(ngModel)]="CurrencyObj.CurrencyName" class="form-control"
                                             placeholder="Currency Name" type="text">
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Is Active:</span>
-                                        <i *ngIf="CurrencyObj?.isActive"
-                                            (click)="CurrencyObj.isActive = false"
+                                        <i *ngIf="CurrencyObj?.isActive" (click)="CurrencyObj.isActive = false"
                                             class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                             aria-hidden="true"></i>
-                                        <i *ngIf="! CurrencyObj?.isActive"
-                                            (click)="CurrencyObj.isActive = true"
+                                        <i *ngIf="! CurrencyObj?.isActive" (click)="CurrencyObj.isActive = true"
                                             class="fa fa-square-o font-size-35 ml-3 text-success"
                                             aria-hidden="true"></i>
                                     </div>
-                                </div>                                                             
+                                </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
-                            <div class="col-md-12">                                
+                            <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <button *ngIf="CurrencyObj?.ID == 0" (click)="saveCurrency()" type="button"
                                         class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
@@ -87,7 +92,7 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th class="width-1p text-center">SN#</th> 
+                                        <th class="width-1p text-center">SN#</th>
                                         <th class="width-4p text-center">Currency Name</th>
                                         <th class="width-2p text-center">Status</th>
                                         <th class="width-2p text-center">Action</th>
@@ -96,7 +101,7 @@
                                 <tbody>
                                     <tr
                                         *ngFor="let item of CurrencyList | searchFilter : SearchCurrencyList; let i = index">
-                                        <td class="text-right"> {{i+1}} </td> 
+                                        <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left"> {{item?.CurrencyName}} </td>
                                         <td class="text-center">
                                             <span *ngIf="item?.isActive" class="text-success">Active</span>
@@ -107,6 +112,156 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB CurrencyRate ; 2nd TAB-->
+    <div id="CurrencyRate" class="tab-pane fade">
+        <div class="tab-pane fade in active">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel">
+                        <div class="panel-heading btn-toggle-collapse">
+                            <span><b>Currency Entry</b> </span>
+                            <div class="right">
+                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rate Code</span>
+                                            <input [(ngModel)]="CurrencyRateObj.CurrencyRateCode" class="form-control"
+                                                 type="text" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Currency</span>
+                                            <select class="form-control" [(ngModel)]="CurrencyRateObj.Currency">
+                                                <option selected value="0">SELECT..</option>
+                                                <ng-container *ngFor="let item of CurrencyList; let i = index">
+                                                    <option value="{{item.CurrencyName}}">{{item?.CurrencyName}}</option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rate</span>
+                                            <input [(ngModel)]="CurrencyRateObj.Rate" class="form-control"
+                                                placeholder="Currency Rate" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Ordering</span>
+                                            <input [(ngModel)]="CurrencyRateObj.Order" class="form-control"
+                                                placeholder="Ordering" type="number">
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">FromdDate</span>
+                                            <input [(ngModel)]="CurrencyRateObj.FromdDate" class="form-control" type="date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">ExpireDate</span>
+                                            <input [(ngModel)]="CurrencyRateObj.ExpireDate" class="form-control" type="date">
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-3 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Is Active:</span>
+                                            <i *ngIf="CurrencyRateObj?.isActive" (click)="CurrencyRateObj.isActive = false"
+                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="! CurrencyRateObj?.isActive" (click)="CurrencyRateObj.isActive = true"
+                                                class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-3 mt-3">
+                                        <button *ngIf="CurrencyRateObj?.ID == 0" (click)="saveUpdateCurrencyRate()" type="button"
+                                            class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                        <button *ngIf="CurrencyRateObj?.ID > 0" (click)="saveUpdateCurrencyRate()" type="button"
+                                            class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                        <button type="button" (click)="ResetCurrencyRateModel()" class="btn btn-info ml-2"><i
+                                                class="fas fa-redo-alt"></i> Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--Currency Rate list -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="hoverlink" (click)="getCurrencyRate()"><b>Currency Rate List</b> <i
+                                    class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                          
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p4 custom-table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6">
+                                                <input class="form-control form-control-sm" placeholder="Search"
+                                                    type="text" [(ngModel)]="SearchCurrencyRateList">
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="width-1p text-center">SN#</th>
+                                            <th class="width-1p text-center">Rate Code</th>
+                                            <th class="width-4p text-center">Currency Name</th>
+                                            <th class="width-4p text-center">Currency Rate</th>
+                                            <th class="width-4p text-center">FromdDate</th>
+                                            <th class="width-4p text-center">ExpireDate</th>
+                                            <th class="width-4p text-center">Order</th>
+                                            <th class="width-2p text-center">Status</th>
+                                            <th class="width-2p text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of CurrencyRateList | searchFilter : SearchCurrencyRateList; let i = index">
+                                            <td class="text-right"> {{i+1}} </td>
+                                            <td class="text-left"> {{item?.CurrencyRateCode}} </td>
+                                            <td class="text-left"> {{item?.Currency}} </td>
+                                            <td class="text-left"> {{item?.Rate}} </td>
+                                            <td class="text-left"> {{item?.FromdDate | date: 'dd MMM YYYY'}} </td>
+                                            <td class="text-left"> {{item?.ExpireDate | date: 'dd MMM YYYY' }} </td>
+                                            <td class="text-left"> {{item?.Order}} </td> 
+                                            <td class="text-center">
+                                                <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                                <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                            </td>
+                                            <td (click)="EditCurrencyRate(item)" title="Click to Edit the item."
+                                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
