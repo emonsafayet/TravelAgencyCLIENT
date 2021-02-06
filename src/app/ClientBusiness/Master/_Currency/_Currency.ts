@@ -147,5 +147,8 @@ export class _Currency implements OnInit {
 	EditCurrencyRate(item) {
 		this.CurrencyRateObj = JSON.parse(JSON.stringify(item));
 	}
+	ResetCurrencyRateModel(){
+		
+	}
 	
 }
