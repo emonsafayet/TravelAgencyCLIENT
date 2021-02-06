@@ -50,6 +50,7 @@ import { AirTicketRegistration } from "../ClientBusiness/Transaction/AirTicketRe
 import { HotelBooking } from "../ClientBusiness/Transaction/HotelBooking/HotelBooking";
 import { GroupTour } from "../ClientBusiness/Transaction/GroupTour/GroupTour";
 import { HolidayPackageTour } from "../ClientBusiness/Transaction/HolidayPackageTour/HolidayPackageTour";
+import { MoneyReceipt } from "../ClientBusiness/Transaction/MoneyReceipt/MoneyReceipt";
 
 
 export const AdminRoutes: Routes = [
@@ -102,5 +103,6 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/transaction/hotel/booking', component: HotelBooking },
 	{ path: 'client/business/travel/transaction/group/tour', component: GroupTour },
 	{ path: 'client/business/travel/transaction/holiday/package/tour', component: HolidayPackageTour },
+	{ path: 'client/business/travel/transaction/money/receipt', component: MoneyReceipt },
 ];
  
