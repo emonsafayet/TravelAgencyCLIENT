@@ -4,6 +4,7 @@ import { AuthGuard } from '../../../authGuard.guard';
 import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service";
 import { Library } from 'src/app/library/library';
+import { Common } from "../../../library/common";
 //Service   
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { ClientBusinessService } from '../../../Services/ClientBusiness.service';
@@ -11,6 +12,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 // classess
 import { TopUpModel, TopUpTypeModel } from '../../../Classes/Transaction/TopUpModel';
 
+declare var moment: any;
 @Component({
 	templateUrl: 'TopUp.html'
 })
@@ -31,7 +33,7 @@ export class TopUp implements OnInit {
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
-
+		this.topUpObj.TopUpDate = moment().format(Common.SQLDateFormat);
 		this.getTopUpList();
 		this.GetTopUpTypeList();
 		this.GetProviderList();
@@ -86,6 +88,7 @@ export class TopUp implements OnInit {
 
 	EditItem(item) {
 		this.topUpObj = JSON.parse(JSON.stringify(item));
+		this.topUpObj.TopUpDate = moment(new Date(this.topUpObj.TopUpDate)).format(Common.SQLDateFormat);
 	}
 	getTopUpList() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -175,5 +178,6 @@ export class TopUp implements OnInit {
 	}
 	EditTopUpType(item) {
 		this.topUpTypeObj = JSON.parse(JSON.stringify(item));
+		this.topUpTypeObj.date =  moment(new Date(this.topUpTypeObj.BookingRegDate)).format(Common.SQLDateFormat);
 	}
 }

@@ -127,7 +127,7 @@ export class HolidayPackageTour implements OnInit {
 		return result;
 	}
 	EditItem() {
-
+		this.HolidayPackageMasterObj.TourDate = moment(new Date(this.HolidayPackageMasterObj.TourDate)).format(Common.SQLDateFormat);
 	}
 	//DROP DOWN
 	GETCompanyLIST() {

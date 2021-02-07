@@ -55,6 +55,8 @@ export class AirTicketRegistration implements OnInit {
 		this.GetTravelProviderList();
 		this.GETActiveCurrencyRateLIST();
 		this.airTicketregObj.TravelDate = moment().format(Common.SQLDateFormat); 
+		this.airTicketregObj.ReturnDate = moment().format(Common.SQLDateFormat); 
+		this.airTicketregObj.ChangeDate = moment().format(Common.SQLDateFormat); 
 		this.GetAirTicketList();
 		this.Notification.LoadingRemove();
 
@@ -98,6 +100,10 @@ export class AirTicketRegistration implements OnInit {
 	}
 	EditItem(item) {
 		this.airTicketregObj = JSON.parse(JSON.stringify(item)); 
+		this.airTicketregObj.TravelDate = moment(new Date(this.airTicketregObj.TravelDate)).format(Common.SQLDateFormat); 
+		this.airTicketregObj.ReturnDate = moment(new Date(this.airTicketregObj.ReturnDate)).format(Common.SQLDateFormat); 
+		this.airTicketregObj.ChangeDate = moment(new Date(this.airTicketregObj.ChangeDate)).format(Common.SQLDateFormat); 
+
 	}
 	ResetModel() {
 		this.airTicketregObj =  new AirTicketRegModel();

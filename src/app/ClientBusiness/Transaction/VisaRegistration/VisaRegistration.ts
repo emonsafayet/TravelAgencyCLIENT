@@ -42,6 +42,7 @@ export class VisaRegistration implements OnInit {
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 
 		this.Notification.LoadingWithMessage('Loading...');
+		this.visaRegObj.VisaRegDate = moment().format(Common.SQLDateFormat);
 		this.GETCustomerLIST();
 		this.GETCompanyLIST();
 		this.GETCurrencyList();
@@ -165,6 +166,8 @@ export class VisaRegistration implements OnInit {
 		if (Library.isNuLLorUndefined(item.CustomerCode)) this.visaRegObj.CustomerCode = "0";
 		if (Library.isNuLLorUndefined(item.CardName)) this.visaRegObj.CardID = "0";
 		if (Library.isNuLLorUndefined(item.CurrencyName)) this.visaRegObj.Currency = "0";
+		this.visaRegObj.VisaRegDate = moment(new Date(this.visaRegObj.VisaRegDate)).format(Common.SQLDateFormat);
+
 	}
 	GETVisaTegLIST() {
 		this.Notification.LoadingWithMessage('Loading...');

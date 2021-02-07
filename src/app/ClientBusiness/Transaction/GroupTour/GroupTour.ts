@@ -127,7 +127,7 @@ export class GroupTour implements OnInit {
 
 	}
 	EditItem() {
-
+		this.groupTourInfoMasterObj.TourDate = moment(new Date(this.groupTourInfoMasterObj.TourDate)).format(Common.SQLDateFormat);
 	}
 	//DROP DOWN
 	GETCompanyLIST() {

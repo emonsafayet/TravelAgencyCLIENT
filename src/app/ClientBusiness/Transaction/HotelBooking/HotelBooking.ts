@@ -160,10 +160,13 @@ export class HotelBooking implements OnInit {
 	EditItem(item) {
 		this.ResetModel();
 		this.hotelBookingObj = JSON.parse(JSON.stringify(item));
+		this.hotelBookingObj.BookingRegDate =  moment(new Date(this.hotelBookingObj.BookingRegDate)).format(Common.SQLDateFormat);
+		this.hotelBookingObj.CheckInDate =  moment(new Date(this.hotelBookingObj.CheckInDate)).format(Common.SQLDateFormat);
+		this.hotelBookingObj.CheckOutDate =  moment(new Date(this.hotelBookingObj.CheckOutDate)).format(Common.SQLDateFormat);
+	 
 	}
 	ResetModel() {
 		this.hotelBookingObj = new HotelBookingModel();
-		this.hotelBookingObj.BookingRegDate = moment().format(Common.SQLDateFormat);
 	}
 	updateTotalPayable() {
 		setTimeout(() => {

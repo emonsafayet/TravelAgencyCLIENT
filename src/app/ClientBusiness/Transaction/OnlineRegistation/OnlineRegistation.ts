@@ -51,6 +51,7 @@ export class OnlineRegistation implements OnInit {
 		this.GETCardLIST();
 		this.GETActiveCurrencyRateLIST();
 		this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
+		this.regObj.EvenDate = moment().format(Common.SQLDateFormat);
 		this.Notification.LoadingRemove();
 	}
 	getOnlineRegistation() {
@@ -155,6 +156,7 @@ export class OnlineRegistation implements OnInit {
 		this.regObj.TravelDestinationCode = "0";
 		this.regObj.CurrencyRate=0;
 		this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
+		this.regObj.EvenDate = moment().format(Common.SQLDateFormat);
 	}
 	 
 	EditItem(item) {
@@ -163,6 +165,8 @@ export class OnlineRegistation implements OnInit {
 		if (Library.isNuLLorUndefined(item.CompanyCode)) this.regObj.CompanyCode = "0";
 		if (Library.isNuLLorUndefined(item.TravelDestinationCode)) this.regObj.TravelDestinationCode = "0";
 		if (Library.isNuLLorUndefined(item.CardID)) this.regObj.CardCode = "0";
+		this.regObj.RegistationDate = moment(new Date(this.regObj.RegistationDate)).format(Common.SQLDateFormat);
+		this.regObj.EvenDate = moment(new Date(this.regObj.EvenDate)).format(Common.SQLDateFormat);
 	}
 	updateTotalPayable(){
 		debugger 
