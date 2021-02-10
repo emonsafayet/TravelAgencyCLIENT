@@ -53,6 +53,11 @@ import { HolidayPackageTour } from "../ClientBusiness/Transaction/HolidayPackage
 import { MoneyReceipt } from "../ClientBusiness/Transaction/MoneyReceipt/MoneyReceipt";
 import { ClientAdvancePayment } from "../ClientBusiness/Transaction/ClientAdvancePayment/ClientAdvancePayment";
 
+//Report
+import { CollectionReport } from "../Report/CollectionReport/CollectionReport";
+import { ServiceReport } from "../Report/ServiceReport/ServiceReport";
+import { DueReport } from "../Report/DueReport/DueReport";
+
 
 export const AdminRoutes: Routes = [
 	{ path: '', component: Dashboard },
@@ -106,5 +111,12 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/transaction/holiday/package/tour', component: HolidayPackageTour },
 	{ path: 'client/business/travel/transaction/money/receipt', component: MoneyReceipt },
 	{ path: 'client/business/travel/advance/payment', component: ClientAdvancePayment },
+
+	//Report
+	{ path: 'report/business/travel/service/report', component: ServiceReport },
+	{ path: 'report/business/travel/collection/report', component: CollectionReport },
+	{ path: 'report/business/travel/due/report', component: DueReport },
+
+
 ];
  

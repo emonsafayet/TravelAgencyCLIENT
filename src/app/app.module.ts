@@ -10,10 +10,11 @@ import { AuthGuard } from './authGuard.guard';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
-// Componentsimport { ClientAdvancePayment } from "./ClientBusiness/Transaction/ClientAdvancePayment/ClientAdvancePayment";
+
+import { ClientAdvancePayment } from "./ClientBusiness/Transaction/ClientAdvancePayment/ClientAdvancePayment";
 import { MoneyReceipt } from "./ClientBusiness/Transaction/MoneyReceipt/MoneyReceipt";
 import { HolidayPackageTour } from "./ClientBusiness/Transaction/HolidayPackageTour/HolidayPackageTour";
 import { GroupTour } from "./ClientBusiness/Transaction/GroupTour/GroupTour";
@@ -38,9 +39,9 @@ import { TypCustomer } from "./ClientBusiness/Master/TypCustomer/TypCustomer";
 
 import { Airline } from "./ClientBusiness/Master/Airline/Airline";
 
-import { Destination } from "./ClientBusiness/Master/Destination/Destination"; 
+import { Destination } from "./ClientBusiness/Master/Destination/Destination";
 
-import { Country } from "./ClientBusiness/Master/Country/Country"; 
+import { Country } from "./ClientBusiness/Master/Country/Country";
 import { TravelProduct } from "./ClientBusiness/Master/TravelProduct/TravelProduct";
 import { Provider } from "./ClientBusiness/Master/Provider/Provider";
 import { NotiflixUI } from "./SysManage/template/NotiflixUI/NotiflixUI";
@@ -100,8 +101,10 @@ import { showInMillion } from "./pipes/showInMillion.pipe";
 import { showInCrore } from "./pipes/showInCrore.pipe";
 import { ProductNameShorter } from "./pipes/ProductNameShorter.pipe";
 
-// Services 
-import {  TransactionCommonService} from "./Services/TransactionCommon.service";
+// Services   
+
+import { RptService } from "./Services/RptService";
+import { TransactionCommonService } from "./Services/TransactionCommon.service";
 import { ClientBusinessService } from "./Services/ClientBusiness.service";
 import { NotificationService } from "./Services/Notification.service";
 import { EmployeeService } from "./Services/Employee.service";
@@ -110,7 +113,12 @@ import { MasterService } from "./Services/Master.service";
 import { UserService } from "./Services/User.service";
 import { MenuService } from "./Services/menu.service";
 
-
+// Report
+import { ServiceReport } from "./Report/ServiceReport/ServiceReport";
+import { CollectionReport } from "./Report/CollectionReport/CollectionReport";
+import { DueReport } from "./Report/DueReport/DueReport";
+
+
 
 
 @NgModule({
@@ -123,7 +131,11 @@ import { MenuService } from "./Services/menu.service";
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
     ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
-    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour, CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking, GroupTour, HolidayPackageTour, MoneyReceipt, ClientAdvancePayment],
+    Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour,
+    CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking, GroupTour, HolidayPackageTour,
+    MoneyReceipt, ClientAdvancePayment,
+    //Report
+    DueReport, CollectionReport, ServiceReport],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   
@@ -132,7 +144,9 @@ import { MenuService } from "./Services/menu.service";
     //SysManage
     MenuService, UserService, MasterService, UserAccessService, EmployeeService,
     //Client Business
-     Provider, ClientBusinessService, TransactionCommonService],
+    Provider, 
+    //Service
+    ClientBusinessService, TransactionCommonService,RptService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
