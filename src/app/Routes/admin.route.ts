@@ -51,6 +51,7 @@ import { HotelBooking } from "../ClientBusiness/Transaction/HotelBooking/HotelBo
 import { GroupTour } from "../ClientBusiness/Transaction/GroupTour/GroupTour";
 import { HolidayPackageTour } from "../ClientBusiness/Transaction/HolidayPackageTour/HolidayPackageTour";
 import { MoneyReceipt } from "../ClientBusiness/Transaction/MoneyReceipt/MoneyReceipt";
+import { ClientAdvancePayment } from "../ClientBusiness/Transaction/ClientAdvancePayment/ClientAdvancePayment";
 
 
 export const AdminRoutes: Routes = [
@@ -104,5 +105,6 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/transaction/group/tour', component: GroupTour },
 	{ path: 'client/business/travel/transaction/holiday/package/tour', component: HolidayPackageTour },
 	{ path: 'client/business/travel/transaction/money/receipt', component: MoneyReceipt },
+	{ path: 'client/business/travel/advance/payment', component: ClientAdvancePayment },
 ];
  

@@ -85,6 +85,15 @@ export class TransactionCommonService{
 	getholidayPackageTourList() { return this.masterService.get("client/business/travel/transaction/holiday/package/tour/list"); }
 
 	//END HOLIDAY PACKAGE TOUR
+
+
+	//START Advance Payment
+
+	saveUpdateAdvancePayment(clientAdvceObj: any) { return this.masterService.post(`client/business/travel/transaction/advance/payment/save/update`, clientAdvceObj); }
+	
+	getAdvancePayment() { return this.masterService.get("client/business/travel/transaction/advance/payment/list"); }
+
+	//END Advance Payment
  
 
 

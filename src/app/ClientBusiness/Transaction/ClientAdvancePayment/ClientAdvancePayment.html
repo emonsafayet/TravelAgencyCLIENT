@@ -1,0 +1,239 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Business</li>
+        <li class="breadcrumb-item active">Travel</li>
+        <li class="breadcrumb-item active">Transaction</li>
+        <li class="breadcrumb-item active">Client</li>
+        <li class="breadcrumb-item active">Advance</li>
+        <li class="breadcrumb-item active">Payment</li>
+    </ol>
+</nav>
+<div class="tab-content" style="background-color: white;">
+    <div id="topUp" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Client Advance Entry</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Advance Code</span>
+                                        <input readonly [(ngModel)]="clientAdvceObj.AdvanceCode" class="form-control"
+                                            type="text" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Advance Amount</span>
+                                        <input [(ngModel)]="clientAdvceObj.Amount" class="form-control" type="number">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Advance Payment Date</span>
+                                        <input type="date" data-date="" [attr.data-date]="clientAdvceObj.AdvanceDate"
+                                            data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="clientAdvceObj.AdvanceDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Company</span>
+                                        <select class="form-control" [(ngModel)]="clientAdvceObj.CompanyCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of companyList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <select class="form-control" [(ngModel)]="clientAdvceObj.CustomerCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Payment Type</span>
+                                        <select class="form-control" [(ngModel)]="clientAdvceObj.PaymentType"
+                                            (change)="onChangeBank($event.target.value)">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of PaymentTypeList; let i = index">
+                                                <option value="{{item.PaymentTypeCode}}">{{item?.PaymentTypeName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Bank</span>
+                                        <select class="form-control" [(ngModel)]="clientAdvceObj.BankCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of bankList; let i = index">
+                                                <option value="{{item.BankCode}}">{{item?.BankName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Cheque No</span>
+                                        <input [(ngModel)]="clientAdvceObj.ChequeNo" class="form-control" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3  mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Cheque Clearing Date</span>
+                                        <input type="date" data-date="" [attr.data-date]="clientAdvceObj.ClearingDate"
+                                            data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="clientAdvceObj.ClearingDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="clientAdvceObj.Remark" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Clear:</span>
+                                        <i *ngIf="clientAdvceObj?.isClear" (click)="clientAdvceObj.isClear = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! clientAdvceObj?.isClear" (click)="clientAdvceObj.isClear = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="clientAdvceObj?.isActive" (click)="clientAdvceObj.isActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! clientAdvceObj?.isActive" (click)="clientAdvceObj.isActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- ----------Save-Update -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <button *ngIf="clientAdvceObj?.ID == 0" (click)="saveUpdate()" type="button"
+                                        class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                    <button *ngIf="clientAdvceObj?.ID > 0" (click)="saveUpdate()" type="button"
+                                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                    <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                            class="fas fa-redo-alt"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- --list -->
+                        <div class="panel mt-3">
+                            <div class="panel-heading">
+                                <span class="hoverlink" (click)="getAdvancePaymentList()"><b>Advance Payment List</b> <i
+                                        class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                                <span class="label label-primary ml-2 hoverPointer">Report</span>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse"><i
+                                            class="lnr lnr-chevron-up"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-fixed">
+                                    <table class="table table-bordered table-p4 custom-table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="12">
+                                                    <input class="form-control form-control-sm" placeholder="Search"
+                                                        type="text" [(ngModel)]="searchList">
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="width-1p text-center">SN#</th>
+                                                <th class="width-5p text-center">Advance Code/Date</th>
+                                                <th class="width-10p">Company</th>
+                                                <th class="width-2p">Amount</th>
+                                                <th class="width-2p">Payment Type</th>
+                                                <th class="width-2p">Bank</th>
+                                                <th class="width-2p">Cheque No</th>
+                                                <th class="width-2p">is Cheque Clear</th>
+                                                <th class="width-2p">Cheque Clearance Date</th>
+                                                <th class="width-2p text-center">Status</th>
+                                                <th class="width-2p text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let item of advancePaymentList | searchFilter : searchList; let i = index">
+                                                <td class="width-1p text-right"> {{i+1}} </td>
+                                                <td class="width-5p text-left"> Code :{{item?.AdvanceCode}}
+                                                    <br>Adv. Date : {{item?.AdvanceDate | date: 'dd MMM yyyy' }}
+
+                                                </td>
+
+                                                <td class="width-10p text-left">
+                                                    Company : {{item?.CompanyName}}
+                                                    <br> Customer : {{item?.CustomerName}}
+                                                </td>
+                                                <td class="width-2p text-left"> {{item?.Amount}} </td>
+                                                <td class="width-2p text-left"> {{item?.PaymentTypeName}} </td>
+                                                <td class="width-2p text-left"> {{item?.BankName}} </td>
+                                                <td class="width-2p text-left"> {{item?.ChequeNo}} </td>
+                                                <td class="text-center">
+                                                    <span *ngIf="item?.isClear" class="text-success">Yes</span>
+                                                    <span *ngIf="! item?.isClear" class="text-danger">Not Yet</span>
+                                                </td>
+                                                <td class="width-5p text-left">   {{item?.ClearingDate | date: 'dd MMM yyyy' }}
+                                                </td>
+                                                <td class="text-center">
+                                                    <span *ngIf="item?.isActive" class="text-success">Active</span>
+                                                    <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                                </td>
+                                                <td (click)="EditItem(item)" title="Click to Edit the item."
+                                                    class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

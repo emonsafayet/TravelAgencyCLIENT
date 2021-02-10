@@ -79,7 +79,7 @@ export class ClientBusinessService {
 
 	/*START Currency Rate */
 	GETCurrencyRateLIST() { return this.masterService.get("client/business/travel/Currency/Rate/list"); }
-	
+
 	saveUpdateCurrencyRate(currencyRateObj: any) { return this.masterService.post(`client/business/travel/currency/rate/save/update`, currencyRateObj); }
 	/*END Currency Rate */
 
@@ -132,9 +132,14 @@ export class ClientBusinessService {
 
 	/*END Hotel Type */
 
-/*START Top Up TYPE */
- 
-saveUpdateTopUpType(topUpTypeObj: any) { return this.masterService.post(`client/business/travel/transaction/topUp/Type/save/update`, topUpTypeObj); }
+	/*START Top Up TYPE */
 
-/*END Top Up TYPE*/
+	saveUpdateTopUpType(topUpTypeObj: any) { return this.masterService.post(`client/business/travel/transaction/topUp/Type/save/update`, topUpTypeObj); }
+
+	/*END Top Up TYPE*/
+
+	/*START BANK */
+	GetBankList() { return this.masterService.get("client/business/travel/transaction/bank/list"); }
+
+	/*END BANK */
 }

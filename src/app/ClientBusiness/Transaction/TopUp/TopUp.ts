@@ -178,6 +178,6 @@ export class TopUp implements OnInit {
 	}
 	EditTopUpType(item) {
 		this.topUpTypeObj = JSON.parse(JSON.stringify(item));
-		this.topUpTypeObj.date =  moment(new Date(this.topUpTypeObj.BookingRegDate)).format(Common.SQLDateFormat);
+		 
 	}
 }
