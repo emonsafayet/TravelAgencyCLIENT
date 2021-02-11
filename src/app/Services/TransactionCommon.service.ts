@@ -94,6 +94,12 @@ export class TransactionCommonService{
 	getAdvancePayment() { return this.masterService.get("client/business/travel/transaction/advance/payment/list"); }
 
 	//END Advance Payment
+
+	//Start Money Receipt
+
+	getServiceListByCustomerCode(customerCode: string) { return this.masterService.get("client/business/travel/transaction/money/receipt/service/list/"+customerCode); }
+ 
+	//End Money Receipt
  
 
 

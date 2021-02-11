@@ -31,7 +31,251 @@
     </div>
     <!-- TAB MR-Entry ; 2nd TAB-->
     <div id="MREntry" class="tab-pane fade">
-        
-    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- RECENT PURCHASES -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Money Receipt Master</h3>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
 
+                        </div>
+                    </div>
+                    <div class="panel-body no-padding">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Receipt Code</span>
+                                        <input readonly [(ngModel)]="mrMasterObj.ReceiptCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Registion Date</span>
+                                        <input type="date" data-date="" [attr.data-date]="mrMasterObj.ReceivedDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="mrMasterObj.ReceivedDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3  mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Client</span>
+                                        <select class="form-control" [(ngModel)]="mrMasterObj.CustomerCode"
+                                            (change)="onChange($event.target.value)">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3  mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="mrMasterObj.Remark" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Total Payable Amount</span>
+                                        <input [(ngModel)]="mrMasterObj.TotalPayableAmount" class="form-control"
+                                            type="number">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Lock:</span>
+                                        <i *ngIf="mrMasterObj?.IsLocked" (click)="mrMasterObj.IsLocked = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! mrMasterObj?.IsLocked" (click)="mrMasterObj.IsLocked = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="mrMasterObj?.isActive" (click)="mrMasterObj.isActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! mrMasterObj?.isActive" (click)="mrMasterObj.isActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <button *ngIf="mrMasterObj?.ID == 0" (click)="saveUpdateMoneyReceipt()"
+                                        type="button" class="btn btn-success"><i class="fa fa-plus"></i>
+                                        Save</button>
+                                    <button *ngIf="mrMasterObj?.ID > 0" (click)="saveUpdateMoneyReceipt()" type="button"
+                                        class="btn btn-success ml-2"><i class="fa fa-plus"></i>
+                                        Update</button>
+                                    <button type="button" (click)="ResetMoneyReceiptModel()"
+                                        class="btn btn-info ml-2"><i class="fas fa-redo-alt"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- START Service Payment Details -->
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Service Payment Details</h3>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+
+                        </div>
+                    </div>
+                    <div class="panel-body no-padding">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+
+                                    <th class="text-left width-10p">Service Code</th>
+                                    <th class="text-left width-20p">Service Name</th>
+                                    <th class="text-left width-8p">Due Amount</th>
+                                    <th class="text-left width-10p">Payable Amount</th>
+                                    <th class="text-left width-10p">Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="font-size-8" *ngFor="let item of serviceListObj; let i = index">
+
+                                    <td class="text-left width-10p">
+                                        <input readonly type="text" class="form-control form-control-sm"
+                                            [(ngModel)]="item.ServiceCode">
+                                    </td>
+                                    <td class="text-left width-20p">
+                                        <input readonly type="text" class="form-control form-control-sm"
+                                            [(ngModel)]="item.ServiceName">
+                                    </td>
+                                    <td class="text-left width-8p">
+                                        <input readonly type="text" class="form-control form-control-sm"
+                                            [(ngModel)]="item.ServiceAmount">
+                                    </td>
+                                    <td class="text-left width-10p">
+                                        <input type="text" class="form-control form-control-sm"
+                                            [(ngModel)]="item.PayableAmount">
+                                    </td>
+                                    <td class="text-left width-10p">
+                                        <input type="text" class="form-control form-control-sm"
+                                            [(ngModel)]="item.Remark">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END Service Payment Details -->
+            <!-- START Payment Status  -->
+            <div class="col-md-7">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Payment Status Details</h3>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn btn-success" (click)="addDetailsNew()"><i class="fa fa-plus"
+                                aria-hidden="true"></i>Add  NEW
+                        </div>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-fixed">
+                                    <table class="table table-bordered table-p1 custom-table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="width-10p">Payment Type</th>
+                                                <th class="width-5p">Receive Amount</th>
+                                                <th class="width-20p">Bank Name</th>
+                                                <th class="width-20p">Cheque No</th>
+                                                <th class="width-20p">Card</th>
+                                                <th class="width-20p">POS Transaction No</th>
+                                                <th class="width-20p">TxnNo</th>
+                                                <th class="width-2p">Cancel</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="font-size-10"
+                                                *ngFor="let item of mrPaymentDetailObj; let i = index">
+                                                <td class="width-10p">
+                                                    <select class="form-control  form-control-sm"
+                                                        [(ngModel)]="item.PaymentType">
+                                                        <option selected value="0">SELECT..</option>
+                                                        <ng-container
+                                                            *ngFor="let itm of PaymentTypeList; let i = index">
+                                                            <option value="{{itm.PaymentTypeCode}}">
+                                                                {{itm?.PaymentTypeName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </td>
+
+                                                <td class="width-5p">
+                                                    <input type="number" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.ReceivedAmount">
+                                                </td>
+                                                <td class="width-20p">
+                                                    <select class="form-control form-control-sm"
+                                                        [(ngModel)]="item.BankName">
+                                                        <option selected value="0">SELECT..</option>
+                                                        <ng-container *ngFor="let itm of bankList; let i = index">
+                                                            <option value="{{itm.BankCode}}">{{itm?.BankName}}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                </td>
+                                                <td class="width-20p">
+                                                    <input type="text" class="form-control form-control-sm" [(ngModel)]="item.ChequeNo">
+                                                </td>
+                                                <td class="width-20p">
+                                                    <input type="text" class="form-control form-control-sm"  [(ngModel)]="item.CardNo">
+                                                </td>
+                                                <td class="width-20p">
+                                                    <input type="text" class="form-control form-control-sm" [(ngModel)]="item.POSTransactionNo">
+                                                </td>
+                                                <td class="width-20p">
+                                                    <input type="text" class="form-control form-control-sm" [(ngModel)]="item.TxnNo" (keyup.enter)="addDetailsNew()">
+                                                </td>
+                                                <td class="text-center" (click)="removeDetails(i)"> <i  class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Payment Status  -->
+        </div>
+    </div>
 </div>
