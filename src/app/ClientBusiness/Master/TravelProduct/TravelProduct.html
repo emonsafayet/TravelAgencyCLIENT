@@ -37,6 +37,19 @@
                                 </div>  
                                 <div class="col-md-3">
                                     <div class="input-group">
+                                        <span class="input-group-addon">Table Name</span>
+                                        <select class="form-control"
+                                            [(ngModel)]="travelProductObj.TableName">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of tableNameList; let i = index">
+                                                <option value="{{item.TableName}}">  {{item?.TableName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Service Charge%</span>
                                         <input [(ngModel)]="travelProductObj.ServiceCharge_Percent" class="form-control"
                                             placeholder="Service Charge On Percent" type="number">
@@ -89,13 +102,7 @@
                     <div class="panel-heading">
                         <span class="hoverlink" (click)="getTravelProductList()"><b>Travel Service List</b> <i
                                 class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
-
-                        <span class="label label-primary ml-2 hoverPointer">Report</span>
-                        <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
-                        <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
-                        <span class="label label-info ml-2 hoverPointer">INFO</span>
-                        <span class="label label-warning ml-2 hoverPointer">WARNING</span>
-                        <span class="label label-danger ml-2 hoverPointer">DANGER</span>
+                        <span class="label label-primary ml-2 hoverPointer">Report</span> 
                         <div class="right">
                             <button type="button" class="btn-toggle-collapse"><i
                                     class="lnr lnr-chevron-up"></i></button>
@@ -115,6 +122,7 @@
                                         <th class="width-1p text-center">SN#</th>
                                         <th class="width-1p">Service Code</th>
                                         <th class="width-4p text-center">Service Name</th>
+                                        <th class="width-4p text-center">Table Name</th>
                                         <th class="width-1p text-center">Percentage(%)</th>
                                         <th class="width-4p text-center">Remarks</th>
                                         <th class="width-1p text-center">Status</th>
@@ -127,6 +135,7 @@
                                         <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left"> {{item?.ServiceCode}} </td>
                                         <td class="text-left"> {{item?.ServiceName}} </td>
+                                        <td class="text-left"> {{item?.TableName }} </td>
                                         <td class="text-right"> {{item?.ServiceCharge_Percent}} </td>
                                         <td class="text-left"> {{item?.Remarks}} </td>
                                         <td class="text-center">

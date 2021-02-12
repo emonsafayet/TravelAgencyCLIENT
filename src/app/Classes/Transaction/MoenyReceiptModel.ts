@@ -22,7 +22,7 @@ export class MRInvoiceDetailModel{
 	public ReceiptCode : string;
 	public ServiceCode : string;
 	public DueAmount : number;
-	public PaidAmount : number;
+	public PaidAmount : number=0;
 	public Remark : string;
 	public CreatedBy : string;
 	public CreatedOn : string;
@@ -50,7 +50,7 @@ export class MRInvoiceDetailModelDTO{
 
 	public ServiceCode : string;
 	public ServiceName : string;
-	public ServiceAmount : number; 
+	public ServiceAmount : number=0; 
 	public PayableAmount : number=0; 
 	public Remark : string;
  

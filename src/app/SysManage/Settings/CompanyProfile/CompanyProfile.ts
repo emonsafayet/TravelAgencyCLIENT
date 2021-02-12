@@ -106,7 +106,7 @@ export class CompanyProfile implements OnInit {
 			);
 	}
 	setCompanyProfileList(data) {
-		debugger
+		
 		this.companyObj = data;
 		// this.companyObj.OpeningDate = moment(this.companyObj.OpeningDate).add(0, 'months').format('MM/DD/YYYY');
 		this.Notification.LoadingRemove();

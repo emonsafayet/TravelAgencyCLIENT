@@ -7,6 +7,7 @@ import { NotificationService } from "../../../Services/Notification.service";
 import { UserAccessService } from "../../../Services/UserAccess.service";
 import { Library } from 'src/app/library/library';
 import { ClientBusinessService } from '../../../Services/ClientBusiness.service';
+import { SettingService } from '../../../Services/Setting.service';
 
 //classes
 import { TravelProductModel } from '../../../Classes/ClientBusiness/TravelProductModel';
@@ -18,16 +19,18 @@ import { TravelProductModel } from '../../../Classes/ClientBusiness/TravelProduc
 export class TravelProduct implements OnInit {
 	user: any;
 	travelProductList: any[] = [];
+	tableNameList: any[] = [];
 	travelProductObj: TravelProductModel = new TravelProductModel();
 	SearchtravelProductList: string = '';
 	constructor(private userService: UserService, private authGuard: AuthGuard,
-		private Notification: NotificationService, private clientBusinessService: ClientBusinessService) { }
+		private Notification: NotificationService, private clientBusinessService: ClientBusinessService,private settingService:SettingService) { }
 
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 
 		this.Notification.LoadingWithMessage('Loading...');
+		this.getTableList();
 		this.getTravelProductList();
 		this.Notification.LoadingRemove();
 
@@ -97,5 +100,18 @@ export class TravelProduct implements OnInit {
 
 		return result;
 	}
+	getTableList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.settingService.getSignatureList()
+			.subscribe(
+				data => this.setTableNameList(data),
+				error => this.Notification.Error(error)
+			);
+	}
 
+	setTableNameList(data) {  	
+		this.tableNameList = data; 
+		this.tableNameList=this.tableNameList.filter(p => p.TableType =="Transaction"); 
+		this.Notification.LoadingRemove();
+	}
 }

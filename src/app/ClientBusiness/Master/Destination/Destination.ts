@@ -48,7 +48,7 @@ export class Destination implements OnInit {
 		if (this.destinationObj.ID > 0) this.destinationObj.UpdatedBy = this.user.EmployeeCode;
 		else this.destinationObj.CreatedBy = this.user.EmployeeCode;
 		this.Notification.LoadingWithMessage('Loading...');
-			debugger
+			
 		this.clientBusinessService.saveUpdateTravelDestination(this.destinationObj)
 			.subscribe(
 				data => this.setaveResult(data),
@@ -90,8 +90,7 @@ export class Destination implements OnInit {
 		this.destinationObj.CountryCode = "0";
 	}
 
-	validateModel() {
-		debugger
+	validateModel() { 
 		var result = true;
 		if (Library.isNuLLorUndefined(this.destinationObj.DestinationName)) {
 			this.Notification.Warning('Please Enter Destination Name.');

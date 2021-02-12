@@ -90,7 +90,7 @@ export class _PackTour implements OnInit {
 	savePackage() {
 		// console.log(this.packageMasterObj);
 		// console.log(this.packageDetailObj);
-		debugger
+		
 		// Validation
 		if (!this.validateModel()) return;
 
@@ -122,7 +122,7 @@ export class _PackTour implements OnInit {
 		this.setNewPackageDetails();  
 	}
 	validateModel() {
-		debugger
+		
 		var result = true;
 		try {
 			if (Library.isNullOrEmpty(this.packageMasterObj.PackageName)) {

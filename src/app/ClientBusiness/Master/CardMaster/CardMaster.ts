@@ -91,8 +91,7 @@ export class CardMaster implements OnInit {
 	}
 
 	//get Card List
-	getCardinfosList() {
-		debugger
+	getCardinfosList() { 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getcardList()
 			.subscribe(
@@ -107,8 +106,7 @@ export class CardMaster implements OnInit {
 	}
 
 	//get Card TYPE List
-	getCardTypeList() {
-		debugger
+	getCardTypeList() { 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getCardTypeList()
 			.subscribe(
@@ -117,16 +115,14 @@ export class CardMaster implements OnInit {
 			);
 	}
 
-	setCardTypeList(data) {
-		debugger
+	setCardTypeList(data) { 
 		this.cardTypeList = data;
 		this.Notification.LoadingRemove();
 		console.log(this.cardTypeList);
 	}
 
 	//get Currency List
-	getCurrencyList() {
-		debugger
+	getCurrencyList() { 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getCurrencyList()
 			.subscribe(
@@ -135,8 +131,7 @@ export class CardMaster implements OnInit {
 			);
 	}
 
-	setCurrencyList(data) {
-		debugger
+	setCurrencyList(data) { 
 		this.currencyList = data;
 		this.Notification.LoadingRemove();
 		console.log(this.currencyList);

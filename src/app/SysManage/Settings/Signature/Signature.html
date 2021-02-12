@@ -1,0 +1,202 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">System</li>
+        <li class="breadcrumb-item active">Settings</li>
+        <li class="breadcrumb-item active">Signature</li>
+    </ol>
+</nav>
+<div class="tab-content" style="background-color: white;">
+    <div class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Signature Entry</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Key ID</span>
+                                        <input placeholder="REG" [(ngModel)]="signatureObj.KeyID" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Prefix</span>
+                                        <input placeholder="REG-" [(ngModel)]="signatureObj.Prefix" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Suffix</span>
+                                        <input [(ngModel)]="signatureObj.Suffix" class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">NoOfDigit</span>
+                                        <input [(ngModel)]="signatureObj.NoOfDigit" class="form-control" type="number">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">DBName</span>
+                                        <select class="form-control" [(ngModel)]="signatureObj.DBName">
+                                            <option selected value="0">SELECT..</option>
+                                            <!-- <ng-container *ngFor="let item of providerList; let i = index">
+                                                <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
+                                            </ng-container> -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Table Type</span>
+                                        <select class="form-control" [(ngModel)]="signatureObj.TableType">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of tableTypeList; let i = index">
+                                                <option value="{{item.TableTypeName}}">{{item?.TableTypeName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">TableName</span>
+                                        <select class="form-control" [(ngModel)]="signatureObj.TableName">
+                                            <option selected value="0">SELECT..</option>
+                                            <!-- <ng-container *ngFor="let item of providerList; let i = index">
+                                                <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
+                                            </ng-container> -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">ColumnName</span>
+                                        <select class="form-control" [(ngModel)]="signatureObj.ColumnName">
+                                            <option selected value="0">SELECT..</option>
+                                            <!-- <ng-container *ngFor="let item of providerList; let i = index">
+                                                <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
+                                            </ng-container> -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">InitialCode</span>
+                                        <input [(ngModel)]="signatureObj.InitialCode" class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">CriteriaColumn</span>
+                                        <input [(ngModel)]="signatureObj.CriteriaColumn" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">ExtraCondition</span>
+                                        <input [(ngModel)]="signatureObj.ExtraCondition" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <button *ngIf="signatureObj?.ID == 0" (click)="saveUpdateSignature()" type="button"
+                                        class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                    <button *ngIf="signatureObj?.ID > 0" (click)="saveUpdateSignature()" type="button"
+                                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                    <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                            class="fas fa-redo-alt"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- --list -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="hoverlink" (click)="GetSignatureList()"><b>Top-Up LIST</b> <i
+                                    class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+
+                            <span class="label label-primary ml-2 hoverPointer">Report</span>
+                            <div class="right">
+                                <button type="button" class="btn-toggle-collapse"><i
+                                        class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p4 custom-table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="12">
+                                                <input class="form-control form-control-sm" placeholder="Search"
+                                                    type="text" [(ngModel)]="SearchSignatureList">
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="width-1p text-center">SN#</th>
+                                            <th class="width-1p text-center">KeyID</th>
+                                            <th class="width-1p">Prefix</th>
+                                            <th class="width-2p">Suffix</th>
+                                            <th class="width-2p">NoOfDigit</th>
+                                            <th class="width-2p">DBName</th>
+                                            <th class="width-2p">TableType</th>
+                                            <th class="width-2p">TableName</th>
+                                            <th class="width-2p">ColumnName</th>
+                                            <th class="width-2p">InitialCode</th>
+                                            <th class="width-2p">ExtraCondition</th>
+                                            <th class="width-2p text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of signatureList | searchFilter : SearchSignatureList; let i = index">
+                                            <td class="text-right"> {{i+1}} </td>
+                                            <td class="text-left"> {{item?.KeyID }} </td>
+                                            <td class="text-left"> {{item?.Prefix }} </td>
+                                            <td class="text-left"> {{item?.Suffix }} </td>
+                                            <td class="text-left"> {{item?.NoOfDigit }} </td>
+                                            <td class="text-left"> {{item?.DBName }} </td>
+                                            <td class="text-left"> {{item?.TableType }} </td>
+                                            <td class="text-left"> {{item?.TableName }} </td>
+                                            <td class="text-left"> {{item?.ColumnName }} </td>
+                                            <td class="text-left"> {{item?.InitialCode }} </td>
+                                            <td class="text-left"> {{item?.ExtraCondition }} </td>
+
+                                            <td (click)="EditItem(item)" title="Click to Edit the item."
+                                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

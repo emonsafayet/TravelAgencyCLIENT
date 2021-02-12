@@ -87,8 +87,8 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Total Payable Amount</span>
-                                        <input [(ngModel)]="mrMasterObj.TotalPayableAmount" class="form-control"
-                                            type="number">
+                                        <input [(ngModel)]="mrMasterObj.TotalPayableAmount" value="{{sumOfTotalValue| number:'1.0-0' }}" class="form-control"
+                                            type="text"> 
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -138,7 +138,7 @@
         </div>
         <!-- START Service Payment Details -->
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="panel">
                     <div class="panel-heading">
                         <h3 class="panel-title">Service Payment Details</h3>
@@ -156,8 +156,7 @@
                                     <th class="text-left width-10p">Service Code</th>
                                     <th class="text-left width-20p">Service Name</th>
                                     <th class="text-left width-8p">Due Amount</th>
-                                    <th class="text-left width-10p">Payable Amount</th>
-                                    <th class="text-left width-10p">Remark</th>
+                                    <th class="text-left width-10p">Payable Amount</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -176,13 +175,10 @@
                                             [(ngModel)]="item.ServiceAmount">
                                     </td>
                                     <td class="text-left width-10p">
-                                        <input type="text" class="form-control form-control-sm"
-                                            [(ngModel)]="item.PayableAmount">
-                                    </td>
-                                    <td class="text-left width-10p">
-                                        <input type="text" class="form-control form-control-sm"
-                                            [(ngModel)]="item.Remark">
-                                    </td>
+                                        <input type="text" class="form-control form-control-sm font-size-16 strong text-right"
+                                        (input)="CalculateTotalPayableValue(item.PayableAmount, serviceListObj)" 
+                                           [(ngModel)]="item.PayableAmount" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                                    </td> 
                                 </tr>
                             </tbody>
                         </table>
@@ -191,7 +187,7 @@
             </div>
             <!-- END Service Payment Details -->
             <!-- START Payment Status  -->
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="panel">
                     <div class="panel-heading">
                         <h3 class="panel-title">Payment Status Details</h3>

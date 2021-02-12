@@ -83,7 +83,7 @@ export class GroupTour implements OnInit {
 		this.groupTourInfoMasterObj = new GroupTourInfoMasterModel();
 	}
 	validateModel() {
-		debugger
+		
 		var result = true;
 		try {
 			if (Library.isUndefinedOrNullOrZero(this.groupTourInfoMasterObj.PackageName)) {
@@ -121,7 +121,7 @@ export class GroupTour implements OnInit {
 			);
 	}
 	setGroupTourLIST(data) {
-		debugger
+		
 		this.grouptourinfoList = data;
 		this.Notification.LoadingRemove();
 
@@ -222,7 +222,7 @@ export class GroupTour implements OnInit {
 	}
 	//get packageName
 	onPackageChange(item) {
-		debugger
+		
 		this.packagename = "";
 		var packName = this.packageList.filter(p => p.PackageCode == item)[0];
 		if (Library.isNullOrEmpty(packName))
@@ -246,7 +246,7 @@ export class GroupTour implements OnInit {
 	}
 	updateTotalPayable() {
 		setTimeout(() => {
-			debugger
+			
 			if (Number(this.groupTourInfoMasterObj.CurrencyRate) == 0) this.groupTourInfoMasterObj.CurrencyRate = 1;
 			var serviceCharge: any = 0;
 

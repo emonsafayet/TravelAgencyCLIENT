@@ -11,6 +11,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 
 // classess
 import { MRMasterModel, MRInvoiceDetailModel, MRPaymentDetailModel, MRInvoiceDetailModelDTO } from '../../../Classes/Transaction/MoenyReceiptModel';
+import { library } from '@fortawesome/fontawesome-svg-core';
 declare var moment: any;
 @Component({
 	templateUrl: 'MoneyReceipt.html'
@@ -20,6 +21,7 @@ export class MoneyReceipt implements OnInit {
 	customerList: any[] = [];
 	PaymentTypeList: any[] = [];
 	bankList: any[] = [];
+	sumOfTotalValue: number = 0;
 	serviceListObj: MRInvoiceDetailModelDTO = new MRInvoiceDetailModelDTO();
 
 	mrMasterObj: MRMasterModel = new MRMasterModel();
@@ -62,6 +64,7 @@ export class MoneyReceipt implements OnInit {
 	onChange(customerCode) {
 		this.serviceListObj = new MRInvoiceDetailModelDTO();
 		this.GetServiceListByCustomerCode(customerCode);
+		this.sumOfTotalValue = 0;
 	}
 	GetServiceListByCustomerCode(customerCode) {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -120,5 +123,15 @@ export class MoneyReceipt implements OnInit {
 	setBankList(data) {
 		this.bankList = data;
 		this.Notification.LoadingRemove();
+	}
+	CalculateTotalPayableValue(PayableAmount, item){
+		
+		this.sumOfTotalValue = 0;	 
+		 item.forEach(element => {  
+			if(element.PayableAmount== undefined) element.PayableAmount=0;  
+			this.sumOfTotalValue = this.sumOfTotalValue +  Number(element.PayableAmount);
+			this.sumOfTotalValue = Number(this.sumOfTotalValue.toFixed(2));
+		});
+		console.log(this.sumOfTotalValue);
 	}
 }

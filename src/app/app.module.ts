@@ -112,16 +112,19 @@ import { UserAccessService } from "./Services/UserAccess.service";
 import { MasterService } from "./Services/Master.service";
 import { UserService } from "./Services/User.service";
 import { MenuService } from "./Services/menu.service";
+import { SettingService } from "./Services/Setting.service";
 
 // Report
 import { ServiceReport } from "./Report/ServiceReport/ServiceReport";
 import { CollectionReport } from "./Report/CollectionReport/CollectionReport";
 import { DueReport } from "./Report/DueReport/DueReport";
 
+// Components
+import { Signature } from "./SysManage/Settings/Signature/Signature"; 
 
 
 
-@NgModule({
+ @NgModule({
   declarations: [
     AppComponent
     , Navbar, Sidebar, AdminLayout, Dashboard, Login, MenuSetting, UserRole, User, UserAccess, UserAccessType,
@@ -135,14 +138,14 @@ import { DueReport } from "./Report/DueReport/DueReport";
     CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking, GroupTour, HolidayPackageTour,
     MoneyReceipt, ClientAdvancePayment,
     //Report
-    DueReport, CollectionReport, ServiceReport],
+    DueReport, CollectionReport, ServiceReport,   Signature],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   
   ],
   providers: [AuthGuard, { provide: APP_BASE_HREF, useValue: '/' }, NotificationService,
     //SysManage
-    MenuService, UserService, MasterService, UserAccessService, EmployeeService,
+    SettingService,MenuService, UserService, MasterService, UserAccessService, EmployeeService,
     //Client Business
     Provider, 
     //Service

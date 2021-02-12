@@ -11,8 +11,12 @@ import { MenuSetting } from "../SysManage/MenuSetting/MenuSetting";
 import { EmployeeBasic } from "../SysManage/Employee/EmployeeBasic/EmployeeBasic";
 import { EmployeeDepartment } from "../SysManage/Employee/EmployeeDepartment/EmployeeDepartment";
 import { EmployeeDesignation } from "../SysManage/Employee/EmployeeDesignation/EmployeeDesignation";
+
+//Settings
+
 import { Location } from "../SysManage/Settings/Location/Location";
 import { CompanyProfile } from "../SysManage/Settings/CompanyProfile/CompanyProfile";
+import { Signature } from "../SysManage/Settings/Signature/Signature";
 
 import { NoAccess } from "../Layouts/NoAccess/NoAccess";
 import { NotFound } from "../Layouts/NotFound/NotFound";
@@ -75,6 +79,7 @@ export const AdminRoutes: Routes = [
 	{ path: 'system/user/access', component: UserAccess },
 	{ path: 'system/user/access/type', component: UserAccessType },
 	{ path: 'system/menu/setting', component: MenuSetting },
+	{ path: 'system/settings/signature', component: Signature },
 
 	{ path: 'system/template/profile', component: TmpProfile },
 	{ path: 'system/template/icon', component: TmpIcon },

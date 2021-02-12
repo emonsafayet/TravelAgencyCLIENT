@@ -88,7 +88,7 @@ export class VisaRegistration implements OnInit {
 		this.visaRegObj.VisaRegDate = moment().format(Common.SQLDateFormat);
 	}
 	validateModel() {
-		debugger;
+		;
 		var result = true
 		if (Library.isNuLLorUndefined(this.visaRegObj.VisaRegDate)) {
 			this.Notification.Warning('Please Select Registation date.');
@@ -275,7 +275,7 @@ export class VisaRegistration implements OnInit {
 
 	}
 	updateTotalPayable() {
-		debugger
+		
 		var serviceCharge: any = 0;
 		var regCharge = Number(this.visaRegObj.VisaFee) * Number(this.visaRegObj.CurrencyRate);
 		serviceCharge = (Number(regCharge)) / 100 * Number(this.visaRegObj.ServiceCharge);
@@ -284,7 +284,7 @@ export class VisaRegistration implements OnInit {
 
 	}
 	onCurrencyChange(item) {
-		debugger
+		
 		this.visaRegObj.GovtTax = 0;
 		this.visaRegObj.ServiceCharge = 0;
 		this.visaRegObj.TotalPayable = 0;

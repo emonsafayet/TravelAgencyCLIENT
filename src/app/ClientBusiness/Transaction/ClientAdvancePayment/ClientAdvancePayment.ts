@@ -80,7 +80,7 @@ export class ClientAdvancePayment implements OnInit {
 		this.clientAdvceObj.AdvanceDate = moment().format(Common.SQLDateFormat);
 	}
 	EditItem(item) {
-		debugger
+		
 		 if(item.BankName != null) this.GetBankList();
 		this.clientAdvceObj = JSON.parse(JSON.stringify(item));
 		this.clientAdvceObj.AdvanceDate = moment(new Date(this.clientAdvceObj.AdvanceDate)).format(Common.SQLDateFormat);

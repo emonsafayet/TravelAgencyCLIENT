@@ -61,7 +61,7 @@ export class HolidayPackageTour implements OnInit {
 	}
 
 	GETHolidayPackageTourList() {
-		debugger
+		
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.getholidayPackageTourList()
 			.subscribe(
@@ -70,7 +70,7 @@ export class HolidayPackageTour implements OnInit {
 			);
 	}
 	setHolidayPackageTourLIST(data) {
-		debugger
+		
 		this.getpackageTourInfoList = data;
 		this.Notification.LoadingRemove();
 
@@ -102,7 +102,7 @@ export class HolidayPackageTour implements OnInit {
 		this.HolidayPackageMasterObj = new HolidayPackageMasterModel();
 	}
 	validateModel() {
-		debugger
+		
 		var result = true;
 		try {
 			if (Library.isUndefinedOrNullOrZero(this.HolidayPackageMasterObj.PackageCode)) {
@@ -222,7 +222,7 @@ export class HolidayPackageTour implements OnInit {
 	}
 	//get packageName
 	onPackageChange(item) {
-		debugger
+		
 		this.packagename = "";
 		var packName = this.packageList.filter(p => p.PackageCode == item)[0];
 		if (Library.isNullOrEmpty(packName))
@@ -246,7 +246,7 @@ export class HolidayPackageTour implements OnInit {
 	}
 	updateTotalPayable() {
 		setTimeout(() => {
-			debugger
+			
 			if (Number(this.HolidayPackageMasterObj.CurrencyRate) == 0) this.HolidayPackageMasterObj.CurrencyRate = 1;
 			var serviceCharge: any = 0;
 

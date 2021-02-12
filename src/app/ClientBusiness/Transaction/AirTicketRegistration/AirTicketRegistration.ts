@@ -109,7 +109,7 @@ export class AirTicketRegistration implements OnInit {
 		this.airTicketregObj =  new AirTicketRegModel();
 	}
 	updateTotalPayable() {
-		debugger
+		
 		var serviceCharge: any = 0;
 		if(Library.isNuLLorUndefined(this.airTicketregObj.CurrencyRate))
 			this.airTicketregObj.CurrencyRate=1;
@@ -121,7 +121,7 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 	onCurrencyChange(item) {
-		debugger
+		
 		this.airTicketregObj.BaseFare = 0;
 		this.airTicketregObj.GovTax = 0;
 		this.airTicketregObj.ServiceCharge = 0;
@@ -135,7 +135,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 	
 	validateModel() {
-		debugger;
+		;
 		var result = true
 		if (this.airTicketregObj.CustomerCode == "0") {
 			this.Notification.Warning('Please Select Customer.');
@@ -213,7 +213,7 @@ export class AirTicketRegistration implements OnInit {
 			);
 	}
 	setTravelTypeList(data) {
-		debugger
+		
 		this.travelTypeList = data;
 		this.Notification.LoadingRemove();
 

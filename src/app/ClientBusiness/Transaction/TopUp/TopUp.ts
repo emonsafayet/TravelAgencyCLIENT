@@ -65,7 +65,7 @@ export class TopUp implements OnInit {
 		this.getTopUpList();
 	}
 	validateModel() {
-		debugger;
+		;
 		var result = true
 		if (this.topUpObj.TopUpTypeCode == "0") {
 			this.Notification.Warning('Please Select Top Up Type.');

@@ -101,7 +101,7 @@ export class HotelBooking implements OnInit {
 
 
 	validateModel() {
-		debugger;
+		;
 		var result = true
 		if (Library.isNuLLorUndefined(this.hotelBookingObj.BookingRegDate)) {
 			this.Notification.Warning('Please Select Event date.');
@@ -170,7 +170,7 @@ export class HotelBooking implements OnInit {
 	}
 	updateTotalPayable() {
 		setTimeout(() => {
-			debugger
+			
 			var serviceCharge: any = 0;
 			var roomFare = 0;
 			roomFare = Number(this.hotelBookingObj.RoomFare) * Number(this.hotelBookingObj.CurrencyRate);
@@ -180,7 +180,7 @@ export class HotelBooking implements OnInit {
 	}
 	onCurrencyChange(item) {
 		setTimeout(() => {
-			debugger
+			
 			this.hotelBookingObj.RoomFare = 0;
 			this.hotelBookingObj.ServiceCharge = 0;
 			this.hotelBookingObj.TotalPayable = 0;

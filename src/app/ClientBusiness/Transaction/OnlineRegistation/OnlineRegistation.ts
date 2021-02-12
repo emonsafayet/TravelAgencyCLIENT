@@ -91,7 +91,7 @@ export class OnlineRegistation implements OnInit {
 		this.getOnlineRegistation();
 	}
 	validateModel() {
-		debugger;
+		;
 		var result = true
 		if (this.regObj.CustomerCode == "0") {
 			this.Notification.Warning('Please Select Customer.');
@@ -169,7 +169,7 @@ export class OnlineRegistation implements OnInit {
 		this.regObj.EvenDate = moment(new Date(this.regObj.EvenDate)).format(Common.SQLDateFormat);
 	}
 	updateTotalPayable(){
-		debugger 
+		 
 		var serviceCharge: any =0;
 		var regCharge =Number(this.regObj.RegistrationCharge) * Number(this.regObj.CurrencyRate);
 		serviceCharge=  (Number(regCharge))/100 *Number(this.regObj.ServiceCharge);		
@@ -177,7 +177,7 @@ export class OnlineRegistation implements OnInit {
 	 
 	}
 	onCurrencyChange(item){
-		debugger 	
+		 	
 		this.regObj.RegistrationCharge=0;
 		this.regObj.ServiceCharge=0;
 		this.regObj.TotalPayableAmt=0;	 

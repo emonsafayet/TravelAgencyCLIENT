@@ -3,6 +3,7 @@ export class TravelProductModel {
 	public ID : number=0;
 	public ServiceCode : string;
 	public ServiceName : string;
+	public TableName: string="0";
 	public ServiceCharge_Percent : number;
 	public Remarks : string;
 	public CreatedBy : string;
