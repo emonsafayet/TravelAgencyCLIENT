@@ -104,12 +104,7 @@ export class Library{
         var date = new Date(FromDate);
         var dd = date.getDate() + AddDay;
         var mm = date.getMonth()+1;
-        var yyyy = date.getFullYear();
-        
-        
-
-        
-
+        var yyyy = date.getFullYear();  
         var day = dd.toString(), month= mm.toString();
 
         if(dd<10) {
@@ -442,6 +437,11 @@ export class Library{
     public static isUndefinedOrNullOrZero(str){
         if(str == undefined || str == null || str == '0') return true;
         else return false;
+    }
+    public static isUndefinedOrNullOrZeroReturn0(str){
+        debugger
+        if(str==0) return 0;
+        else return str;
     }
 
     public static isUndefinedOrNullOrEmpty(str: any){
@@ -870,15 +870,6 @@ export class Library{
         }
     }
 
-
-    public static isGRNComplete(requisitionQuantity: number, grnQuantity: number, sourceType: string){
-		if(Library.isNullOrZero(grnQuantity)) return false;
-        var percentValue = (sourceType == 'Local') ? .10 : .05;     
-        var minimumQty = Library.valueDouble(requisitionQuantity) - ((Library.valueDouble(requisitionQuantity) * (percentValue)));
-		if(grnQuantity >= minimumQty) return true;
-		return false;
-    }
-    
     public static IsSubstring(maintext: string, subtext: string){
         if(Library.isNullOrEmpty(maintext)) return false;
         if(Library.isNullOrEmpty(subtext)) return false;

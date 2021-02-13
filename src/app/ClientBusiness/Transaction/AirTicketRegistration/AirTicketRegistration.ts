@@ -43,7 +43,7 @@ export class AirTicketRegistration implements OnInit {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 
-		this.Notification.LoadingWithMessage('Loading...');		
+		this.Notification.LoadingWithMessage('Loading...');
 		this.GETCustomerLIST();
 		this.GETCompanyLIST();
 		this.GETCurrencyList();
@@ -54,9 +54,9 @@ export class AirTicketRegistration implements OnInit {
 		this.GetTravelTypeList();
 		this.GetTravelProviderList();
 		this.GETActiveCurrencyRateLIST();
-		this.airTicketregObj.TravelDate = moment().format(Common.SQLDateFormat); 
-		this.airTicketregObj.ReturnDate = moment().format(Common.SQLDateFormat); 
-		this.airTicketregObj.ChangeDate = moment().format(Common.SQLDateFormat); 
+		this.airTicketregObj.TravelDate = moment().format(Common.SQLDateFormat);
+		this.airTicketregObj.ReturnDate = moment().format(Common.SQLDateFormat);
+		this.airTicketregObj.ChangeDate = moment().format(Common.SQLDateFormat);
 		this.GetAirTicketList();
 		this.Notification.LoadingRemove();
 
@@ -83,7 +83,7 @@ export class AirTicketRegistration implements OnInit {
 			this.Notification.LoadingRemove();
 		}
 		this.airTicketregObj = new AirTicketRegModel();
-	   this.GetAirTicketList();
+		this.GetAirTicketList();
 	}
 	GetAirTicketList() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -99,29 +99,34 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 	EditItem(item) {
-		this.airTicketregObj = JSON.parse(JSON.stringify(item)); 
-		this.airTicketregObj.TravelDate = moment(new Date(this.airTicketregObj.TravelDate)).format(Common.SQLDateFormat); 
-		this.airTicketregObj.ReturnDate = moment(new Date(this.airTicketregObj.ReturnDate)).format(Common.SQLDateFormat); 
-		this.airTicketregObj.ChangeDate = moment(new Date(this.airTicketregObj.ChangeDate)).format(Common.SQLDateFormat); 
+		this.airTicketregObj = JSON.parse(JSON.stringify(item));
+		this.airTicketregObj.TravelDate = moment(new Date(this.airTicketregObj.TravelDate)).format(Common.SQLDateFormat);
+		this.airTicketregObj.ReturnDate = moment(new Date(this.airTicketregObj.ReturnDate)).format(Common.SQLDateFormat);
+		this.airTicketregObj.ChangeDate = moment(new Date(this.airTicketregObj.ChangeDate)).format(Common.SQLDateFormat);
 
 	}
 	ResetModel() {
-		this.airTicketregObj =  new AirTicketRegModel();
+		this.airTicketregObj = new AirTicketRegModel();
 	}
 	updateTotalPayable() {
-		
+		debugger
 		var serviceCharge: any = 0;
-		if(Library.isNuLLorUndefined(this.airTicketregObj.CurrencyRate))
-			this.airTicketregObj.CurrencyRate=1;
-		var BaseRate = Number(this.airTicketregObj.BaseFare) * Number(this.airTicketregObj.CurrencyRate);
-		serviceCharge = (Number(BaseRate)) / 100 * Number(this.airTicketregObj.ServiceCharge);
-		this.airTicketregObj.TotalPayable = Number(BaseRate.toFixed(2)) + Number(serviceCharge.toFixed(2))+
-											Number(this.airTicketregObj.ComissionAmount.toFixed(2))+Number(this.airTicketregObj.GovTax.toFixed(2))
-											+ Number(this.airTicketregObj.ChangePenalty.toFixed(2));
+		if (Library.isNuLLorUndefined(this.airTicketregObj.CurrencyRate))
+			this.airTicketregObj.CurrencyRate = 1;
+		var BaseRate = Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.BaseFare))
+						* Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.CurrencyRate));
+		serviceCharge = (Number(BaseRate)) / 100 * 
+						Number(this.airTicketregObj.ServiceCharge);
+
+		this.airTicketregObj.TotalPayable = Number(BaseRate) + Number(serviceCharge)
+											+ Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.ComissionAmount))
+											+ Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.GovTax))
+											+ Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.ChangePenalty));
+		this.airTicketregObj.TotalPayable = Number(this.airTicketregObj.TotalPayable.toFixed(2));
 
 	}
 	onCurrencyChange(item) {
-		
+
 		this.airTicketregObj.BaseFare = 0;
 		this.airTicketregObj.GovTax = 0;
 		this.airTicketregObj.ServiceCharge = 0;
@@ -133,7 +138,7 @@ export class AirTicketRegistration implements OnInit {
 		if (Library.isNullOrEmpty(RateItem)) this.airTicketregObj.CurrencyRate = 0;
 		else this.airTicketregObj.CurrencyRate = RateItem.Rate;
 	}
-	
+
 	validateModel() {
 		;
 		var result = true
@@ -167,7 +172,7 @@ export class AirTicketRegistration implements OnInit {
 			result = false;
 			return;
 		}
-		if (this.airTicketregObj.BaseFare==0 || Library.isNuLLorUndefined(this.airTicketregObj.BaseFare)) {
+		if (this.airTicketregObj.BaseFare == 0 || Library.isNuLLorUndefined(this.airTicketregObj.BaseFare)) {
 			this.Notification.Warning('Please Enter Resigtation Charge.');
 			result = false;
 			return;
@@ -176,17 +181,17 @@ export class AirTicketRegistration implements OnInit {
 			this.Notification.Warning('Please Enter ServiceCharge.');
 			result = false;
 			return;
-		}  
-		if (this.airTicketregObj.TotalPayable==0 || Library.isNullOrZero(this.airTicketregObj.TotalPayable)) {
+		}
+		if (this.airTicketregObj.TotalPayable == 0 || Library.isNullOrZero(this.airTicketregObj.TotalPayable)) {
 			this.Notification.Warning('Total Payable Amount Can Not Zero.');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.airTicketregObj.SalesStaffCode) ||  this.airTicketregObj.SalesStaffCode=="0") {
+		if (Library.isNuLLorUndefined(this.airTicketregObj.SalesStaffCode) || this.airTicketregObj.SalesStaffCode == "0") {
 			this.Notification.Warning('Please Select Sales Staff .');
 			result = false;
 			return;
-		} 
+		}
 		return result;
 	}
 	//DROP DOWN 
@@ -213,7 +218,7 @@ export class AirTicketRegistration implements OnInit {
 			);
 	}
 	setTravelTypeList(data) {
-		
+
 		this.travelTypeList = data;
 		this.Notification.LoadingRemove();
 

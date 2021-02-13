@@ -12,6 +12,7 @@ import { TransactionCommonService } from '../../../Services/TransactionCommon.se
 import { Common } from "../../../library/common";
 //Classes
 import { VisaRegModel } from '../../../Classes/Transaction/VisaRegModel';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 //
 declare var moment: any;
@@ -83,8 +84,8 @@ export class VisaRegistration implements OnInit {
 		this.visaRegObj.CompanyCode = "0";
 		this.visaRegObj.CustomerCode = "0";
 		this.visaRegObj.Currency = "0";
-		this.visaRegObj.SalesStaffCode = "0"; 
-		this.visaRegObj.CurrencyRate=0;
+		this.visaRegObj.SalesStaffCode = "0";
+		this.visaRegObj.CurrencyRate = 0;
 		this.visaRegObj.VisaRegDate = moment().format(Common.SQLDateFormat);
 	}
 	validateModel() {
@@ -99,39 +100,39 @@ export class VisaRegistration implements OnInit {
 			this.Notification.Warning('Please Select Customer.');
 			result = false;
 			return;
-		}  
+		}
 		if (Library.isNuLLorUndefined(this.visaRegObj.ServiceCharge)) {
 			this.Notification.Warning('Please Enter ServiceCharge.');
 			result = false;
 			return;
-		}	
-		if (Library.isNuLLorUndefined(this.visaRegObj.VisaType) || this.visaRegObj.VisaType=="0") {
+		}
+		if (Library.isNuLLorUndefined(this.visaRegObj.VisaType) || this.visaRegObj.VisaType == "0") {
 			this.Notification.Warning('Please Select Visa Type .');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.visaRegObj.VisaCountry) || this.visaRegObj.VisaCountry=="0") {
+		if (Library.isNuLLorUndefined(this.visaRegObj.VisaCountry) || this.visaRegObj.VisaCountry == "0") {
 			this.Notification.Warning('Please Select Visa Country .');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.visaRegObj.PassportNo) ){
+		if (Library.isNuLLorUndefined(this.visaRegObj.PassportNo)) {
 			this.Notification.Warning('Please Enter Passport Number .');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.visaRegObj.Currency) || this.visaRegObj.Currency=="0") {
+		if (Library.isNuLLorUndefined(this.visaRegObj.Currency) || this.visaRegObj.Currency == "0") {
 			this.Notification.Warning('Please Select Currency .');
 			result = false;
 			return;
 		}
-		if (Library.isNuLLorUndefined(this.visaRegObj.CardID) || this.visaRegObj.CardID=="0") {
+		if (Library.isNuLLorUndefined(this.visaRegObj.CardID) || this.visaRegObj.CardID == "0") {
 			this.Notification.Warning('Please Enter CardCode.');
 			result = false;
 			return;
-		}	
-		
-		if (Library.isNuLLorUndefined(this.visaRegObj.SalesStaffCode) ||  this.visaRegObj.SalesStaffCode=="0") {
+		}
+
+		if (Library.isNuLLorUndefined(this.visaRegObj.SalesStaffCode) || this.visaRegObj.SalesStaffCode == "0") {
 			this.Notification.Warning('Please Select Sales Staff .');
 			result = false;
 			return;
@@ -155,7 +156,7 @@ export class VisaRegistration implements OnInit {
 			this.Notification.Warning('Total Payable Amount Can Not Zero.');
 			result = false;
 			return;
-		} 
+		}
 		return result;
 	}
 	EditItem(item) {
@@ -275,16 +276,19 @@ export class VisaRegistration implements OnInit {
 
 	}
 	updateTotalPayable() {
-		
+		debugger
 		var serviceCharge: any = 0;
-		var regCharge = Number(this.visaRegObj.VisaFee) * Number(this.visaRegObj.CurrencyRate);
-		serviceCharge = (Number(regCharge)) / 100 * Number(this.visaRegObj.ServiceCharge);
-		this.visaRegObj.TotalPayable = Number(regCharge.toFixed(2)) + Number(serviceCharge.toFixed(2)) 
-										+ Number(this.visaRegObj.GovtTax.toFixed(2)) ;
+		if (Library.isNuLLorUndefined(this.visaRegObj.CurrencyRate))
+			this.visaRegObj.CurrencyRate = 1;
+		var regCharge = Library.isUndefinedOrNullOrZeroReturn0(Number(this.visaRegObj.VisaFee)) * Library.isUndefinedOrNullOrZeroReturn0(Number(this.visaRegObj.CurrencyRate));
+		serviceCharge = (Number(regCharge)) / 100 * Library.isUndefinedOrNullOrZeroReturn0(Number(this.visaRegObj.ServiceCharge));
+		this.visaRegObj.TotalPayable = Number(regCharge) + Number(serviceCharge)
+									+ Library.isUndefinedOrNullOrZeroReturn0(Number(this.visaRegObj.GovtTax));
+		this.visaRegObj.TotalPayable = Number(this.visaRegObj.TotalPayable.toFixed(2));
 
 	}
 	onCurrencyChange(item) {
-		
+
 		this.visaRegObj.GovtTax = 0;
 		this.visaRegObj.ServiceCharge = 0;
 		this.visaRegObj.TotalPayable = 0;
