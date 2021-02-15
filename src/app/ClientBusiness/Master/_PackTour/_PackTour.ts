@@ -87,10 +87,7 @@ export class _PackTour implements OnInit {
 	removeDetails(index: number) {
 		this.packageDetailObj.splice(index, 1);
 	}
-	savePackage() {
-		// console.log(this.packageMasterObj);
-		// console.log(this.packageDetailObj);
-		
+	savePackage() { 
 		// Validation
 		if (!this.validateModel()) return;
 

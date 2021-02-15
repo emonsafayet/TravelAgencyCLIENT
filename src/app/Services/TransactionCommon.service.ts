@@ -4,10 +4,10 @@ import { MasterService } from './Master.service';
 
 
 @Injectable()
-export class TransactionCommonService{ 
+export class TransactionCommonService {
 
 	constructor(private masterService: MasterService) { }
- 
+
 	/**START TOP UP Service**/
 
 	GetTopUpList() { return this.masterService.get("client/business/travel/transaction/topUp/list"); }
@@ -24,56 +24,56 @@ export class TransactionCommonService{
 
 	/**END  TOP UP TYPE Service**/
 
-	/**START Online Registation Service**/ 
-	
+	/**START Online Registation Service**/
+
 	GetOnlineRegisationList() { return this.masterService.get("client/business/travel/transaction/online/registation/list"); }
 
 	saveOnlineRegisationList(regObj: any) { return this.masterService.post(`client/business/travel/transaction/online/registation/save/update`, regObj); }
 
 	/**END  Online Registation Service**/
 
-	/*START ACTIVE Currency Rate */ 
-	GETActiveCurrencyRateLIST() { return this.masterService.get("client/business/travel/transaction/Active/Currency/Rate/list"); }	
-	/*END ACTIVE Currency Rate */ 
+	/*START ACTIVE Currency Rate */
+	GETActiveCurrencyRateLIST() { return this.masterService.get("client/business/travel/transaction/Active/Currency/Rate/list"); }
+	/*END ACTIVE Currency Rate */
 
 	/*START VISA TYPE*/
-	GETVisaTypeLIST() { return this.masterService.get("client/business/travel/transaction/Visa/Type/list"); }	
-	
+	GETVisaTypeLIST() { return this.masterService.get("client/business/travel/transaction/Visa/Type/list"); }
+
 	saveOrUpdateVisaType(visaTypeObj: any) { return this.masterService.post(`client/business/travel/transaction/Visa/Type/save/update`, visaTypeObj); }
 	/*END VISA TYPE*/
 
 	/*START VISA Registation */
-	GETVisaRegistationLIST() { return this.masterService.get("client/business/travel/transaction/Visa/Registation/list"); }	
+	GETVisaRegistationLIST() { return this.masterService.get("client/business/travel/transaction/Visa/Registation/list"); }
 
 	saveOrUpdateVisaRegistation(visaRegObj: any) { return this.masterService.post(`client/business/travel/transaction/Visa/Registation/save/update`, visaRegObj); }
- 
-	/*END VISA Registation */   
+
+	/*END VISA Registation */
 
 	/*START Air ticket */
-	GETAirTicketLIST() { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/list"); }	
+	GETAirTicketLIST() { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/list"); }
 
 	SaveUpdateAirTicketRegistration(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/save/update`, seattypeObj); }
- 
-	/*END  Air ticket */ 
- 
+
+	/*END  Air ticket */
+
 
 	/*START Hotel Booking  */
-	GetHotelBooking() { return this.masterService.get("client/business/travel/transaction/hotel/booking/list"); }	
+	GetHotelBooking() { return this.masterService.get("client/business/travel/transaction/hotel/booking/list"); }
 
 	SaveUpdateHotelBooking(hotelBookingObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/booking/save/update`, hotelBookingObj); }
- 
-	/*END  Hotel Booking  */ 
+
+	/*END  Hotel Booking  */
 
 
 	// START COMMON DROP DOWN
 	GETCompanyLIST() { return this.masterService.get("client/business/travel/transaction/company/list"); }
 
-	GETSalesStaffLIST() { return this.masterService.get("client/business/travel/transaction/sales/staff/list"); }	
-   // END COMMON DROP DOWN
+	GETSalesStaffLIST() { return this.masterService.get("client/business/travel/transaction/sales/staff/list"); }
+	// END COMMON DROP DOWN
 
-   //START GROUP TOUR 
+	//START GROUP TOUR 
 	saveUpdateGroupTour(groupTourObj: any) { return this.masterService.post(`client/business/travel/transaction/group/tour/save/update`, groupTourObj); }
-	
+
 	GetGroupTourList() { return this.masterService.get("client/business/travel/transaction/group/tour/list"); }
 
 	// END GROUP TOUR 
@@ -81,26 +81,25 @@ export class TransactionCommonService{
 	//START HOLIDAY PACKAGE TOUR
 
 	saveUpdateHolidayPackageTour(holidayPackageTourObj: any) { return this.masterService.post(`client/business/travel/transaction/holiday/package/tour/save/update`, holidayPackageTourObj); }
-	
+
 	getholidayPackageTourList() { return this.masterService.get("client/business/travel/transaction/holiday/package/tour/list"); }
 
-	//END HOLIDAY PACKAGE TOUR
-
+	//END HOLIDAY PACKAGE TOUR 
 
 	//START Advance Payment
 
 	saveUpdateAdvancePayment(clientAdvceObj: any) { return this.masterService.post(`client/business/travel/transaction/advance/payment/save/update`, clientAdvceObj); }
-	
+
 	getAdvancePayment() { return this.masterService.get("client/business/travel/transaction/advance/payment/list"); }
 
 	//END Advance Payment
 
-	//Start Money Receipt
+	//START Money Receipt
 
-	getServiceListByCustomerCode(customerCode: string) { return this.masterService.get("client/business/travel/transaction/money/receipt/service/list/"+customerCode); }
- 
-	//End Money Receipt
- 
+	getServiceListByCustomerCode(customerCode: string) { return this.masterService.get("client/business/travel/transaction/money/receipt/service/list/" + customerCode); }
 
+	saveUpdateMoenyReceipt(mrReceiptObj: any) { return this.masterService.post(`client/business/travel/transaction/money/receipt/save/update`, mrReceiptObj); }
+
+	//END Money Receipt 
 
 }
