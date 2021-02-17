@@ -439,8 +439,8 @@ export class Library{
         else return false;
     }
     public static isUndefinedOrNullOrZeroReturn0(str){
-        debugger
-        if(str==0) return 0;
+      
+        if(str==0 ||  str==NaN) return 0;
         else return str;
     }
 

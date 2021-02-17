@@ -17,12 +17,11 @@ declare var moment: any;
 	templateUrl: 'MoneyReceipt.html'
 })
 export class MoneyReceipt implements OnInit {
-	user: any;
+	user: any; 
 	customerList: any[] = [];
 	PaymentTypeList: any[] = [];
-	bankList: any[] = [];
-	sumOfTotalValue: number = 0;
-	serviceListObj: MRInvoiceDetailModelDTO = new MRInvoiceDetailModelDTO();
+	bankList: any[] = []; 
+	serviceListObj: MRInvoiceDetailModelDTO [] = [];
 
 	mrMasterObj: MRMasterModel = new MRMasterModel();
 	mrMasterModelDTOObj: MRMasterModelDTO = new MRMasterModelDTO();
@@ -45,16 +44,14 @@ export class MoneyReceipt implements OnInit {
 	ResetMoneyReceiptModel() {
 		this.mrMasterModelDTOObj = new MRMasterModelDTO();
 		this.mrInvoiceDetailObj = new MRInvoiceDetailModel();
-		this.serviceListObj = new MRInvoiceDetailModelDTO();
-		this.mrPaymentDetailObj = [];//= new MRPaymentDetailModel() ;
+		this.serviceListObj = [];
+		this.mrPaymentDetailObj = [];
 	}
 	saveUpdateMoneyReceipt() {
 		debugger
 		if (this.mrMasterModelDTOObj.ID > 0)
 			this.mrMasterModelDTOObj.UpdatedBy = this.user.EmployeeCode;
 		else this.mrMasterModelDTOObj.CreatedBy = this.user.EmployeeCode;
-
-		this.mrMasterModelDTOObj.TotalPayableAmount=this.sumOfTotalValue;
 
 		// Validation
 		if (!this.validateModel()) return;
@@ -129,9 +126,10 @@ export class MoneyReceipt implements OnInit {
 
 	}
 	onChange(customerCode) {
-		this.serviceListObj = new MRInvoiceDetailModelDTO();
+		 
+		this.serviceListObj = [];
 		this.GetServiceListByCustomerCode(customerCode);
-		this.sumOfTotalValue = 0;
+		this.mrMasterModelDTOObj.TotalPayableAmount = 0;
 	}
 	GetServiceListByCustomerCode(customerCode) {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -191,14 +189,15 @@ export class MoneyReceipt implements OnInit {
 		this.bankList = data;
 		this.Notification.LoadingRemove();
 	}
-	CalculateTotalPayableValue(PayableAmount, item) {
-
-		this.sumOfTotalValue = 0;
-		item.forEach(element => {
-			if (element.PayableAmount == undefined) element.PayableAmount = 0;
-			this.sumOfTotalValue = this.sumOfTotalValue + Number(element.PayableAmount);
-			this.sumOfTotalValue = Number(this.sumOfTotalValue.toFixed(2));
+	CalculateTotalPayableValue(item) {
+		
+		this.mrMasterModelDTOObj.TotalPayableAmount = 0;
+		item.forEach(element => { 
+			if(element.PayableAmount == NaN || element.PayableAmount == undefined) element.PayableAmount=0;
+			this.mrMasterModelDTOObj.TotalPayableAmount = Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount)) + 
+								Library.isUndefinedOrNullOrZeroReturn0(Number(element.PayableAmount));
+								this.mrMasterModelDTOObj.TotalPayableAmount= Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount.toFixed(2)));
 		});
-		console.log(this.sumOfTotalValue);
+		console.log(this.mrMasterModelDTOObj.TotalPayableAmount);
 	}
 }
