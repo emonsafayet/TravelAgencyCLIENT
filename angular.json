@@ -12,9 +12,8 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            
-            "outputPath": "dist/ClientMIS",
+          "options": {            
+            "outputPath": "G:\\Project Deployment\\TravelTech\\Client",             
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

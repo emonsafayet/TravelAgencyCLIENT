@@ -10,22 +10,20 @@ import { TransactionCommonService } from '../../../Services/TransactionCommon.se
 import { ClientBusinessService } from '../../../Services/ClientBusiness.service';
 
 // classess
-import { MRMasterModel, MRInvoiceDetailModel, MRPaymentDetailModel, MRMasterModelDTO, MRInvoiceDetailModelDTO} from '../../../Classes/Transaction/MoenyReceiptModel';
+import { MRMasterModel, MRInvoiceDetailModel, MRPaymentDetailModel, MRMasterModelDTO } from '../../../Classes/Transaction/MoenyReceiptModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 declare var moment: any;
 @Component({
 	templateUrl: 'MoneyReceipt.html'
 })
 export class MoneyReceipt implements OnInit {
-	user: any; 
+	user: any;
 	customerList: any[] = [];
 	PaymentTypeList: any[] = [];
-	bankList: any[] = []; 
-	serviceListObj: MRInvoiceDetailModelDTO [] = [];
-
-	mrMasterObj: MRMasterModel = new MRMasterModel();
+	bankList: any[] = [];
+ 
 	mrMasterModelDTOObj: MRMasterModelDTO = new MRMasterModelDTO();
-	mrInvoiceDetailObj: MRInvoiceDetailModel = new MRInvoiceDetailModel();
+	mrInvoiceDetailObj: MRInvoiceDetailModel[] = [];
 	mrPaymentDetailObj: MRPaymentDetailModel[] = [];
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private transactionCommonService: TransactionCommonService, private clientBusinessService: ClientBusinessService) { }
@@ -43,8 +41,7 @@ export class MoneyReceipt implements OnInit {
 	}
 	ResetMoneyReceiptModel() {
 		this.mrMasterModelDTOObj = new MRMasterModelDTO();
-		this.mrInvoiceDetailObj = new MRInvoiceDetailModel();
-		this.serviceListObj = [];
+		this.mrInvoiceDetailObj = []; 
 		this.mrPaymentDetailObj = [];
 	}
 	saveUpdateMoneyReceipt() {
@@ -56,21 +53,21 @@ export class MoneyReceipt implements OnInit {
 		// Validation
 		if (!this.validateModel()) return;
 
-		var invoiceDetails = JSON.stringify(this.mrInvoiceDetailObj);
-		var paymentDetails = JSON.stringify(this.mrPaymentDetailObj);
+		// var invoiceDetails = JSON.stringify(this.mrInvoiceDetailObj);
+		// var paymentDetails = JSON.stringify(this.mrPaymentDetailObj);
 
-		this.mrMasterModelDTOObj.InvoiceDetail = Library.getBase64(invoiceDetails);
-		this.mrMasterModelDTOObj.mrPaymentDetail = Library.getBase64(paymentDetails);
+		this.mrMasterModelDTOObj.InvoiceDetail = Library.encode(this.mrInvoiceDetailObj);
+		this.mrMasterModelDTOObj.PaymentDetail = Library.encode(this.mrPaymentDetailObj);
 
 		console.log(this.mrMasterModelDTOObj);
 		this.transactionCommonService.saveUpdateMoenyReceipt(this.mrMasterModelDTOObj)
 			.subscribe(
-				data => this.setaveResult(data),
+				data => this.setsaveResult(data),
 				error => this.Notification.Error(error)
 			);
 
 	}
-	setaveResult(Data: any) {
+	setsaveResult(Data: any) {
 		if (Data.ID > 0) {
 			this.Notification.Success('Saved Successfully.');
 			this.ResetMoneyReceiptModel();
@@ -78,7 +75,7 @@ export class MoneyReceipt implements OnInit {
 			//this.getPackageList(); 
 		}
 		else {
-			this.Notification.Failure('Unable to save data.'); 
+			this.Notification.Failure('Unable to save data.');
 		}
 	}
 	validateModel() {
@@ -126,8 +123,8 @@ export class MoneyReceipt implements OnInit {
 
 	}
 	onChange(customerCode) {
-		 
-		this.serviceListObj = [];
+
+		this.mrInvoiceDetailObj = [];
 		this.GetServiceListByCustomerCode(customerCode);
 		this.mrMasterModelDTOObj.TotalPayableAmount = 0;
 	}
@@ -140,7 +137,7 @@ export class MoneyReceipt implements OnInit {
 			);
 	}
 	setServicelist(data) {
-		this.serviceListObj = data;
+		this.mrInvoiceDetailObj = data;
 		this.Notification.LoadingRemove();
 
 	}
@@ -190,14 +187,12 @@ export class MoneyReceipt implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	CalculateTotalPayableValue(item) {
-		
 		this.mrMasterModelDTOObj.TotalPayableAmount = 0;
-		item.forEach(element => { 
-			if(element.PayableAmount == NaN || element.PayableAmount == undefined) element.PayableAmount=0;
-			this.mrMasterModelDTOObj.TotalPayableAmount = Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount)) + 
-								Library.isUndefinedOrNullOrZeroReturn0(Number(element.PayableAmount));
-								this.mrMasterModelDTOObj.TotalPayableAmount= Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount.toFixed(2)));
+		item.forEach(element => {
+			if (element.PaidAmount == NaN || element.PaidAmount == undefined) element.PaidAmount = 0;
+			this.mrMasterModelDTOObj.TotalPayableAmount = Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount)) +
+				Library.isUndefinedOrNullOrZeroReturn0(Number(element.PaidAmount));
+			this.mrMasterModelDTOObj.TotalPayableAmount = Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount.toFixed(2)));
 		});
-		console.log(this.mrMasterModelDTOObj.TotalPayableAmount);
 	}
 }
