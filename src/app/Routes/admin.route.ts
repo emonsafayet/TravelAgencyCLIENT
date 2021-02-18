@@ -45,6 +45,9 @@ import { Provider } from "../ClientBusiness/Master/Provider/Provider";
 import {  TypCustomer } from "../ClientBusiness/Master/TypCustomer/TypCustomer";
 import { CardMaster} from "../ClientBusiness/Master/CardMaster/CardMaster";
 import { CardType} from "../ClientBusiness/Master/CardType/CardType";
+import { TypeHotel} from "../ClientBusiness/Master/typeHotel/typeHotel";
+import { TypeRoom} from "../ClientBusiness/Master/typeRoom/typeRoom";
+import { TypeSeat} from "../ClientBusiness/Master/typeSeat/typeSeat";
 
 //Transaction Pages
 import { TopUp } from "../ClientBusiness/Transaction/TopUp/TopUp";
@@ -105,6 +108,10 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/provider', component: Provider },
 	{ path: 'client/business/travel/cardinfo', component: CardMaster },
 	{ path: 'client/business/travel/card/type', component: CardType },
+
+	{ path: 'client/business/travel/hotel/type', component: TypeHotel },
+	{ path: 'client/business/travel/hotel/room/type', component: TypeRoom },
+	{ path: 'client/business/travel/vehicle/seat/type', component: TypeSeat },
 
 	//Transaction Routes
 	{ path: 'client/business/travel/transaction/topUp', component: TopUp },

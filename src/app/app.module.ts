@@ -119,10 +119,11 @@ import { ServiceReport } from "./Report/ServiceReport/ServiceReport";
 import { CollectionReport } from "./Report/CollectionReport/CollectionReport";
 import { DueReport } from "./Report/DueReport/DueReport";
 
-// Components
+// Componentsimport { TypeRoom } from "./ClientBusiness/Master/typeRoom/typeRoom";
+import { TypeSeat } from "./ClientBusiness/Master/typeSeat/typeSeat";
+import { TypeHotel } from "./ClientBusiness/Master/typeHotel/typeHotel";
+
 import { Signature } from "./SysManage/Settings/Signature/Signature"; 
-
-
 
  @NgModule({
   declarations: [
@@ -138,7 +139,7 @@ import { Signature } from "./SysManage/Settings/Signature/Signature";
     CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking, GroupTour, HolidayPackageTour,
     MoneyReceipt, ClientAdvancePayment,
     //Report
-    DueReport, CollectionReport, ServiceReport,   Signature],
+    DueReport, CollectionReport, ServiceReport,   Signature, TypeHotel, TypeSeat, TypeRoom],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   

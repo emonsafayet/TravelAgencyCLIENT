@@ -126,7 +126,7 @@ export class ClientBusinessService {
 	/*END Seat Type */
 
 	/*START Hotel TYPE */
-	GETHotelLIST() { return this.masterService.get("client/business/travel/transaction/hotel/type/list"); }
+	GETHotelTypeLIST() { return this.masterService.get("client/business/travel/transaction/hotel/type/list"); }
 
 	SaveUpdateHotelType(hotelTypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/type/save/update`, hotelTypeObj); }
 

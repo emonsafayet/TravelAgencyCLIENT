@@ -327,7 +327,7 @@ export class HotelBooking implements OnInit {
 	}
 	GETHotelTypeLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.clientBusinessService.GETHotelLIST()
+		this.clientBusinessService.GETHotelTypeLIST()
 			.subscribe(
 				data => this.setHotelTypeList(data),
 				error => this.Notification.Error(error)
