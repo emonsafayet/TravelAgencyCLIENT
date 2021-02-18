@@ -114,7 +114,7 @@ export class ClientBusinessService {
 	/*START Seat Type */
 	GETSeatTypeLIST() { return this.masterService.get("client/business/travel/transaction/Seat/Type/list"); }
 
-	saveOrUpdateSeatType(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Seat/Type/save/update`, seattypeObj); }
+	saveOrUpdateSeatType(seattypeObj: any) { return this.masterService.post(`client/business/travel/transaction/Seat/Type/save/update`, seattypeObj); }
 
 	/*END Seat Type */
 

@@ -2,7 +2,7 @@ export class SeatTypeModel {
 
 	public ID : number=0;
 	public SeatTypeCode : string;
-	public SeatType : string;
+	public SeatType1 : string;
 	public CreatedBy : string;
 	public CreatedOn : string;
 	public UpdatedBy : string;
