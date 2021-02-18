@@ -30,6 +30,7 @@ export class MasterService{
 	loginERP(URL: string, Body: any) {
 		//this.Notification.init();
 		return this.http.post(Config.getBaseUrl + URL, Body);
+		// return this.http.post(Config.API_URL + URL, Body);
 	}
 
 	loginMIS(URL: string, Body: any) {

@@ -26,7 +26,7 @@ signInMIS(usercode: string, password: string, logDetails: string): any{
 	
 	// Encodes the parameters.  
 	let body: string = Library.encodeParams(params);  
-	return this.masterService.loginERP("token",body);
+	return this.masterService.loginERP("token", body);
 }
 
 getLoggedUser(): User{
