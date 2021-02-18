@@ -146,9 +146,14 @@ export class _Currency implements OnInit {
 	}
 	EditCurrencyRate(item) {
 		this.CurrencyRateObj = JSON.parse(JSON.stringify(item));
+		this.CurrencyRateObj.FromdDate = moment(new Date(this.CurrencyRateObj.FromdDate)).format(Common.SQLDateFormat);
+		this.CurrencyRateObj.ExpireDate = moment(new Date(this.CurrencyRateObj.ExpireDate)).format(Common.SQLDateFormat);
 	}
 	ResetCurrencyRateModel(){
-		
+		debugger
+		this.CurrencyRateObj = new CurrencyConversationHistoryModel();
+		this.CurrencyRateObj.FromdDate = moment().format(Common.SQLDateFormat); 
+		this.CurrencyRateObj.ExpireDate = moment().format(Common.SQLDateFormat); 
 	}
 	
 }

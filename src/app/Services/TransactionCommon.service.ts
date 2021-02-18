@@ -99,7 +99,9 @@ export class TransactionCommonService {
 	getServiceListByCustomerCode(customerCode: string) { return this.masterService.get("client/business/travel/transaction/money/receipt/service/list/" + customerCode); }
 
 	saveUpdateMoenyReceipt(mrReceiptObj: any) { return this.masterService.post(`client/business/travel/transaction/money/receipt/save/update`, mrReceiptObj); }
-
+	 
+	getMRList(fromDate: string,toDate: string):any { return this.masterService.get(`client/business/travel/transaction/money/receipt/list/${fromDate}/${toDate}`); }
+	//pullDiscountPolicyData(KeyType: string, KeyValue: string): any { return this.masterService.get(`data/pull/${KeyType}/${KeyValue}`); }
 	//END Money Receipt 
 
 }

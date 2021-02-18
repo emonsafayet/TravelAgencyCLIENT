@@ -11,6 +11,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 
 // classess
 import { MRMasterModel, MRInvoiceDetailModel, MRPaymentDetailModel, MRMasterModelDTO } from '../../../Classes/Transaction/MoenyReceiptModel';
+import { CommonModel } from '../../../Classes/CommonModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 declare var moment: any;
 @Component({
@@ -21,27 +22,54 @@ export class MoneyReceipt implements OnInit {
 	customerList: any[] = [];
 	PaymentTypeList: any[] = [];
 	bankList: any[] = [];
- 
+	moneyReceiptList:any[]=[];
 	mrMasterModelDTOObj: MRMasterModelDTO = new MRMasterModelDTO();
 	mrInvoiceDetailObj: MRInvoiceDetailModel[] = [];
 	mrPaymentDetailObj: MRPaymentDetailModel[] = [];
+	commonModelObj: CommonModel = new CommonModel();
+	SearchList:string ="";
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private transactionCommonService: TransactionCommonService, private clientBusinessService: ClientBusinessService) { }
 
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
+		this.commonModelObj.toDate = moment().format(Common.SQLDateFormat);
+		this.commonModelObj.fromDate = Common.previousMonthFirstDay(this.commonModelObj.toDate);
+
 		this.mrMasterModelDTOObj.ReceivedDate = moment().format(Common.SQLDateFormat);
+		this.GetMRList();
 		this.GETCustomerLIST();
 		this.getPaymentTypeList();
 		this.GetBankList();
 		this.addDetailsNew();
 		this.Notification.LoadingWithMessage('Loading...');
 		this.Notification.LoadingRemove();
+
+
+	}
+	LoadData() { this.GetMRList(); }
+
+	GetMRList() {
+		var fromDate =this.commonModelObj.fromDate;
+		var toDate= this.commonModelObj.toDate;
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.getMRList(fromDate, toDate).subscribe(
+				data => this.setMRList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setMRList(data) {
+		this.moneyReceiptList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	EditItem(item){
+
 	}
 	ResetMoneyReceiptModel() {
 		this.mrMasterModelDTOObj = new MRMasterModelDTO();
-		this.mrInvoiceDetailObj = []; 
+		this.mrInvoiceDetailObj = [];
 		this.mrPaymentDetailObj = [];
 	}
 	saveUpdateMoneyReceipt() {
@@ -137,6 +165,7 @@ export class MoneyReceipt implements OnInit {
 			);
 	}
 	setServicelist(data) {
+		debugger
 		this.mrInvoiceDetailObj = data;
 		this.Notification.LoadingRemove();
 
