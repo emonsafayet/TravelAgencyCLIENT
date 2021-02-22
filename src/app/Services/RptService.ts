@@ -5,4 +5,6 @@ import { MasterService } from './Master.service';
 export class RptService{ 
 
 	constructor(private masterService: MasterService) { }
+
+	GetServiceTransactionSummaryList(fromDate: string,toDate: string) { return this.masterService.get(`client/business/travel/transaction/report/service/transaction/summary/list/${fromDate}/${toDate}`); }
 }
