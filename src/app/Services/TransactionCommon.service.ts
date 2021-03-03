@@ -84,6 +84,9 @@ export class TransactionCommonService {
 
 	getholidayPackageTourList() { return this.masterService.get("client/business/travel/transaction/holiday/package/tour/list"); }
 
+
+	getHolidayPackageDetailByHOPCodeList(hopCode: any) { return this.masterService.get("client/business/travel/holiday/package/tour/hop/code/" + hopCode); }
+	
 	//END HOLIDAY PACKAGE TOUR 
 
 	//START Advance Payment
@@ -101,7 +104,13 @@ export class TransactionCommonService {
 	saveUpdateMoenyReceipt(mrReceiptObj: any) { return this.masterService.post(`client/business/travel/transaction/money/receipt/save/update`, mrReceiptObj); }
 	 
 	getMRList(fromDate: string,toDate: string):any { return this.masterService.get(`client/business/travel/transaction/money/receipt/list/${fromDate}/${toDate}`); }
-	//pullDiscountPolicyData(KeyType: string, KeyValue: string): any { return this.masterService.get(`data/pull/${KeyType}/${KeyValue}`); }
+	
+
+	getMoneyReceiptPaymentDetailByReceiptCode(receiptCode: any) { return this.masterService.get("client/business/travel/money/receipt/payment/detail/code/" + receiptCode); }
+	
+	getMoneyReceiptInvoiceDetailByReceiptCode(receiptCode: any) { return this.masterService.get("client/business/travel/money/receipt/invoice/detail/code/" + receiptCode); }
+	
+	
 	//END Money Receipt 
 
 }

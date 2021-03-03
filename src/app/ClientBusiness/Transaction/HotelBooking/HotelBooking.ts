@@ -100,9 +100,8 @@ export class HotelBooking implements OnInit {
 	}
 
 
-	validateModel() {
-		;
-		var result = true
+	validateModel() {		 
+		var result = true;
 		if (Library.isNuLLorUndefined(this.hotelBookingObj.BookingRegDate)) {
 			this.Notification.Warning('Please Select Event date.');
 			result = false;
@@ -179,8 +178,7 @@ export class HotelBooking implements OnInit {
 		}, 100);
 	}
 	onCurrencyChange(item) {
-		setTimeout(() => {
-			
+		setTimeout(() => {			
 			this.hotelBookingObj.RoomFare = 0;
 			this.hotelBookingObj.ServiceCharge = 0;
 			this.hotelBookingObj.TotalPayable = 0;
@@ -191,8 +189,7 @@ export class HotelBooking implements OnInit {
 		}, 100);
 
 	}
-	//DROP DOWN
-	//get travel Product List
+	//DROP DOWN 
 
 	getRoomTypeList() {
 		this.Notification.LoadingWithMessage('Loading...');

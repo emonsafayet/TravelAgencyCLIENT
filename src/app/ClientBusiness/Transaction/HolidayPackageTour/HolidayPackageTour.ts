@@ -23,7 +23,7 @@ export class HolidayPackageTour implements OnInit {
 
 	holidayTourList: any[] = [];
 	HolidayPackageMasterObj: HolidayPackageMasterModel = new HolidayPackageMasterModel();
-	holidayPackageDetailObj: HolidayPackageDetailModel = new HolidayPackageDetailModel();
+	holidayPackageDetailObj: HolidayPackageDetailModel[] =[]; //new HolidayPackageDetailModel();
  
 
 	getpackageTourInfoList:any[]=[];
@@ -126,8 +126,18 @@ export class HolidayPackageTour implements OnInit {
 		}
 		return result;
 	}
-	EditItem() {
+	EditItem(item) {
+		this.HolidayPackageMasterObj=JSON.parse(JSON.stringify(item)); 
 		this.HolidayPackageMasterObj.TourDate = moment(new Date(this.HolidayPackageMasterObj.TourDate)).format(Common.SQLDateFormat);
+		
+		this.transactionCommonService.getHolidayPackageDetailByHOPCodeList(this.HolidayPackageMasterObj.HOPCode)
+		.subscribe(
+			data => this.holidayPackageDetailObj = data,
+			error => this.Notification.Error(error)
+		
+		);	console.log(this.holidayPackageDetailObj);
+		document.getElementById('HolidayTourEntry_tab').click();
+
 	}
 	//DROP DOWN
 	GETCompanyLIST() {
@@ -221,8 +231,7 @@ export class HolidayPackageTour implements OnInit {
 
 	}
 	//get packageName
-	onPackageChange(item) {
-		
+	onPackageChange(item) {		
 		this.packagename = "";
 		var packName = this.packageList.filter(p => p.PackageCode == item)[0];
 		if (Library.isNullOrEmpty(packName))
@@ -257,7 +266,6 @@ export class HolidayPackageTour implements OnInit {
 
 	}
 	onCurrencyChange(item) {
-
 		this.HolidayPackageMasterObj.TotalServiceCharge = 0;
 		this.HolidayPackageMasterObj.TotalPayable = 0;
 

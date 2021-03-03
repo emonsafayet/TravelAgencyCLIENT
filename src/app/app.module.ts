@@ -119,7 +119,8 @@ import { ServiceReport } from "./Report/ServiceReport/ServiceReport";
 import { CollectionReport } from "./Report/CollectionReport/CollectionReport";
 import { DueReport } from "./Report/DueReport/DueReport";
 
-// Componentsimport { TypVisa } from "./ClientBusiness/Master/typVisa/typVisa";
+// Components
+import { TypVisa } from "./ClientBusiness/Master/typVisa/typVisa";
 import { TypeRoom } from "./ClientBusiness/Master/typeRoom/typeRoom";
 import { TypeSeat } from "./ClientBusiness/Master/typeSeat/typeSeat";
 import { TypeHotel } from "./ClientBusiness/Master/typeHotel/typeHotel";
@@ -135,7 +136,9 @@ import { Signature } from "./SysManage/Settings/Signature/Signature";
     // Pipes
     TableHtmlPipe, Leox_CurrencyPipe, LeoxTimePipe, ShortNamePipe, RemoveZeroPipe, ValueInShort, RemoveZeroOrNullPipe, ChangeStatusPipe, AmountInWords,
     PercentCheckPipe, FilterPipe, ArraySortPipe, DaysFromDatePipe, LimitTextPipe, Format_Percentage, NumberToRoman,
-    ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
+    ShortNamePipe2, showInMillion, showInCrore, ProductNameShorter, 
+    //Component
+    EmployeeDepartment, EmployeeDesignation, EmployeeBasic, CompanyProfile,
     Location, NotiflixUI, TravelProduct, Country, Destination, Airline, Provider, TypCustomer, TypPayment, _Currency, _Customer, _PackTour,
     CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking, GroupTour, HolidayPackageTour,
     MoneyReceipt, ClientAdvancePayment,
