@@ -22,13 +22,14 @@ export class MoneyReceipt implements OnInit {
 	customerList: any[] = [];
 	PaymentTypeList: any[] = [];
 	bankList: any[] = [];
-	moneyReceiptList:any[]=[];
+	moneyReceiptList: any[] = [];
 	mrMasterModelDTOObj: MRMasterModelDTO = new MRMasterModelDTO();
 	mrInvoiceDetailObj: MRInvoiceDetailModel[] = [];
 	mrPaymentDetailObj: MRPaymentDetailModel[] = [];
 	commonModelObj: CommonModel = new CommonModel();
-	SearchList:string ="";
+	SearchList: string = "";
 	isFullPaid: boolean = false;
+	sumOfTotalAmount: number = 0;
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private transactionCommonService: TransactionCommonService, private clientBusinessService: ClientBusinessService) { }
 
@@ -52,38 +53,38 @@ export class MoneyReceipt implements OnInit {
 	LoadData() { this.GetMRList(); }
 
 	GetMRList() {
-		var fromDate =this.commonModelObj.fromDate;
-		var toDate= this.commonModelObj.toDate;
+		var fromDate = this.commonModelObj.fromDate;
+		var toDate = this.commonModelObj.toDate;
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.getMRList(fromDate, toDate).subscribe(
-				data => this.setMRList(data),
-				error => this.Notification.Error(error)
-			);
+			data => this.setMRList(data),
+			error => this.Notification.Error(error)
+		);
 	}
 	setMRList(data) {
 		this.moneyReceiptList = data;
 		this.Notification.LoadingRemove();
 
 	}
-	EditItem(item){
-		this.mrMasterModelDTOObj = JSON.parse(JSON.stringify(item)); 
+	EditItem(item) {
+		debugger
+		this.mrMasterModelDTOObj = JSON.parse(JSON.stringify(item));
 		this.mrMasterModelDTOObj.ReceivedDate = moment(new Date(this.mrMasterModelDTOObj.ReceivedDate)).format(Common.SQLDateFormat);
-		
+
 		this.transactionCommonService.getMoneyReceiptPaymentDetailByReceiptCode(this.mrMasterModelDTOObj.ReceiptCode)
-		.subscribe(
-			data => this.mrPaymentDetailObj = (data),
-			error => this.Notification.Error(error)
-		);
-		
-		this.transactionCommonService.getMoneyReceiptInvoiceDetailByReceiptCode(this.mrMasterModelDTOObj.ReceiptCode)
-		.subscribe(
-			data => this.mrInvoiceDetailObj = (data),
-			error => this.Notification.Error(error)
-		);
+			.subscribe(
+				data => this.mrPaymentDetailObj = (data),
+				error => this.Notification.Error(error)
+			);
+
+		this.transactionCommonService.getMoneyReceiptInvoiceDetailByReceiptCode(this.mrMasterModelDTOObj.ReceiptCode, this.mrMasterModelDTOObj.CustomerCode)
+			.subscribe(
+				data => this.mrInvoiceDetailObj = (data),
+				error => this.Notification.Error(error)
+			);
 		document.getElementById('MREntry_tab').click();
 
-		console.log(this.mrPaymentDetailObj);
-		console.log(this.mrInvoiceDetailObj);
+
 	}
 	ResetMoneyReceiptModel() {
 		this.mrMasterModelDTOObj = new MRMasterModelDTO();
@@ -118,7 +119,7 @@ export class MoneyReceipt implements OnInit {
 			this.Notification.Success('Saved Successfully.');
 			this.ResetMoneyReceiptModel();
 			document.getElementById("NRList_tab").click();
-			this.GetMRList(); 
+			this.GetMRList();
 		}
 		else {
 			this.Notification.Failure('Unable to save data.');
@@ -181,7 +182,7 @@ export class MoneyReceipt implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
-	setServicelist(data) {		 
+	setServicelist(data) {
 		this.mrInvoiceDetailObj = data;
 		this.Notification.LoadingRemove();
 	}
@@ -233,31 +234,58 @@ export class MoneyReceipt implements OnInit {
 	CalculateTotalPayableValue(item) {
 		this.mrMasterModelDTOObj.TotalPayableAmount = 0;
 		item.forEach(element => {
+			// paidamount and due amount validation
+			if (!this.validateOfamountModel(element)) return;
 
 			if (element.PaidAmount == NaN || element.PaidAmount == undefined) element.PaidAmount = 0;
 			this.mrMasterModelDTOObj.TotalPayableAmount = Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount)) +
 				Library.isUndefinedOrNullOrZeroReturn0(Number(element.PaidAmount));
-			this.mrMasterModelDTOObj.TotalPayableAmount = Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount.toFixed(2)));
+			this.mrMasterModelDTOObj.TotalPayableAmount = this.sumOfTotalAmount = Library.isUndefinedOrNullOrZeroReturn0(Number(this.mrMasterModelDTOObj.TotalPayableAmount.toFixed(2)));
 		});
 	}
-	selectAllFullPaid(mrInvoiceObj){	
-		debugger	
-		if(mrInvoiceObj.length>0) 
-		{
-			if (this.isFullPaid) {	
-				this.isFullPaid = false;
-				mrInvoiceObj.forEach(item => {				 
-					item.PaidAmount= 0;				 
-				});
+	validateOfamountModel(element) {
+		var result = true;
+		try {
+			element.PaidAmount = parseInt(element.PaidAmount)
+			if (Library.isUndefinedOrNullOrZero(element.PaidAmount <= element.DueAmount)) {
+				element.PaidAmount = 0;
+				this.Notification.Warning('Paid Amount Must Be Equal Or Less Than Due Amount.');
+				result = false;
+				return;
 			}
-			else { 
-				//selected / checked
-				mrInvoiceObj.forEach(item => {				 
-					item.PaidAmount= item.DueAmount;				 
+		}
+		catch (e) {
+			this.Notification.Warning('Please Select item.');
+			return false;
+		}
+		return result;
+	}
+	selectAllFullPaid(mrInvoiceObj) {
+		debugger
+		if (mrInvoiceObj.length > 0) {
+			if (this.isFullPaid) {
+				this.isFullPaid = false;
+				mrInvoiceObj.forEach(item => {
+					item.PaidAmount = 0;
 				});
+				this.mrMasterModelDTOObj.TotalPayableAmount = 0;
+			}
+			else {
+				//selected / checked
+				mrInvoiceObj.forEach(item => {
+					item.PaidAmount = item.DueAmount;
+				});
+				this.calculateSumOfTotalPaidAmount(mrInvoiceObj);
 				this.isFullPaid = true;
 			}
 		}
-		
+
+	}
+	calculateSumOfTotalPaidAmount(mrInvoiceObj) {
+		this.sumOfTotalAmount = 0;
+		mrInvoiceObj.forEach(element => {
+			this.sumOfTotalAmount = this.sumOfTotalAmount + Number(element.PaidAmount);
+			this.mrMasterModelDTOObj.TotalPayableAmount = this.sumOfTotalAmount = Number(this.sumOfTotalAmount.toFixed(2));
+		});
 	}
 }

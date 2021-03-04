@@ -61,7 +61,7 @@
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-2p text-center">SN# [{{moneyReceiptList?.length}}] </th>
                                         <th class="width-1p text-center">Receipt Code</th>
                                         <th class="width-10p text-left">Receipt Date</th>
                                         <th class="width-10p">Customer</th>
@@ -73,9 +73,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     <tr
                                         *ngFor="let item of moneyReceiptList | searchFilter : SearchList; let i = index">
-                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-right width-2p"> {{i+1}} </td>
                                         <td class="text-left"> {{item?.ReceiptCode}} </td>
                                         <td class="text-left width-10p"> {{item?.ReceivedDate | date: 'dd MMM yyyy' }}
                                         </td>
@@ -134,12 +135,11 @@
                                                 <span class="input-group-addon">Registion Date</span>
                                                 <input type="date" data-date=""
                                                     [attr.data-date]="mrMasterModelDTOObj.ReceivedDate"
-                                                    data-date-format="dd-MM-YYYY"
-                                                    class="form-control   form-control-sm"
+                                                    data-date-format="dd-MM-YYYY" class="form-control   form-control-sm"
                                                     [(ngModel)]="mrMasterModelDTOObj.ReceivedDate" />
                                             </div>
-                                        </div> 
-                                    </div> 
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="col-md-6 mt-3">
                                             <div class="input-group">
@@ -157,12 +157,12 @@
                                         </div>
                                         <div class="col-md-6 mt-3">
                                             <div class="input-group">
-                                                <span class="input-group-addon">Total Payable Amount</span>
+                                                <span class="input-group-addon">Total Paid Amount</span>
                                                 <input readonly [(ngModel)]="mrMasterModelDTOObj.TotalPayableAmount"
                                                     class="form-control" type="number">
                                             </div>
                                         </div>
-                                    </div>     
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="col-md-6 mt-3">
                                             <div class="input-group">
@@ -191,7 +191,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12"> 
+                                    <div class="col-md-12">
                                         <div class="col-md-6  mt-3">
                                             <div class="input-group">
                                                 <span class="input-group-addon">Remarks</span>
@@ -200,14 +200,13 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 mt-3">
-                                            <div class="input-group"
-                                            (click)="selectAllFullPaid(mrInvoiceDetailObj)"
-                                                title="Select/UnSelect All"  >
+                                            <div class="input-group" (click)="selectAllFullPaid(mrInvoiceDetailObj)"
+                                                title="Select/UnSelect All">
                                                 <span class="input-group-addon">Is Full Paid:</span>
                                                 <i *ngIf="isFullPaid"
-                                                class="fa fa-check-square-o font-size-30 text-success"></i>
-                                            <i *ngIf="!isFullPaid"
-                                                class="fa fa-square-o font-size-30 text-success"></i>
+                                                    class="fa fa-check-square-o font-size-30 text-success"></i>
+                                                <i *ngIf="!isFullPaid"
+                                                    class="fa fa-square-o font-size-30 text-success"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -235,7 +234,7 @@
                                                         <table class="table table-striped">
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="text-left width-10p">Payment Type</th>
+                                                                    <th class="text-left width-20p">Payment Type</th>
                                                                     <th class="text-left width-15p">Receive Amount</th>
                                                                     <th class="text-left width-15p">Bank Name</th>
                                                                     <th class="text-left width-15p">Cheque No</th>
@@ -249,7 +248,7 @@
                                                             <tbody>
                                                                 <tr class="font-size-10"
                                                                     *ngFor="let item of mrPaymentDetailObj; let i = index">
-                                                                    <td class="width-10p">
+                                                                    <td class="text-left width-20p">
                                                                         <select class="form-control  form-control-sm"
                                                                             [(ngModel)]="item.PaymentType">
                                                                             <option selected value="0">SELECT..</option>
@@ -262,12 +261,12 @@
                                                                         </select>
                                                                     </td>
 
-                                                                    <td class="width-15p">
+                                                                    <td class="text-left  width-15p">
                                                                         <input type="number"
                                                                             class="form-control form-control-sm"
                                                                             [(ngModel)]="item.ReceivedAmount">
                                                                     </td>
-                                                                    <td class="width-10p">
+                                                                    <td class="text-left width-10p">
                                                                         <select class="form-control form-control-sm"
                                                                             [(ngModel)]="item.BankName">
                                                                             <option selected value="0">SELECT..</option>
@@ -278,22 +277,22 @@
                                                                             </ng-container>
                                                                         </select>
                                                                     </td>
-                                                                    <td class="width-15p">
+                                                                    <td class="text-left width-15p">
                                                                         <input type="text"
                                                                             class="form-control form-control-sm"
                                                                             [(ngModel)]="item.ChequeNo">
                                                                     </td>
-                                                                    <td class="width-15p">
+                                                                    <td class="text-left width-15p">
                                                                         <input type="text"
                                                                             class="form-control form-control-sm"
                                                                             [(ngModel)]="item.CardNo">
                                                                     </td>
-                                                                    <td class="width-15p">
+                                                                    <td class="text-left width-15p">
                                                                         <input type="text"
                                                                             class="form-control form-control-sm"
                                                                             [(ngModel)]="item.POSTransactionNo">
                                                                     </td>
-                                                                    <td class="width-15p">
+                                                                    <td class="text-left width-15p">
                                                                         <input type="text"
                                                                             class="form-control form-control-sm"
                                                                             [(ngModel)]="item.TxnNo"
@@ -316,7 +315,7 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
         <!-- START Service Payment Details -->
@@ -324,7 +323,7 @@
             <div class="col-md-12">
                 <div class="panel">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Service Payment Details</h3>
+                        <h3 class="panel-title">Service Payment Details [{{mrInvoiceDetailObj?.length}}]</h3>
                         <div class="right">
                             <button type="button" class="btn-toggle-collapse"><i
                                     class="lnr lnr-chevron-up"></i></button>
@@ -349,7 +348,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="font-size-10" *ngFor="let item of mrInvoiceDetailObj">
+                                            <tr class="font-size-8" *ngFor="let item of mrInvoiceDetailObj">
 
                                                 <td class="text-left width-6p">
                                                     <input readonly type="text" class="form-control form-control-sm"
@@ -397,7 +396,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="width-240" colspan="8"></td>
+                                            <td class="width-800 right"><strong> Total</strong> </td>
+                                            <td class="width-120 right"><strong> {{sumOfTotalAmount| number:'1.0-0' }}
+                                                </strong></td>
 
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -412,8 +425,8 @@
                             <button *ngIf="mrMasterModelDTOObj?.ID == 0" (click)="saveUpdateMoneyReceipt()"
                                 type="button" class="btn btn-success"><i class="fa fa-plus"></i>
                                 Save</button>
-                            <button *ngIf="mrMasterModelDTOObj?.ID > 0" (click)="saveUpdateMoneyReceipt()" type="button"
-                                class="btn btn-success ml-2"><i class="fa fa-plus"></i>
+                            <button *ngIf="mrMasterModelDTOObj?.ID > 0 " (click)="saveUpdateMoneyReceipt()"
+                                type="button" class="btn btn-success ml-2"><i class="fa fa-plus"></i>
                                 Update</button>
                             <button type="button" (click)="ResetMoneyReceiptModel()" class="btn btn-info ml-2"><i
                                     class="fas fa-redo-alt"></i> Reset</button>

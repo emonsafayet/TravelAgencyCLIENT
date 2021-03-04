@@ -108,7 +108,7 @@ export class TransactionCommonService {
 
 	getMoneyReceiptPaymentDetailByReceiptCode(receiptCode: any) { return this.masterService.get("client/business/travel/money/receipt/payment/detail/code/" + receiptCode); }
 	
-	getMoneyReceiptInvoiceDetailByReceiptCode(receiptCode: any) { return this.masterService.get("client/business/travel/money/receipt/invoice/detail/code/" + receiptCode); }
+	getMoneyReceiptInvoiceDetailByReceiptCode(receiptCode: any,customerCode :any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/detail/code/${receiptCode}/${customerCode}` ); }
 	
 	
 	//END Money Receipt 
