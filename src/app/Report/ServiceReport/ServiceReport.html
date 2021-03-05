@@ -52,15 +52,31 @@
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="text-left width-10p">Service Name</th>
-                        <th class="text-center width-5p">Count Transaction</th>
+                        <th class="text-left width-10p">Service</th> 
+                        <th class="text-left width-20p">Service Count & Amount</th> 
+                        <th class="text-left width-20p">Business Client</th>
+                        <th class="text-left width-20p">Corporate Client</th>
+                        <th class="text-left width-20p">Other Client</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of ServiceTransactionListObj;let i=index">
                         <td class="text-right width-1p "> {{i+1}} </td>
-                        <td class="text-left width-10p"> {{item?.ServiceName}} </td>
-                        <td class="text-right width-5p"> {{item?.ServiceCount}} </td>
+                        <td class="text-left width-10p">{{item?.ServiceName}} </td>
+
+                        <td class="text-left width-20p"> Count: {{item?.NoOfService}} 
+                            <br> <strong>  Amount : {{item?.TotalServiceAmt}} </strong>
+                        </td>
+
+                        <td class="text-left width-20p"> Count : {{item?.BusinessClient}}
+                            <br> <strong>Amount :{{item?.BusinessClientValue}}</strong>
+                             </td>
+                        <td class="text-left width-20p">Count: {{item?.CorporateClient}} 
+                            <br> <strong> Amount :{{item?.CorporateClientValue}} </strong>
+                        </td>
+                        <td class="text-left width-20p">Count : {{item?.OtherClient}} 
+                                <br> <strong> Amount :{{item?.OtherClientValue}}  </strong>
+                        </td> 
                    
                     </tr>
                 </tbody>

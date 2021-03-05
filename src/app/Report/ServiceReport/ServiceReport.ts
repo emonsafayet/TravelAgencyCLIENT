@@ -28,12 +28,10 @@ export class ServiceReport implements OnInit {
 
 	ngOnInit() {
 		this.ReportModelObj.ToDate = moment().format(Common.SQLDateFormat);
-		this.ReportModelObj.FromDate = moment().format(Common.previousMonthFirstDay(this.ReportModelObj.ToDate));
-		
+		this.ReportModelObj.FromDate = moment().format(Common.previousMonthFirstDay(this.ReportModelObj.ToDate));		
 		this.getServiceTransactionList();
 	}
 	getServiceTransactionList() {
-
 		this.Notification.LoadingWithMessage('Loading...');
 		this.rptService.GetServiceTransactionSummaryList(this.ReportModelObj.FromDate,this.ReportModelObj.ToDate)
 			.subscribe(
