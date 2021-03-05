@@ -24,11 +24,10 @@
     </div>
     <div class="col-md-3">
         <div class="input-group">
-            <button (click)="LoadRptService()"
-            type="button" class="btn btn-success"><i class="fa fa-home"></i>
-            LOAD</button>
+            <button (click)="LoadRptService()" type="button" class="btn btn-success"><i class="fa fa-home"></i>
+                LOAD</button>
         </div>
-    </div> 
+    </div>
 </div>
 
 <div class="panel mt-3">
@@ -52,8 +51,8 @@
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="text-left width-10p">Service</th> 
-                        <th class="text-left width-20p">Service Count & Amount</th> 
+                        <th class="text-left width-10p">Service</th>
+                        <th class="text-left width-20p">Service Count & Amount</th>
                         <th class="text-left width-20p">Business Client</th>
                         <th class="text-left width-20p">Corporate Client</th>
                         <th class="text-left width-20p">Other Client</th>
@@ -62,22 +61,24 @@
                 <tbody>
                     <tr *ngFor="let item of ServiceTransactionListObj;let i=index">
                         <td class="text-right width-1p "> {{i+1}} </td>
-                        <td class="text-left width-10p">{{item?.ServiceName}} </td>
+                        <td class="text-left width-10p"
+                            (click)="getServiceTransactionDetail(item)">
+                            {{item?.ServiceName}} </td>
 
-                        <td class="text-left width-20p"> Count: {{item?.NoOfService}} 
-                            <br> <strong>  Amount : {{item?.TotalServiceAmt}} </strong>
+                        <td class="text-left width-20p"> Count: {{item?.NoOfService}}
+                            <br> <strong> Amount : {{item?.TotalServiceAmt}} </strong>
                         </td>
 
                         <td class="text-left width-20p"> Count : {{item?.BusinessClient}}
                             <br> <strong>Amount :{{item?.BusinessClientValue}}</strong>
-                             </td>
-                        <td class="text-left width-20p">Count: {{item?.CorporateClient}} 
+                        </td>
+                        <td class="text-left width-20p">Count: {{item?.CorporateClient}}
                             <br> <strong> Amount :{{item?.CorporateClientValue}} </strong>
                         </td>
-                        <td class="text-left width-20p">Count : {{item?.OtherClient}} 
-                                <br> <strong> Amount :{{item?.OtherClientValue}}  </strong>
-                        </td> 
-                   
+                        <td class="text-left width-20p">Count : {{item?.OtherClient}}
+                            <br> <strong> Amount :{{item?.OtherClientValue}} </strong>
+                        </td>
+
                     </tr>
                 </tbody>
             </table>
@@ -86,7 +87,7 @@
 </div>
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"><b>Detail With Customer</b>      <i class="glyphicon glyphicon-download"></i> </span>
+        <span class="hoverlink"><b> Service Detail With Customer-{{serviceName}} </b> <i class="glyphicon glyphicon-download"></i> </span>
         <div class="right">
             <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
         </div>
@@ -96,51 +97,36 @@
             <table class="table table-bordered table-p4 custom-table-hover">
                 <thead>
                     <tr>
-                        <th colspan="15">
+                        <th colspan="6">
                             <input class="form-control form-control-sm" placeholder="Search" type="text">
                         </th>
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="width-10p">Customer Name</th>
-                        <th class="width-10p text-center">Service Date</th>
-                        <th class="width-10p text-center">Transaction ID</th>
-                        <th class="width-10p text-center">Service Description</th>
-                        <th class="width-10p text-center">Service Amount</th>
+                        <th class="width-20p">Registration Info</th>
+                        <th class="width-20p text-center">Customer Type</th>
+                        <th class="width-20p text-center">Customer Info</th>
+                        <th class="width-20p text-center">Service Description & Amount</th> 
                     </tr>
                 </thead>
+                <tbody>
+                    <tr *ngFor="let item of ServiceTransactionDetailObj;let i=index">
+                        <td class="text-right width-1p "> {{i+1}} </td>
+                        <td class="text-left width-20p"> Code: {{item?.RegistrationCode}}
+                            <br> Date : {{item?.RegistationDate | date:'dd MMM yy'}}
+                        </td>
+                        <td class="text-left width-20p">{{item?.TypeName}} </td>
+                        <td class="text-left width-20p"> Code : {{item?.CustomerCode}}
+                            <br> <strong>Name :{{item?.CustomerName}}</strong>
+                        </td> 
 
+                        <td class="text-left width-20p">Count : {{item?.ServiceDescription}}
+                            <br> <strong> Amount :{{item?.ServiceAmount}} </strong>
+                        </td>
+
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
-</div>
-<div class="panel mt-3">
-    <div class="panel-heading">
-        <span class="hoverlink"><b>Transaction Details</b>
-      
-        </span>
-
-        <div class="right">
-            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="table-fixed">
-            <table class="table table-bordered table-p4 custom-table-hover">
-                <thead>
-                    <tr>
-                        <th colspan="15">
-                            <input class="form-control form-control-sm" placeholder="Search" type="text">
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="width-1p text-center">SN#</th>
-                        <th class="width-10p">Transction No</th>
-                        <th class="width-10p text-center">Information</th>
-                    </tr>
-                </thead>
-
-            </table>
-        </div>
-    </div>
-</div>
+</div> 

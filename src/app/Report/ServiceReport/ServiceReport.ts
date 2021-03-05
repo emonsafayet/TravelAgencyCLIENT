@@ -22,6 +22,8 @@ export class ServiceReport implements OnInit {
 	user: any;
 	ReportModelObj: ReportModel = new ReportModel();
 	ServiceTransactionListObj: any[] = [];
+	ServiceTransactionDetailObj: any[] = [];
+	serviceName : string="";
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService,
 		private transactionCommonService: TransactionCommonService, private rptService: RptService) { }
@@ -43,6 +45,21 @@ export class ServiceReport implements OnInit {
 		this.ServiceTransactionListObj = data;
 		this.Notification.LoadingRemove();
 		console.log(this.ServiceTransactionListObj);
+	}
+	getServiceTransactionDetail(obj) {
+		 this.serviceName="";
+		 this.ServiceTransactionDetailObj =[];
+		 this.serviceName = obj.ServiceName; 
+		this.Notification.LoadingWithMessage('Loading...');
+		this.rptService.getServiceTransactionDetail(this.ReportModelObj.FromDate,this.ReportModelObj.ToDate,obj.ServiceCode)
+			.subscribe(
+				data => this.ServiceTransactionDetail(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	ServiceTransactionDetail(data) {
+		this.ServiceTransactionDetailObj = data;
+		this.Notification.LoadingRemove(); 
 	}
 	LoadRptService(){
 		this.getServiceTransactionList();
