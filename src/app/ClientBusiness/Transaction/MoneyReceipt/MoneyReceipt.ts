@@ -13,6 +13,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 import { MRMasterModel, MRInvoiceDetailModel, MRPaymentDetailModel, MRMasterModelDTO } from '../../../Classes/Transaction/MoenyReceiptModel';
 import { CommonModel } from '../../../Classes/CommonModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { Config } from 'src/app/config';
 declare var moment: any;
 @Component({
 	templateUrl: 'MoneyReceipt.html'
@@ -287,5 +288,10 @@ export class MoneyReceipt implements OnInit {
 			this.sumOfTotalAmount = this.sumOfTotalAmount + Number(element.PaidAmount);
 			this.mrMasterModelDTOObj.TotalPayableAmount = this.sumOfTotalAmount = Number(this.sumOfTotalAmount.toFixed(2));
 		});
+	}
+	PrintMR(obj){
+		var receiptCode = obj.ReceiptCode;
+		var customerCode=obj.CustomerCode;
+		window.open(`${Config.getBaseUrl}SystemReport/MoneyReceipt?receiptCode=${receiptCode}&customerCode=${customerCode}`, "_blank");
 	}
 }

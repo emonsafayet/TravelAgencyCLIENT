@@ -64,12 +64,13 @@
                                         <th class="width-2p text-center">SN# [{{moneyReceiptList?.length}}] </th>
                                         <th class="width-1p text-center">Receipt Code</th>
                                         <th class="width-10p text-left">Receipt Date</th>
-                                        <th class="width-10p">Customer</th>
-                                        <th class="width-5p">TotalPayableAmount</th>
-                                        <th class="width-15p text-left ">Remark</th>
+                                        <th class="width-20p">Customer Code/Name</th>
+                                        <th class="width-10p">Total Paid Amount</th>
+                                        <th class="width-20p text-left ">Remark</th>
                                         <th class="width-2p">Amount</th>
                                         <th class="width-2p text-center">Status</th>
-                                        <th class="width-2p text-center">Action</th>
+                                        <th class="width-5p text-center">Action</th>
+                                        <th class="width-2p text-center">Print</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,21 +81,27 @@
                                         <td class="text-left"> {{item?.ReceiptCode}} </td>
                                         <td class="text-left width-10p"> {{item?.ReceivedDate | date: 'dd MMM yyyy' }}
                                         </td>
-                                        <td class="text-left width-10p">
-                                            Code: {{item?.CustomerCode}} <br> Name: {{item?.CustomerName}} </td>
-                                        <td class="text-left width-5p"> {{item?.TotalPayableAmount}} </td>
-                                        <td class="text-left width-15p"> {{item?.Remark}} </td>
+                                        <td class="text-left width-20p">
+                                            Code: {{item?.CustomerCode}} -> Name: {{item?.CustomerName}} </td>
+                                        <td class="text-left width-10p"> {{item?.TotalPayableAmount}} </td>
+                                        <td class="text-left width-20p"> {{item?.Remark}} </td>
 
-                                        <td class="text-center">
-                                            <span *ngIf="item?.IsLocked" class="text-danger">Lock</span>
-                                            <span *ngIf="! item?.IsLocked" class="text-success">Not Locked</span>
+                                        <td class="text-left width-5p">
+                                            <span *ngIf="item?.IsLocked" class="text-danger">Locked</span>
+                                            <span *ngIf="! item?.IsLocked" class="text-success">UnLocked</span>
                                         </td>
-                                        <td class="text-center">
+                                        <td class="text-left width-5p">
                                             <span *ngIf="item?.isActive" class="text-success">Active</span>
                                             <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
                                         </td>
                                         <td (click)="EditItem(item)" title="Click to Edit the item."
                                             class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        <td class="text-center width-5p">
+                                            <button  class="btn btn-info"  (click)="PrintMR(item)">
+                                                Print
+                                                <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
