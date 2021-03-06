@@ -450,12 +450,14 @@
 
                                             </td>
                                             <td class="text-left">
-                                                Base Fare: <b> {{item?.BaseFare}}</b> , Govt Fee: <i> <b>{{item?.GovTax}}
-                                                 <br>   </b> </i> Comission: <i> <b> {{item?.ComissionAmount}} </b> </i>
+                                                Base Fare: <b> {{item?.BaseFare}}</b> , Govt Fee: <i>
+                                                    <b>{{item?.GovTax}}
+                                                        <br> </b> </i> Comission: <i> <b> {{item?.ComissionAmount}} </b>
+                                                </i>
                                                 , Service Charge: <i> <b> {{item?.ServiceCharge}}% </b> </i>
                                             </td>
                                             <td class="text-left"> {{item?.TotalPayable}} </td>
-                                            <td class="text-left">  
+                                            <td class="text-left">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         Chage Date: {{item?.ChangeDate | date: 'dd MMM yyyy' }}
@@ -485,6 +487,13 @@
 
                                             <td (click)="EditItem(item)" title="Click to Edit the item."
                                                 class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                            <td class="text-center width-5p">
+                                                <button class="btn btn-info" (click)="PrintAirTicketReg(item)">
+                                                    Print
+                                                    <i class="fa fa-download" aria-hidden="true"
+                                                        style="padding: 2px"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

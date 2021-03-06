@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '../../../authGuard.guard';
 import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service";
-
+import { Config } from 'src/app/config';
 //Service  
 import { UserAccessService } from "../../../Services/UserAccess.service";
 import { Library } from 'src/app/library/library';
@@ -278,6 +278,10 @@ export class OnlineRegistation implements OnInit {
 		this.activeCurrencyRateList = data;
 		this.Notification.LoadingRemove();
 
+	}
+	PrintOnlineReg(obj){
+		var RegistrationCode = obj.RegistrationCode; 
+		window.open(`${Config.getBaseUrl}TransactionReport/onlineRegistrationDetail?onlineRegCode=${RegistrationCode}`, "_blank");
 	}
 
 }

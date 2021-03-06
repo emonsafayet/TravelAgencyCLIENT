@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '../../../authGuard.guard';
 import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service";
-
+import { Config } from 'src/app/config';
 //Service  
 import { UserAccessService } from "../../../Services/UserAccess.service";
 import { Library } from 'src/app/library/library';
@@ -327,6 +327,11 @@ export class AirTicketRegistration implements OnInit {
 		this.activeCurrencyRateList = data;
 		this.Notification.LoadingRemove();
 
+	}
+	PrintAirTicketReg(obj){
+		debugger
+		var airTicketRegCode = obj.AirTicketTransCode; 
+		window.open(`${Config.getBaseUrl}TransactionReport/GetAirTicketRegistrationByAirTicketRegCode?airticketRegCode=${airTicketRegCode}`, "_blank");
 	}
 
 

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '../../../authGuard.guard';
 import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service";
-
+import { Config } from 'src/app/config';
 //Service  
 import { UserAccessService } from "../../../Services/UserAccess.service";
 import { Library } from 'src/app/library/library';
@@ -310,6 +310,11 @@ export class VisaRegistration implements OnInit {
 	setCountryList(data) {
 		this.countryList = data;
 		this.Notification.LoadingRemove();
+	}
+	PrintVisaReg(obj){
+		debugger
+		var VisaCode = obj.VisaCode; 
+		window.open(`${Config.getBaseUrl}TransactionReport/VisaRegistrationPrint?VisaCode=${VisaCode}`, "_blank");
 	}
 
 }

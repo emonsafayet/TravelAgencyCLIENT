@@ -103,20 +103,23 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon"> Currency</span>
-                                        <select class="form-control" [(ngModel)]="regObj.Currency" (change)="onCurrencyChange($event.target.value)">
+                                        <select class="form-control" [(ngModel)]="regObj.Currency"
+                                            (change)="onCurrencyChange($event.target.value)">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of currencyList; let i = index">
                                                 <option value="{{item.CurrencyName}}">{{item?.CurrencyName}}</option>
                                             </ng-container>
                                         </select>
-                                        <input [(ngModel)]="regObj.CurrencyRate" class="form-control" type="number" readonly>
+                                        <input [(ngModel)]="regObj.CurrencyRate" class="form-control" type="number"
+                                            readonly>
                                     </div>
-                                </div> 
-                                
+                                </div>
+
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Registration Charge</span>
-                                        <input [(ngModel)]="regObj.RegistrationCharge" class="form-control" type="number" (ngModelChange)="updateTotalPayable()" >
+                                        <input [(ngModel)]="regObj.RegistrationCharge" class="form-control"
+                                            type="number" (ngModelChange)="updateTotalPayable()">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -133,7 +136,7 @@
                                             readonly>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div class="row">
@@ -144,7 +147,8 @@
                                         <select class="form-control" [(ngModel)]="regObj.CardCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of cardList; let i = index">
-                                                <option value="{{item.CardID}}">{{item?.CardID}}>> {{item?.CardName}}</option>
+                                                <option value="{{item.CardID}}">{{item?.CardID}}>> {{item?.CardName}}
+                                                </option>
                                             </ng-container>
                                         </select>
                                     </div>
@@ -214,7 +218,7 @@
                                             <input class="form-control form-control-sm" placeholder="Search" type="text"
                                                 [(ngModel)]="SearchRegList">
                                         </th>
-                                        
+
                                     </tr>
                                     <tr>
                                         <th class="width-1p text-center">SN#</th>
@@ -223,13 +227,14 @@
                                         <th class="width-10p">WEBSITE</th>
                                         <th class="width-20p">EVENT </th>
                                         <th class="width-20p">DESTINATION</th>
-                                        <th class="width-5p">CURRENCY</th> 
+                                        <th class="width-5p">CURRENCY</th>
                                         <th class="width-10p">CARD INFO</th>
                                         <th class="width-20p">SERVICE CHARGE</th>
                                         <th class="width-5p">TOTAL CHARGE</th>
                                         <th class="width-2p">SELL BY</th>
                                         <th class="width-2p text-center">Status</th>
                                         <th class="width-2p text-center">Action</th>
+                                        <th class="width-2p text-center">Print</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -264,15 +269,15 @@
                                             </div>
                                         </td>
                                         <td class="text-left width-20p"> {{item?.DestinationName}} </td>
-                                        <td class="text-left width-5"> 
+                                        <td class="text-left width-5">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Currency :{{item?.Currency}} 
+                                                    Currency :{{item?.Currency}}
                                                     <br>Rate: <i>{{item?.CurrencyRate}} </i>
                                                 </div>
                                             </div>
-                                            
-                                         </td> 
+
+                                        </td>
                                         <td class="text-left width-20p">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -300,7 +305,14 @@
                                             <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
                                         </td>
                                         <td (click)="EditItem(item)" title="Click to Edit the item."
-                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i>
+                                        </td>
+                                        <td class="text-center width-5p">
+                                            <button class="btn btn-info" (click)="PrintOnlineReg(item)">
+                                                Print
+                                                <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

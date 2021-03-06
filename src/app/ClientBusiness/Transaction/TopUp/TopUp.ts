@@ -183,6 +183,6 @@ export class TopUp implements OnInit {
 	}
 	Print(obj){
 		var topUpCode = obj.TopUpCode; 
-		window.open(`${Config.getBaseUrl}Transaction/TopUpDetail?topUpCode=${topUpCode}`, "_blank");
+		window.open(`${Config.getBaseUrl}TransactionReport/TopUpDetail?topUpCode=${topUpCode}`, "_blank");
 	}
 }

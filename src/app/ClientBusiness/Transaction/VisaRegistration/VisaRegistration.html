@@ -133,14 +133,15 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Visa Fees</span>
-                                        <input [(ngModel)]="visaRegObj.VisaFee" type="text" class="form-control" (ngModelChange)="updateTotalPayable()" />
+                                        <input [(ngModel)]="visaRegObj.VisaFee" type="text" class="form-control"
+                                            (ngModelChange)="updateTotalPayable()" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Service Charge</span>
-                                        <input [(ngModel)]="visaRegObj.ServiceCharge" type="number" (ngModelChange)="updateTotalPayable()"
-                                            class="form-control" />
+                                        <input [(ngModel)]="visaRegObj.ServiceCharge" type="number"
+                                            (ngModelChange)="updateTotalPayable()" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -150,13 +151,15 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Govt. TAX</span>
-                                        <input [(ngModel)]="visaRegObj.GovtTax" type="number" class="form-control" (ngModelChange)="updateTotalPayable()" />
+                                        <input [(ngModel)]="visaRegObj.GovtTax" type="number" class="form-control"
+                                            (ngModelChange)="updateTotalPayable()" />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Total Payable</span>
-                                        <input [(ngModel)]="visaRegObj.TotalPayable" type="number" class="form-control" readonly/>
+                                        <input [(ngModel)]="visaRegObj.TotalPayable" type="number" class="form-control"
+                                            readonly />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -165,7 +168,8 @@
                                         <select class="form-control" [(ngModel)]="visaRegObj.SalesStaffCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of salesStaffList; let i = index">
-                                                <option value="{{item.EmployeeCode}}">{{item.EmployeeCode}}->{{item?.FullName}}</option>
+                                                <option value="{{item.EmployeeCode}}">
+                                                    {{item.EmployeeCode}}->{{item?.FullName}}</option>
                                             </ng-container>
                                         </select>
                                     </div>
@@ -251,6 +255,7 @@
                                         <th class="width-1p text-center">Is Group</th>
                                         <th class="width-2p text-center">Status</th>
                                         <th class="width-2p text-center">Action</th>
+                                        <th class="width-2p text-center">Print</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -271,27 +276,27 @@
                                         <td class="text-left"> {{item?.VisaTypeName}} </td>
                                         <td class="text-left"> {{item?.CountryName}} </td>
                                         <td class="text-left"> {{item?.PassportNo}} </td>
-                                        <td class="text-left"> 
+                                        <td class="text-left">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                 Card Name: {{item?.CardName}} 
-                                                 <br> Card No: <i> {{item?.CardID}} </i>
+                                                    Card Name: {{item?.CardName}}
+                                                    <br> Card No: <i> {{item?.CardID}} </i>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-left">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                   Currency: {{item?.CurrencyName}}
-                                                    <br> Rate <i>{{item?.CurrencyRate}} </i> 
+                                                    Currency: {{item?.CurrencyName}}
+                                                    <br> Rate <i>{{item?.CurrencyRate}} </i>
                                                 </div>
                                             </div>
 
                                         </td>
                                         <td class="text-left">
-                                           Visa Fee: <b> {{item?.VisaFee}}</b> , Govt Fee: <i> <b>{{item?.GovtTax}} 
-                                           </b>  </i>
-                                             , Service Charge: <i> <b>  {{item?.ServiceCharge}}% </b> </i>
+                                            Visa Fee: <b> {{item?.VisaFee}}</b> , Govt Fee: <i> <b>{{item?.GovtTax}}
+                                                </b> </i>
+                                            , Service Charge: <i> <b> {{item?.ServiceCharge}}% </b> </i>
                                         </td>
                                         <td class="text-left"> {{item?.TotalPayable}} </td>
                                         <td class="text-left">{{item?.SalesStaffCode}}-{{item?.SalesStaffName}} </td>
@@ -303,9 +308,15 @@
                                             <span *ngIf="item?.isActive" class="text-success">Active</span>
                                             <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
                                         </td>
-  
+
                                         <td (click)="EditItem(item)" title="Click to Edit the item."
                                             class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                        <td class="text-center width-5p">
+                                            <button class="btn btn-info" (click)="PrintVisaReg(item)">
+                                                Print
+                                                <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
