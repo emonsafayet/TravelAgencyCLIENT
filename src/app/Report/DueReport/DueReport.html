@@ -22,17 +22,22 @@
                 data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm" />
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="input-group">
+            <button (click)="LoadRptServiceDue()" type="button" class="btn btn-success"><i class="fa fa-home"></i>
+                LOAD</button>
+        </div>
+    </div>
 </div>
 
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"  ><b>Service Report</b> <i
-                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+        <span class="hoverlink"><b>Due Report</b> <i class="fa fa-refresh ml-2 text-success"
+                aria-hidden="true"></i></span>
 
-        <span class="label label-primary ml-2 hoverPointer">Print</span> 
+        <span class="label label-primary ml-2 hoverPointer">Print</span>
         <div class="right">
-            <button type="button" class="btn-toggle-collapse"><i
-                    class="lnr lnr-chevron-up"></i></button>
+            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
         </div>
     </div>
     <div class="panel-body">
@@ -41,31 +46,37 @@
                 <thead>
                     <tr>
                         <th colspan="15">
-                            <input class="form-control form-control-sm" placeholder="Search" type="text" >
+                            <input class="form-control form-control-sm" placeholder="Search" type="text">
                         </th>
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="width-10p">Service Type</th>
+                        <th class="width-10p">Service Name</th>
                         <th class="width-10p text-center">Invoice Amount</th>
-                        <th class="width-10p text-center">Collection Amount</th> 
-                        <th class="width-10p text-center">Advance Amount</th> 
-                        <th class="width-10p text-center">Cash Amount</th> 
-                        <th class="width-10p text-center">Cheque Amount</th> 
-                        <th class="width-10p text-center">Due Amount</th> 
+                        <th class="width-10p text-center">Paid Amount</th>
+                        <th class="width-10p text-center">Due Amount</th>
                     </tr>
                 </thead>
-         
+                <tbody>
+                    <tr *ngFor="let item of ServiceTransactionDueListObj;let i=index">
+                        <td class="text-right width-1p"> {{i+1}} </td>
+                        <td class="text-left width-20p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.ServiceName}} </td>
+                        <td class="text-right width-20p"> {{item?.InvoiceAmount}} </td>
+                        <td class="text-right width-20p"> {{item?.PaidAmount}} </td>
+                        <td class="text-right width-20p">{{item?.DueAmount}}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"  ><b>Detail With Customer</b> </span> 
+        <span class="hoverlink"><b>Due Detail With Customer- {{serviceName}}</b> </span>
         <div class="right">
-            <button type="button" class="btn-toggle-collapse"><i
-                    class="lnr lnr-chevron-up"></i></button>
+            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
         </div>
     </div>
     <div class="panel-body">
@@ -73,21 +84,33 @@
             <table class="table table-bordered table-p4 custom-table-hover">
                 <thead>
                     <tr>
-                        <th colspan="15">
-                            <input class="form-control form-control-sm" placeholder="Search" type="text" >
+                        <th colspan="8">
+                            <input class="form-control form-control-sm" placeholder="Search" type="text">
                         </th>
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="width-10p">Customer Name</th>
-                        <th class="width-10p text-center">Collection Date</th>
-                        <th class="width-10p text-center">Invoice ID</th> 
-                        <th class="width-10p text-center">Collection ID</th> 
-                        <th class="width-10p text-center">Payable Amount</th> 
-                        <th class="width-10p text-center">Collection Amount</th> 
+                        <th class="text-left width-10p">InvoiceID</th>
+                        <th class="text-left width-10p">Invoice Date</th> 
+                        <th class="text-left width-20p">Customer </th>
+                        <th class="text-left width-20p">ServiceDescription</th>
+                        <th class="text-left width-10p">Invoice Amount</th>
+                        <th class="text-left width-10p">Paid Amount</th>
+                        <th class="text-left width-10p">Due Amount</th>
                     </tr>
                 </thead>
-         
+                <tbody>
+                    <tr *ngFor="let item of ServiceTransactionDueDetailsListObj;let i=index">
+                        <td class="text-right width-1p"> {{i+1}} </td>
+                        <td class="text-left  width-20p">{{item?.InvoiceID}} </td>
+                        <td class="text-left width-10p">{{item?.InvoiceDate| date:'dd MMM yy'}} </td>
+                        <td class="text-left width-20p">{{item?.CustomerCode}} </td>
+                        <td class="text-left width-20p">{{item?.ServiceDescription}}</td>
+                        <td class="text-right width-10p">{{item?.InvoiceAmount}}</td>
+                        <td class="text-right width-10p">{{item?.PaidAmount}}</td>
+                        <td class="text-right width-10p">{{item?.DueAmount}}</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

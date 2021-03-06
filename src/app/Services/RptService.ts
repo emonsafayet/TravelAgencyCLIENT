@@ -21,4 +21,11 @@ export class RptService {
 	
 	
 	/*END Collection Reporting*/
+
+	
+	/*START Service Transaction Due Reporting*/
+	GetServiceTransactionDueCollectionList(asondate: string) { return this.masterService.get(`client/business/travel/transaction/report/service/transaction/due/summary/${asondate}`); }
+
+	getServiceTransactionDueCollectionDetail(asondate: string, serviceCode: string) { return this.masterService.get(`client/business/travel/transaction/report/service/transaction/due/detail/${asondate}/${serviceCode}`); }
+	/*END Service Reporting*/
 }
