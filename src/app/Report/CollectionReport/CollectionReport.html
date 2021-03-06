@@ -22,6 +22,12 @@
                 data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm" />
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="input-group">
+            <button (click)="LoadRptService()" type="button" class="btn btn-success"><i class="fa fa-home"></i>
+                LOAD</button>
+        </div>
+    </div>
 </div>
 
 <div class="panel mt-3">
@@ -46,20 +52,30 @@
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="width-10p">Service Type</th>
-                        <th class="width-10p text-center">Collection Amount</th>
-                        <th class="width-10p text-center">Advance Amount</th> 
+                        <th class="width-20p">Service Name</th>
+                        <th class="width-20p text-center">Payable Amount</th>
+                        <th class="width-20p text-center">Paid Amount</th> 
                     </tr>
                 </thead>
                 
-         
+                <tbody>
+                    <tr *ngFor="let item of ServiceTransactionCollectionListObj;let i=index">
+                        <td class="text-right width-1p "> {{i+1}} </td>
+                        <td class="text-left width-20p"
+                            (click)="getServiceTransactionCollectionDetail(item)">
+                            {{item?.ServiceName}} </td>  
+                        <td class="text-right width-20p"> {{item?.Payableamount}} </td>
+                        <td class="text-right width-20p"> {{item?.PaidAmount}} </td>
+
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"  ><b>Detail With Customer</b> </span> 
+        <span class="hoverlink"  ><b>Collection Detail With Customer-{{serviceName}}</b> </span> 
         <div class="right">
             <button type="button" class="btn-toggle-collapse"><i
                     class="lnr lnr-chevron-up"></i></button>
@@ -76,15 +92,27 @@
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="width-10p">Customer Name</th>
-                        <th class="width-10p text-center">Collection Date</th>
-                        <th class="width-10p text-center">Invoice ID</th> 
-                        <th class="width-10p text-center">Collection ID</th> 
-                        <th class="width-10p text-center">Payable Amount</th> 
-                        <th class="width-10p text-center">Collection Amount</th> 
+                        <th class="width-20p">Registration Info</th> 
+                        <th class="width-20p text-center">Customer Info</th>
+                        <th class="width-20p text-center">Invoice Code</th> 
+                        <th class="width-20p text-center">Due Amount</th> 
+                        <th class="width-20p text-center">Paid Amount</th> 
                     </tr>
                 </thead>
-         
+                <tbody>
+                    <tr *ngFor="let item of ServiceTransactionCollectionDetailListObj;let i=index">
+                        <td class="text-right width-1p "> {{i+1}} </td>
+                        <td class="text-left width-20p"> Code: {{item?.ReceiptCode}}
+                            <br> Date : {{item?.ReceivedDate | date:'dd MMM yy'}}
+                        </td> 
+                        <td class="text-left width-20p"> Code : {{item?.CustomerCode}}
+                            <br> <strong>Name :{{item?.CustomerName}}</strong>
+                        </td> 
+                        <td class="text-left width-20p">  {{item?.InvoiceID}}   </td> 
+                        <td class="text-right width-20p"> {{item?.DueAmount}} </td>
+                        <td class="text-right width-20p">  {{item?.PaidAmount}} </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

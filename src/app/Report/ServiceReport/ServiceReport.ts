@@ -62,6 +62,7 @@ export class ServiceReport implements OnInit {
 		this.Notification.LoadingRemove(); 
 	}
 	LoadRptService(){
+		this.ServiceTransactionDetailObj =[];
 		this.getServiceTransactionList();
 	}
 
