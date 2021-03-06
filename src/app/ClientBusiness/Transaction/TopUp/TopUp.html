@@ -192,7 +192,14 @@
                                                 <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
                                             </td>
                                             <td (click)="EditItem(item)" title="Click to Edit the item."
-                                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                                class="hoverPointer text-center"><i class="lnr lnr-pencil"></i>
+                                            </td>
+                                            <td class="text-center width-5p">
+                                                <button  class="btn btn-info"  (click)="Print(item)">
+                                                    Print
+                                                    <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

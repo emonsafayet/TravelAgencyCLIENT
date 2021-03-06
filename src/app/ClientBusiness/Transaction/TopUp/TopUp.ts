@@ -5,6 +5,7 @@ import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service";
 import { Library } from 'src/app/library/library';
 import { Common } from "../../../library/common";
+import { Config } from 'src/app/config';
 //Service   
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { ClientBusinessService } from '../../../Services/ClientBusiness.service';
@@ -179,5 +180,9 @@ export class TopUp implements OnInit {
 	EditTopUpType(item) {
 		this.topUpTypeObj = JSON.parse(JSON.stringify(item));
 		 
+	}
+	Print(obj){
+		var topUpCode = obj.TopUpCode; 
+		window.open(`${Config.getBaseUrl}Transaction/TopUpDetail?topUpCode=${topUpCode}`, "_blank");
 	}
 }

@@ -39,11 +39,14 @@ export class DueReport implements OnInit {
 	getServiceTransactionDueList() {
 		debugger
 		this.Notification.LoadingWithMessage('Loading...');
-		this.rptService.GetServiceTransactionDueCollectionList(this.ReportModelObj.FromDate)
+		setTimeout(() => {
+			this.rptService.GetServiceTransactionDueCollectionList(this.ReportModelObj.FromDate)
 			.subscribe(
 				data => this.setServiceTransactionDueList(data),
 				error => this.Notification.Error(error)
 			);
+		}, 300);
+		
 	}
 	setServiceTransactionDueList(data) {
 		this.ServiceTransactionDueListObj = data;

@@ -292,6 +292,6 @@ export class MoneyReceipt implements OnInit {
 	PrintMR(obj){
 		var receiptCode = obj.ReceiptCode;
 		var customerCode=obj.CustomerCode;
-		window.open(`${Config.getBaseUrl}SystemReport/MoneyReceipt?receiptCode=${receiptCode}&customerCode=${customerCode}`, "_blank");
+		window.open(`${Config.getBaseUrl}Transaction/MoneyReceipt?receiptCode=${receiptCode}&customerCode=${customerCode}`, "_blank");
 	}
 }
