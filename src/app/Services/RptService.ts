@@ -16,5 +16,9 @@ export class RptService {
 	GetServiceTransactionCollectionSummaryList(fromDate: string, toDate: string) { return this.masterService.get(`client/business/travel/transaction/report/service/transaction/collection/summary/list/${fromDate}/${toDate}`); }
 	
 	GetTransactionCollectionDetailsByServiceCode(fromDate: string, toDate: string, serviceCode: string) { return this.masterService.get(`client/business/travel/transaction/report/service/transaction/collection/details/service/code/${fromDate}/${toDate}/${serviceCode}`); }
+	
+	GetCustomerAdvanceList(fromDate: string, toDate: string) { return this.masterService.get(`client/business/travel/transaction/report/service/customer/advance/collection/list/${fromDate}/${toDate}`); }
+	
+	
 	/*END Collection Reporting*/
 }

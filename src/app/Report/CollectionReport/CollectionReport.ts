@@ -22,6 +22,7 @@ export class CollectionReport implements OnInit {
 	ReportModelObj: ReportModel = new ReportModel();
 	ServiceTransactionCollectionListObj:any[]=[];
 	ServiceTransactionCollectionDetailListObj:any[]=[];
+	CustomerAdvanceCollectionObj:any[]=[];
 	serviceName:string="";
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService,
@@ -31,10 +32,12 @@ export class CollectionReport implements OnInit {
 		this.ReportModelObj.FromDate = moment().format(Common.previousMonthFirstDay(this.ReportModelObj.ToDate));		
 		this.ReportModelObj.ToDate = moment().format(Common.SQLDateFormat);
 		this.getServiceTransactionCollectionList();
+		this.getCustomerAdvanceCollectionList();
 	}
 	LoadRptService(){
 		this.ServiceTransactionCollectionDetailListObj=[];
 		this.getServiceTransactionCollectionList();
+		this.getCustomerAdvanceCollectionList();
 	}
 	getServiceTransactionCollectionList(){
 		this.Notification.LoadingWithMessage('Loading...');
@@ -61,6 +64,18 @@ export class CollectionReport implements OnInit {
 	}
 	setTransactionCollectionDetail(data){
 		this.ServiceTransactionCollectionDetailListObj = data;
+		this.Notification.LoadingRemove(); 
+	}
+	getCustomerAdvanceCollectionList(){
+		this.Notification.LoadingWithMessage('Loading...');
+		this.rptService.GetCustomerAdvanceList(this.ReportModelObj.FromDate,this.ReportModelObj.ToDate)
+			.subscribe(
+				data => this.setCustomerAdvanceCollectionList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCustomerAdvanceCollectionList(data) {
+		this.CustomerAdvanceCollectionObj = data;
 		this.Notification.LoadingRemove(); 
 	}
 }

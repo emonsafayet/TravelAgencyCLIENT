@@ -29,13 +29,48 @@
         </div>
     </div>
 </div>
-
+<div class="panel mt-3">
+    <div class="panel-heading">
+        <span class="hoverlink"  ><b>Advance Collection</b> <i
+                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+        <div class="right">
+            <button type="button" class="btn-toggle-collapse"><i
+                    class="lnr lnr-chevron-up"></i></button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="table-fixed">
+            <table class="table table-bordered table-p4 custom-table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="15">
+                            <input class="form-control form-control-sm" placeholder="Search" type="text" >
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center width-1p text-center">SN#</th>
+                        <th class="text-center width-20p">Customer Code</th>
+                        <th class="text-center width-20p text-center">Customer Name</th>
+                        <th class="text-center width-20p text-center">Advance Amount</th> 
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr *ngFor="let item of CustomerAdvanceCollectionObj;let i=index">
+                        <td class="text-right width-1p "> {{i+1}} </td>
+                        <td class="text-left  width-20p" > {{item?.CustomerCode}} </td>  
+                        <td class="text-right width-20p"> {{item?.CustomerName}} </td>
+                        <td class="text-right width-20p"> {{item?.AdvanceAmt}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <div class="panel mt-3">
     <div class="panel-heading">
         <span class="hoverlink"  ><b>Collection Report</b> <i
                 class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
-
-        <span class="label label-primary ml-2 hoverPointer">Print</span> 
         <div class="right">
             <button type="button" class="btn-toggle-collapse"><i
                     class="lnr lnr-chevron-up"></i></button>
