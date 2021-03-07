@@ -119,7 +119,8 @@ import { ServiceReport } from "./Report/ServiceReport/ServiceReport";
 import { CollectionReport } from "./Report/CollectionReport/CollectionReport";
 import { DueReport } from "./Report/DueReport/DueReport";
 
-// Components
+// Componentsimport { AdvancePaymentClearance } from "./ClientBusiness/Transaction/AdvancePaymentClearance/AdvancePaymentClearance";
+
 import { TypVisa } from "./ClientBusiness/Master/typVisa/typVisa";
 import { TypeRoom } from "./ClientBusiness/Master/typeRoom/typeRoom";
 import { TypeSeat } from "./ClientBusiness/Master/typeSeat/typeSeat";
@@ -143,7 +144,7 @@ import { Signature } from "./SysManage/Settings/Signature/Signature";
     CardMaster, CardType, TopUp, OnlineRegistation, VisaRegistration, AirTicketRegistration, HotelBooking, GroupTour, HolidayPackageTour,
     MoneyReceipt, ClientAdvancePayment,
     //Report
-    DueReport, CollectionReport, ServiceReport,   Signature, TypeHotel, TypeSeat, TypeRoom, TypVisa],
+    DueReport, CollectionReport, ServiceReport,   Signature, TypeHotel, TypeSeat, TypeRoom, TypVisa, AdvancePaymentClearance],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgSelectModule, Routing,
     // required animations module   

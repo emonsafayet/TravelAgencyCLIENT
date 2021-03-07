@@ -60,6 +60,7 @@ import { GroupTour } from "../ClientBusiness/Transaction/GroupTour/GroupTour";
 import { HolidayPackageTour } from "../ClientBusiness/Transaction/HolidayPackageTour/HolidayPackageTour";
 import { MoneyReceipt } from "../ClientBusiness/Transaction/MoneyReceipt/MoneyReceipt";
 import { ClientAdvancePayment } from "../ClientBusiness/Transaction/ClientAdvancePayment/ClientAdvancePayment";
+import { AdvancePaymentClearance } from "../ClientBusiness/Transaction/AdvancePaymentClearance/AdvancePaymentClearance";
 
 //Report
 import { CollectionReport } from "../Report/CollectionReport/CollectionReport";
@@ -125,6 +126,7 @@ export const AdminRoutes: Routes = [
 	{ path: 'client/business/travel/transaction/holiday/package/tour', component: HolidayPackageTour },
 	{ path: 'client/business/travel/transaction/money/receipt', component: MoneyReceipt },
 	{ path: 'client/business/travel/advance/payment', component: ClientAdvancePayment },
+	{ path: 'client/business/travel/advance/payment/clearance', component: AdvancePaymentClearance },
 
 	//Report
 	{ path: 'report/business/travel/service/report', component: ServiceReport },

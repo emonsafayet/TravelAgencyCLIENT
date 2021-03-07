@@ -86,7 +86,7 @@ export class TransactionCommonService {
 
 
 	getHolidayPackageDetailByHOPCodeList(hopCode: any) { return this.masterService.get("client/business/travel/holiday/package/tour/hop/code/" + hopCode); }
-	
+
 	//END HOLIDAY PACKAGE TOUR 
 
 	//START Advance Payment
@@ -102,15 +102,22 @@ export class TransactionCommonService {
 	getServiceListByCustomerCode(customerCode: string) { return this.masterService.get("client/business/travel/transaction/money/receipt/service/list/" + customerCode); }
 
 	saveUpdateMoenyReceipt(mrReceiptObj: any) { return this.masterService.post(`client/business/travel/transaction/money/receipt/save/update`, mrReceiptObj); }
-	 
-	getMRList(fromDate: string,toDate: string):any { return this.masterService.get(`client/business/travel/transaction/money/receipt/list/${fromDate}/${toDate}`); }
-	
+
+	getMRList(fromDate: string, toDate: string): any { return this.masterService.get(`client/business/travel/transaction/money/receipt/list/${fromDate}/${toDate}`); }
+
 
 	getMoneyReceiptPaymentDetailByReceiptCode(receiptCode: any) { return this.masterService.get("client/business/travel/money/receipt/payment/detail/code/" + receiptCode); }
-	
-	getMoneyReceiptInvoiceDetailByReceiptCode(receiptCode: any,customerCode :any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/detail/code/${receiptCode}/${customerCode}` ); }
-	
-	
+
+	getMoneyReceiptInvoiceDetailByReceiptCode(receiptCode: any, customerCode: any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/detail/code/${receiptCode}/${customerCode}`); }
+
+
 	//END Money Receipt 
+	/*Start Advance Clearance*/
+	getAdvancePaymentNotClearanceList() { return this.masterService.get(`client/business/travel/advance/payment/clearance/list`); }
+	
+	updateadvanceClearance(obj: any) { return this.masterService.post(`client/business/travel/advance/payment/clearance/update`, obj); }
+
+	/*End Advance Clearance*/
+
 
 }
