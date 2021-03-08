@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {NotificationService} from "../../Services/Notification.service";
+import { NotificationService } from "../../Services/Notification.service";
 import { Library } from 'src/app/library/library';
 import { AuthGuard } from '../../authGuard.guard';
-
+import { getDefaultSettings } from "http2";
 //Common Service 
 import { MenuService } from "../../Services/menu.service";
 import { UserService } from '../../Services/User.service';
@@ -10,7 +10,7 @@ import { UserAccessService } from '../../Services/UserAccess.service';
 import { EmployeeService } from '../../Services/Employee.service';
 
 //Classes
-import { UserTblModel  } from '../../Classes/SysManage/UserTblModel';
+import { UserTblModel } from '../../Classes/SysManage/UserTblModel';
 
 
 @Component({
@@ -26,27 +26,28 @@ export class User implements OnInit {
 	EmpList: any[] = [];
 	UserObj: UserTblModel = new UserTblModel();
 	IsUpdate: boolean = false;
-	searchInUserList : string;
+	searchInUserList: string;
 
-	IsPasswordShow : boolean = false;
+	IsPasswordShow: boolean = false;
 
 	constructor(private authGuard: AuthGuard, private menuService: MenuService,
-		 private userService: UserService,private userAccessService:UserAccessService, private employeeService : EmployeeService, private Notification:NotificationService) { }
+		private userService: UserService, private userAccessService: UserAccessService, private employeeService: EmployeeService, private Notification: NotificationService) { }
 
 	ngOnInit() {
 
 		this.user = this.userService.getLoggedUser();
-		this.authGuard.hasUserThisMenuPrivilege(this.user);		
+		this.authGuard.hasUserThisMenuPrivilege(this.user);
 		this.Notification.LoadingWithMessage('Loading...');
+		this.ResetUserEntryForm();
 		this.getUserList();
 		this.getApplications();
 		this.GetEmployeeList();
-		this.getRoles();			
-		this.Notification.LoadingRemove();	
+		this.getRoles();
+		this.Notification.LoadingRemove();
 
 	}
-	ResetUserEntryForm(){
-		this.UserObj=  new UserTblModel(); this.IsUpdate=false;
+	ResetUserEntryForm() {
+		this.UserObj = new UserTblModel(); this.IsUpdate = false;
 	}
 	saveUser() {
 
@@ -128,14 +129,14 @@ export class User implements OnInit {
 		this.IsUpdate = true;
 		//console.log(item);
 		this.UserObj = JSON.parse(JSON.stringify(item));
-		
+
 		this.UserObj.IsActive = item.UserIsActive;
 		this.UserObj.EmployeeName = item.FullName;
 	}
 
 	//get user List
 	getUserList() {
-
+		this.ResetUserEntryForm();
 		this.Notification.LoadingWithMessage('Loading...');
 		this.userAccessService.getUserDetailList()
 			.subscribe(
@@ -146,7 +147,7 @@ export class User implements OnInit {
 	}
 	setUserDetailList(data) {
 		this.Notification.LoadingRemove();
-			this.UserDetailList = data;
+		this.UserDetailList = data;
 		//console.log(this.UserDetailList);
 	}
 	//Application List

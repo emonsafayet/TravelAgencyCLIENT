@@ -2,7 +2,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
         <li class="breadcrumb-item active">System</li>
-        <li class="breadcrumb-item active">User</li>      
+        <li class="breadcrumb-item active">User</li>
     </ol>
 </nav>
 <ul class="nav nav-tabs">
@@ -51,7 +51,7 @@
                                     <span class="input-group-addon" *ngIf="! IsUpdate">Employee </span>
                                     <select class="form-control" [disabled]="IsUpdate"
                                         [(ngModel)]="UserObj.EmployeeCode">
-                                        <option selected>SELECT..</option>
+                                        <option selected value="0">SELECT..</option>
                                         <ng-container *ngFor="let item of EmpList; let i = index">
                                             <option value="{{item.EmployeeCode}}">{{item?.FullName}}
                                                 ({{item?.EmployeeCode}})</option>
@@ -63,7 +63,7 @@
                                     <span class="input-group-addon">Application </span>
 
                                     <select class="form-control" [(ngModel)]="UserObj.ApplicationID">
-                                        <option selected>SELECT..</option>
+                                        <option selected value="0">SELECT..</option>
                                         <ng-container *ngFor="let item of ApplicationList; let i = index">
                                             <option value="{{item.ID}}">{{item?.ApplicationName}}</option>
                                         </ng-container>
@@ -75,22 +75,24 @@
                                 <div class="input-group mt-4">
                                     <span class="input-group-addon">Role </span>
                                     <select class="form-control" [(ngModel)]="UserObj.RoleID">
-                                        <option selected>SELECT..</option>
+                                        <option selected value="0">SELECT..</option>
                                         <ng-container *ngFor="let item of RoleList; let i = index">
                                             <option value="{{item.ID}}">{{item?.Name}}</option>
                                         </ng-container>
                                     </select>
 
                                 </div>
-                                <div class="input-group mt-4">
-                                    <span class="input-group-addon">Ative </span>
-                                    <select class="form-control" [(ngModel)]="UserObj.IsActive">
-
-                                        <option value="true">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="UserObj?.IsActive" (click)="UserObj.IsActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! UserObj?.IsActive" (click)="UserObj.IsActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="row">
@@ -113,14 +115,9 @@
 
                 <div class="panel">
                     <div class="panel-heading">
-                        <span class="hoverlink" (click)="getUserList()"><b>User List</b> <i
-                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
-                        <span class="label label-default ml-4 hoverPointer">DEFAULT</span>
-                        <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
-                        <span class="label label-success ml-2 hoverPointer">SUCCESS</span>
-                        <span class="label label-info ml-2 hoverPointer">INFO</span>
-                        <span class="label label-warning ml-2 hoverPointer">WARNING</span>
-                        <span class="label label-danger ml-2 hoverPointer">DANGER</span>
+                        <span class="hoverlink" (click)="getUserList()"><b>User List</b>
+                            <i class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i>
+                        </span>                        
                         <div class="right"><button type="button" class="btn-toggle-collapse"><i
                                     class="lnr lnr-chevron-up"></i></button> </div>
                     </div>
@@ -131,8 +128,8 @@
                                 <thead>
                                     <tr>
                                         <th colspan="11">
-                                            <input class="form-control form-control-sm" [(ngModel)]="searchInUserList" placeholder="Search"
-                                                type="text">
+                                            <input class="form-control form-control-sm" [(ngModel)]="searchInUserList"
+                                                placeholder="Search" type="text">
                                         </th>
                                     </tr>
                                     <tr>
@@ -151,7 +148,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of UserDetailList | searchFilter : searchInUserList; let i = index">
+                                    <tr
+                                        *ngFor="let item of UserDetailList | searchFilter : searchInUserList; let i = index">
                                         <td class="text-right">{{i+1}}</td>
                                         <td class="text-left">{{item?.UserName}}</td>
                                         <td class="text-left">{{item?.UserPassword}} </td>
