@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core'; 
 import { AuthGuard } from '../../../authGuard.guard';
 import { UserService } from '../../../Services/User.service';
-import { NotificationService } from "../../../Services/Notification.service";
-import { Library } from 'src/app/library/library';
-import { Common } from "../../../library/common";
+import { NotificationService } from "../../../Services/Notification.service"; 
 //Service   
-import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
-import { ClientBusinessService } from '../../../Services/ClientBusiness.service';
+import { TransactionCommonService } from '../../../Services/TransactionCommon.service'; 
 
 // classess
 import { AdvPaymentClearance } from '../../../Classes/Transaction/AdvPaymentClearance';
@@ -20,8 +16,7 @@ export class AdvancePaymentClearance implements OnInit {
 	advancePaymentClearanceList: AdvPaymentClearance[] = [];
 	searchList: string = '';
 	constructor(private userService: UserService, private authGuard: AuthGuard,
-		private Notification: NotificationService, private transactionCommonService: TransactionCommonService, private clientBusinessService: ClientBusinessService) { }
-
+		private Notification: NotificationService, private transactionCommonService: TransactionCommonService) { } 
 
 
 	ngOnInit() {

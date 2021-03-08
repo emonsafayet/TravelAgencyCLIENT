@@ -1,3 +1,5 @@
+import { getDefaultSettings } from "http2";
+
 export class  AdvPaymentClearance{
 
 	public ID : number;
