@@ -5,8 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Login } from "./Public/Login/Login";
 import { AdminRoutes } from "./routes/admin.route";
 
-import { AdminLayout } from "./Layouts/AdminLayout/AdminLayout";
-
+import { AdminLayout } from "./Layouts/AdminLayout/AdminLayout"; 
  
 //Guard
 import { AuthGuard } from './authGuard.guard';

@@ -36,18 +36,13 @@ export class User implements OnInit {
 	ngOnInit() {
 
 		this.user = this.userService.getLoggedUser();
-		this.authGuard.hasUserThisMenuPrivilege(this.user);
-
-		
+		this.authGuard.hasUserThisMenuPrivilege(this.user);		
 		this.Notification.LoadingWithMessage('Loading...');
 		this.getUserList();
 		this.getApplications();
 		this.GetEmployeeList();
-		this.getRoles();	
-		
-		this.Notification.LoadingRemove();
-
-		
+		this.getRoles();			
+		this.Notification.LoadingRemove();	
 
 	}
 	ResetUserEntryForm(){

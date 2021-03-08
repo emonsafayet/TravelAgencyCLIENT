@@ -4,6 +4,7 @@ import { UserService } from '../../../Services/User.service';
 import { NotificationService } from "../../../Services/Notification.service"; 
 import { Library } from 'src/app/library/library';
 import { Common } from "../../../library/common";
+import { getDefaultSettings } from "http2";
 //Service   
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service'; 
 
@@ -42,8 +43,7 @@ export class AdvancePaymentClearance implements OnInit {
 		this.advancePaymentClearanceList = data;
 		this.Notification.LoadingRemove();
 	}
-	Update(obj) {
-		console.log(obj);
+	Update(obj) { 
 		if(obj.isClear ==true)
 		{ 
 			this.transactionCommonService.updateadvanceClearance(obj)
@@ -51,11 +51,14 @@ export class AdvancePaymentClearance implements OnInit {
 				data => this.setupdateadvanceClearance(data),
 				error => this.Notification.Error(error)
 			);
+		}else{
+			this.Notification.Warning('Clear Check is not selected');
 		}
 	}
 	setupdateadvanceClearance(data) {
-		this.GetadvancePaymentClearanceList();
+		this.GetadvancePaymentClearanceList();	
 		this.Notification.LoadingRemove();
+		this.Notification.Success("Successfully Clear");
 	}
 
 }
