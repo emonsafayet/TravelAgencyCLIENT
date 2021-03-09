@@ -22,6 +22,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@ng-select/ng-select": "^5.0.9",
+    "http2": "^3.3.7",
     "moment": "^2.29.1",
     "ngx-device-detector": "^2.0.4",
     "ngx-show-hide-password": "^2.3.0",

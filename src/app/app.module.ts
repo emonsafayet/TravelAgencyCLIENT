@@ -119,7 +119,8 @@ import { ServiceReport } from "./Report/ServiceReport/ServiceReport";
 import { CollectionReport } from "./Report/CollectionReport/CollectionReport";
 import { DueReport } from "./Report/DueReport/DueReport";
 
-// Componentsimport { AdvancePaymentClearance } from "./ClientBusiness/Transaction/AdvancePaymentClearance/AdvancePaymentClearance";
+// Components
+import { AdvancePaymentClearance } from "./ClientBusiness/Transaction/AdvancePaymentClearance/AdvancePaymentClearance";
 
 import { TypVisa } from "./ClientBusiness/Master/typVisa/typVisa";
 import { TypeRoom } from "./ClientBusiness/Master/typeRoom/typeRoom";

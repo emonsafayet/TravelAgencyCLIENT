@@ -15,6 +15,10 @@ export class Config {
     // public static get API_URL(): string { return "http://localhost:81/api/api/"; }
     // public static get getBaseUrl(): string { return "http://localhost:81/api/"; }
 
+    // LIVE SERVER
+    // public static get API_URL(): string { return "http://115.42.53.69:81/api/api/"; }
+    // public static get getBaseUrl(): string { return "http://115.42.53.69:81/api/"; }
+
 
     // LOCAL SERVER
     public static get API_URL(): string {return "http://localhost:62600/api/"; } 
