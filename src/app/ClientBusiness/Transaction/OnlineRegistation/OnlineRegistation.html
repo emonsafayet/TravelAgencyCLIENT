@@ -9,199 +9,26 @@
         <li class="breadcrumb-item active">Registation</li>
     </ol>
 </nav>
+<ul class="nav nav-tabs">
+    <li (click)="getOnlineRegistation()"><a data-toggle="tab" class="hoverlink" href="#onlineRegList"
+            id="onlineRegList_tab">Online
+            Registration List</a></li>
+    <li class="active"> <a data-toggle="tab" class="hoverlink" href="#onlineRegEntry" id="onlineRegEntry_tab">Online
+            Registration
+            Entry</a>
+    </li>
+</ul>
+
 <div class="tab-content" style="background-color: white;">
-    <div class="tab-pane fade in active">
+    <!-- TAB ONLINE REGISTRATION LIST | 1st TAB-->
+    <!-- --list -->
+    <div id="onlineRegList" class="tab-pane">
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel">
-                    <div class="panel-heading btn-toggle-collapse">
-                        <span><b>ONLINE REGISTATION</b> </span>
-                        <div class="right">
-                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Registion No</span>
-                                        <input readonly [(ngModel)]="regObj.RegistrationCode" class="form-control"
-                                            type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Registion Date</span>
-                                        <input type="date" data-date="" [attr.data-date]="regObj.RegistationDate"
-                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
-                                            [(ngModel)]="regObj.RegistationDate" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Customer</span>
-                                        <select class="form-control" [(ngModel)]="regObj.CustomerCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Company</span>
-                                        <select class="form-control" [(ngModel)]="regObj.CompanyCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of companyList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Website Link</span>
-                                        <input [(ngModel)]="regObj.WebsiteLink" class="form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Event Name</span>
-                                        <input [(ngModel)]="regObj.EventName" class="form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Even Date</span>
-                                        <input type="date" data-date="" [attr.data-date]="regObj.EvenDate"
-                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
-                                            [(ngModel)]="regObj.EvenDate" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"> Destination</span>
-                                        <select class="form-control" [(ngModel)]="regObj.TravelDestinationCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of destinationList; let i = index">
-                                                <option value="{{item.DestinationCode}}">{{item?.DestinationName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"> Currency</span>
-                                        <select class="form-control" [(ngModel)]="regObj.Currency"
-                                            (change)="onCurrencyChange($event.target.value)">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of currencyList; let i = index">
-                                                <option value="{{item.CurrencyName}}">{{item?.CurrencyName}}</option>
-                                            </ng-container>
-                                        </select>
-                                        <input [(ngModel)]="regObj.CurrencyRate" class="form-control" type="number"
-                                            readonly>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Registration Charge</span>
-                                        <input [(ngModel)]="regObj.RegistrationCharge" class="form-control"
-                                            type="number" (ngModelChange)="updateTotalPayable()">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Service Charge(%)</span>
-                                        <input [(ngModel)]="regObj.ServiceCharge" class="form-control" type="number"
-                                            (ngModelChange)="updateTotalPayable()">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Total Payable</span>
-                                        <input [(ngModel)]="regObj.TotalPayableAmt" class="form-control" type="number"
-                                            readonly>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Card </span>
-                                        <select class="form-control" [(ngModel)]="regObj.CardCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of cardList; let i = index">
-                                                <option value="{{item.CardID}}">{{item?.CardID}}>> {{item?.CardName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Sales Reference</span>
-                                        <select class="form-control" [(ngModel)]="regObj.SalesReferenceCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
-                                                <option value="{{item.EmployeeCode}}">{{item?.FullName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Remarks</span>
-                                        <textarea [(ngModel)]="regObj.Remark" class="form-control" rows="3"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Is Active:</span>
-                                        <i *ngIf="regObj?.isActive" (click)="regObj.isActive = false"
-                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                            aria-hidden="true"></i>
-                                        <i *ngIf="! regObj?.isActive" (click)="regObj.isActive = true"
-                                            class="fa fa-square-o font-size-35 ml-3 text-success"
-                                            aria-hidden="true"></i>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mt-3">
-                                <button *ngIf="regObj?.ID == 0" (click)="saveOnlineReg()" type="button"
-                                    class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
-                                <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
-                                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
-                                <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
-                                        class="fas fa-redo-alt"></i> Reset</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- --list -->
-                <div class="panel">
                     <div class="panel-heading">
-                        <span class="hoverlink" (click)="getOnlineRegistation()"><b>REGISTATION LIST</b> <i
-                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+                        <span class="hoverlink"><b>REGISTATION LIST</b> <i class="fa fa-refresh ml-2 text-success"
+                                aria-hidden="true"></i></span>
 
                         <span class="label label-primary ml-2 hoverPointer">Report</span>
                         <div class="right">
@@ -222,17 +49,15 @@
                                     </tr>
                                     <tr>
                                         <th class="width-1p text-center">SN#</th>
-                                        <th class="width-10p">REG </th>
-                                        <th class="width-10p">CUSTOMER</th>
-                                        <th class="width-10p">WEBSITE</th>
-                                        <th class="width-20p">EVENT </th>
-                                        <th class="width-20p">DESTINATION</th>
-                                        <th class="width-5p">CURRENCY</th>
-                                        <th class="width-10p">CARD INFO</th>
-                                        <th class="width-20p">SERVICE CHARGE</th>
-                                        <th class="width-5p">TOTAL CHARGE</th>
-                                        <th class="width-2p">SELL BY</th>
-                                        <th class="width-2p text-center">Status</th>
+                                        <th class="width-10p">Transaction </th>
+                                        <th class="width-10p">Customer</th>
+                                        <th class="width-20p">Destination</th>
+                                        <th class="width-5p">Currency</th>
+                                        <th class="width-10p">Card INFO</th>
+                                        <th class="width-5p">Total Payable Amount</th>
+                                        <th class="width-2p">Sold BY</th>
+                                        <th class="width-2p text-center">Cancalation Status</th>
+                                        <th class="width-2p text-center">Lock Status</th>
                                         <th class="width-2p text-center">Action</th>
                                         <th class="width-2p text-center">Print</th>
                                     </tr>
@@ -244,8 +69,8 @@
                                         <td class="text-left width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    CODE: {{item?.RegistrationCode}}
-                                                    <br> DATE: <i> {{item?.RegistationDate | date: 'dd MMM yyyy' }}
+                                                    CODE: {{item?.TransactionCode}}
+                                                    <br> DATE: <i> {{item?.TransactionDate | date: 'dd MMM yyyy' }}
                                                     </i>
                                                 </div>
                                             </div>
@@ -253,57 +78,42 @@
                                         <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Customer: {{item?.CustomerName}}
-                                                    <br>Company:<i> {{item?.COMPANYNAME}} </i>
+                                                    Code: {{item?.CustomerCode}}
+                                                    <br>Name:<i> {{item?.CustomerName}} </i>
                                                 </div>
                                             </div>
 
                                         </td>
-                                        <td class="text-left width-10p"> {{item?.WebsiteLink}} </td>
-                                        <td class="text-left  width-20p">
+                                        <td class="text-left  width-10p"> {{item?.DestinationName}} </td>
+                                        <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Event Name: {{item?.EventName}}
-                                                    <br> Date:<i> {{item?.EvenDate | date: 'dd MMM yyyy' }}</i>
+                                                    Currency: {{item?.Currency}}
+                                                    <br>Rate:<i> {{item?.CurrencyRate}} </i>
                                                 </div>
                                             </div>
+
                                         </td>
-                                        <td class="text-left width-20p"> {{item?.DestinationName}} </td>
-                                        <td class="text-left width-5">
+                                        <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Currency :{{item?.Currency}}
-                                                    <br>Rate: <i>{{item?.CurrencyRate}} </i>
+                                                    Card: {{item?.CardCode}}
+                                                    <br>Charge:<i> {{item?.CardChargeAmount}} </i>
                                                 </div>
                                             </div>
 
                                         </td>
-                                        <td class="text-left width-20p">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Card Name: {{item?.CardName}}
-                                                    <br> Code: <i> {{item?.CardCode}} </i>
-                                                </div>
-                                            </div>
-
-
-                                        </td>
-                                        <td class="text-left width-20p">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Registation : {{item?.RegistrationCharge}}
-                                                    <br> Service: {{item?.ServiceCharge}}
-                                                    <br> Card : {{item?.CardChargeAmount}}
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                        <td class="text-left width-5p"> {{item?.TotalPayableAmt}} </td>
+                                        <td class="text-left width-5p"> {{item?.NetPayableAmt}} </td>
                                         <td class="text-left width-10p"> {{item?.SALESEXCUTIVENAME}} </td>
                                         <td class="text-center">
-                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
-                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                            <span *ngIf="! item?.IsCancel" class="text-success">Not Cancel</span>
+                                            <span *ngIf="item?.IsCancel" class="text-danger">Cancel</span>
                                         </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.IsFinalLocked" class="text-success">Locked</span>
+                                            <span *ngIf="!item?.IsFinalLocked" class="text-danger">UnLock</span>
+                                        </td>
+
                                         <td (click)="EditItem(item)" title="Click to Edit the item."
                                             class="hoverPointer text-center"><i class="lnr lnr-pencil"></i>
                                         </td>
@@ -316,6 +126,319 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB ONLINE REGISTRATION ENTRY | 2ND TAB-->
+    <div id="onlineRegEntry" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>ONLINE REGISTATION</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Transaction No</span>
+                                        <input readonly [(ngModel)]="regObj.TransactionCode" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Transaction Date</span>
+                                        <input type="date" data-date="" [attr.data-date]="regObj.TransactionDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="regObj.TransactionDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <select class="form-control" [(ngModel)]="regObj.CustomerCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList; let i = index">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> Destination</span>
+                                        <select class="form-control" [(ngModel)]="regObj.TravelDestinationCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of destinationList; let i = index">
+                                                <option value="{{item.DestinationCode}}">{{item?.DestinationName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="col-md-12">
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Currency</span>
+                                                <select class="form-control" [(ngModel)]="regObj.Currency"
+                                                    (change)="onCurrencyChange($event.target.value)">
+                                                    <option selected value="0">SELECT..</option>
+                                                    <ng-container *ngFor="let item of currencyList; let i = index">
+                                                        <option value="{{item.CurrencyName}}">{{item?.CurrencyName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"> <input [(ngModel)]="regObj.CurrencyRate"
+                                                class="form-control" type="number" readonly> </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Card </span>
+                                        <select class="form-control" [(ngModel)]="regObj.CardCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of cardList; let i = index">
+                                                <option value="{{item.CardID}}">{{item?.CardID}}>> {{item?.CardName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Card Charge Amount</span>
+                                        <input [(ngModel)]="regObj.CardChargeAmount" class="form-control" type="number"
+                                            (click)="selectTarget($event)" (ngModelChange)="updateTotalPayable()">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Net Payable</span>
+                                        <input [(ngModel)]="regObj.NetPayableAmt" class="form-control" type="number"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Sales Reference</span>
+                                        <select class="form-control" [(ngModel)]="regObj.SalesReferenceCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                <option value="{{item.EmployeeCode}}">{{item?.FullName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Is Locked</span>
+                                                <i *ngIf="regObj?.IsFinalLocked" (click)="regObj.IsFinalLocked = false"
+                                                    class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                    aria-hidden="true"></i>
+                                                <i *ngIf="! regObj?.IsFinalLocked" (click)="regObj.IsFinalLocked = true"
+                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                    aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Is Cancel:</span>
+                                                <i *ngIf="regObj?.IsCancel" (click)="regObj.IsCancel = false"
+                                                    class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                    aria-hidden="true"></i>
+                                                <i *ngIf="! regObj?.IsCancel" (click)="regObj.IsCancel = true"
+                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                    aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Reason of Cancel</span>
+                                        <textarea [(ngModel)]="regObj.ReasonofCancel" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="regObj.Remarks" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading btn-toggle-collapse">
+                            <span><b>DETAILS</b> </span>
+                            <div class="right">
+                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn btn-success" (click)="addDetailsNew('enter', $event)"><i
+                                            class="fa fa-plus" aria-hidden="true"></i>Add NEW
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-fixed">
+                                        <table class="table table-bordered table-p4 custom-table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="width-1p text-center">SN#</th>
+                                                    <th class="width-20p">Name of Person</th>
+                                                    <th class="width-20p">Event Name</th>
+                                                    <th class="width-5p">EvenDate</th>
+                                                    <th class="width-8p">Reg. Charge</th>
+                                                    <th class="width-8p">Service Charge(%)</th>
+                                                    <th class="width-8p">Service Charge Amt</th>
+                                                    <th class="width-8p">Discount Amt.</th>
+                                                    <th class="width-10p">Cancellation Charge</th>
+                                                    <th class="width-10p">Total Amount</th>
+                                                    <th class="width-1p">X</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of regDetailsObj; let i = index">
+                                                    <td class="text-right"> {{i+1}} </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm text-left"
+                                                            [(ngModel)]="item.NameofPerson">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm text-left"
+                                                            [(ngModel)]="item.EventName">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" data-date="" [attr.data-date]="item.EvenDate"
+                                                            data-date-format="dd-MM-YYYY"
+                                                            class="form-control width-145 form-control-sm"
+                                                            [(ngModel)]="item.EvenDate" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm text-right"
+                                                            [(ngModel)]="item.RegistrationCharge"
+                                                            (input)="CalculateTotalPayableAmount(item)"
+                                                            (click)="selectTarget($event)">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm text-right"
+                                                            [(ngModel)]="item.ServiceChargePercent"
+                                                            (input)="CalculateServiceChargeValue(item)"
+                                                            (click)="selectTarget($event)">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm  text-right"
+                                                            [(ngModel)]="item.ServiceChargeValue"
+                                                            (input)="CalculateServicePertageValue(item)"
+                                                            (keyup.enter)="addDetailsNew('enter', $event)"
+                                                            (click)="selectTarget($event)">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm  text-right"
+                                                            [(ngModel)]="item.DiscountAmount"
+                                                            (input)="CalculateTotalPayableAmount(item)"
+                                                            (keyup.enter)="addDetailsNew('enter', $event)"
+                                                            (click)="selectTarget($event)">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm text-right"
+                                                            [(ngModel)]="item.CancellationCharge"
+                                                            (input)="CalculateTotalPayableAmount(item)"
+                                                            (click)="selectTarget($event)"
+                                                            (keyup.enter)="addDetailsNew('enter', $event)">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm text-right"
+                                                            [(ngModel)]="item.TotalPayableAmt"
+                                                            (click)="selectTarget($event)"
+                                                            (keyup.enter)="addDetailsNew('enter', $event)" readonly>
+                                                    </td>
+
+                                                    <td class="text-center" (click)="removeDetails(i)"> <i
+                                                            class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td>
+
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <span
+                                                            class="font-size-20 strong text-right text-success font-weight-bold ">
+                                                            Total=
+                                                        </span>
+                                                    </td>
+                                                    <td> <span
+                                                            class="font-size-20 strong text-right text-success font-weight-bold ">
+                                                            {{sumOfTotalValue| number:'1.0-0' }}
+                                                        </span>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mt-3">
+                                    <button *ngIf="regObj?.ID == 0" (click)="saveOnlineReg()" type="button"
+                                        class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                    <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
+                                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                    <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                            class="fas fa-redo-alt"></i> Reset</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

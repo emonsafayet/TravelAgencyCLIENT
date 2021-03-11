@@ -11,8 +11,9 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { Common } from "../../../library/common";
 //Classes
-import { OnlineRegistationModel } from '../../../Classes/ClientBusiness/OnlineRegistationModel';
+import { OnlineRegistationMasterModelDTO, OnlineRegistationDetailModelDTO } from '../../../Classes/ClientBusiness/OnlineRegistationModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFan } from '@fortawesome/free-solid-svg-icons';
 
 //
 declare var moment: any;
@@ -20,38 +21,36 @@ declare var moment: any;
 	templateUrl: 'OnlineRegistation.html'
 })
 export class OnlineRegistation implements OnInit {
-	user: any; 
-
+	user: any;
+	sumOfTotalValue: number = 0;
+	TotalPayableAmt: number = 0;
 	registaionList: any[] = [];
 	customerList: any[] = [];
-	companyList: any[] = [];
 	currencyList: any[] = [];
 	salesStaffList: any[] = [];
 	activeCurrencyRateList: any[] = [];
 	cardList: any[] = [];
-	destinationList:any[]=[];
-	regObj: OnlineRegistationModel = new OnlineRegistationModel();
+	destinationList: any[] = [];
+	regObj: OnlineRegistationMasterModelDTO = new OnlineRegistationMasterModelDTO();
+	regDetailsObj: OnlineRegistationDetailModelDTO[] = [];
 	SearchRegList: string = '';
 
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
 
-		
+
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
-
-		this.Notification.LoadingWithMessage('Loading...');
-		this.getOnlineRegistation();
+		this.setNewDetails();
+		this.Notification.LoadingWithMessage('Loading...'); 
 		this.GETCustomerLIST();
-		this.GETCompanyLIST();
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST();
-		this.GETDestinationLIST(); 
+		this.GETDestinationLIST();
 		this.GETCardLIST();
 		this.GETActiveCurrencyRateLIST();
-		this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
-		this.regObj.EvenDate = moment().format(Common.SQLDateFormat);
+		this.regObj.TransactionDate = moment().format(Common.SQLDateFormat);
 		this.Notification.LoadingRemove();
 	}
 	getOnlineRegistation() {
@@ -62,7 +61,7 @@ export class OnlineRegistation implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
-	setOnlineRegistation(data) { 
+	setOnlineRegistation(data) {
 		this.registaionList = data;
 		this.Notification.LoadingRemove();
 
@@ -71,10 +70,16 @@ export class OnlineRegistation implements OnInit {
 		if (this.regObj.ID > 0)
 			this.regObj.UpdatedBy = this.user.EmployeeCode;
 		else this.regObj.CreatedBy = this.user.EmployeeCode;
+
+		if (Library.isNullOrZero(this.regObj.NetPayableAmt)) this.regObj.NetPayableAmt = 0;
 		
-		if(Library.isNullOrZero(this.regObj.TotalPayableAmt))this.regObj.TotalPayableAmt=0;
 		//validation
 		if (!this.validateModel()) return;
+
+		var details = JSON.stringify(this.regDetailsObj);
+
+		this.regObj.OnlineRegistrationDetail = Library.getBase64(details);
+		this.regObj.CreatedBy = this.user.EmployeeCode;
 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.saveOnlineRegisationList(this.regObj).subscribe(
@@ -83,124 +88,184 @@ export class OnlineRegistation implements OnInit {
 		);
 	}
 	setOnlineReg(Data: any) {
-		if (Data.ID > 0) this.Notification.Success('Saved Successfully.');
-		else {
-			this.Notification.LoadingRemove();
-		}
-		this.regObj = new OnlineRegistationModel();
+		if (Data.ID > 0) this.Notification.Success('Update Successfully.');
+		else this.Notification.Success('Save Successfully.');		 	
 		this.getOnlineRegistation();
+		document.getElementById('onlineRegEntry_tab').click();
+		this.ResetModel();
+		this.Notification.LoadingRemove();
 	}
+
 	validateModel() {
-		;
-		var result = true
-		if (this.regObj.CustomerCode == "0") {
-			this.Notification.Warning('Please Select Customer.');
-			result = false;
-			return;
+		var result = true;
+		try {
+
+			if (this.regObj.CustomerCode == "0") {
+				this.Notification.Warning('Please Select Customer.');
+				result = false;
+				return;
+			}
+			if (Library.isNuLLorUndefined(this.regObj.CustomerCode) || this.regObj.CustomerCode == "0") {
+				this.Notification.Warning('Please Select Customer.');
+				result = false;
+				return;
+			}
+			if (Library.isNuLLorUndefined(this.regObj.TravelDestinationCode) || this.regObj.TravelDestinationCode == "0") {
+				this.Notification.Warning('Please Select Destination.');
+				result = false;
+				return;
+			}
+			if (Library.isNuLLorUndefined(this.regObj.CardCode) || this.regObj.CardCode == "0") {
+				this.Notification.Warning('Please Enter CardCode.');
+				result = false;
+				return;
+			}
+			if (!Library.isUndefinedOrNullOrZeroReturn0(this.regObj.CardChargeAmount)) {
+				this.Notification.Warning('Please Card Charge Amount.');
+				result = false;
+				return;
+			}
+			if (Library.isNuLLorUndefined(this.regObj.SalesReferenceCode) || this.regObj.SalesReferenceCode == "0") {
+				this.Notification.Warning('Please Select Sales Staff .');
+				result = false;
+				return;
+			}
+			if (Library.isNullOrZero(this.regObj.NetPayableAmt)) {
+				this.Notification.Warning('Total Payable Amount Can Not Zero.');
+				result = false;
+				return;
+			}
+			var validDetails = 0;
+			this.regDetailsObj.forEach(item => {
+				if (!Library.isNullOrZero(item.EventName)) {
+					if (Library.isNullOrZero(item.EventName)) {
+						this.Notification.Warning('Please Enter Event Name.');
+						result = false;
+						return;
+					}
+					if (Library.isNullOrZero(item.RegistrationCharge)) {
+						this.Notification.Warning('Please Enter Registration Charge.');
+						result = false;
+						return;
+					}
+					if (Library.isNullOrZero(item.ServiceChargeValue)) {
+						this.Notification.Warning('Please Enter Service Charge Value.');
+						result = false;
+						return;
+					}
+					validDetails += 1;
+				}
+				else {
+					this.Notification.Warning('Please Select Event Name.');
+					result = false;
+					return;
+				}
+			});
 		}
-		if (Library.isNuLLorUndefined(this.regObj.EventName)) {
-			this.Notification.Warning('Please Enter Event Name.');
-			result = false;
-			return;
+		catch (e) {
+			this.Notification.Warning('Please Select item.');
+			return false;
 		}
-		if (Library.isNuLLorUndefined(this.regObj.EvenDate)) {
-			this.Notification.Warning('Please Select Event date.');
-			result = false;
-			return;
-		}
-		if (Library.isNuLLorUndefined(this.regObj.TravelDestinationCode) || this.regObj.TravelDestinationCode == "0") {
-			this.Notification.Warning('Please Select Destination.');
-			result = false;
-			return;
-		}
-		if (Library.isNuLLorUndefined(this.regObj.RegistrationCharge)) {
-			this.Notification.Warning('Please Enter Resigtation Charge.');
-			result = false;
-			return;
-		}
-		if (Library.isNuLLorUndefined(this.regObj.ServiceCharge)) {
-			this.Notification.Warning('Please Enter ServiceCharge.');
-			result = false;
-			return;
-		}
-		if (Library.isNuLLorUndefined(this.regObj.Currency) || this.regObj.Currency=="0") {
-			this.Notification.Warning('Please Select Currency .');
-			result = false;
-			return;
-		}
-		if (Library.isNuLLorUndefined(this.regObj.CardCode) || this.regObj.CardCode=="0") {
-			this.Notification.Warning('Please Enter CardCode.');
-			result = false;
-			return;
-		}	
-		
-		if (Library.isNuLLorUndefined(this.regObj.SalesReferenceCode) ||  this.regObj.SalesReferenceCode=="0") {
-			this.Notification.Warning('Please Select Sales Staff .');
-			result = false;
-			return;
-		}
-		if (Library.isNullOrZero(this.regObj.TotalPayableAmt)) {
-			this.Notification.Warning('Total Payable Amount Can Not Zero.');
-			result = false;
-			return;
-		} 
 		return result;
 	}
-	
+
 	ResetModel() {
-		this.regObj = new OnlineRegistationModel();
-		this.regObj.CompanyCode = "0";
-		this.regObj.CustomerCode = "0";
-		this.regObj.Currency = "0";
-		this.regObj.SalesReferenceCode = "0";
-		this.regObj.TravelDestinationCode = "0";
-		this.regObj.CurrencyRate=0;
-		this.regObj.RegistationDate = moment().format(Common.SQLDateFormat);
-		this.regObj.EvenDate = moment().format(Common.SQLDateFormat);
-	}
-	 
+		this.regObj = new OnlineRegistationMasterModelDTO();		
+		this.regObj.TransactionDate = moment().format(Common.SQLDateFormat);
+		this.sumOfTotalValue=0;
+		this.setNewDetails(); 
+	} 
 	EditItem(item) {
 		this.regObj = JSON.parse(JSON.stringify(item));
-		if (Library.isNuLLorUndefined(item.SalesReferenceCode)) this.regObj.SalesReferenceCode = "0";
-		if (Library.isNuLLorUndefined(item.CompanyCode)) this.regObj.CompanyCode = "0";
-		if (Library.isNuLLorUndefined(item.TravelDestinationCode)) this.regObj.TravelDestinationCode = "0";
-		if (Library.isNuLLorUndefined(item.CardID)) this.regObj.CardCode = "0";
-		this.regObj.RegistationDate = moment(new Date(this.regObj.RegistationDate)).format(Common.SQLDateFormat);
-		this.regObj.EvenDate = moment(new Date(this.regObj.EvenDate)).format(Common.SQLDateFormat);
+		this.sumOfTotalValue=this.regObj.NetPayableAmt;
+		this.regObj.TransactionDate = moment(new Date(this.regObj.TransactionDate)).format(Common.SQLDateFormat);
+		
+		this.transactionCommonService.getOnlineRegistrationDetailsByTransactionCode(this.regObj.TransactionCode)
+		.subscribe( 
+			data =>this.setOnlineRegEdit(data),
+			error => this.Notification.Error(error)
+		);
+
+		
 	}
-	updateTotalPayable(){
-		 
-		var serviceCharge: any =0;
-		var regCharge =Number(this.regObj.RegistrationCharge) * Number(this.regObj.CurrencyRate);
-		serviceCharge=  (Number(regCharge))/100 *Number(this.regObj.ServiceCharge);		
-		this.regObj.TotalPayableAmt=Number(regCharge.toFixed(2)) +Number(serviceCharge.toFixed(2));
-	 
+	setOnlineRegEdit(Data: any) {		 
+		Data.forEach(element => {
+				element.EvenDate=moment(new Date(element.EvenDate)).format(Common.SQLDateFormat);
+		});
+		this.regDetailsObj = Data;
+		document.getElementById('onlineRegEntry_tab').click();
 	}
-	onCurrencyChange(item){
-		 	
-		this.regObj.RegistrationCharge=0;
-		this.regObj.ServiceCharge=0;
-		this.regObj.TotalPayableAmt=0;	 
+	updateTotalPayable() {
+		var serviceCharge: any = 0;
+		var regCharge = Number(this.regObj.CardChargeAmount) * Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
+		this.regObj.NetPayableAmt = Number(regCharge.toFixed(2)) + Number(serviceCharge.toFixed(2)) + this.sumOfTotalValue;
+	}
+	onCurrencyChange(item) {
 
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
-		if(Library.isNullOrEmpty(RateItem)) this.regObj.CurrencyRate = 0 ;
-		else this.regObj.CurrencyRate =RateItem.Rate;	
+		if (Library.isNullOrEmpty(RateItem)) this.regObj.CurrencyRate = 0;
+		else this.regObj.CurrencyRate = RateItem.Rate;
 	}
 
-	//DROP DOWN
-	GETCompanyLIST() {
-		this.Notification.LoadingWithMessage('Loading...');
-		this.transactionCommonService.GETCompanyLIST()
-			.subscribe(
-				data => this.setCompanyLIST(data),
-				error => this.Notification.Error(error)
-			);
-	}
-	setCompanyLIST(data) {
-		this.companyList = data;
-		this.Notification.LoadingRemove();
+	setNewDetails() {
+		this.regDetailsObj = [];
+		this.regObj = new OnlineRegistationMasterModelDTO();
 
+		this.addNewColumnForDetail();
 	}
+
+	addDetailsNew(value, event) {
+		this.addNewColumnForDetail();
+		setTimeout(() => this.selectNext(value, event), 500)
+		// this.selectNext(value, event);
+	}
+
+	addNewColumnForDetail() {
+		var onlineRegDetail = new OnlineRegistationDetailModelDTO();
+		onlineRegDetail.EvenDate = moment().format(Common.SQLDateFormat);
+		this.regDetailsObj.push(onlineRegDetail);
+	}
+
+	selectNext(key, e): void {
+		if (key == 'enter') {
+			var elem = e.target.parentNode.parentNode.nextSibling;
+			//Check IS Real Number	
+			if (!Library.isNuLLorUndefined(elem)) {
+				elem.firstChild.nextSibling.children[0].select();
+				elem.firstChild.nextSibling.children[0].focus();
+			}
+		}
+	}
+
+	removeDetails(index: number) {
+		this.regDetailsObj.splice(index, 1);
+	}
+
+	CalculateServicePertageValue(obj) {
+		obj.ServiceChargePercent = (Number(obj.ServiceChargeValue) * 100) / Number(obj.RegistrationCharge);
+		obj.ServiceChargePercent = Number(obj.ServiceChargePercent).toFixed(2);
+		this.CalculateTotalPayableAmount(obj);
+	}
+
+	CalculateServiceChargeValue(obj) {
+		obj.ServiceChargeValue = (Number(obj.RegistrationCharge) * (Number(obj.ServiceChargePercent) / 100))
+		obj.ServiceChargeValue = Number(obj.ServiceChargeValue).toFixed(2);
+		this.CalculateTotalPayableAmount(obj);
+	}
+
+	CalculateTotalPayableAmount(obj) {
+		this.sumOfTotalValue = 0
+		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) + Number(obj.CancellationCharge) - Number(obj.DiscountAmount);
+		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
+		this.regObj.NetPayableAmt = this.sumOfTotalValue +
+			Number(this.regObj.CardChargeAmount) *
+			Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
+	}
+
+	selectTarget(e) {
+		e.target.select();
+	}
+	//DROP DOWN	 
 	GETCustomerLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getcustomerList()
@@ -279,8 +344,8 @@ export class OnlineRegistation implements OnInit {
 		this.Notification.LoadingRemove();
 
 	}
-	PrintOnlineReg(obj){
-		var RegistrationCode = obj.RegistrationCode; 
+	PrintOnlineReg(obj) {
+		var RegistrationCode = obj.RegistrationCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/onlineRegistrationDetail?onlineRegCode=${RegistrationCode}`, "_blank");
 	}
 

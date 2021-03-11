@@ -139,8 +139,7 @@ export class AirTicketRegistration implements OnInit {
 		else this.airTicketregObj.CurrencyRate = RateItem.Rate;
 	}
 
-	validateModel() {
-		;
+	validateModel() { 
 		var result = true
 		if (this.airTicketregObj.CustomerCode == "0") {
 			this.Notification.Warning('Please Select Customer.');
@@ -189,6 +188,11 @@ export class AirTicketRegistration implements OnInit {
 		}
 		if (Library.isNuLLorUndefined(this.airTicketregObj.SalesStaffCode) || this.airTicketregObj.SalesStaffCode == "0") {
 			this.Notification.Warning('Please Select Sales Staff .');
+			result = false;
+			return;
+		}
+		if (Library.isUndefinedOrNullOrEmpty(this.airTicketregObj.TicketNo) ) {
+			this.Notification.Warning('Please Enter Ticket No.');
 			result = false;
 			return;
 		}

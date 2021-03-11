@@ -440,7 +440,7 @@ export class Library{
     }
     public static isUndefinedOrNullOrZeroReturn0(str){
       
-        if(str==0 ||  str==NaN) return 0;
+        if(str == NaN || str == null || str == undefined || str == "") return 0;
         else return str;
     }
 

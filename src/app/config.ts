@@ -14,6 +14,11 @@ export class Config {
     // LIVE SERVER
     // public static get API_URL(): string { return "http://localhost:81/api/api/"; }
     // public static get getBaseUrl(): string { return "http://localhost:81/api/"; }
+    
+    // LIVE SERVER -->> Travel Tech
+    // public static get API_URL(): string { return "http://110.76.129.22:81/api/api/"; }
+    // public static get getBaseUrl(): string { return "http://110.76.129.22:81/api/"; }    
+
 
     // LIVE SERVER
     // public static get API_URL(): string { return "http://115.42.53.69:81/api/api/"; }

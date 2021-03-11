@@ -29,6 +29,8 @@ export class TransactionCommonService {
 	GetOnlineRegisationList() { return this.masterService.get("client/business/travel/transaction/online/registation/list"); }
 
 	saveOnlineRegisationList(regObj: any) { return this.masterService.post(`client/business/travel/transaction/online/registation/save/update`, regObj); }
+	
+	getOnlineRegistrationDetailsByTransactionCode(transactionCode:string) { return this.masterService.get("client/business/travel/transaction/online/registation/details/by/transactionCode/"+transactionCode); }
 
 	/**END  Online Registation Service**/
 

@@ -118,8 +118,7 @@ export class _PackTour implements OnInit {
 		this.packageMasterObj = new  PackageMasterModel();		
 		this.setNewPackageDetails();  
 	}
-	validateModel() {
-		
+	validateModel() {		
 		var result = true;
 		try {
 			if (Library.isNullOrEmpty(this.packageMasterObj.PackageName)) {
