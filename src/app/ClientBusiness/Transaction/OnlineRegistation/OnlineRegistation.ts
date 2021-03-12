@@ -84,7 +84,7 @@ export class OnlineRegistation implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.saveOnlineRegisationList(this.regObj).subscribe(
 			(data) => this.setOnlineReg(data),
-			(error) => this.Notification.Error(error)
+			(error) => this.showError(error)
 		);
 	}
 	setOnlineReg(Data: any) {
@@ -98,38 +98,13 @@ export class OnlineRegistation implements OnInit {
 
 	validateModel() {
 		var result = true;
-		try {
-
-			if (this.regObj.CustomerCode == "0") {
-				this.Notification.Warning('Please Select Customer.');
-				result = false;
-				return;
-			}
+		try {			
 			if (Library.isNuLLorUndefined(this.regObj.CustomerCode) || this.regObj.CustomerCode == "0") {
 				this.Notification.Warning('Please Select Customer.');
 				result = false;
 				return;
 			}
-			if (Library.isNuLLorUndefined(this.regObj.TravelDestinationCode) || this.regObj.TravelDestinationCode == "0") {
-				this.Notification.Warning('Please Select Destination.');
-				result = false;
-				return;
-			}
-			if (Library.isNuLLorUndefined(this.regObj.CardCode) || this.regObj.CardCode == "0") {
-				this.Notification.Warning('Please Enter CardCode.');
-				result = false;
-				return;
-			}
-			if (!Library.isUndefinedOrNullOrZeroReturn0(this.regObj.CardChargeAmount)) {
-				this.Notification.Warning('Please Card Charge Amount.');
-				result = false;
-				return;
-			}
-			if (Library.isNuLLorUndefined(this.regObj.SalesReferenceCode) || this.regObj.SalesReferenceCode == "0") {
-				this.Notification.Warning('Please Select Sales Staff .');
-				result = false;
-				return;
-			}
+			
 			if (Library.isNullOrZero(this.regObj.NetPayableAmt)) {
 				this.Notification.Warning('Total Payable Amount Can Not Zero.');
 				result = false;
@@ -271,7 +246,7 @@ export class OnlineRegistation implements OnInit {
 		this.clientBusinessService.getcustomerList()
 			.subscribe(
 				data => this.setCustomerLIST(data),
-				error => this.Notification.Error(error)
+				error => this.showError(error)
 			);
 	}
 	setCustomerLIST(data) {
@@ -284,7 +259,7 @@ export class OnlineRegistation implements OnInit {
 		this.clientBusinessService.getCurrencyList()
 			.subscribe(
 				data => this.setCurrencyList(data),
-				error => this.Notification.Error(error)
+				error => this.showError(error)
 			);
 	}
 	setCurrencyList(data) {
@@ -297,7 +272,7 @@ export class OnlineRegistation implements OnInit {
 		this.transactionCommonService.GETSalesStaffLIST()
 			.subscribe(
 				data => this.setSalesStaffLIST(data),
-				error => this.Notification.Error(error)
+				error => this.showError(error)
 			);
 	}
 	setSalesStaffLIST(data) {
@@ -310,7 +285,7 @@ export class OnlineRegistation implements OnInit {
 		this.clientBusinessService.getDestinationList()
 			.subscribe(
 				data => this.setDestinationList(data),
-				error => this.Notification.Error(error)
+				error => this.showError(error)
 			);
 	}
 	setDestinationList(data) {
@@ -323,7 +298,7 @@ export class OnlineRegistation implements OnInit {
 		this.clientBusinessService.getcardList()
 			.subscribe(
 				data => this.setcardList(data),
-				error => this.Notification.Error(error)
+				error => this.showError(error)
 			);
 	}
 	setcardList(data) {
@@ -336,7 +311,7 @@ export class OnlineRegistation implements OnInit {
 		this.transactionCommonService.GETActiveCurrencyRateLIST()
 			.subscribe(
 				data => this.setActiveCurrencyRateList(data),
-				error => this.Notification.Error(error)
+				error => this.showError(error)
 			);
 	}
 	setActiveCurrencyRateList(data) {
@@ -348,5 +323,8 @@ export class OnlineRegistation implements OnInit {
 		var RegistrationCode = obj.RegistrationCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/onlineRegistrationDetail?onlineRegCode=${RegistrationCode}`, "_blank");
 	}
-
+	showError(error){ 
+		this.Notification.Error(error);
+		this.Notification.LoadingRemove();
+   }
 }

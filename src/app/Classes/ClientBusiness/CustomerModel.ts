@@ -3,7 +3,7 @@ export class CustomerModel {
 	public ID : number=0;
 	public CustomerCode : string;
 	public CustomerName : string;
-	public CustomerTypeCode : string;
+	public CustomerTypeCode : string="0";
 	public CustomerAddress : string;
 	public MobileNo : string;
 	public EmergencyNo : string;

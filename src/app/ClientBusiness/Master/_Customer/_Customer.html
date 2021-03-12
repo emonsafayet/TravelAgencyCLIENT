@@ -32,7 +32,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">Customer Type</span>
                                         <select class="form-control" [(ngModel)]="customerObj.CustomerTypeCode">
-                                            <option value="0">SELECT..</option>
+                                            <option value="0" selected>SELECT..</option>
                                             <ng-container *ngFor="let item of customerTypeList; let i = index">
                                                 <option value="{{item.TypeCode}}">{{item?.TypeName}}</option>
                                             </ng-container>

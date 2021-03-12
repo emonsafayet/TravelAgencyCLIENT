@@ -44,7 +44,7 @@ export class _Customer implements OnInit {
 		this.clientBusinessService.getcustomerList()
 			.subscribe(
 				data => this.setCustomerList(data),
-				error => this.Notification.Error(error)
+				error => this.showError(error),
 			);
 	}
 	setCustomerList(data) {
@@ -64,10 +64,11 @@ export class _Customer implements OnInit {
 		this.clientBusinessService.getCustomerTypeList()
 			.subscribe(
 				data => this.customerTypeList = data,
-				error => this.Notification.Error(error)
+				error => this.showError(error)
 			);
 	}
 	saveCustomer() {
+		debugger
 		if (this.customerObj.ID > 0)
 			this.customerObj.UpdatedBy = this.user.EmployeeCode;
 		else this.customerObj.CreatedBy = this.user.EmployeeCode;
@@ -78,7 +79,7 @@ export class _Customer implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.saveUpdateCustomer(this.customerObj).subscribe(
 			(data) => this.SetsaveUpdateCustomer(data),
-			(error) => this.Notification.Error(error)
+			(error) => this.showError(error)
 		);
 	}
 	SetsaveUpdateCustomer(Data: any) {
@@ -101,5 +102,8 @@ export class _Customer implements OnInit {
 		}
 		return result;
 	}
-
+	showError(error){ 
+		 this.Notification.Error(error);
+		 this.Notification.LoadingRemove();
+	}
 }
