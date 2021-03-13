@@ -27,6 +27,7 @@ export class TopUp implements OnInit {
 	topUpObj: TopUpModel = new TopUpModel();
 	topUpTypeObj: TopUpTypeModel = new TopUpTypeModel();
 	SearchTopUpList: string = '';
+	
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private transactionCommonService: TransactionCommonService, private clientBusinessService: ClientBusinessService) { }
 
@@ -65,16 +66,39 @@ export class TopUp implements OnInit {
 		this.topUpObj = new TopUpModel();
 		this.getTopUpList();
 	}
-	validateModel() {
-		;
+	validateModel() { 
+		debugger
 		var result = true
 		if (this.topUpObj.TopUpTypeCode == "0") {
 			this.Notification.Warning('Please Select Top Up Type.');
 			result = false;
 			return;
 		}
-		if (this.topUpObj.ProviderID == "0") {
+		if (this.topUpObj.TopUpTypeCode=="TUPT-0003" && this.topUpObj.AirlinesID == "0") {
+			this.topUpObj.ProviderID="0";
+			this.topUpObj.CardID="";
+
+			this.Notification.Warning('Please Select Airlines.');
+			result = false;
+			return;
+		}
+		if (this.topUpObj.TopUpTypeCode=="TUPT-0002" && this.topUpObj.ProviderID == "0") {
+			this.topUpObj.AirlinesID="0";
+			this.topUpObj.CardID="";
+
 			this.Notification.Warning('Please Select Provider.');
+			result = false;
+			return;
+		}
+		if (this.topUpObj.TopUpTypeCode=="TUPT-0001" && this.topUpObj.CardID == "") {
+			this.topUpObj.AirlinesID="0";
+			this.topUpObj.ProviderID="0";
+			this.Notification.Warning('Please Enter Card Number.');
+			result = false;
+			return;
+		}
+		if (Library.isUndefinedOrNullOrEmpty(this.topUpObj.Amount)) {
+			this.Notification.Warning('Please Enter Amount.');
 			result = false;
 			return;
 		}

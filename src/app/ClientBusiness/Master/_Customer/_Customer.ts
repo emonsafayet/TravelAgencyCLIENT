@@ -67,7 +67,7 @@ export class _Customer implements OnInit {
 				error => this.showError(error)
 			);
 	}
-	saveCustomer() {
+	saveCustomer() { 
 		debugger
 		if (this.customerObj.ID > 0)
 			this.customerObj.UpdatedBy = this.user.EmployeeCode;
@@ -83,13 +83,10 @@ export class _Customer implements OnInit {
 		);
 	}
 	SetsaveUpdateCustomer(Data: any) {
-		if (Data.ID > 0) this.Notification.Success('Employee Saved Successfully.');
-		else {
-			this.Notification.LoadingRemove();
-
-			console.log(Data);
-		}
-
+		if (this.customerObj.ID == 0) this.Notification.Success('Customer Saved Successfully.');
+		else  this.Notification.Success('Customer Update Successfully.');
+			 
+		this.Notification.LoadingRemove();
 		this.customerObj = new CustomerModel();
 		this.getCustomerList();
 	}
@@ -100,6 +97,21 @@ export class _Customer implements OnInit {
 			result = false;
 			return;
 		}
+		if (Library.isNuLLorUndefined(this.customerObj.CustomerAddress)) {
+			this.Notification.Warning('Please Enter Customer Address.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.customerObj.MobileNo)) {
+			this.Notification.Warning('Please Enter Mobile No.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.customerObj.CustomerTypeCode) || this.customerObj.CustomerTypeCode=="0") {
+			this.Notification.Warning('Please Select Customer Type.');
+			result = false;
+			return;
+		} 
 		return result;
 	}
 	showError(error){ 

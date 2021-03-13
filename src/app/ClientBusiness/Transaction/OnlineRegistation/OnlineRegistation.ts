@@ -23,6 +23,7 @@ declare var moment: any;
 export class OnlineRegistation implements OnInit {
 	user: any;
 	sumOfTotalValue: number = 0;
+	sumofTotalCancellationCharge: number = 0;
 	TotalPayableAmt: number = 0;
 	registaionList: any[] = [];
 	customerList: any[] = [];
@@ -43,7 +44,7 @@ export class OnlineRegistation implements OnInit {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 		this.setNewDetails();
-		this.Notification.LoadingWithMessage('Loading...'); 
+		this.Notification.LoadingWithMessage('Loading...');
 		this.GETCustomerLIST();
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST();
@@ -72,7 +73,7 @@ export class OnlineRegistation implements OnInit {
 		else this.regObj.CreatedBy = this.user.EmployeeCode;
 
 		if (Library.isNullOrZero(this.regObj.NetPayableAmt)) this.regObj.NetPayableAmt = 0;
-		
+
 		//validation
 		if (!this.validateModel()) return;
 
@@ -89,7 +90,7 @@ export class OnlineRegistation implements OnInit {
 	}
 	setOnlineReg(Data: any) {
 		if (Data.ID > 0) this.Notification.Success('Update Successfully.');
-		else this.Notification.Success('Save Successfully.');		 	
+		else this.Notification.Success('Save Successfully.');
 		this.getOnlineRegistation();
 		document.getElementById('onlineRegEntry_tab').click();
 		this.ResetModel();
@@ -98,13 +99,13 @@ export class OnlineRegistation implements OnInit {
 
 	validateModel() {
 		var result = true;
-		try {			
+		try {
 			if (Library.isNuLLorUndefined(this.regObj.CustomerCode) || this.regObj.CustomerCode == "0") {
 				this.Notification.Warning('Please Select Customer.');
 				result = false;
 				return;
 			}
-			
+
 			if (Library.isNullOrZero(this.regObj.NetPayableAmt)) {
 				this.Notification.Warning('Total Payable Amount Can Not Zero.');
 				result = false;
@@ -145,27 +146,27 @@ export class OnlineRegistation implements OnInit {
 	}
 
 	ResetModel() {
-		this.regObj = new OnlineRegistationMasterModelDTO();		
+		this.regObj = new OnlineRegistationMasterModelDTO();
 		this.regObj.TransactionDate = moment().format(Common.SQLDateFormat);
-		this.sumOfTotalValue=0;
-		this.setNewDetails(); 
-	} 
+		this.sumOfTotalValue = 0;
+		this.setNewDetails();
+	}
 	EditItem(item) {
 		this.regObj = JSON.parse(JSON.stringify(item));
-		this.sumOfTotalValue=this.regObj.NetPayableAmt;
+		this.sumOfTotalValue = this.regObj.NetPayableAmt;
 		this.regObj.TransactionDate = moment(new Date(this.regObj.TransactionDate)).format(Common.SQLDateFormat);
-		
-		this.transactionCommonService.getOnlineRegistrationDetailsByTransactionCode(this.regObj.TransactionCode)
-		.subscribe( 
-			data =>this.setOnlineRegEdit(data),
-			error => this.Notification.Error(error)
-		);
 
-		
+		this.transactionCommonService.getOnlineRegistrationDetailsByTransactionCode(this.regObj.TransactionCode)
+			.subscribe(
+				data => this.setOnlineRegEdit(data),
+				error => this.Notification.Error(error)
+			);
+
+
 	}
-	setOnlineRegEdit(Data: any) {		 
+	setOnlineRegEdit(Data: any) {
 		Data.forEach(element => {
-				element.EvenDate=moment(new Date(element.EvenDate)).format(Common.SQLDateFormat);
+			element.EvenDate = moment(new Date(element.EvenDate)).format(Common.SQLDateFormat);
 		});
 		this.regDetailsObj = Data;
 		document.getElementById('onlineRegEntry_tab').click();
@@ -211,32 +212,6 @@ export class OnlineRegistation implements OnInit {
 			}
 		}
 	}
-
-	removeDetails(index: number) {
-		this.regDetailsObj.splice(index, 1);
-	}
-
-	CalculateServicePertageValue(obj) {
-		obj.ServiceChargePercent = (Number(obj.ServiceChargeValue) * 100) / Number(obj.RegistrationCharge);
-		obj.ServiceChargePercent = Number(obj.ServiceChargePercent).toFixed(2);
-		this.CalculateTotalPayableAmount(obj);
-	}
-
-	CalculateServiceChargeValue(obj) {
-		obj.ServiceChargeValue = (Number(obj.RegistrationCharge) * (Number(obj.ServiceChargePercent) / 100))
-		obj.ServiceChargeValue = Number(obj.ServiceChargeValue).toFixed(2);
-		this.CalculateTotalPayableAmount(obj);
-	}
-
-	CalculateTotalPayableAmount(obj) {
-		this.sumOfTotalValue = 0
-		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) + Number(obj.CancellationCharge) - Number(obj.DiscountAmount);
-		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
-		this.regObj.NetPayableAmt = this.sumOfTotalValue +
-			Number(this.regObj.CardChargeAmount) *
-			Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
-	}
-
 	selectTarget(e) {
 		e.target.select();
 	}
@@ -323,8 +298,56 @@ export class OnlineRegistation implements OnInit {
 		var RegistrationCode = obj.RegistrationCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/onlineRegistrationDetail?onlineRegCode=${RegistrationCode}`, "_blank");
 	}
-	showError(error){ 
+	showError(error) {
 		this.Notification.Error(error);
 		this.Notification.LoadingRemove();
-   }
+	}
+	removeDetails(index: number) {
+		this.regDetailsObj.splice(index, 1);
+		this.getpayableAmount();
+	}
+	// Calculartion
+	CalculateServicePertageValue(obj) {
+		obj.ServiceChargePercent = (Number(obj.ServiceChargeValue) * 100) / Number(obj.RegistrationCharge);
+		obj.ServiceChargePercent = Number(obj.ServiceChargePercent).toFixed(2);
+		this.CalculateTotalPayableAmount(obj);
+	}
+
+	CalculateServiceChargeValue(obj) {
+		obj.ServiceChargeValue = (Number(obj.RegistrationCharge) * (Number(obj.ServiceChargePercent) / 100))
+		obj.ServiceChargeValue = Number(obj.ServiceChargeValue).toFixed(2);
+		this.CalculateTotalPayableAmount(obj);
+	}
+
+	CalculateTotalPayableAmount(obj) {
+		this.sumOfTotalValue = 0
+		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) + Number(obj.DiscountAmount);
+		this.getpayableAmount();
+	}
+	getpayableAmount() {
+		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
+		this.regObj.NetPayableAmt = this.sumOfTotalValue +
+			Number(this.regObj.CardChargeAmount) *
+			Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
+	}
+	CalculeCancelationAmount(obj){
+		debugger
+		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
+
+		obj.TotalPayableAmt =  Number(obj.ServiceChargeValue) + Number(obj.CancellationCharge);
+
+		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
+		this.regObj.NetPayableAmt = this.sumofTotalCancellationCharge +this.sumOfTotalValue;
+	}
+	isCancel(){
+		this.regObj.IsCancel= true
+		console.log(this.regDetailsObj)
+
+		// this.regDetailsObj.forEach(element => {
+		 
+		// 	document.getElementById(element.CancellationCharge).disabled = true;
+		// });
+	 
+	}
+	 
 }

@@ -229,9 +229,12 @@
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Net Payable</span>
-                                        <input [(ngModel)]="regObj.NetPayableAmt" class="form-control" type="number"
-                                            readonly>
+                                        <span
+                                            class="input-group-addon font-size-20 strong text-right text-success font-weight-bold">Net
+                                            Payable</span>
+                                        <input [(ngModel)]="regObj.NetPayableAmt"
+                                            class="form-control font-size-20 strong text-left text-success font-weight-bold"
+                                            type="number" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -270,9 +273,10 @@
                                                 <i *ngIf="regObj?.IsCancel" (click)="regObj.IsCancel = false"
                                                     class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                                     aria-hidden="true"></i>
-                                                <i *ngIf="! regObj?.IsCancel" (click)="regObj.IsCancel = true"
+                                                <i *ngIf="! regObj?.IsCancel" (click)="isCancel()"
                                                     class="fa fa-square-o font-size-35 ml-3 text-success"
                                                     aria-hidden="true"></i>
+                                                 
                                             </div>
                                         </div>
                                     </div>
@@ -382,16 +386,16 @@
                                                         <input type="text"
                                                             class="form-control form-control-sm text-right"
                                                             [(ngModel)]="item.CancellationCharge"
-                                                            (input)="CalculateTotalPayableAmount(item)"
+                                                            (input)="CalculeCancelationAmount(item)"
                                                             (click)="selectTarget($event)"
-                                                            (keyup.enter)="addDetailsNew('enter', $event)">
+                                                            (keyup.enter)="addDetailsNew('enter', $event)" [disabled]="true">
                                                     </td>
                                                     <td>
-                                                        <input type="text"
+                                                        <input type="text" 
                                                             class="form-control form-control-sm text-right"
                                                             [(ngModel)]="item.TotalPayableAmt"
                                                             (click)="selectTarget($event)"
-                                                            (keyup.enter)="addDetailsNew('enter', $event)" readonly>
+                                                            (keyup.enter)="addDetailsNew('enter', $event)" [disabled]="true">
                                                     </td>
 
                                                     <td class="text-center" (click)="removeDetails(i)"> <i
@@ -406,19 +410,25 @@
                                                     </td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
                                                     <td>
                                                         <span
-                                                            class="font-size-20 strong text-right text-success font-weight-bold ">
+                                                            class="font-size-20 strong text-right text-success font-weight-bold">
                                                             Total=
                                                         </span>
                                                     </td>
-                                                    <td> <span
-                                                            class="font-size-20 strong text-right text-success font-weight-bold ">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td> 
+                                                        <span
+                                                        class="font-size-20 strong text-right text-success font-weight-bold">
+                                                        {{sumofTotalCancellationCharge| number:'1.0-0' }}
+                                                    </span>
+                                                    </td>
+                                                    <td>
+                                                         <span
+                                                            class="font-size-20 strong text-right text-success font-weight-bold">
                                                             {{sumOfTotalValue| number:'1.0-0' }}
                                                         </span>
                                                     </td>

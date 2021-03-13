@@ -167,12 +167,13 @@
                                         </tr>
                                         <tr>
                                             <th class="width-1p text-center">SN#</th>
-                                            <th class="width-1p text-center">Top-Up Code</th>
-                                            <th class="width-1p">Top-Up Type</th>
-                                            <th class="width-2p">Provider Name</th>
-                                            <th class="width-2p">Airline Name</th>
-                                            <th class="width-2p">Amount</th>
-                                            <th class="width-2p">TopUp Date</th>
+                                            <th class="width-10p text-center">Top-Up Code</th>
+                                            <th class="width-10p">Top-Up Type</th>
+                                            <th class="width-10p">Provider Name</th>
+                                            <th class="width-10p">Airline Name</th>
+                                            <th class="width-10p">Card Number</th>
+                                            <th class="width-5p">Amount</th>
+                                            <th class="width-5p">TopUp Date</th>
                                             <th class="width-2p text-center">Status</th>
                                             <th class="width-2p text-center">Action</th>
                                             <th class="width-2p text-center">Print</th>
@@ -186,6 +187,7 @@
                                             <td class="text-left"> {{item?.TopUpTypeName}} </td>
                                             <td class="text-left"> {{item?.ProviderName}} </td>
                                             <td class="text-left"> {{item?.AirlinesName}} </td>
+                                            <td class="text-left"> {{item?.CardID}} </td>
                                             <td class="text-left"> {{item?.Amount}} </td>
                                             <td class="text-left"> {{item?.TopUpDate | date: 'dd MMM yyyy' }} </td>
                                             <td class="text-center">
