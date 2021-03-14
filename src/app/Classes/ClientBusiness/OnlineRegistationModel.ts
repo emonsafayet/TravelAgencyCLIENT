@@ -9,8 +9,6 @@ export class OnlineRegistationMasterModelDTO  {
 	public Remarks : string;
 	public NetPayableAmt : number=0;
 	public IsFinalLocked : boolean;
-	public IsCancel : boolean;
-	public ReasonofCancel : string;
 	public CardCode : string="0";
 	public CardChargeAmount : number=0;
 	public Currency : string="0";
@@ -33,6 +31,7 @@ export class OnlineRegistationDetailModelDTO{
 	public ServiceChargeValue : number=0;
 	public DiscountAmount : number=0;
 	public TotalPayableAmt : number=0;
+	public IsCancel : boolean;
 	public CancellationCharge : number=0;
 	public CreatedBy : string ="";
 	public CreatedOn : string="";

@@ -241,7 +241,6 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Sales Reference</span>
@@ -254,38 +253,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
-                                    <div class="col-md-12">
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Is Locked</span>
-                                                <i *ngIf="regObj?.IsFinalLocked" (click)="regObj.IsFinalLocked = false"
-                                                    class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                    aria-hidden="true"></i>
-                                                <i *ngIf="! regObj?.IsFinalLocked" (click)="regObj.IsFinalLocked = true"
-                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                    aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-7">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Is Cancel:</span>
-                                                <i *ngIf="regObj?.IsCancel" (click)="regObj.IsCancel = false"
-                                                    class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                    aria-hidden="true"></i>
-                                                <i *ngIf="! regObj?.IsCancel" (click)="isCancel()"
-                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                    aria-hidden="true"></i>
-                                                 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Reason of Cancel</span>
-                                        <textarea [(ngModel)]="regObj.ReasonofCancel" class="form-control"
-                                            rows="3"></textarea>
+                                        <span class="input-group-addon">Is Locked</span>
+                                        <i *ngIf="regObj?.IsFinalLocked" (click)="regObj.IsFinalLocked = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! regObj?.IsFinalLocked" (click)="regObj.IsFinalLocked = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -294,159 +269,173 @@
                                         <textarea [(ngModel)]="regObj.Remarks" class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-
-
-                    </div>
-                    <div class="panel">
-                        <div class="panel-heading btn-toggle-collapse">
-                            <span><b>DETAILS</b> </span>
-                            <div class="right">
-                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="btn btn-success" (click)="addDetailsNew('enter', $event)"><i
-                                            class="fa fa-plus" aria-hidden="true"></i>Add NEW
-                                    </div>
+                        <div class="panel">
+                            <div class="panel-heading btn-toggle-collapse">
+                                <span><b>DETAILS</b> </span>
+                                <div class="right">
+                                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-fixed">
-                                        <table class="table table-bordered table-p4 custom-table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th class="width-1p text-center">SN#</th>
-                                                    <th class="width-20p">Name of Person</th>
-                                                    <th class="width-20p">Event Name</th>
-                                                    <th class="width-5p">EvenDate</th>
-                                                    <th class="width-8p">Reg. Charge</th>
-                                                    <th class="width-8p">Service Charge(%)</th>
-                                                    <th class="width-8p">Service Charge Amt</th>
-                                                    <th class="width-8p">Discount Amt.</th>
-                                                    <th class="width-10p">Cancellation Charge</th>
-                                                    <th class="width-10p">Total Amount</th>
-                                                    <th class="width-1p">X</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let item of regDetailsObj; let i = index">
-                                                    <td class="text-right"> {{i+1}} </td>
-                                                    <td>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm text-left"
-                                                            [(ngModel)]="item.NameofPerson">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm text-left"
-                                                            [(ngModel)]="item.EventName">
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" data-date="" [attr.data-date]="item.EvenDate"
-                                                            data-date-format="dd-MM-YYYY"
-                                                            class="form-control width-145 form-control-sm"
-                                                            [(ngModel)]="item.EvenDate" />
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm text-right"
-                                                            [(ngModel)]="item.RegistrationCharge"
-                                                            (input)="CalculateTotalPayableAmount(item)"
-                                                            (click)="selectTarget($event)">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm text-right"
-                                                            [(ngModel)]="item.ServiceChargePercent"
-                                                            (input)="CalculateServiceChargeValue(item)"
-                                                            (click)="selectTarget($event)">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm  text-right"
-                                                            [(ngModel)]="item.ServiceChargeValue"
-                                                            (input)="CalculateServicePertageValue(item)"
-                                                            (keyup.enter)="addDetailsNew('enter', $event)"
-                                                            (click)="selectTarget($event)">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm  text-right"
-                                                            [(ngModel)]="item.DiscountAmount"
-                                                            (input)="CalculateTotalPayableAmount(item)"
-                                                            (keyup.enter)="addDetailsNew('enter', $event)"
-                                                            (click)="selectTarget($event)">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm text-right"
-                                                            [(ngModel)]="item.CancellationCharge"
-                                                            (input)="CalculeCancelationAmount(item)"
-                                                            (click)="selectTarget($event)"
-                                                            (keyup.enter)="addDetailsNew('enter', $event)" [disabled]="true">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" 
-                                                            class="form-control form-control-sm text-right"
-                                                            [(ngModel)]="item.TotalPayableAmt"
-                                                            (click)="selectTarget($event)"
-                                                            (keyup.enter)="addDetailsNew('enter', $event)" [disabled]="true">
-                                                    </td>
-
-                                                    <td class="text-center" (click)="removeDetails(i)"> <i
-                                                            class="fa fa-trash text-danger" aria-hidden="true"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td>
-
-                                                    </td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>
-                                                        <span
-                                                            class="font-size-20 strong text-right text-success font-weight-bold">
-                                                            Total=
-                                                        </span>
-                                                    </td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td> 
-                                                        <span
-                                                        class="font-size-20 strong text-right text-success font-weight-bold">
-                                                        {{sumofTotalCancellationCharge| number:'1.0-0' }}
-                                                    </span>
-                                                    </td>
-                                                    <td>
-                                                         <span
-                                                            class="font-size-20 strong text-right text-success font-weight-bold">
-                                                            {{sumOfTotalValue| number:'1.0-0' }}
-                                                        </span>
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn btn-success" (click)="addDetailsNew('enter', $event)"><i
+                                                class="fa fa-plus" aria-hidden="true"></i>Add NEW
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 mt-3">
-                                    <button *ngIf="regObj?.ID == 0" (click)="saveOnlineReg()" type="button"
-                                        class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
-                                    <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
-                                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
-                                    <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
-                                            class="fas fa-redo-alt"></i> Reset</button>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-fixed">
+                                            <table class="table table-bordered table-p4 custom-table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="width-1p text-center">SN#</th>
+                                                        <th class="width-20p">Name of Person</th>
+                                                        <th class="width-20p">Event Name</th>
+                                                        <th class="width-5p">EvenDate</th>
+                                                        <th class="width-8p">Reg. Charge</th>
+                                                        <th class="width-8p">Service Charge(%)</th>
+                                                        <th class="width-8p">Service Charge Amt</th>
+                                                        <th class="width-8p">Discount Amt.</th>
+                                                        <th class="width-10p">Cancellation Charge</th>
+                                                        <th class="width-10p">Total Amount</th>
+                                                        <th class="width-5p">Is Cancel ?</th>
+                                                        <th class="width-1p">X</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of regDetailsObj; let i = index">
+                                                        <td class="text-right"> {{i+1}} </td>
+                                                        <td>
+                                                            <input type="text"
+                                                                class="form-control form-control-sm text-left"
+                                                                [(ngModel)]="item.NameofPerson">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text"
+                                                                class="form-control form-control-sm text-left"
+                                                                [(ngModel)]="item.EventName">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" data-date=""
+                                                                [attr.data-date]="item.EvenDate"
+                                                                data-date-format="dd-MM-YYYY"
+                                                                class="form-control width-145 form-control-sm"
+                                                                [(ngModel)]="item.EvenDate" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm text-right"
+                                                                [(ngModel)]="item.RegistrationCharge"
+                                                                (input)="CalculateTotalPayableAmount(item)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm text-right"
+                                                                [(ngModel)]="item.ServiceChargePercent"
+                                                                (input)="CalculateServiceChargeValue(item)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm  text-right"
+                                                                [(ngModel)]="item.ServiceChargeValue"
+                                                                (input)="CalculateServicePertageValue(item)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm  text-right"
+                                                                [(ngModel)]="item.DiscountAmount"
+                                                                (input)="CalculateTotalPayableAmount(item)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm text-right"
+                                                                [(ngModel)]="item.CancellationCharge"
+                                                                (input)="CalculeCancelationAmount(item)"
+                                                                (click)="selectTarget($event)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                [disabled]="! item?.IsCancel">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number"
+                                                                class="form-control form-control-sm text-right"
+                                                                [(ngModel)]="item.TotalPayableAmt"
+                                                                (click)="selectTarget($event)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                [disabled]="true">
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <i *ngIf="item?.IsCancel"
+                                                                    (click)="isUnCheckCancel(item)"
+                                                                    class="fa fa-check-square-o font-size-35 ml-3 text-success"
+                                                                    aria-hidden="true"></i>
+                                                                <i *ngIf="! item?.IsCancel"
+                                                                    (click)="isCheckCancel(item)"
+                                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                                    aria-hidden="true"></i>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="text-center" (click)="removeDetails(i)"> <i
+                                                                class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span
+                                                                class="font-size-20 strong text-right text-success font-weight-bold">
+                                                                Total=
+                                                            </span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span
+                                                                class="font-size-20 strong text-right text-danger font-weight-bold">
+                                                                {{sumofTotalCancellationCharge| number:'1.0-0' }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="font-size-20 strong text-right text-success font-weight-bold">
+                                                                {{sumOfTotalValue| number:'1.0-0' }}
+                                                            </span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 mt-3">
+                                        <button *ngIf="regObj?.ID == 0" (click)="saveOnlineReg()" type="button"
+                                            class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                                        <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
+                                            class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                        <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                                class="fas fa-redo-alt"></i> Reset</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -455,4 +444,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -17,6 +17,7 @@ import { faFan } from '@fortawesome/free-solid-svg-icons';
 
 //
 declare var moment: any;
+declare  var $:any;
 @Component({
 	templateUrl: 'OnlineRegistation.html'
 })
@@ -149,11 +150,11 @@ export class OnlineRegistation implements OnInit {
 		this.regObj = new OnlineRegistationMasterModelDTO();
 		this.regObj.TransactionDate = moment().format(Common.SQLDateFormat);
 		this.sumOfTotalValue = 0;
+		this.sumofTotalCancellationCharge = 0;
 		this.setNewDetails();
 	}
 	EditItem(item) {
-		this.regObj = JSON.parse(JSON.stringify(item));
-		this.sumOfTotalValue = this.regObj.NetPayableAmt;
+		this.regObj = JSON.parse(JSON.stringify(item));	
 		this.regObj.TransactionDate = moment(new Date(this.regObj.TransactionDate)).format(Common.SQLDateFormat);
 
 		this.transactionCommonService.getOnlineRegistrationDetailsByTransactionCode(this.regObj.TransactionCode)
@@ -165,10 +166,15 @@ export class OnlineRegistation implements OnInit {
 
 	}
 	setOnlineRegEdit(Data: any) {
+		debugger
 		Data.forEach(element => {
 			element.EvenDate = moment(new Date(element.EvenDate)).format(Common.SQLDateFormat);
+			if(element.isCancel == true)element.isCancel=true;
+		 
 		});
 		this.regDetailsObj = Data;
+		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
+		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
 		document.getElementById('onlineRegEntry_tab').click();
 	}
 	updateTotalPayable() {
@@ -321,7 +327,7 @@ export class OnlineRegistation implements OnInit {
 
 	CalculateTotalPayableAmount(obj) {
 		this.sumOfTotalValue = 0
-		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) + Number(obj.DiscountAmount);
+		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) - Number(obj.DiscountAmount);
 		this.getpayableAmount();
 	}
 	getpayableAmount() {
@@ -332,22 +338,28 @@ export class OnlineRegistation implements OnInit {
 	}
 	CalculeCancelationAmount(obj){
 		debugger
-		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
-
 		obj.TotalPayableAmt =  Number(obj.ServiceChargeValue) + Number(obj.CancellationCharge);
 
-		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
-		this.regObj.NetPayableAmt = this.sumofTotalCancellationCharge +this.sumOfTotalValue;
-	}
-	isCancel(){
-		this.regObj.IsCancel= true
-		console.log(this.regDetailsObj)
+		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");		
 
-		// this.regDetailsObj.forEach(element => {
-		 
-		// 	document.getElementById(element.CancellationCharge).disabled = true;
-		// });
+		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
+
+		this.regObj.NetPayableAmt = this.sumOfTotalValue;
+	}
+	isCheckCancel(obj){
+		debugger
+		obj.IsCancel = true;  
+
 	 
+	}
+	isUnCheckCancel(obj){
+		debugger
+		obj.IsCancel = false; 
+		obj.CancellationCharge=0; 
+		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) -Number(obj.DiscountAmount);
+
+		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
+	
 	}
 	 
 }
