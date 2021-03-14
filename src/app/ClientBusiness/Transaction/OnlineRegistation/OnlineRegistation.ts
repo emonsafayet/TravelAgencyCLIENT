@@ -338,6 +338,16 @@ export class OnlineRegistation implements OnInit {
 	}
 	CalculeCancelationAmount(obj){
 		debugger
+		this.getCancelationAmount(obj);
+	}
+	isCheckCancel(obj){
+		debugger
+		obj.IsCancel = true;  
+		this.getCancelationAmount(obj);
+
+	 
+	}
+	getCancelationAmount(obj){
 		obj.TotalPayableAmt =  Number(obj.ServiceChargeValue) + Number(obj.CancellationCharge);
 
 		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");		
@@ -346,12 +356,6 @@ export class OnlineRegistation implements OnInit {
 
 		this.regObj.NetPayableAmt = this.sumOfTotalValue;
 	}
-	isCheckCancel(obj){
-		debugger
-		obj.IsCancel = true;  
-
-	 
-	}
 	isUnCheckCancel(obj){
 		debugger
 		obj.IsCancel = false; 
@@ -359,6 +363,8 @@ export class OnlineRegistation implements OnInit {
 		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) -Number(obj.DiscountAmount);
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
+		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
+		this.regObj.NetPayableAmt = this.sumOfTotalValue+this.regObj.CardChargeAmount;
 	
 	}
 	 
