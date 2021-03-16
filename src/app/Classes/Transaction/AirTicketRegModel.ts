@@ -1,46 +1,50 @@
-export class AirTicketRegModel  {
+export class AirTicketRegModelDTO  {
 
 	public ID : number=0;
-	public AirTicketTransCode : string;
-	public TravelDate : string;
+	public TransactionCode : string;
+	public TransactionDate : string;
 	public CustomerCode : string="0";
-	public CompanyCode : string="0";
-	public ArilineCode : string="0";
+	public Remarks : string;
+	public SalesReferenceCode : string="0";
+	public isConfirmed : boolean;
+	public IsFinalLocked : boolean;
+	public CardCode : string="0";
+	public CardChargeAmount : number=0;
+	public Currency : string="0";
+	public CurrencyRate : number;
+	public NetPayableAmt : number=0;
+	public CreatedBy : string;
+	public CreatedOn : string;
+	public UpdatedBy : string;
+	public UpdatedOn : string;
+}
+export class AirTicketDetailDTo{
+
+	public DetailID : number;
+	public TransactionCode : string;
+	public NameofPerson : string;
+	public AirlinesCode : string="0";
 	public Route : string;
 	public TicketNo : string;
 	public SeatTypeCode : string="0";
-	public TravelType : string="0";
-	public TravelProvider : string="0";
+	public ProviderCode : string="0";
+	public TravelDate : string;
 	public ReturnDate : string;
-	public CardID : string="0";
 	public BaseFare : number=0;
 	public GovTax : number=0;
-	public ComissionAmount : number=0;
-	public ServiceCharge : number=0;
+	public AIT : number=0;
+	public Comission : number=0;
+	public ServiceChargePercent : number;
+	public ServiceChargeValue : number=0;
+	public DiscountValue : number=0;
+	public TotalPayableAmt : number=0;
+	public IsForward : boolean;
 	public ChangePenalty : number=0;
-	public TotalPayable : number;
-	public Currency : string="0";
-	public CurrencyRate : number;
-	public isConfirmed : boolean;
-	public isCancel : boolean;
-	public isForward : boolean;
 	public ChangeDate : string;
-	public Remarks : string;
-	public SalesStaffCode : string="0";
+	public IsCancel : boolean;
+	public CancellationCharge : number=0;
 	public CreatedBy : string;
 	public CreatedOn : string;
 	public UpdatedBy : string;
 	public UpdatedOn : string;
-	public isActive : boolean=true;
-}
-export class SeatTypeModel{
-
-	public ID : number;
-	public SeatTypeCode : string;
-	public SeatType : string;
-	public CreatedBy : string;
-	public CreatedOn : string;
-	public UpdatedBy : string;
-	public UpdatedOn : string;
-	public isActive : boolean;
 }

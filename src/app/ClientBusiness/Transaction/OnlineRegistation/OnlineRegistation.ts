@@ -11,7 +11,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { Common } from "../../../library/common";
 //Classes
-import { OnlineRegistationMasterModelDTO, OnlineRegistationDetailModelDTO } from '../../../Classes/ClientBusiness/OnlineRegistationModel';
+import { OnlineRegistationMasterModelDTO, OnlineRegistationDetailModelDTO } from '../../../Classes/Transaction/OnlineRegistationModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFan } from '@fortawesome/free-solid-svg-icons';
 
@@ -198,8 +198,7 @@ export class OnlineRegistation implements OnInit {
 
 	addDetailsNew(value, event) {
 		this.addNewColumnForDetail();
-		setTimeout(() => this.selectNext(value, event), 500)
-		// this.selectNext(value, event);
+		setTimeout(() => this.selectNext(value, event), 500) 
 	}
 
 	addNewColumnForDetail() {
