@@ -420,6 +420,7 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 	setforwardList(Data: any) {
+		console.log(Data);
 		this.forwardingList = Data;
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
 
@@ -432,14 +433,17 @@ export class AirTicketRegistration implements OnInit {
 		this.forwardairTicketregObj.UpdatedBy = this.user.EmployeeCode;
 		// validation
 		if (!this.ForwardValidateModel()) return;
-		var details = JSON.stringify(this.forwardingList);
-		this.forwardairTicketregObj.AirticketDetails = Library.getBase64(details);
-		console.log(this.forwardairTicketregObj);
-		this.Notification.LoadingWithMessage('Loading...');
-		this.transactionCommonService.UpdateForwardAirTicketRegistration(this.forwardairTicketregObj).subscribe(
-			(data) => this.setForwarAirticketReg(data),
-			(error) => this.Notification.Error(error)
-		);
+
+		var newList = this.forwardingList.filter(i=>i.IsForward== true && i.ChangePenalty !=0);
+		console.log(newList);
+
+		var details = JSON.stringify(newList);
+		this.forwardairTicketregObj.AirticketDetails = Library.getBase64(details); 
+		// this.Notification.LoadingWithMessage('Loading...');
+		// this.transactionCommonService.UpdateForwardAirTicketRegistration(this.forwardairTicketregObj).subscribe(
+		// 	(data) => this.setForwarAirticketReg(data),
+		// 	(error) => this.Notification.Error(error)
+		// );
 
 
 	}
@@ -455,7 +459,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 
 	ForwardValidateModel() {
-		debugger
+	 
 		var result = true
 		if (Library.isNuLLorUndefined(this.forwardairTicketregObj.TransactionCode) || this.forwardairTicketregObj.TransactionCode == "0") {
 			this.Notification.Warning('Please Select Transaction Code.');
@@ -463,13 +467,12 @@ export class AirTicketRegistration implements OnInit {
 			return;
 		}
 		var validDetails = 0;
-		this.forwardingList.forEach(item => {
-			 
-			if (Library.isNullOrZero(item.ChangePenalty)) {
+		this.forwardingList.forEach(item => {			 
+			if (!item.IsForward &&  item.ChangePenalty==0) { 
 				this.Notification.Warning('Please Enter Change Penalty.');
 				result = false;
 				return;
-			}
+			} 
 			validDetails += 1;
 		});
 

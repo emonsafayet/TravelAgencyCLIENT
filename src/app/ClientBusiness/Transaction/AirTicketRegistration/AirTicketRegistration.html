@@ -574,6 +574,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <div class="panel">
                             <div class="panel-heading btn-toggle-collapse">
                                 <span><b>DETAILS</b> </span>
@@ -700,10 +701,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-
+    </div> 
 
     <!-- TAB AIR TICKET CANCELLATION FORM -->
     <div id="airTicketRegCancellationForm" class="tab-pane">
@@ -711,7 +709,7 @@
             <div class="col-sm-12">
                 <div class="panel">
                     <div class="panel-heading btn-toggle-collapse">
-                        <span><b>Air Ticket Cancellation</b> </span>
+                        <span><b>Air Ticket Forward</b> </span>
                         <div class="right">
                             <button type="button"><i class="lnr lnr-chevron-up"></i></button>
                         </div>
@@ -722,8 +720,8 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Transaction Code</span>
-                                        <select class="form-control" [(ngModel)]="airTicketregObj.CustomerCode">
-                                            <option selected value="0">SELECT..</option>
+                                        <select class="form-control" (change)="ticketDetail($event.target.value)">
+                                            <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let item of airTicketregistaionList">
                                                 <option value="{{item.TransactionCode}}">{{item?.TransactionCode}}
                                                 </option>
@@ -731,6 +729,148 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon text-left">Customer</span>
+                                        <input readonly class="form-control strong text-left"
+                                            [(ngModel)]="forwardairTicketregObj.CustomerName" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span
+                                            class="input-group-addon font-size-20 strong text-right text-success font-weight-bold">Total
+                                            Payable Amount</span>
+                                        <input
+                                            class="form-control font-size-20 strong text-left text-success font-weight-bold"
+                                            readonly [(ngModel)]="forwardairTicketregObj.NetPayableAmt"
+                                            class="form-control" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="panel">
+                            <div class="panel-heading btn-toggle-collapse">
+                                <span><b>DETAILS</b> </span>
+                                <div class="right">
+                                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-fixed">
+                                    <table class="table table-bordered table-p4 custom-table-hover font-size-11">
+                                        <thead>
+                                            <tr>
+                                                <th class="width-20p">Name of Person</th>
+                                                <th class="width-20p">Airlines</th>
+                                                <th class="width-10p">Ticket No</th>
+                                                <th class="width-10p">SeatType</th>
+                                                <th class="width-10p">Is forward</th>
+                                                <th class="width-10p">Change Date</th>
+                                                <th class="width-10p">ChangePenalty</th>
+                                                <th class="width-10p">Total Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of forwardingList; let i = index">
+                                                <td>
+                                                    <input readonly [(ngModel)]="item.NameofPerson"
+                                                        class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input readonly [(ngModel)]="item.AirlinesCode"
+                                                        class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input [(ngModel)]="item.TicketNo" class="form-control">
+
+                                                </td>
+
+                                                <td>
+                                                    <div class="input-group">
+                                                        <select class="form-control" [(ngModel)]="item.SeatTypeCode">
+                                                            <option selected value="0">SELECT</option>
+                                                            <ng-container *ngFor="let info  of seatTypeList">
+                                                                <option value="{{info.SeatTypeCode}}">
+                                                                    {{info?.SeatType1}}
+                                                                </option>
+                                                            </ng-container>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+
+                                                    <div class="input-group">
+                                                        <i *ngIf="item?.IsForward" (click)="item.IsForward = false"
+                                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                            aria-hidden="true"></i>
+                                                        <i *ngIf="! item?.IsForward" (click)="item.IsForward = true"
+                                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                            aria-hidden="true"></i>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input type="date" data-date=""
+                                                            [attr.data-date]="item.ChangeDate"
+                                                            data-date-format="dd-MM-YYYY"
+                                                            class="form-control width-190 form-control-sm"
+                                                            [(ngModel)]="item.ChangeDate" />
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input class="width-10p" type="number"
+                                                        class="form-control form-control-sm text-right"
+                                                        [(ngModel)]="item.ChangePenalty"
+                                                        (input)="CalculateTotalPayableWithForwardingChargeAmount(item)"
+                                                        (click)="selectTarget($event)">
+                                                </td>
+                                                <td>
+                                                    <input class="width-10p" type="text"
+                                                        class="form-control form-control-sm text-right" readonly
+                                                        [(ngModel)]="item.TotalPayableAmt">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <span
+                                                        class="font-size-20 strong text-right text-success font-weight-bold">
+                                                        TOTAL
+                                                    </span>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <span
+                                                        class="font-size-20 strong text-right text-success font-weight-bold">
+                                                        {{sumOfForwardingTotalValue| number:'1.0-0' }}
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Save/Update Button -->
+                        <div class="row">
+                            <div class="col-md-3 mt-3">
+                                <button (click)="UpdateToForwardAirTicketReg()" type="button"
+                                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                <button type="button" (click)="ResetForwardModel()" class="btn btn-info ml-2"><i
+                                        class="fas fa-redo-alt"></i> Reset</button>
                             </div>
                         </div>
                     </div>
