@@ -54,10 +54,11 @@ export class TransactionCommonService {
 	/*START Air ticket */
 	GETAirTicketLIST() { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/list"); }
 
-	SaveUpdateAirTicketRegistration(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/save/update`, seattypeObj); }
+	SaveUpdateAirTicketRegistration(obj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/save/update`, obj); }
  
 	getAirTicketDetailsByTransactionCode(transactionCode:string) { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/details/by/transactionCode/"+transactionCode); }
 
+	UpdateForwardAirTicketRegistration(obj: any){ return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/update/forward`, obj); }
 	/*END  Air ticket */
 
 
