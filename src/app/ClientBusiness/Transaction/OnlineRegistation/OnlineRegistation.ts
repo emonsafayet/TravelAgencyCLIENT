@@ -300,7 +300,7 @@ export class OnlineRegistation implements OnInit {
 
 	}
 	PrintOnlineReg(obj) {
-		var RegistrationCode = obj.RegistrationCode;
+		var RegistrationCode = obj.TransactionCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/onlineRegistrationDetail?onlineRegCode=${RegistrationCode}`, "_blank");
 	}
 	showError(error) {
