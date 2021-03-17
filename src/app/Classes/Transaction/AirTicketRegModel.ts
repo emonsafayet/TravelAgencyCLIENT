@@ -17,6 +17,7 @@ export class AirTicketRegModelDTO  {
 	public CreatedOn : string;
 	public UpdatedBy : string;
 	public UpdatedOn : string;
+	public AirticketDetails : string;
 }
 export class AirTicketDetailDTo{
 

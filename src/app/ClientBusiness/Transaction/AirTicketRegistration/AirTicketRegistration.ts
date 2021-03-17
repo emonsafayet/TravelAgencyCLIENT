@@ -93,9 +93,12 @@ export class AirTicketRegistration implements OnInit {
 			this.airTicketregObj.UpdatedBy = this.user.EmployeeCode;
 		else this.airTicketregObj.CreatedBy = this.user.EmployeeCode;
 
-		// if (Library.isNullOrZero(this.airTicketregObj.TotalPayable)) this.airTicketregObj.TotalPayable = 0;
-		//validation
+		if (Library.isNullOrZero(this.airTicketregObj.NetPayableAmt)) this.airTicketregObj.NetPayableAmt = 0;
+		// validation
 		if (!this.validateModel()) return;
+
+		var details = JSON.stringify(this.airTicketregDetailsObj);
+		this.airTicketregObj.AirticketDetails = Library.getBase64(details); 
 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.SaveUpdateAirTicketRegistration(this.airTicketregObj).subscribe(
@@ -108,7 +111,8 @@ export class AirTicketRegistration implements OnInit {
 		else {
 			this.Notification.LoadingRemove();
 		}
-		this.airTicketregObj = new AirTicketRegModelDTO();
+		document.getElementById('airTicketRegEntry_tab').click();
+		this.ResetModel();
 		this.GetAirTicketList();
 	}
 	GetAirTicketList() {
@@ -126,102 +130,126 @@ export class AirTicketRegistration implements OnInit {
 	}
 	EditItem(item) {
 		this.airTicketregObj = JSON.parse(JSON.stringify(item));
-		// this.airTicketregObj.TravelDate = moment(new Date(this.airTicketregObj.TravelDate)).format(Common.SQLDateFormat);
-		// this.airTicketregObj.ReturnDate = moment(new Date(this.airTicketregObj.ReturnDate)).format(Common.SQLDateFormat);
-		// this.airTicketregObj.ChangeDate = moment(new Date(this.airTicketregObj.ChangeDate)).format(Common.SQLDateFormat);
-
+		this.transactionCommonService.getAirTicketDetailsByTransactionCode(this.airTicketregObj.TransactionCode)
+		.subscribe(
+			data => this.setAirticketRegEdit(data),
+			error => this.Notification.Error(error)
+		);
+	}
+	setAirticketRegEdit(Data: any) {
+		debugger
+		Data.forEach(element => {
+			element.TravelDate = moment(new Date(element.TravelDate)).format(Common.SQLDateFormat);
+			element.ReturnDate = moment(new Date(element.ReturnDate)).format(Common.SQLDateFormat);
+		 
+		 
+		});
+		this.airTicketregDetailsObj = Data;
+		this.sumOfTotalValue = Common.calculateTotal(this.airTicketregDetailsObj, "TotalPayableAmt");
+	 	document.getElementById('airTicketRegEntry_tab').click();
 	}
 	ResetModel() {
 		this.airTicketregObj = new AirTicketRegModelDTO();
+		this.airTicketregObj.TransactionDate = moment().format(Common.SQLDateFormat);
+		this.sumOfTotalValue = 0;
+		this.sumofTotalCancellationCharge = 0;
+		this.setNewDetails();
 	}
 	updateTotalPayable() {
-		debugger
 		var serviceCharge: any = 0;
-		if (Library.isNuLLorUndefined(this.airTicketregObj.CurrencyRate))
-			this.airTicketregObj.CurrencyRate = 1;
-		// var BaseRate = Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.BaseFare))
-		// 				* Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.CurrencyRate));
-		// serviceCharge = (Number(BaseRate)) / 100 * 
-		// 				Number(this.airTicketregObj.ServiceCharge);
-
-		// this.airTicketregObj.TotalPayable = Number(BaseRate) + Number(serviceCharge)
-		// 									+ Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.ComissionAmount))
-		// 									+ Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.GovTax))
-		// 									+ Library.isUndefinedOrNullOrZeroReturn0(Number(this.airTicketregObj.ChangePenalty));
-		// this.airTicketregObj.tao = Number(this.airTicketregObj.TotalPayable.toFixed(2));
-
+		var regCharge = Number(this.airTicketregObj.CardChargeAmount) * Number(Library.isNullOrZero(this.airTicketregObj.CurrencyRate) ? 1 : this.airTicketregObj.CurrencyRate);
+		this.airTicketregObj.NetPayableAmt = Number(regCharge.toFixed(2)) + Number(serviceCharge.toFixed(2)) + this.sumOfTotalValue;
 	}
 	onCurrencyChange(item) {
-
-		// this.airTicketregObj.BaseFare = 0;
-		// this.airTicketregObj.GovTax = 0;
-		// this.airTicketregObj.ServiceCharge = 0;
-		// this.airTicketregObj.ChangePenalty = 0;
-		// this.airTicketregObj.ComissionAmount = 0;
-		// this.airTicketregObj.TotalPayable = 0;
-
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
 		if (Library.isNullOrEmpty(RateItem)) this.airTicketregObj.CurrencyRate = 0;
 		else this.airTicketregObj.CurrencyRate = RateItem.Rate;
 	}
-
+	removeDetails(index: number) {
+		this.airTicketregDetailsObj.splice(index, 1);
+		this.getpayableAmount();
+	}
 	validateModel() {
+		debugger
 		var result = true
-		// if (this.airTicketregObj.CustomerCode == "0") {
-		// 	this.Notification.Warning('Please Select Customer.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isNuLLorUndefined(this.airTicketregObj.ArilineCode)) {
-		// 	this.Notification.Warning('Please Select Airline.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isNuLLorUndefined(this.airTicketregObj.Route)) {
-		// 	this.Notification.Warning('Please Enter Route.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isNuLLorUndefined(this.airTicketregObj.SeatTypeCode)) {
-		// 	this.Notification.Warning('Please Select Seat Type.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isNuLLorUndefined(this.airTicketregObj.TravelType)) {
-		// 	this.Notification.Warning('Please Select Travel Type.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isNuLLorUndefined(this.airTicketregObj.TravelProvider)) {
-		// 	this.Notification.Warning('Please Select Travel Provider.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (this.airTicketregObj.BaseFare == 0 || Library.isNuLLorUndefined(this.airTicketregObj.BaseFare)) {
-		// 	this.Notification.Warning('Please Enter Resigtation Charge.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isNuLLorUndefined(this.airTicketregObj.ServiceCharge)) {
-		// 	this.Notification.Warning('Please Enter ServiceCharge.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (this.airTicketregObj.TotalPayable == 0 || Library.isNullOrZero(this.airTicketregObj.TotalPayable)) {
-		// 	this.Notification.Warning('Total Payable Amount Can Not Zero.');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isNuLLorUndefined(this.airTicketregObj.SalesStaffCode) || this.airTicketregObj.SalesStaffCode == "0") {
-		// 	this.Notification.Warning('Please Select Sales Staff .');
-		// 	result = false;
-		// 	return;
-		// }
-		// if (Library.isUndefinedOrNullOrEmpty(this.airTicketregObj.TicketNo) ) {
-		// 	this.Notification.Warning('Please Enter Ticket No.');
-		// 	result = false;
-		// 	return;
-		// }
+		if (Library.isNuLLorUndefined(this.airTicketregObj.CustomerCode) || this.airTicketregObj.CustomerCode == "0") {
+			this.Notification.Warning('Please Select Customer.');
+			result = false;
+			return;
+		}
+		if (Library.isNullOrZero(this.airTicketregObj.NetPayableAmt)) {
+			this.Notification.Warning('Total Payable Amount Can Not Zero.');
+			result = false;
+			return;
+		}
+		var validDetails = 0;
+		this.airTicketregDetailsObj.forEach(item => {
+			if (!Library.isNullOrZero(item.NameofPerson)) {
+				if (Library.isNullOrZero(item.NameofPerson)) {
+					this.Notification.Warning('Please Enter Name of Person.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.AirlinesCode) ||  item.AirlinesCode =="0") {
+					this.Notification.Warning('Please Select Airlines.');
+					result = false;
+					return;
+				} 
+				if (Library.isNullOrZero(item.Route)) {
+					this.Notification.Warning('Please Enter Route.');
+					result = false;
+					return;
+				} 
+				 
+				if (Library.isNullOrZero(item.TicketNo)) {
+					this.Notification.Warning('Please Enter Ticket No.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.BaseFare)) {
+					this.Notification.Warning('Please Enter Base Fare.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.GovTax)) {
+					this.Notification.Warning('Please Enter Govt Tax.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.AIT)) {
+					this.Notification.Warning('Please Enter AIT.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.Comission)) {
+					this.Notification.Warning('Please Enter Comission.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.ServiceChargePercent)) {
+					this.Notification.Warning('Please Enter Service Charge Value.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.ServiceChargeValue)) {
+					this.Notification.Warning('Please Enter Service Charge Value.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.TotalPayableAmt)) {
+					this.Notification.Warning('Please Enter Service Charge Value.');
+					result = false;
+					return;
+				}
+				validDetails += 1;
+			}
+			else {
+				this.Notification.Warning('Please Select Name Of Person.');
+				result = false;
+				return;
+			}
+		});
+		 
 		return result;
 	}
 	//DROP DOWN 

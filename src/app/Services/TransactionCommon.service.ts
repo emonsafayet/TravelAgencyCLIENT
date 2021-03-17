@@ -55,6 +55,8 @@ export class TransactionCommonService {
 	GETAirTicketLIST() { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/list"); }
 
 	SaveUpdateAirTicketRegistration(seattypeObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/save/update`, seattypeObj); }
+ 
+	getAirTicketDetailsByTransactionCode(transactionCode:string) { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/details/by/transactionCode/"+transactionCode); }
 
 	/*END  Air ticket */
 
