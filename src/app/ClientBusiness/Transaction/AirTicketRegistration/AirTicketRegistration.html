@@ -701,7 +701,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- TAB AIR TICKET CANCELLATION FORM -->
     <div id="airTicketRegCancellationForm" class="tab-pane">
@@ -720,7 +720,8 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Transaction Code</span>
-                                        <select class="form-control" (change)="ticketDetail($event.target.value)">
+                                        <select class="form-control"
+                                            (change)="CancellationticketDetail($event.target.value)">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let item of airTicketregistaionList">
                                                 <option value="{{item.TransactionCode}}">{{item?.TransactionCode}}
@@ -766,68 +767,42 @@
                                         <thead>
                                             <tr>
                                                 <th class="width-20p">Name of Person</th>
-                                                <th class="width-20p">Airlines</th>
-                                                <th class="width-10p">Ticket No</th>
-                                                <th class="width-10p">SeatType</th>
-                                                <th class="width-10p">Is forward</th>
-                                                <th class="width-10p">Change Date</th>
-                                                <th class="width-10p">ChangePenalty</th>
+                                                <th class="width-20p">Service Charge</th>
+                                                <th class="width-20p">Penalty Charge</th>
+                                                <th class="width-10p">Is Cancel</th>
+                                                <th class="width-10p">CancellationCharge</th>
                                                 <th class="width-10p">Total Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let item of forwardingList; let i = index">
+                                            <tr *ngFor="let item of CancellationList; let i = index">
                                                 <td>
                                                     <input readonly [(ngModel)]="item.NameofPerson"
                                                         class="form-control">
-                                                </td>
+                                                </td> 
                                                 <td>
-                                                    <input readonly [(ngModel)]="item.AirlinesCode"
+                                                    <input readonly [(ngModel)]="item.ServiceChargeValue"
                                                         class="form-control">
-                                                </td>
+                                                </td> 
                                                 <td>
-                                                    <input [(ngModel)]="item.TicketNo" class="form-control">
-
-                                                </td>
-
+                                                    <input readonly [(ngModel)]="item.ChangePenalty"
+                                                        class="form-control">
+                                                </td> 
                                                 <td>
                                                     <div class="input-group">
-                                                        <select class="form-control" [(ngModel)]="item.SeatTypeCode">
-                                                            <option selected value="0">SELECT</option>
-                                                            <ng-container *ngFor="let info  of seatTypeList">
-                                                                <option value="{{info.SeatTypeCode}}">
-                                                                    {{info?.SeatType1}}
-                                                                </option>
-                                                            </ng-container>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td>
-
-                                                    <div class="input-group">
-                                                        <i *ngIf="item?.IsForward" (click)="item.IsForward = false"
+                                                        <i *ngIf="item?.IsCancel" (click)="item.IsCancel = false"
                                                             class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                                             aria-hidden="true"></i>
-                                                        <i *ngIf="! item?.IsForward" (click)="item.IsForward = true"
+                                                        <i *ngIf="! item?.IsCancel" (click)="item.IsCancel = true"
                                                             class="fa fa-square-o font-size-35 ml-3 text-success"
                                                             aria-hidden="true"></i>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="input-group">
-                                                        <input type="date" data-date=""
-                                                            [attr.data-date]="item.ChangeDate"
-                                                            data-date-format="dd-MM-YYYY"
-                                                            class="form-control width-190 form-control-sm"
-                                                            [(ngModel)]="item.ChangeDate" />
-
-                                                    </div>
-                                                </td>
-                                                <td>
                                                     <input class="width-10p" type="number"
                                                         class="form-control form-control-sm text-right"
-                                                        [(ngModel)]="item.ChangePenalty"
-                                                        (input)="CalculateTotalPayableWithForwardingChargeAmount(item)"
+                                                        [(ngModel)]="item.CancellationCharge"
+                                                        (input)="CalculateTotalPayableCancellationChargeAmount(item)"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>
@@ -841,9 +816,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td></td> 
                                                 <td>
                                                     <span
                                                         class="font-size-20 strong text-right text-success font-weight-bold">
