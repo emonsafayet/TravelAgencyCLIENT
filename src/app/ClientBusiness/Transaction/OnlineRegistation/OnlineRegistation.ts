@@ -176,12 +176,7 @@ export class OnlineRegistation implements OnInit {
 		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
 		document.getElementById('onlineRegEntry_tab').click();
-	}
-	updateTotalPayable() {
-		var serviceCharge: any = 0;
-		var regCharge = Number(this.regObj.CardChargeAmount) * Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
-		this.regObj.NetPayableAmt = Number(regCharge.toFixed(2)) + Number(serviceCharge.toFixed(2)) + this.sumOfTotalValue;
-	}
+	} 
 	onCurrencyChange(item) {
 
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
@@ -331,9 +326,8 @@ export class OnlineRegistation implements OnInit {
 	}
 	getpayableAmount() {
 		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
-		this.regObj.NetPayableAmt = this.sumOfTotalValue +
-			Number(this.regObj.CardChargeAmount) *
-			Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
+		this.regObj.NetPayableAmt = this.sumOfTotalValue 
+		// + Number(this.regObj.CardChargeAmount) *Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
 	}
 	CalculeCancelationAmount(obj){
 		debugger
@@ -363,7 +357,8 @@ export class OnlineRegistation implements OnInit {
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
 		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
-		this.regObj.NetPayableAmt = this.sumOfTotalValue+this.regObj.CardChargeAmount;
+		this.regObj.NetPayableAmt = this.sumOfTotalValue;
+		//+this.regObj.CardChargeAmount;
 	
 	}
 	 

@@ -220,7 +220,7 @@
                                         <span class="input-group-addon">Card Charge Amount</span>
                                         <input (click)="selectTarget($event)"
                                             [(ngModel)]="airTicketregObj.CardChargeAmount" class="form-control"
-                                            type="number" (ngModelChange)="updateTotalPayable()">
+                                            type="number">
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -592,7 +592,10 @@
                                                 <th class="width-20p">Name of Person</th>
                                                 <th class="width-20p">Airlines</th>
                                                 <th class="width-10p">Ticket No</th>
-                                                <th class="width-10p">SeatType</th>
+                                                <th class="width-10p">SeatType</th> 
+                                                <th class="width-10p">Base Fare</th> 
+                                                <th class="width-10p">Govt. Tax</th> 
+                                                <th class="width-10p">Service Charge</th> 
                                                 <th class="width-10p">Is forward</th>
                                                 <th class="width-10p">Change Date</th>
                                                 <th class="width-10p">ChangePenalty</th>
@@ -627,12 +630,24 @@
                                                     </div>
                                                 </td>
                                                 <td>
+                                                    <input readonly [(ngModel)]="item.BaseFare" class="form-control">
+
+                                                </td>
+                                                <td>
+                                                    <input  readonly [(ngModel)]="item.GovTax" class="form-control">
+
+                                                </td>
+                                                <td>
+                                                    <input readonly [(ngModel)]="item.ServiceChargeValue" class="form-control">
+
+                                                </td>
+                                                <td>
 
                                                     <div class="input-group">
-                                                        <i *ngIf="item?.isConfirmed" (click)="item.isConfirmed = false"
+                                                        <i *ngIf="item?.IsForward" (click)="item.IsForward = false"
                                                             class="fa fa-check-square-o font-size-35 ml-3  text-success"
                                                             aria-hidden="true"></i>
-                                                        <i *ngIf="! item?.isConfirmed" (click)="item.isConfirmed = true"
+                                                        <i *ngIf="! item?.IsForward" (click)="item.IsForward = true"
                                                             class="fa fa-square-o font-size-35 ml-3 text-success"
                                                             aria-hidden="true"></i>
                                                     </div>
@@ -663,6 +678,9 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -709,7 +727,7 @@
             <div class="col-sm-12">
                 <div class="panel">
                     <div class="panel-heading btn-toggle-collapse">
-                        <span><b>Air Ticket Forward</b> </span>
+                        <span><b>Air Ticket Cancellation</b> </span>
                         <div class="right">
                             <button type="button"><i class="lnr lnr-chevron-up"></i></button>
                         </div>
@@ -734,7 +752,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon text-left">Customer</span>
                                         <input readonly class="form-control strong text-left"
-                                            [(ngModel)]="forwardairTicketregObj.CustomerName" class="form-control"
+                                            [(ngModel)]="cancellingAirTicketregObj.CustomerName" class="form-control"
                                             type="text">
                                     </div>
                                 </div>
@@ -745,7 +763,7 @@
                                             Payable Amount</span>
                                         <input
                                             class="form-control font-size-20 strong text-left text-success font-weight-bold"
-                                            readonly [(ngModel)]="forwardairTicketregObj.NetPayableAmt"
+                                            readonly [(ngModel)]="cancellingAirTicketregObj.NetPayableAmt"
                                             class="form-control" type="number">
                                     </div>
                                 </div>
@@ -754,7 +772,7 @@
                         <br>
                         <div class="panel">
                             <div class="panel-heading btn-toggle-collapse">
-                                <span><b>DETAILS</b> </span>
+                                <span><b>Cancellation Details</b> </span>
                                 <div class="right">
                                     <button type="button"><i class="lnr lnr-chevron-up"></i></button>
                                 </div>
@@ -827,7 +845,7 @@
                                                 <td>
                                                     <span
                                                         class="font-size-20 strong text-right text-success font-weight-bold">
-                                                        {{sumOfForwardingTotalValue| number:'1.0-0' }}
+                                                        {{sumofTotalCancellationCharge| number:'1.0-0' }}
                                                     </span>
                                                 </td>
 
@@ -840,9 +858,9 @@
                         <!-- Save/Update Button -->
                         <div class="row">
                             <div class="col-md-3 mt-3">
-                                <button (click)="UpdateToForwardAirTicketReg()" type="button"
+                                <button (click)="UpdateToCancellationAirTicketReg()" type="button"
                                     class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
-                                <button type="button" (click)="ResetForwardModel()" class="btn btn-info ml-2"><i
+                                <button type="button" (click)="ResetCancellationModel()" class="btn btn-info ml-2"><i
                                         class="fas fa-redo-alt"></i> Reset</button>
                             </div>
                         </div>

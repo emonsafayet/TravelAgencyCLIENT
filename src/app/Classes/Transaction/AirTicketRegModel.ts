@@ -4,6 +4,7 @@ export class AirTicketRegModelDTO  {
 	public TransactionCode : string;
 	public TransactionDate : string;
 	public CustomerCode : string="0";
+	public CustomerName : string;
 	public Remarks : string;
 	public SalesReferenceCode : string="0";
 	public isConfirmed : boolean;

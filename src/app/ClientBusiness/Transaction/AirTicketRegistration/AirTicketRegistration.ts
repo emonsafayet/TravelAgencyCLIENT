@@ -166,11 +166,6 @@ export class AirTicketRegistration implements OnInit {
 		this.sumofTotalCancellationCharge = 0;
 		this.setNewDetails();
 	}
-	updateTotalPayable() {
-		var serviceCharge: any = 0;
-		var regCharge = Number(this.airTicketregObj.CardChargeAmount) * Number(Library.isNullOrZero(this.airTicketregObj.CurrencyRate) ? 1 : this.airTicketregObj.CurrencyRate);
-		this.airTicketregObj.NetPayableAmt = Number(regCharge.toFixed(2)) + Number(serviceCharge.toFixed(2)) + this.sumOfTotalValue;
-	}
 	onCurrencyChange(item) {
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
 		if (Library.isNullOrEmpty(RateItem)) this.airTicketregObj.CurrencyRate = 0;
@@ -397,20 +392,21 @@ export class AirTicketRegistration implements OnInit {
 	}
 	getpayableAmount() {
 		this.sumOfTotalValue = Common.calculateTotal(this.airTicketregDetailsObj, "TotalPayableAmt");
-		this.airTicketregObj.NetPayableAmt = this.sumOfTotalValue +
-			Number(this.airTicketregObj.CardChargeAmount) *
-			Number(Library.isNullOrZero(this.airTicketregObj.CurrencyRate) ? 1 : this.airTicketregObj.CurrencyRate);
+		this.airTicketregObj.NetPayableAmt = this.sumOfTotalValue
+		// +Number(this.airTicketregObj.CardChargeAmount) *Number(Library.isNullOrZero(this.airTicketregObj.CurrencyRate) ? 1 : this.airTicketregObj.CurrencyRate);
 	}
 
 	CalculateTotalPayableWithForwardingChargeAmount(obj) {
-		obj.TotalPayableAmt = Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2))+Number(obj.CancellationCharge);
+		debugger
+		obj.TotalPayableAmt = Number(obj.BaseFare.toFixed(2)) +Number(obj.GovTax.toFixed(2)) +
+						 Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
 
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
-		this.forwardairTicketregObj.NetPayableAmt = Number(this.forwardairTicketregObj.NetPayableAmt.toFixed(2)) + Number(this.sumOfForwardingTotalValue.toFixed(2));
+		this.forwardairTicketregObj.NetPayableAmt = Number(this.sumOfForwardingTotalValue.toFixed(2));
 
 	}
 	CalculateTotalPayableCancellationChargeAmount(obj) {
-		obj.TotalPayableAmt = Number(obj.TotalPayableAmt.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
+		obj.TotalPayableAmt = Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.CancellationCharge.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.CancellationList, "TotalPayableAmt");
 		this.cancellingAirTicketregObj.NetPayableAmt = Number(this.sumofTotalCancellationCharge.toFixed(2));
@@ -420,6 +416,7 @@ export class AirTicketRegistration implements OnInit {
 	// AIRTICKET FORWARDING 
 
 	ticketDetail(obj) {
+		debugger
 		this.forwardairTicketregObj = new AirTicketRegModelDTO();
 		this.forwardingList = [];
 
@@ -445,12 +442,9 @@ export class AirTicketRegistration implements OnInit {
 	UpdateToForwardAirTicketReg() {
 		this.forwardairTicketregObj.UpdatedBy = this.user.EmployeeCode;
 		// validation
-		if (!this.ForwardValidateModel()) return;
+		if (!this.ForwardValidateModel()) return;	 
 
-		var newList = this.forwardingList.filter(i => i.IsForward == true && i.ChangePenalty != 0);
-		console.log(newList);
-
-		var details = JSON.stringify(newList);
+		var details = JSON.stringify(this.forwardingList);
 		this.forwardairTicketregObj.AirticketDetails = Library.getBase64(details);
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.UpdateForwardAirTicketRegistration(this.forwardairTicketregObj).subscribe(
@@ -481,7 +475,7 @@ export class AirTicketRegistration implements OnInit {
 		}
 		var validDetails = 0;
 		this.forwardingList.forEach(item => {
-			if (!item.IsForward && item.ChangePenalty == 0) {
+			if ((item.IsForward == true) && (item.ChangePenalty == 0)) {
 				this.Notification.Warning('Please Enter Change Penalty.');
 				result = false;
 				return;
@@ -500,10 +494,7 @@ export class AirTicketRegistration implements OnInit {
 		this.forwardairTicketregObj.NetPayableAmt = 0;
 	}
 
-
-
-
-	//  Camcellation Air Ticket 
+	//  Cancellation Air Ticket 
 	CancellationticketDetail(obj) {
 		debugger
 		this.cancellingAirTicketregObj = new AirTicketRegModelDTO();
@@ -517,9 +508,59 @@ export class AirTicketRegistration implements OnInit {
 			);
 
 	}
-	setCancellationList(Data: any) { 
-		this.CancellationList = Data.filter(i=>i.IsCancel==false);
-		this.sumOfCancellationTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
+	setCancellationList(Data: any) {
+		this.CancellationList = Data;
+		this.sumofTotalCancellationCharge = Common.calculateTotal(this.CancellationList, "TotalPayableAmt");
+ 
 
+	}
+	UpdateToCancellationAirTicketReg() {
+		this.cancellingAirTicketregObj.UpdatedBy = this.user.EmployeeCode;
+		// validation
+		if (!this.CancellationValidateModel()) return;
+	 
+		var details = JSON.stringify( this.CancellationList);
+		this.cancellingAirTicketregObj.AirticketDetails = Library.getBase64(details);
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.UpdateCancellingAirTicketRegistration(this.cancellingAirTicketregObj).subscribe(
+			(data) => this.setCancellationAirticketReg(data),
+			(error) => this.Notification.Error(error)
+		);
+
+	}
+	setCancellationAirticketReg(Data: any) {
+		if (Data.ID > 0) this.Notification.Success('Cancellation Successfully.');
+		else {
+			this.Notification.LoadingRemove();
+		}
+		this.ResetCancellationModel();
+		this.GetAirTicketList();
+	}
+	CancellationValidateModel() {
+		var result = true
+		if (Library.isNuLLorUndefined(this.cancellingAirTicketregObj.TransactionCode) || this.cancellingAirTicketregObj.TransactionCode == "0") {
+			this.Notification.Warning('Please Select Transaction Code.');
+			result = false;
+			return;
+		}
+		var validDetails = 0;
+		this.CancellationList.forEach(item => {
+			if ((item.IsCancel == true) && (item.CancellationCharge == 0)) {
+				this.Notification.Warning('Please Enter Change Penalty.');
+				result = false;
+				return;
+			}
+			validDetails += 1;
+		});
+
+		return result;
+	}
+
+	ResetCancellationModel() {
+		this.cancellingAirTicketregObj = new AirTicketRegModelDTO();
+		this.cancellingAirTicketregObj.TransactionCode = "0";
+		this.CancellationList = [];
+		this.sumofTotalCancellationCharge = 0;
+		this.cancellingAirTicketregObj.NetPayableAmt = 0;
 	}
 }

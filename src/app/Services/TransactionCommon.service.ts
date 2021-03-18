@@ -59,6 +59,8 @@ export class TransactionCommonService {
 	getAirTicketDetailsByTransactionCode(transactionCode:string) { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/details/by/transactionCode/"+transactionCode); }
 
 	UpdateForwardAirTicketRegistration(obj: any){ return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/update/forward`, obj); }
+	
+	UpdateCancellingAirTicketRegistration(obj: any){ return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/update/client`, obj); }
 	/*END  Air ticket */
 
 
