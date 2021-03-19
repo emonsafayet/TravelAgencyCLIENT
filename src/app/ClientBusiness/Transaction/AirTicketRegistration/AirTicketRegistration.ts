@@ -361,7 +361,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 	isCheckCancel(obj) {
 		obj.IsCancel = true;
-		//this.getCancelationAmount(obj); 
+		this.CalculateTotalPayableCancellationChargeAmount(obj);
 	}
 
 	isUnCheckCancel(obj) {
@@ -487,15 +487,15 @@ export class AirTicketRegistration implements OnInit {
 			result = false;
 			return;
 		}
-		var validDetails = 0;
-		this.forwardingList.forEach(item => {
-			if ((item.IsForward == true) && (item.ChangePenalty == 0)) {
-				this.Notification.Warning('Please Enter Change Penalty.');
-				result = false;
-				return;
-			}
-			validDetails += 1;
-		});
+		// var validDetails = 0;
+		// this.forwardingList.forEach(item => {
+		// 	if ((item.IsForward == true) && (item.ChangePenalty == 0)) {
+		// 		this.Notification.Warning('Please Enter Change Penalty.');
+		// 		result = false;
+		// 		return;
+		// 	}
+		// 	validDetails += 1;
+		// });
 
 		return result;
 	}
@@ -558,15 +558,15 @@ export class AirTicketRegistration implements OnInit {
 			result = false;
 			return;
 		}
-		var validDetails = 0;
-		this.CancellationList.forEach(item => {
-			if ((item.IsCancel == true) && (item.CancellationCharge == 0)) {
-				this.Notification.Warning('Please Enter Change Penalty.');
-				result = false;
-				return;
-			}
-			validDetails += 1;
-		});
+		// var validDetails = 0;
+		// this.CancellationList.forEach(item => {
+		// 	if ((item.IsCancel == true) && (item.CancellationCharge == 0)) {
+		// 		this.Notification.Warning('Please Enter Change Penalty.');
+		// 		result = false;
+		// 		return;
+		// 	}
+		// 	validDetails += 1;
+		// });
 
 		return result;
 	}
