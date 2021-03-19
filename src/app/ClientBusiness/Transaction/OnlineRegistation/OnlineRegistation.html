@@ -20,7 +20,7 @@
 </ul>
 
 <div class="tab-content" style="background-color: white;">
-    <!-- TAB ONLINE REGISTRATION LIST | 1st TAB--> 
+    <!-- TAB ONLINE REGISTRATION LIST | 1st TAB-->
     <div id="onlineRegList" class="tab-pane">
         <div class="row">
             <div class="col-sm-12">
@@ -432,6 +432,10 @@
                                             class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
                                         <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
                                             class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                                        <button *ngIf="regObj?.ID > 0"  class=" btn btn-info ml-2" (click)="PrintOnlineReg(regObj)">
+                                            Print
+                                            <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i> 
+                                        </button>
                                         <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
                                                 class="fas fa-redo-alt"></i> Reset</button>
                                     </div>
