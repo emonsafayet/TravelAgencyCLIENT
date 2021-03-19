@@ -1,4 +1,4 @@
-import { Component, DebugElement, OnInit } from '@angular/core';
+import { Component, DebugElement, DebugNode, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '../../../authGuard.guard';
 import { UserService } from '../../../Services/User.service';
@@ -124,9 +124,16 @@ export class AirTicketRegistration implements OnInit {
 		}
 		document.getElementById('airTicketRegEntry_tab').click();
 		this.ResetModel();
-		this.GetAirTicketList();
+		this.GetAirTicketList("");
 	}
-	GetAirTicketList() {
+	GetAirTicketList(param) {
+		if (param == "forward") {
+			this.ResetForwardModel();
+		} else if (param == "cancellation") {
+			this.ResetCancellationModel();
+		} else {
+			this.ResetModel();
+		}
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.GETAirTicketLIST()
 			.subscribe(
@@ -141,6 +148,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 	EditItem(item) {
 		this.airTicketregObj = JSON.parse(JSON.stringify(item));
+		this.airTicketregObj.TransactionDate = moment(new Date(this.airTicketregObj.TransactionDate)).format(Common.SQLDateFormat);
 		this.transactionCommonService.getAirTicketDetailsByTransactionCode(this.airTicketregObj.TransactionCode)
 			.subscribe(
 				data => this.setAirticketRegEdit(data),
@@ -348,27 +356,33 @@ export class AirTicketRegistration implements OnInit {
 	}
 	PrintAirTicketReg(obj) {
 		debugger
-		var airTicketRegCode = obj.AirTicketTransCode;
+		var airTicketRegCode = obj.TransactionCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/GetAirTicketRegistrationByAirTicketRegCode?airticketRegCode=${airTicketRegCode}`, "_blank");
 	}
 	isCheckCancel(obj) {
-		debugger
 		obj.IsCancel = true;
 		//this.getCancelationAmount(obj); 
 	}
-	selectTarget(e) {
-		e.target.select();
-	}
+
 	isUnCheckCancel(obj) {
+		debugger
 		obj.IsCancel = false;
+		obj.CancellationCharge = 0;
+		obj.TotalPayableAmt = Number(obj.BaseFare.toFixed(2)) + Number(obj.GovTax.toFixed(2)) +
+			Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
+		this.sumofTotalCancellationCharge = Common.calculateTotal(this.CancellationList, "TotalPayableAmt");
+		this.cancellingAirTicketregObj.NetPayableAmt = Number(this.sumofTotalCancellationCharge.toFixed(2));
 	}
 	isCheckForward(obj) {
 		obj.IsForward = true;
 	}
 	isUnCheckForward(obj) {
-		obj.IsCancel = false;
-	}
+		obj.IsForward = false;
 
+	}
+	selectTarget(e) {
+		e.target.select();
+	}
 	// Calculation
 
 	CalculateServiceChargeValue(obj) {
@@ -397,9 +411,8 @@ export class AirTicketRegistration implements OnInit {
 	}
 
 	CalculateTotalPayableWithForwardingChargeAmount(obj) {
-		debugger
-		obj.TotalPayableAmt = Number(obj.BaseFare.toFixed(2)) +Number(obj.GovTax.toFixed(2)) +
-						 Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
+		obj.TotalPayableAmt = Number(obj.BaseFare.toFixed(2)) + Number(obj.GovTax.toFixed(2)) +
+			Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
 
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
 		this.forwardairTicketregObj.NetPayableAmt = Number(this.sumOfForwardingTotalValue.toFixed(2));
@@ -430,19 +443,20 @@ export class AirTicketRegistration implements OnInit {
 	}
 
 	setforwardList(Data: any) {
-		console.log(Data);
+		debugger;
 		this.forwardingList = Data;
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
 
 		Data.forEach(element => {
 			element.ChangeDate = moment(new Date(element.ChangeDate)).format(Common.SQLDateFormat);
+
 		});
 
 	}
 	UpdateToForwardAirTicketReg() {
 		this.forwardairTicketregObj.UpdatedBy = this.user.EmployeeCode;
 		// validation
-		if (!this.ForwardValidateModel()) return;	 
+		if (!this.ForwardValidateModel()) return;
 
 		var details = JSON.stringify(this.forwardingList);
 		this.forwardairTicketregObj.AirticketDetails = Library.getBase64(details);
@@ -462,7 +476,7 @@ export class AirTicketRegistration implements OnInit {
 		}
 		// document.getElementById('airTicketRegEntry_tab').click();
 		this.ResetForwardModel();
-		this.GetAirTicketList();
+		this.GetAirTicketList("forward");
 	}
 
 	ForwardValidateModel() {
@@ -511,15 +525,15 @@ export class AirTicketRegistration implements OnInit {
 	setCancellationList(Data: any) {
 		this.CancellationList = Data;
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.CancellationList, "TotalPayableAmt");
- 
+
 
 	}
 	UpdateToCancellationAirTicketReg() {
 		this.cancellingAirTicketregObj.UpdatedBy = this.user.EmployeeCode;
 		// validation
 		if (!this.CancellationValidateModel()) return;
-	 
-		var details = JSON.stringify( this.CancellationList);
+
+		var details = JSON.stringify(this.CancellationList);
 		this.cancellingAirTicketregObj.AirticketDetails = Library.getBase64(details);
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.UpdateCancellingAirTicketRegistration(this.cancellingAirTicketregObj).subscribe(
@@ -533,8 +547,9 @@ export class AirTicketRegistration implements OnInit {
 		else {
 			this.Notification.LoadingRemove();
 		}
+
 		this.ResetCancellationModel();
-		this.GetAirTicketList();
+		this.GetAirTicketList("cancellation");
 	}
 	CancellationValidateModel() {
 		var result = true
