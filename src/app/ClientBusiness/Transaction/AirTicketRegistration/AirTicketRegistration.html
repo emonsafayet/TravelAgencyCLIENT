@@ -89,8 +89,7 @@
                                         <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Card: {{item?.CardCode}}
-                                                    <br>Charge:<i> {{item?.CardChargeAmount}} </i>
+                                                    Card: {{item?.CardCode}} 
                                                 </div>
                                             </div>
                                         </td>
@@ -327,6 +326,7 @@
                                                 <th class="width-6p">Govt Tax</th>
                                                 <th class="width-6p">AIT</th>
                                                 <th class="width-6p">Comission Charge</th>
+                                                <th class="width-6p">Card Charge</th>
                                                 <th class="width-6p">Svc. Charge(%)</th>
                                                 <th class="width-6p">Svc. Charge Value</th>
                                                 <th class="width-6p">Discount Amount</th>
@@ -426,6 +426,12 @@
                                                         [(ngModel)]="item.Comission"
                                                         (input)="CalculateTotalPayableAmount(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
+                                                        (click)="selectTarget($event)">
+                                                </td>
+                                                <td>
+                                                    <input class="width-10p" type="number"
+                                                        class="form-control form-control-sm text-right font-size-10"
+                                                        [(ngModel)]="item.CardChargeAmount"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>

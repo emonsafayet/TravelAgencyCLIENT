@@ -225,11 +225,11 @@ export class AirTicketRegistration implements OnInit {
 					result = false;
 					return;
 				}
-				if (Library.isNullOrZero(item.GovTax)) {
-					this.Notification.Warning('Please Enter Govt Tax.');
-					result = false;
-					return;
-				}
+				// if (Library.isNullOrZero(item.GovTax)) {
+				// 	this.Notification.Warning('Please Enter Govt Tax.');
+				// 	result = false;
+				// 	return;
+				// }
 				if (Library.isNullOrZero(item.TotalPayableAmt)) {
 					this.Notification.Warning('Please Enter Total Payable Amount.');
 					result = false;
