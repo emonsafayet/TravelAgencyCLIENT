@@ -10,7 +10,6 @@ export class OnlineRegistationMasterModelDTO  {
 	public NetPayableAmt : number=0;
 	public IsFinalLocked : boolean;
 	public CardCode : string="0";
-	public CardChargeAmount : number=0;
 	public Currency : string="0";
 	public CurrencyRate : number;
 	public CreatedBy : string;
@@ -30,6 +29,7 @@ export class OnlineRegistationDetailModelDTO{
 	public ServiceChargePercent : number=0;
 	public ServiceChargeValue : number=0;
 	public DiscountAmount : number=0;
+	public CardChargeAmount : number=0;
 	public TotalPayableAmt : number=0;
 	public IsCancel : boolean;
 	public CancellationCharge : number=0;

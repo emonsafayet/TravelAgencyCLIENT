@@ -117,7 +117,7 @@ export class TransactionCommonService {
 
 	getMoneyReceiptInvoiceDetailByReceiptCode(receiptCode: any, customerCode: any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/detail/code/${receiptCode}/${customerCode}`); }
 
-
+	getMRcustomerList() { return this.masterService.get("client/business/travel/MR/customer/list"); }
 	//END Money Receipt 
 	/*Start Advance Clearance*/
 	getAdvancePaymentNotClearanceList() { return this.masterService.get(`client/business/travel/advance/payment/clearance/list`); }

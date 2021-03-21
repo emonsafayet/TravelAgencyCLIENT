@@ -9,8 +9,7 @@ export class AirTicketRegModelDTO  {
 	public SalesReferenceCode : string="0";
 	public isConfirmed : boolean;
 	public IsFinalLocked : boolean;
-	public CardCode : string="0";
-	public CardChargeAmount : number=0;
+	public CardCode : string="0";	
 	public Currency : string="0";
 	public CurrencyRate : number;
 	public NetPayableAmt : number=0;
@@ -36,6 +35,7 @@ export class AirTicketDetailDTo{
 	public GovTax : number=0;
 	public AIT : number=0;
 	public Comission : number=0;
+	public CardChargeAmount : number=0;
 	public ServiceChargePercent : number;
 	public ServiceChargeValue : number=0;
 	public DiscountValue : number=0;

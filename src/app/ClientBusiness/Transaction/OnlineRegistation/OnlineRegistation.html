@@ -96,8 +96,7 @@
                                         <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Card: {{item?.CardCode}}
-                                                    <br>Charge:<i> {{item?.CardChargeAmount}} </i>
+                                                    Card: {{item?.CardCode}} 
                                                 </div>
                                             </div>
 
@@ -204,7 +203,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4"> <input [(ngModel)]="regObj.CurrencyRate"
-                                                class="form-control" type="number" readonly> </div>
+                                                class="form-control" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly> </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -218,14 +217,7 @@
                                             </ng-container>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Card Charge Amount</span>
-                                        <input [(ngModel)]="regObj.CardChargeAmount" class="form-control" type="number"
-                                            (click)="selectTarget($event)">
-                                    </div>
-                                </div>
+                                </div> 
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span
@@ -233,7 +225,7 @@
                                             Payable</span>
                                         <input [(ngModel)]="regObj.NetPayableAmt"
                                             class="form-control font-size-20 strong text-left text-success font-weight-bold"
-                                            type="number" readonly>
+                                            type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -296,6 +288,7 @@
                                                         <th class="width-20p">Name of Person</th>
                                                         <th class="width-20p">Event Name</th>
                                                         <th class="width-5p">EvenDate</th>
+                                                        <th class="width-5p">Card Charge</th>
                                                         <th class="width-8p">Reg. Charge</th>
                                                         <th class="width-8p">Service Charge(%)</th>
                                                         <th class="width-8p">Service Charge Amt</th>
@@ -327,21 +320,26 @@
                                                                 [(ngModel)]="item.EvenDate" />
                                                         </td>
                                                         <td>
-                                                            <input type="number"
+                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right"
+                                                                [(ngModel)]="item.CardChargeAmount" >
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.RegistrationCharge"
                                                                 (input)="CalculateTotalPayableAmount(item)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="number"
+                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.ServiceChargePercent"
                                                                 (input)="CalculateServiceChargeValue(item)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="number"
+                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm  text-right"
                                                                 [(ngModel)]="item.ServiceChargeValue"
                                                                 (input)="CalculateServicePertageValue(item)"
@@ -349,7 +347,7 @@
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="number"
+                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm  text-right"
                                                                 [(ngModel)]="item.DiscountAmount"
                                                                 (input)="CalculateTotalPayableAmount(item)"
@@ -357,7 +355,7 @@
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="number"
+                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.CancellationCharge"
                                                                 (input)="CalculeCancelationAmount(item)"
@@ -366,7 +364,7 @@
                                                                 [disabled]="! item?.IsCancel">
                                                         </td>
                                                         <td>
-                                                            <input type="number"
+                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.TotalPayableAmt"
                                                                 (click)="selectTarget($event)"

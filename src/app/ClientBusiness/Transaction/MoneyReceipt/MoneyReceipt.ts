@@ -103,7 +103,8 @@ export class MoneyReceipt implements OnInit {
 
 		// var invoiceDetails = JSON.stringify(this.mrInvoiceDetailObj);
 		// var paymentDetails = JSON.stringify(this.mrPaymentDetailObj);
-
+		this.mrInvoiceDetailObj = this.mrInvoiceDetailObj.filter(i=>i.PaidAmount>0); // ignore 0 amount;
+		
 		this.mrMasterModelDTOObj.InvoiceDetail = Library.encode(this.mrInvoiceDetailObj);
 		this.mrMasterModelDTOObj.PaymentDetail = Library.encode(this.mrPaymentDetailObj);
 
@@ -159,7 +160,7 @@ export class MoneyReceipt implements OnInit {
 	}
 	GETCustomerLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.clientBusinessService.getcustomerList()
+		this.transactionCommonService.getMRcustomerList()
 			.subscribe(
 				data => this.setCustomerLIST(data),
 				error => this.Notification.Error(error)

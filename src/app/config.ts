@@ -12,12 +12,12 @@ export class Config {
     //public static get APP_VERSION(): string {return "7.6.4";}
 
     // LIVE SERVER
-    // public static get API_URL(): string { return "http://localhost:81/api/api/"; }
-    // public static get getBaseUrl(): string { return "http://localhost:81/api/"; }
+    public static get API_URL(): string { return "http://localhost:81/api/api/"; }
+    public static get getBaseUrl(): string { return "http://localhost:81/api/"; }
     
     // LIVE SERVER -->> Travel Tech
-    // public static get API_URL(): string { return "http://103.231.162.170:81/api/api/"; }
-    // public static get getBaseUrl(): string { return "http://103.231.162.170:81/api/"; }    
+    public static get API_URL(): string { return "http://103.231.162.170:81/api/api/"; }
+    public static get getBaseUrl(): string { return "http://103.231.162.170:81/api/"; }    
 
 
     // LIVE SERVER
