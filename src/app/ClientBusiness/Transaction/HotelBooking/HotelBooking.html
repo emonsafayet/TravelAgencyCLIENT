@@ -9,284 +9,23 @@
         <li class="breadcrumb-item active">Booking</li>
     </ol>
 </nav>
+<ul class="nav nav-tabs">
+    <li (click)=getHotelBookingList()><a data-toggle="tab" class="hoverlink" href="#hotelBookingList" id="onlineRegList_tab">Hotel Booking List</a>
+    </li>
+    <li class="active"> <a data-toggle="tab" class="hoverlink" href="#hotelBookingEntry" id="hotelBookingEntry_tab">
+            Hotel Booking Entry</a>
+    </li>
+</ul>
 <div class="tab-content" style="background-color: white;">
-    <div class="tab-pane fade in active">
+    <!-- TAB Hotel Booking  LIST | 1st TAB-->
+    <div id="hotelBookingList" class="tab-pane">
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel">
-                    <div class="panel-heading btn-toggle-collapse">
-                        <span><b>HOTEL BOOKING</b> </span>
-                        <div class="right">
-                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Booking Code</span>
-                                        <input readonly [(ngModel)]="hotelBookingObj.BookingCode" class="form-control"
-                                            type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Booking Date</span>
-                                        <input [(ngModel)]="hotelBookingObj.BookingRegDate" class="form-control"
-                                             data-date=""
-                                            [attr.data-date]="hotelBookingObj.BookingRegDate" type="date">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Customer</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CustomerCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Company</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CompanyCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of companyList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Country</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CountryCode"
-                                            (change)="filterCityByCountryCode()">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of countryList; let i = index">
-                                                <option value="{{item.CountryCode}}">{{item?.CountryName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">City</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CityCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of cityList; let i = index">
-                                                <option value="{{item.CityCode}}">{{item?.CityName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Provider</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.TravelProvider">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of providerList; let i = index">
-                                                <option value="{{item.ProviderCode}}">{{item?.ProviderName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Hotel Type</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.HotelType">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of hotelTypeList; let i = index">
-                                                <option value="{{item.HotelTypeCode}}">{{item?.HotelTypeName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Hotel Name</span>
-                                        <input [(ngModel)]="hotelBookingObj.HotelName" class="form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Check-In-Date</span>
-                                        <input [(ngModel)]="hotelBookingObj.CheckInDate" class="form-control"
-                                            data-date-format="dd-MM-YYYY" data-date=""
-                                            [attr.data-date]="hotelBookingObj.CheckInDate" type="date">
-
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Check-Out-Date</span>
-                                        <input [(ngModel)]="hotelBookingObj.CheckOutDate" class="form-control"
-                                            data-date-format="dd-MM-YYYY" data-date=""
-                                            [attr.data-date]="hotelBookingObj.CheckOutDate" type="date">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">No Of Day(s)</span>
-                                        <input [(ngModel)]="hotelBookingObj.NoOfDay" class="form-control" type="number">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Room Type</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.RoomType">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of roomTypeList; let i = index">
-                                                <option value="{{item.RoomTypeCode}}"> {{item?.RoomTypeName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Card</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CardCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of cardList; let i = index">
-                                                <option value="{{item.CardID}}">
-                                                    {{item?.CardID}}>> {{item?.CardName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Currency</span>
-                                        <select (change)="onCurrencyChange($event.target.value)" class="form-control"
-                                            [(ngModel)]="hotelBookingObj.Currency">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of currencyList; let i = index">
-                                                <option value="{{item.CurrencyName}}"> {{item?.CurrencyName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                        <input [(ngModel)]="hotelBookingObj.CurrencyRate" class="form-control"
-                                            type="number" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Room Fare</span>
-                                        <input [(ngModel)]="hotelBookingObj.RoomFare" class="form-control" type="number"
-                                            (ngModelChange)="updateTotalPayable()">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Service Charge %</span>
-                                        <input [(ngModel)]="hotelBookingObj.ServiceCharge" class="form-control"
-                                            type="number" (ngModelChange)="updateTotalPayable()">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Total Payable</span>
-                                        <input [(ngModel)]="hotelBookingObj.TotalPayable" class="form-control"
-                                            type="number" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Sales Reference</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.SalesStaffCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
-                                                <option value="{{item.EmployeeCode}}">
-                                                    {{item.EmployeeCode}}->{{item?.FullName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Remarks</span>
-                                        <textarea [(ngModel)]="hotelBookingObj.Remark" class="form-control"
-                                            rows="3"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 mt-3">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Is Airport PickUp:</span>
-                                                    <i *ngIf="hotelBookingObj?.isAirportPickUp"
-                                                        (click)="hotelBookingObj.isAirportPickUp = false"
-                                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                        aria-hidden="true"></i>
-                                                    <i *ngIf="! hotelBookingObj?.isAirportPickUp"
-                                                        (click)="hotelBookingObj.isAirportPickUp = true"
-                                                        class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                        aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Is Active:</span>
-                                                    <i *ngIf="hotelBookingObj?.isActive"
-                                                        (click)="hotelBookingObj.isActive = false"
-                                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                        aria-hidden="true"></i>
-                                                    <i *ngIf="! hotelBookingObj?.isActive"
-                                                        (click)="hotelBookingObj.isActive = true"
-                                                        class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                        aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mt-3">
-                                <button *ngIf="hotelBookingObj?.ID == 0" (click)="saveHotelBooking()" type="button"
-                                    class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
-                                <button *ngIf="hotelBookingObj?.ID > 0" (click)="saveHotelBooking()" type="button"
-                                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
-                                <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
-                                        class="fas fa-redo-alt"></i> Reset</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel">
                     <div class="panel-heading">
-                        <span class="hoverlink"><b>HOTEL BOOKING LIST</b> <i class="fa fa-refresh ml-2 text-success"
+                        <span class="hoverlink"><b>Hotel Booking List</b> <i class="fa fa-refresh ml-2 text-success"
                                 aria-hidden="true"></i></span>
 
-                        <span class="label label-primary ml-2 hoverPointer">Report</span>
                         <div class="right">
                             <button type="button" class="btn-toggle-collapse"><i
                                     class="lnr lnr-chevron-up"></i></button>
@@ -301,102 +40,438 @@
                                             <input class="form-control form-control-sm" placeholder="Search" type="text"
                                                 [(ngModel)]="SearchHotelBookingList">
                                         </th>
-
                                     </tr>
                                     <tr>
                                         <th class="width-1p text-center">SN#</th>
-                                        <th class="width-10p">REG</th>
-                                        <th class="width-20p">CUSTOMER</th>
-                                        <th class="width-10p">Country/City</th>
-                                        <th class="width-10p">TravelProvider </th>
-                                        <th class="width-20p">HOTEL</th>
-                                        <th class="width-5p">ROOM TYPE</th>
-                                        <th class="width-10p">CARD INFO</th>
-                                        <th class="width-10p">CURRENCY</th>
-                                        <th class="width-20p">SERVICE CHARGE</th>
-                                        <th class="width-5p">TOTAL CHARGE</th>
-                                        <th class="width-10p">SELL BY</th>
-                                        <th class="width-2p text-center">STATUS</th>
-                                        <th class="width-2p text-center">ACTION</th>
+                                        <th class="width-10p">Transaction Code</th>
+                                        <th class="width-10p">Transaction Date</th>
+                                        <th class="width-10p">Card Info</th>
+                                        <th class="width-10p">Currency</th>
+                                        <th class="width-5p">Total Payable Amount</th>
+                                        <th class="width-10p">Sold by</th>
+                                        <th class="width-2p text-center">Status</th>
+                                        <th class="width-2p text-center">Action</th>
+                                        <th class="width-2p text-center">Print</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="font-size-12"
-                                        *ngFor="let item of hotelBookingList | searchFilter : SearchHotelBookingList; let i = index">
+                                    <tr *ngFor="let item of hotelBookingList; let i = index">
                                         <td class="text-right"> {{i+1}} </td>
-                                        <td class="text-left width-10p">
+                                        <td class="text-left  width-10p"> {{item?.TransactionCode}} </td>
+                                        <td class="text-left  width-10p"> {{item?.TransactionDate | date: 'dd MMM yyyy'}} </td>
+                                        <td class="text-left  width-10p"> {{item?.CardCode}} </td>
+                                        <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    CODE: {{item?.BookingCode}}
-                                                    <br> DATE: <i> {{item?.BookingRegDate | date: 'dd MMM yyyy' }}
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-left  width-20p">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Customer: {{item?.CustomerName}}
-                                                    <br>Company:<i> {{item?.CompanyName}} </i>
+                                                    Currency: {{item?.Currency}}
+                                                    <br>Rate:<i> {{item?.CurrencyRate}} </i>
                                                 </div>
                                             </div>
 
                                         </td>
-                                        <td class="text-left  width-20p">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Country: {{item?.CountryName}}
-                                                    <br> City:<i> {{item?.CityName}}</i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-left width-10p"> {{item?.ProviderName}} </td>
-
-                                        <td class="text-left width-20p">
-                                            Hotel : {{item?.HotelName}}
-                                            <br> Hotel Type:<i> {{item?.HotelTypeName}} </i>
-                                        </td>
-                                        <td class="text-left width-5p">Room Type : {{item?.RoomType}}</td>
-                                        <td class="text-left width-20p">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Card Name: {{item?.CardName}}
-                                                    <br> Code: <i> {{item?.CardCode}} </i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-left width-5">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Currency :{{item?.Currency}}
-                                                    <br>Rate: <i>{{item?.CurrencyRate}} </i>
-                                                </div>
-                                            </div> 
-                                        </td> 
-                                        <td class="text-left width-20p">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Room Fare : {{item?.RoomFare}}
-                                                    <br> Service Charge: <i>{{item?.ServiceCharge}} %  </i>
-                                                </div>
-                                            </div> 
-                                        </td>
-                                        <td class="text-left width-5p"> {{item?.TotalPayable}} </td>
-                                        <td class="text-left width-10p"> Employee Code: {{item?.SalesStaffCode}}
-                                            <br> Name: <i> {{item?.FullName}} </i>
-                                        </td>
+                                        <td class="text-left width-5p"> {{item?.NetPayableAmt}} </td>
+                                        <td class="text-left width-10p"> {{item?.FullName}} </td>
                                         <td class="text-center">
-                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
-                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
+                                            <span *ngIf="item?.IsFinalLocked" class="text-success">Locked</span>
+                                            <span *ngIf="!item?.IsFinalLocked" class="text-danger">UnLock</span>
                                         </td>
+
                                         <td (click)="EditItem(item)" title="Click to Edit the item."
-                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i>
+                                        </td>
+                                        <td class="text-center width-5p">
+                                            <button class="btn btn-info" (click)="PrintHotelBooking(item)">
+                                                Print
+                                                <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TAB Hotel Booking Entry LIST | 2nd TAB-->
+    <div id="hotelBookingEntry" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>HOTEL BOOKING</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Transaction No</span>
+                                        <input readonly [(ngModel)]="hotelBookingObj.TransactionCode"
+                                            class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Transaction Date</span>
+                                        <input type="date" data-date=""
+                                            [attr.data-date]="hotelBookingObj.TransactionDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="hotelBookingObj.TransactionDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CustomerCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList; let i = index">
+                                                <option value="{{item.CustomerCode}}">
+                                                    {{item.CustomerCode}}-{{item?.CustomerName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4 mt-3">
+                                    <div class="col-md-12">
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Currency</span>
+                                                <select class="form-control" [(ngModel)]="hotelBookingObj.Currency"
+                                                    (change)="onCurrencyChange($event.target.value)">
+                                                    <option selected value="0">SELECT..</option>
+                                                    <ng-container *ngFor="let item of currencyList; let i = index">
+                                                        <option value="{{item.CurrencyName}}">{{item?.CurrencyName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4"> <input [(ngModel)]="hotelBookingObj.CurrencyRate"
+                                                class="form-control" type="text"
+                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly> </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Card </span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CardCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of cardList; let i = index">
+                                                <option value="{{item.CardID}}">{{item?.CardID}}>> {{item?.CardName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                    <div class="input-group">
+                                        <span
+                                            class="input-group-addon font-size-20 strong text-right text-success font-weight-bold">Net
+                                            Payable</span>
+                                        <input [(ngModel)]="hotelBookingObj.NetPayableAmt"
+                                            class="form-control font-size-20 strong text-left text-success font-weight-bold"
+                                            type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Sales Reference</span>
+                                        <select class="form-control" [(ngModel)]="hotelBookingObj.SalesStaffCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                <option value="{{item.EmployeeCode}}">{{item?.FullName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Locked</span>
+                                        <i *ngIf="hotelBookingObj?.IsFinalLocked"
+                                            (click)="hotelBookingObj.IsFinalLocked = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! hotelBookingObj?.IsFinalLocked"
+                                            (click)="hotelBookingObj.IsFinalLocked = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="hotelBookingObj.Remark" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel-heading btn-toggle-collapse">
+                                <span><b>DETAILS</b> </span>
+                                <div class="right">
+                                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn btn-success" (click)="addDetailsNew('enter', $event)"><i
+                                                class="fa fa-plus" aria-hidden="true"></i>Add NEW
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-fixed">
+                                            <table
+                                                class="table table-bordered table-p4 custom-table-hover font-size-11">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="width-1p text-center">SN#</th>
+                                                        <th class="width-15p">Name of Person</th>
+                                                        <th class="width-15p">City Name</th>
+                                                        <th class="width-10p">Provider Name</th>
+                                                        <th class="width-15p">Hotel Name</th>
+                                                        <th class="width-8p">Room type</th>
+                                                        <th class="width-6p">Check In Date</th>
+                                                        <th class="width-6p">Check Out Date</th>
+                                                        <th class="width-6p">No Of Day</th>
+                                                        <th class="width-6p">Card Charge Amt.</th>
+                                                        <th class="width-8p">Room Fare</th>
+                                                        <th class="width-6p">Service Charge(%)</th>
+                                                        <th class="width-8p">Service Charge Amount</th>
+                                                        <th class="width-6p">Discount Amt.</th>
+                                                        <th class="width-6p">Cancellation Charge</th>
+                                                        <th class="width-6p">Is Cancel ?</th>
+                                                        <th class="width-10p">Total Amount</th>
+                                                        <th class="width-1p">X</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of hotelBookingDetailObj; let i = index">
+                                                        <td class="text-right"> {{i+1}} </td>
+                                                        <td class="width-15p">
+                                                            <input type="text"
+                                                                class="form-control form-control-sm text-left font-size-11"
+                                                                [(ngModel)]="item.NameofPerson">
+                                                        </td>
+                                                        <td class="width-15p">
+                                                            <input type="text"
+                                                                class="form-control form-control-sm text-left font-size-11"
+                                                                [(ngModel)]="item.CityName">
+                                                        </td>
+                                                        <td class="width-10p">
+                                                            <div class="input-group">
+                                                                <select
+                                                                    class="form-control form-control-sm text-right font-size-11"
+                                                                    [(ngModel)]="item.TravelProvider">
+                                                                    <option selected value="0">SELECT</option>
+                                                                    <ng-container *ngFor="let info  of providerList">
+                                                                        <option value="{{info.ProviderCode}}">
+                                                                            {{info?.ProviderName}}
+                                                                        </option>
+                                                                    </ng-container>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td class="width-15p">
+                                                            <input type="text"
+                                                                class="form-control form-control-sm text-left"
+                                                                [(ngModel)]="item.HotelName">
+                                                        </td>
+                                                        <td class="width-10p">
+                                                            <div class="input-group">
+                                                                <select
+                                                                    class="form-control form-control-sm text-right font-size-11"
+                                                                    [(ngModel)]="item.RoomType">
+                                                                    <option selected value="0">SELECT</option>
+                                                                    <ng-container *ngFor="let info  of roomTypeList">
+                                                                        <option value="{{info.RoomTypeCode}}">
+                                                                            {{info?.RoomTypeName}}
+                                                                    </ng-container>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" data-date=""
+                                                                [attr.data-date]="item.CheckInDate"
+                                                                data-date-format="dd-MM-YYYY"
+                                                                class="form-control  width-120 font-size-11 form-control-sm"
+                                                                [(ngModel)]="item.CheckInDate" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" data-date=""
+                                                                [attr.data-date]="item.CheckOutDate"
+                                                                data-date-format="dd-MM-YYYY"
+                                                                class="form-control width-120 font-size-11 form-control-sm"
+                                                                [(ngModel)]="item.CheckOutDate" />
+                                                        </td>
+                                                        <td class="width-6p">
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-10"
+                                                                (input)="CalculateTotalPayableAmount(item)"
+                                                                [(ngModel)]="item.NoOfDay"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td class="width-6p">
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-11"
+                                                                [(ngModel)]="item.CardChargeAmount"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-11"
+                                                                [(ngModel)]="item.RoomFare"
+                                                                (input)="CalculateTotalPayableAmount(item)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-11"
+                                                                [(ngModel)]="item.ServiceChargePercent"
+                                                                (input)="CalculateServiceChargeValue(item)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td class="width-8p">
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-11"
+                                                                [(ngModel)]="item.ServiceChargeValue"
+                                                                (input)="CalculateServicePertageValue(item)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td class="width-10p">
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-11"
+                                                                [(ngModel)]="item.DiscountValue"
+                                                                (input)="CalculateTotalPayableAmount(item)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                (click)="selectTarget($event)">
+                                                        </td>
+                                                        <td class="width-10p">
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-11"
+                                                                [(ngModel)]="item.CancellationCharge"
+                                                                (input)="CalculeCancelationAmount(item)"
+                                                                (click)="selectTarget($event)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                [disabled]="! item?.IsCancel">
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <i *ngIf="item?.IsCancel"
+                                                                    (click)="isUnCheckCancel(item)"
+                                                                    class="fa fa-check-square-o font-size-35 ml-3 text-success"
+                                                                    aria-hidden="true"></i>
+                                                                <i *ngIf="! item?.IsCancel"
+                                                                    (click)="isCheckCancel(item)"
+                                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                                    aria-hidden="true"></i>
+                                                            </div>
+                                                        </td>
+                                                        <td class="width-10p">
+                                                            <input type="text"
+                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                                class="form-control form-control-sm text-right font-size-11"
+                                                                [(ngModel)]="item.TotalPayableAmt"
+                                                                (click)="selectTarget($event)"
+                                                                (keyup.enter)="addDetailsNew('enter', $event)"
+                                                                [disabled]="true">
+                                                        </td>
+
+                                                        <td class="text-center" (click)="removeDetails(i)"> <i
+                                                                class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <span
+                                                                class="font-size-20 strong text-right text-success font-weight-bold">
+                                                                Total=
+                                                            </span>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td> </td>
+                                                        <td>
+                                                            <span
+                                                                class="font-size-20 strong text-right text-danger font-weight-bold">
+                                                                {{sumofTotalCancellationCharge| number:'1.0-0' }}
+                                                            </span>
+                                                        </td>
+                                                        <td></td>
+
+                                                        <td>
+                                                            <span
+                                                                class="font-size-20 strong text-right text-success font-weight-bold">
+                                                                {{sumOfTotalValue| number:'1.0-0' }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 mt-3">
+                                        <button *ngIf="hotelBookingObj?.ID == 0" (click)="saveHotelBooking()"
+                                            type="button" class="btn btn-success"><i class="fa fa-plus"></i>
+                                            Save</button>
+                                        <button *ngIf="hotelBookingObj?.ID > 0" (click)="saveHotelBooking()"
+                                            type="button" class=" btn btn-success ml-2"><i class="fa fa-plus"></i>
+                                            Update</button>
+                                        <button *ngIf="hotelBookingObj?.ID > 0" class=" btn btn-info ml-2"
+                                            (click)="PrintHotelBooking(hotelBookingObj)">
+                                            Print
+                                            <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                                        </button>
+                                        <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                                class="fas fa-redo-alt"></i> Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

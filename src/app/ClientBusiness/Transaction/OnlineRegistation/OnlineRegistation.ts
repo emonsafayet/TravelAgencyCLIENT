@@ -43,9 +43,9 @@ export class OnlineRegistation implements OnInit {
 
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
-		this.authGuard.hasUserThisMenuPrivilege(this.user);
-		this.setNewDetails();
+		this.authGuard.hasUserThisMenuPrivilege(this.user);	
 		this.Notification.LoadingWithMessage('Loading...');
+		this.setNewDetails();
 		this.GETCustomerLIST();
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST();
@@ -81,7 +81,7 @@ export class OnlineRegistation implements OnInit {
 		var details = JSON.stringify(this.regDetailsObj);
 
 		this.regObj.OnlineRegistrationDetail = Library.getBase64(details);
-		this.regObj.CreatedBy = this.user.EmployeeCode;
+		 
 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.saveOnlineRegisationList(this.regObj).subscribe(
