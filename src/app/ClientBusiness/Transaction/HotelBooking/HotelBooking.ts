@@ -75,7 +75,7 @@ export class HotelBooking implements OnInit {
 	}
 	PrintHotelBooking(obj){
 		var RegistrationCode = obj.TransactionCode;
-		// window.open(`${Config.getBaseUrl}TransactionReport/onlineRegistrationDetail?onlineRegCode=${RegistrationCode}`, "_blank");
+	   window.open(`${Config.getBaseUrl}TransactionReport/GetHotelBookingTransactionCode?TransactionCode=${RegistrationCode}`, "_blank");
 	}
 	//SAVE/UPDATE
 	saveHotelBooking() {
@@ -158,10 +158,27 @@ export class HotelBooking implements OnInit {
 
 		return result;
 	}
-	EditItem(item) {
-		this.ResetModel();
-		this.hotelBookingObj = JSON.parse(JSON.stringify(item));
+	EditItem(item) {		
+		this.hotelBookingObj = JSON.parse(JSON.stringify(item)); 
+		this.hotelBookingObj.TransactionDate = moment(new Date(this.hotelBookingObj.TransactionDate)).format(Common.SQLDateFormat);
+		this.transactionCommonService.getHotelDetailsByTransactionCode(this.hotelBookingObj.TransactionCode)
+		.subscribe(
+			data => this.setHotelEdit(data),
+			error => this.Notification.Error(error)
+		);	 
+	}
+	setHotelEdit(Data: any) {
+		debugger
+		Data.forEach(element => {
+			element.CheckInDate = moment(new Date(element.CheckInDate)).format(Common.SQLDateFormat);
+			element.CheckOutDate = moment(new Date(element.CheckOutDate)).format(Common.SQLDateFormat);
+			if(element.isCancel == true)element.isCancel=true;
 		 
+		});
+		this.hotelBookingDetailObj = Data;
+		this.sumOfTotalValue = Common.calculateTotal(this.hotelBookingDetailObj, "TotalPayableAmt");
+		this.sumofTotalCancellationCharge = Common.calculateTotal(this.hotelBookingDetailObj, "CancellationCharge");
+		document.getElementById('hotelBookingEntry_tab').click();
 	}
 	ResetModel() { 
 		this.hotelBookingObj = new HotelBookMaster();

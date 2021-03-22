@@ -26,19 +26,19 @@
 
 
                 <div class="row">
-                    <div class="col-md-2">                     
-                            <div class="input-group mt-4">
-                                <span class="input-group-addon">Employee Code </span>
-                                <input type="text" class="form-control" readonly type="text"
-                                    [(ngModel)]="EmployeeObj.EmployeeCode">
-                            </div>    
-                                       
-                                   image       
+                    <div class="col-md-2">
+                        <div class="input-group mt-4">
+                            <span class="input-group-addon">Employee Code </span>
+                            <input type="text" class="form-control" readonly type="text"
+                                [(ngModel)]="EmployeeObj.EmployeeCode">
+                        </div>
+
+                        image
                     </div>
                     <div class="col-md-10">
                         <div class="row">
-                            <div class="col-md-12"> 
-                            
+                            <div class="col-md-12">
+
                                 <div class="col-md-3">
                                     <div class="input-group mt-4">
                                         <span class="input-group-addon">First Name </span>
@@ -56,7 +56,8 @@
                                 <div class="col-md-3">
                                     <div class="input-group mt-4">
                                         <span class="input-group-addon">Last Name </span>
-                                        <input class="form-control" placeholder="Last Name" [(ngModel)]="EmployeeObj.LName">
+                                        <input class="form-control" placeholder="Last Name"
+                                            [(ngModel)]="EmployeeObj.LName">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -69,14 +70,14 @@
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>
-                                </div>     
-                           
+                                </div>
+
                             </div>
                         </div>
                         <!-- ENd 1st row -->
 
                         <div class="row">
-                            <div class="col-md-12"> 
+                            <div class="col-md-12">
                                 <div class="col-md-3">
                                     <div class="input-group mt-4">
                                         <span class="input-group-addon">Father Name </span>
@@ -116,7 +117,7 @@
                                         <input type="date" data-date="" [attr.data-date]="EmployeeObj.DOB"
                                             data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
                                             [(ngModel)]="EmployeeObj.DOB" />
-        
+
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -147,12 +148,12 @@
                             </div>
                         </div>
                         <!--END 3rd row -->
-                        
+
 
                         <div class="row">
-                            <div class="col-md-12">  
-                                                  
-                                <div class="col-md-3"> 
+                            <div class="col-md-12">
+
+                                <div class="col-md-3">
                                     <div class="input-group mt-4">
                                         <span class="input-group-addon">Tele Phone </span>
                                         <input class="form-control" placeholder="Tele Phone" type="text"
@@ -185,23 +186,23 @@
                                             <option value="Widow">Widow</option>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3">
                                     <div class="input-group mt-4">
                                         <span class="input-group-addon">Location </span>
-                                        <select class="form-control" [(ngModel)]="EmployeeObj.EmployeeLocationID"> 
+                                        <select class="form-control" [(ngModel)]="EmployeeObj.EmployeeLocationID">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of EmployeeStatusList; let i = index">
                                                 <option value="{{item.ID}}">{{item?.StatusName}}</option>
                                             </ng-container>
-                                           
+
                                         </select>
 
-                                      
+
 
                                     </div>
-                                </div>     
-                               
+                                </div>
+
 
                             </div>
                         </div>
@@ -210,36 +211,12 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- --------------------------------------- -->
-
-
-
-
-
-
-
-           
-
-           
-               
-               
+                <!-- --------------------------------------- -->
                 <div class="row">
                     <div class="col-md-12">
-                        
-                     
-                    
+
+
+
                     </div>
                 </div>
 
@@ -342,7 +319,7 @@
                                 <input class="form-control" type="text" [(ngModel)]="EmployeeObj.EPersonTelephone">
                             </div>
                         </div>
-                     
+
                     </div>
                 </div>
 

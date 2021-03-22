@@ -243,39 +243,39 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="width-1p text-center">SN#</th>
-                                                        <th class="width-15p">Name of Person</th>
-                                                        <th class="width-15p">City Name</th>
-                                                        <th class="width-10p">Provider Name</th>
-                                                        <th class="width-15p">Hotel Name</th>
-                                                        <th class="width-8p">Room type</th>
-                                                        <th class="width-6p">Check In Date</th>
-                                                        <th class="width-6p">Check Out Date</th>
-                                                        <th class="width-6p">No Of Day</th>
-                                                        <th class="width-6p">Card Charge Amt.</th>
-                                                        <th class="width-8p">Room Fare</th>
-                                                        <th class="width-6p">Service Charge(%)</th>
-                                                        <th class="width-8p">Service Charge Amount</th>
-                                                        <th class="width-6p">Discount Amt.</th>
-                                                        <th class="width-6p">Cancellation Charge</th>
-                                                        <th class="width-6p">Is Cancel ?</th>
-                                                        <th class="width-10p">Total Amount</th>
-                                                        <th class="width-1p">X</th>
+                                                        <th class="width-10p text-left">Name of Person</th>
+                                                        <th class="width-10p text-left">City Name</th>
+                                                        <th class="width-10p text-left">Provider Name</th>
+                                                        <th class="width-10p text-left">Hotel Name</th>
+                                                        <th class="width-10p text-left">Room type</th>
+                                                        <th class="width-10p text-left">Check In Date</th>
+                                                        <th class="width-10p text-left">Check Out Date</th>
+                                                        <th class="width-10p text-left">No Of Day</th>
+                                                        <th class="width-10p text-left">Card Charge Amt.</th>
+                                                        <th class="width-10p text-left">Room Fare</th>
+                                                        <th class="width-10p text-left">Service Charge(%)</th>
+                                                        <th class="width-10p text-left">Service Charge Amount</th>
+                                                        <th class="width-10p text-left">Discount Amt.</th>
+                                                        <th class="width-10p text-left">Cancellation Charge</th>
+                                                        <th class="width-10p text-left">Is Cancel ?</th>
+                                                        <th class="width-10p text-left">Total Amount</th>
+                                                        <th class="width-p text-left">X</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let item of hotelBookingDetailObj; let i = index">
                                                         <td class="text-right"> {{i+1}} </td>
-                                                        <td class="width-15p">
+                                                        <td class="text-left">
                                                             <input type="text"
                                                                 class="form-control form-control-sm text-left font-size-11"
                                                                 [(ngModel)]="item.NameofPerson">
                                                         </td>
-                                                        <td class="width-15p">
+                                                        <td class="text-left"> 
                                                             <input type="text"
                                                                 class="form-control form-control-sm text-left font-size-11"
                                                                 [(ngModel)]="item.CityName">
                                                         </td>
-                                                        <td class="width-10p">
+                                                        <td class="text-left">
                                                             <div class="input-group">
                                                                 <select
                                                                     class="form-control form-control-sm text-right font-size-11"
@@ -289,12 +289,12 @@
                                                                 </select>
                                                             </div>
                                                         </td>
-                                                        <td class="width-15p">
+                                                        <td class="text-left">
                                                             <input type="text"
                                                                 class="form-control form-control-sm text-left"
                                                                 [(ngModel)]="item.HotelName">
                                                         </td>
-                                                        <td class="width-10p">
+                                                        <td>
                                                             <div class="input-group">
                                                                 <select
                                                                     class="form-control form-control-sm text-right font-size-11"
@@ -321,7 +321,7 @@
                                                                 class="form-control width-120 font-size-11 form-control-sm"
                                                                 [(ngModel)]="item.CheckOutDate" />
                                                         </td>
-                                                        <td class="width-6p">
+                                                        <td>
                                                             <input type="text"
                                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right font-size-10"
@@ -329,7 +329,7 @@
                                                                 [(ngModel)]="item.NoOfDay"
                                                                 (click)="selectTarget($event)">
                                                         </td>
-                                                        <td class="width-6p">
+                                                        <td>
                                                             <input type="text"
                                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right font-size-11"
@@ -352,7 +352,7 @@
                                                                 (input)="CalculateServiceChargeValue(item)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
-                                                        <td class="width-8p">
+                                                        <td>
                                                             <input type="text"
                                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right font-size-11"
@@ -361,7 +361,7 @@
                                                                 (keyup.enter)="addDetailsNew('enter', $event)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
-                                                        <td class="width-10p">
+                                                        <td>
                                                             <input type="text"
                                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right font-size-11"
@@ -370,7 +370,7 @@
                                                                 (keyup.enter)="addDetailsNew('enter', $event)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
-                                                        <td class="width-10p">
+                                                        <td>
                                                             <input type="text"
                                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right font-size-11"
@@ -392,7 +392,7 @@
                                                                     aria-hidden="true"></i>
                                                             </div>
                                                         </td>
-                                                        <td class="width-10p">
+                                                        <td>
                                                             <input type="text"
                                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'');"
                                                                 class="form-control form-control-sm text-right font-size-11"
@@ -402,7 +402,7 @@
                                                                 [disabled]="true">
                                                         </td>
 
-                                                        <td class="text-center" (click)="removeDetails(i)"> <i
+                                                        <td (click)="removeDetails(i)"> <i
                                                                 class="fa fa-trash text-danger" aria-hidden="true"></i>
                                                         </td>
                                                     </tr>

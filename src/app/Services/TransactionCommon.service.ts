@@ -29,8 +29,8 @@ export class TransactionCommonService {
 	GetOnlineRegisationList() { return this.masterService.get("client/business/travel/transaction/online/registation/list"); }
 
 	saveOnlineRegisationList(regObj: any) { return this.masterService.post(`client/business/travel/transaction/online/registation/save/update`, regObj); }
-	
-	getOnlineRegistrationDetailsByTransactionCode(transactionCode:string) { return this.masterService.get("client/business/travel/transaction/online/registation/details/by/transactionCode/"+transactionCode); }
+
+	getOnlineRegistrationDetailsByTransactionCode(transactionCode: string) { return this.masterService.get("client/business/travel/transaction/online/registation/details/by/transactionCode/" + transactionCode); }
 
 	/**END  Online Registation Service**/
 
@@ -55,12 +55,12 @@ export class TransactionCommonService {
 	GETAirTicketLIST() { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/list"); }
 
 	SaveUpdateAirTicketRegistration(obj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/save/update`, obj); }
- 
-	getAirTicketDetailsByTransactionCode(transactionCode:string) { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/details/by/transactionCode/"+transactionCode); }
 
-	UpdateForwardAirTicketRegistration(obj: any){ return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/update/forward`, obj); }
-	
-	UpdateCancellingAirTicketRegistration(obj: any){ return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/update/client`, obj); }
+	getAirTicketDetailsByTransactionCode(transactionCode: string) { return this.masterService.get("client/business/travel/transaction/Air/Ticket/Registration/details/by/transactionCode/" + transactionCode); }
+
+	UpdateForwardAirTicketRegistration(obj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/update/forward`, obj); }
+
+	UpdateCancellingAirTicketRegistration(obj: any) { return this.masterService.post(`client/business/travel/transactionSeat/Air/Ticket/Registration/update/client`, obj); }
 	/*END  Air ticket */
 
 
@@ -68,6 +68,7 @@ export class TransactionCommonService {
 	GetHotelBooking() { return this.masterService.get("client/business/travel/transaction/hotel/booking/list"); }
 
 	SaveUpdateHotelBooking(hotelBookingObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/booking/save/update`, hotelBookingObj); }
+	getHotelDetailsByTransactionCode(transactionCode: string) { return this.masterService.get("client/business/travel/transaction/hotel/booking/details/by/transactionCode/" + transactionCode); }
 
 	/*END  Hotel Booking  */
 
@@ -121,7 +122,7 @@ export class TransactionCommonService {
 	//END Money Receipt 
 	/*Start Advance Clearance*/
 	getAdvancePaymentNotClearanceList() { return this.masterService.get(`client/business/travel/advance/payment/clearance/list`); }
-	
+
 	updateadvanceClearance(obj: any) { return this.masterService.post(`client/business/travel/advance/payment/clearance/update`, obj); }
 
 	/*End Advance Clearance*/
