@@ -89,7 +89,7 @@
                                         <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Card: {{item?.CardCode}} 
+                                                    Card: {{item?.CardCode}}
                                                 </div>
                                             </div>
                                         </td>
@@ -168,7 +168,8 @@
                                         <select class="form-control" [(ngModel)]="airTicketregObj.CustomerCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item.CustomerCode}}{{item?.CustomerName}}</option>
+                                                <option value="{{item.CustomerCode}}">
+                                                    {{item.CustomerCode}}{{item?.CustomerName}}</option>
                                             </ng-container>
                                         </select>
                                     </div>
@@ -213,7 +214,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <div class="input-group">
@@ -306,33 +307,33 @@
                                     <table class="table table-bordered table-p4 custom-table-hover font-size-11">
                                         <thead>
                                             <tr>
-                                                <th class="width-15p">Name of Person</th>
-                                                <th class="width-15p">Airlines</th>
-                                                <th class="width-15p">Route</th>
+                                                <th class="width-10p">Name of Person</th>
+                                                <th class="width-10p">Airlines</th>
+                                                <th class="width-10p">Route</th>
                                                 <th class="width-10p">Ticket No</th>
                                                 <th class="width-6p">SeatType</th>
                                                 <th class="width-10p">Provider</th>
-                                                <th class="width-6p">Travel Date</th>
-                                                <th class="width-6p">Return Date</th>
+                                                <th class="width-8p text-left">Travel Date</th>
+                                                <th class="width-8p text-left">Return Date</th>
                                                 <th class="width-6p">Card Charge</th>
                                                 <th class="width-6p">Base Fare</th>
                                                 <th class="width-6p">Govt Tax</th>
-                                                <th class="width-6p">AIT</th>
-                                                <th class="width-6p">Comission Charge</th>                                              
+                                                <th class="width-6p">Commision (%)</th>
+                                                <th class="width-6p">Comission Charge</th>
                                                 <th class="width-6p">Svc. Charge(%)</th>
-                                                <th class="width-6p">Svc. Charge Value</th>
+                                                <th class="width-10p">Service Charge Value</th>
                                                 <th class="width-6p">Discount Amount</th>
-                                                <th class="width-6p">Total Amount</th>
+                                                <th class="width-10p">Total Amount</th>
                                                 <th class="width-1p">X</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let item of airTicketregDetailsObj; let i = index">
-                                                <td class="width-15p">
+                                                <td class="width-10p">
                                                     <textarea [(ngModel)]="item.NameofPerson" class="form-control"
                                                         rows="2"></textarea>
                                                 </td>
-                                                <td  class="width-15p">
+                                                <td class="width-10p">
                                                     <div class="input-group font-size-10">
                                                         <select class="form-control" [(ngModel)]="item.AirlinesCode">
                                                             <option selected value="0">SELECT..</option>
@@ -344,7 +345,7 @@
                                                         </select>
                                                     </div>
                                                 </td>
-                                                <td  class="width-15p">
+                                                <td class="width-10p">
                                                     <textarea [(ngModel)]="item.Route" class="form-control"
                                                         rows="2"></textarea>
                                                 </td>
@@ -379,74 +380,78 @@
                                                 <td>
                                                     <input class="font-size-10" type="date" data-date=""
                                                         [attr.data-date]="item.TravelDate" data-date-format="dd-MM-YYYY"
-                                                        class="form-control width-131 form-control-sm"
+                                                        class="form-control width-115 font-size-11 form-control-sm"
                                                         [(ngModel)]="item.TravelDate" />
                                                 </td>
                                                 <td>
                                                     <input class="font-size-10" type="date" data-date=""
                                                         [attr.data-date]="item.ReturnDate" data-date-format="dd-MM-YYYY"
-                                                        class="form-control width-131 form-control-sm"
+                                                        class="form-control width-115 font-size-11 form-control-sm"
                                                         [(ngModel)]="item.ReturnDate" />
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-10p" type="text"
+                                                        (keypress)="isNumberKey($event)"
                                                         class="form-control form-control-sm text-right font-size-10"
                                                         [(ngModel)]="item.CardChargeAmount"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-10p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
-                                                        [(ngModel)]="item.BaseFare"
+                                                        [(ngModel)]="item.BaseFare" (keypress)="isNumberKey($event)"
                                                         (input)="CalculateTotalPayableAmount(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-10p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
-                                                        [(ngModel)]="item.GovTax"
+                                                        [(ngModel)]="item.GovTax" (keypress)="isNumberKey($event)"
                                                         (input)="CalculateTotalPayableAmount(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-10p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
-                                                        [(ngModel)]="item.AIT"
-                                                        (input)="CalculateTotalPayableAmount(item)"
+                                                        [(ngModel)]="item.ComissionChargePercent" (keypress)="isNumberKey($event)"
+                                                        (input)="CalculateComissionChargePercentValue(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-8p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
-                                                        [(ngModel)]="item.Comission"
-                                                        (input)="CalculateTotalPayableAmount(item)"
+                                                        [(ngModel)]="item.Comission" (keypress)="isNumberKey($event)"
+                                                        (input)="CalculateComissionChargeValue(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
                                                 </td>
-                                                
+
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-8p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
                                                         [(ngModel)]="item.ServiceChargePercent"
+                                                        (keypress)="isNumberKey($event)"
                                                         (input)="CalculateServicePertageValue(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-10p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
                                                         [(ngModel)]="item.ServiceChargeValue"
+                                                        (keypress)="isNumberKey($event)"
                                                         (input)="CalculateServiceChargeValue(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                    <input class="width-6p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
                                                         [(ngModel)]="item.DiscountValue"
+                                                        (keypress)="isNumberKey($event)"
                                                         (input)="CalculateTotalPayableAmount(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
@@ -680,7 +685,7 @@
                                                     <input class="width-10p" type="number"
                                                         class="form-control form-control-sm text-right"
                                                         [(ngModel)]="item.ChangePenalty"
-                                                        (input)="CalculateTotalPayableWithForwardingChargeAmount(item)"
+                                                        (input)="CalculateTotalPayableWithForwardingChargeAmount(item,$event)"
                                                         (click)="selectTarget($event)" [disabled]="! item?.IsForward">
                                                 </td>
                                                 <td>
@@ -799,9 +804,10 @@
                                         <thead>
                                             <tr>
                                                 <th class="width-20p">Name of Person</th>
-                                                <th class="width-20p">Service Charge</th>
-                                                <th class="width-20p">Penalty Charge</th>
-                                                <th class="width-10p">Is Cancel</th>
+                                                <th class="width-15p">Service Charge</th>
+                                                <th class="width-15p">Comission Amount</th>
+                                                <th class="width-15p">Penalty Charge</th>
+                                                <th class="width-8p">Is Cancel</th>
                                                 <th class="width-10p">CancellationCharge</th>
                                                 <th class="width-10p">Total Amount</th>
                                             </tr>
@@ -815,6 +821,9 @@
                                                 <td>
                                                     <input readonly [(ngModel)]="item.ServiceChargeValue"
                                                         class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input readonly [(ngModel)]="item.Comission" class="form-control">
                                                 </td>
                                                 <td>
                                                     <input readonly [(ngModel)]="item.ChangePenalty"
@@ -834,7 +843,7 @@
                                                     <input class="width-10p" type="number"
                                                         class="form-control form-control-sm text-right"
                                                         [(ngModel)]="item.CancellationCharge"
-                                                        (input)="CalculateTotalPayableCancellationChargeAmount(item)"
+                                                        (input)="CalculateTotalPayableCancellationChargeAmount(item,$event)"
                                                         (click)="selectTarget($event)" [disabled]="! item?.IsCancel">
                                                 </td>
                                                 <td>
@@ -855,6 +864,7 @@
                                                         TOTAL
                                                     </span>
                                                 </td>
+                                                <td></td>
                                                 <td></td>
                                                 <td>
                                                     <span

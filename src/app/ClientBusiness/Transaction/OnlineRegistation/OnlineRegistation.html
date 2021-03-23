@@ -96,7 +96,7 @@
                                         <td class="text-left  width-10p">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    Card: {{item?.CardCode}} 
+                                                    Card: {{item?.CardCode}}
                                                 </div>
                                             </div>
 
@@ -166,7 +166,8 @@
                                         <select class="form-control" [(ngModel)]="regObj.CustomerCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item.CustomerCode}}-{{item?.CustomerName}}</option>
+                                                <option value="{{item.CustomerCode}}">
+                                                    {{item.CustomerCode}}-{{item?.CustomerName}}</option>
                                             </ng-container>
                                         </select>
                                     </div>
@@ -203,7 +204,8 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4"> <input [(ngModel)]="regObj.CurrencyRate"
-                                                class="form-control" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly> </div>
+                                                class="form-control" type="text" (keypress)="isNumberKey($event)"
+                                                readonly> </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -217,7 +219,7 @@
                                             </ng-container>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span
@@ -225,7 +227,7 @@
                                             Payable</span>
                                         <input [(ngModel)]="regObj.NetPayableAmt"
                                             class="form-control font-size-20 strong text-left text-success font-weight-bold"
-                                            type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly>
+                                            type="text" (keypress)="isNumberKey($event)" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -320,34 +322,34 @@
                                                                 [(ngModel)]="item.EvenDate" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right"
-                                                                [(ngModel)]="item.CardChargeAmount" >
+                                                                [(ngModel)]="item.CardChargeAmount">
                                                         </td>
                                                         <td>
-                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.RegistrationCharge"
                                                                 (input)="CalculateTotalPayableAmount(item)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.ServiceChargePercent"
                                                                 (input)="CalculateServiceChargeValue(item)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm  text-right"
                                                                 [(ngModel)]="item.ServiceChargeValue"
-                                                                (input)="CalculateServicePertageValue(item)"
+                                                                (input)="CalculateServiceValue(item)"
                                                                 (keyup.enter)="addDetailsNew('enter', $event)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm  text-right"
                                                                 [(ngModel)]="item.DiscountAmount"
                                                                 (input)="CalculateTotalPayableAmount(item)"
@@ -355,16 +357,17 @@
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.CancellationCharge"
+                                                                (keypress)="isNumberKey($event)"
                                                                 (input)="CalculeCancelationAmount(item)"
                                                                 (click)="selectTarget($event)"
                                                                 (keyup.enter)="addDetailsNew('enter', $event)"
                                                                 [disabled]="! item?.IsCancel">
                                                         </td>
                                                         <td>
-                                                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text"
                                                                 class="form-control form-control-sm text-right"
                                                                 [(ngModel)]="item.TotalPayableAmt"
                                                                 (click)="selectTarget($event)"
@@ -391,6 +394,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
+                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -430,9 +434,10 @@
                                             class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
                                         <button *ngIf="regObj?.ID > 0" (click)="saveOnlineReg()" type="button"
                                             class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
-                                        <button *ngIf="regObj?.ID > 0"  class=" btn btn-info ml-2" (click)="PrintOnlineReg(regObj)">
+                                        <button *ngIf="regObj?.ID > 0" class=" btn btn-info ml-2"
+                                            (click)="PrintOnlineReg(regObj)">
                                             Print
-                                            <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i> 
+                                            <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
                                         </button>
                                         <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
                                                 class="fas fa-redo-alt"></i> Reset</button>

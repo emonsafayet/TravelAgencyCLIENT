@@ -10,7 +10,8 @@
     </ol>
 </nav>
 <ul class="nav nav-tabs">
-    <li (click)=getHotelBookingList()><a data-toggle="tab" class="hoverlink" href="#hotelBookingList" id="onlineRegList_tab">Hotel Booking List</a>
+    <li (click)=getHotelBookingList()><a data-toggle="tab" class="hoverlink" href="#hotelBookingList"
+            id="onlineRegList_tab">Hotel Booking List</a>
     </li>
     <li class="active"> <a data-toggle="tab" class="hoverlink" href="#hotelBookingEntry" id="hotelBookingEntry_tab">
             Hotel Booking Entry</a>
@@ -58,7 +59,8 @@
                                     <tr *ngFor="let item of hotelBookingList; let i = index">
                                         <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left  width-10p"> {{item?.TransactionCode}} </td>
-                                        <td class="text-left  width-10p"> {{item?.TransactionDate | date: 'dd MMM yyyy'}} </td>
+                                        <td class="text-left  width-10p"> {{item?.TransactionDate | date: 'dd MMM
+                                            yyyy'}} </td>
                                         <td class="text-left  width-10p"> {{item?.CardCode}} </td>
                                         <td class="text-left  width-10p">
                                             <div class="row">
@@ -156,8 +158,8 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4"> <input [(ngModel)]="hotelBookingObj.CurrencyRate"
-                                                class="form-control" type="text"
-                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly> </div>
+                                                class="form-control" type="text" (keypress)="isNumberKey($event)"
+                                                readonly> </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mt-3">
@@ -179,7 +181,7 @@
                                             Payable</span>
                                         <input [(ngModel)]="hotelBookingObj.NetPayableAmt"
                                             class="form-control font-size-20 strong text-left text-success font-weight-bold"
-                                            type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly>
+                                            type="text" (keypress)="isNumberKey($event)" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +272,7 @@
                                                                 class="form-control form-control-sm text-left font-size-11"
                                                                 [(ngModel)]="item.NameofPerson">
                                                         </td>
-                                                        <td class="text-left"> 
+                                                        <td class="text-left">
                                                             <input type="text"
                                                                 class="form-control form-control-sm text-left font-size-11"
                                                                 [(ngModel)]="item.CityName">
@@ -322,39 +324,34 @@
                                                                 [(ngModel)]="item.CheckOutDate" />
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-10"
                                                                 (input)="CalculateTotalPayableAmount(item)"
                                                                 [(ngModel)]="item.NoOfDay"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-11"
                                                                 [(ngModel)]="item.CardChargeAmount"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-11"
                                                                 [(ngModel)]="item.RoomFare"
                                                                 (input)="CalculateTotalPayableAmount(item)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-11"
                                                                 [(ngModel)]="item.ServiceChargePercent"
                                                                 (input)="CalculateServiceChargeValue(item)"
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-11"
                                                                 [(ngModel)]="item.ServiceChargeValue"
                                                                 (input)="CalculateServicePertageValue(item)"
@@ -362,8 +359,7 @@
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-11"
                                                                 [(ngModel)]="item.DiscountValue"
                                                                 (input)="CalculateTotalPayableAmount(item)"
@@ -371,8 +367,7 @@
                                                                 (click)="selectTarget($event)">
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-11"
                                                                 [(ngModel)]="item.CancellationCharge"
                                                                 (input)="CalculeCancelationAmount(item)"
@@ -393,8 +388,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <input type="text"
-                                                                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                                                            <input type="text" (keypress)="isNumberKey($event)"
                                                                 class="form-control form-control-sm text-right font-size-11"
                                                                 [(ngModel)]="item.TotalPayableAmt"
                                                                 (click)="selectTarget($event)"

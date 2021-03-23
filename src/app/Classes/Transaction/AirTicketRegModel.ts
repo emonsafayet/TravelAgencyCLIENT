@@ -35,14 +35,17 @@ export class AirTicketDetailDTo{
 	public GovTax : number=0;
 	public AIT : number=0;
 	public Comission : number=0;
+	public ComissionChargePercent : number=0;
 	public CardChargeAmount : number=0;
-	public ServiceChargePercent : number;
+	public ServiceChargePercent : number=0;
 	public ServiceChargeValue : number=0;
 	public DiscountValue : number=0;
 	public TotalPayableAmt : number=0;
 	public IsForward : boolean;
 	public ChangePenalty : number=0;
 	public ChangeDate : string;
+	public ProviderPenalty : number=0;
+
 	public IsCancel : boolean;
 	public CancellationCharge : number=0;
 	public CreatedBy : string;

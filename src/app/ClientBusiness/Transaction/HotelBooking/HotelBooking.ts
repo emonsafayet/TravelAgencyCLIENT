@@ -11,7 +11,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { Common } from "../../../library/common";
 //Classes
-import { HotelBookMaster,HotelBookDetail,  RoomTypeModel } from '../../../Classes/Transaction/HotelBookingModel';
+import { HotelBookMaster, HotelBookDetail, RoomTypeModel } from '../../../Classes/Transaction/HotelBookingModel';
 
 declare var moment: any;
 @Component({
@@ -19,11 +19,11 @@ declare var moment: any;
 })
 export class HotelBooking implements OnInit {
 	user: any;
-	sumOfTotalValue:any=0;
-	sumofTotalCancellationCharge:any=0;
+	sumOfTotalValue: any = 0;
+	sumofTotalCancellationCharge: any = 0;
 	hotelBookingList: any[] = [];
 	hotelBookingObj: HotelBookMaster = new HotelBookMaster();
-	hotelBookingDetailObj: HotelBookDetail[] =[];
+	hotelBookingDetailObj: HotelBookDetail[] = [];
 	customerList: any[] = [];
 	companyList: any[] = [];
 	currencyList: any[] = [];
@@ -48,17 +48,25 @@ export class HotelBooking implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.setNewDetails();
 		this.hotelBookingObj.TransactionDate = moment().format(Common.SQLDateFormat);
-		this.GETCustomerLIST(); 
+		this.GETCustomerLIST();
 		this.GETCurrencyList();
 		this.GETSalesStaffLIST();
 		this.GETCardLIST();
-		this.GETActiveCurrencyRateLIST(); 
+		this.GETActiveCurrencyRateLIST();
 		this.GETTravelProviderLIST();
 		this.getRoomTypeList();
 		this.getHotelBookingList();
 		this.Notification.LoadingRemove();
-	} 
-	
+	}
+	isNumberKey(evt) {
+		debugger
+		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if (charCode != 46 && charCode > 31
+			&& (charCode < 48 || charCode > 57)) {
+			return false;
+		}
+		return true;
+	}
 	//GET LIST
 	getHotelBookingList() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -73,9 +81,9 @@ export class HotelBooking implements OnInit {
 		this.Notification.LoadingRemove();
 
 	}
-	PrintHotelBooking(obj){
+	PrintHotelBooking(obj) {
 		var RegistrationCode = obj.TransactionCode;
-	   window.open(`${Config.getBaseUrl}TransactionReport/GetHotelBookingTransactionCode?TransactionCode=${RegistrationCode}`, "_blank");
+		window.open(`${Config.getBaseUrl}TransactionReport/GetHotelBookingTransactionCode?TransactionCode=${RegistrationCode}`, "_blank");
 	}
 	//SAVE/UPDATE
 	saveHotelBooking() {
@@ -100,13 +108,13 @@ export class HotelBooking implements OnInit {
 	setHotelBooking(Data: any) {
 		debugger
 		if (Data.ID > 0) this.Notification.Success('Update Successfully.');
-		else this.Notification.Success('Save Successfully.'); 
+		else this.Notification.Success('Save Successfully.');
 		document.getElementById('hotelBookingEntry_tab').click();
 		this.ResetModel();
 		this.Notification.LoadingRemove();
 	}
- 
-	validateModel() {		 
+
+	validateModel() {
 		var result = true;
 		if (Library.isNuLLorUndefined(this.hotelBookingObj.TransactionDate)) {
 			this.Notification.Warning('Please Select Transaction date.');
@@ -117,76 +125,76 @@ export class HotelBooking implements OnInit {
 			this.Notification.Warning('Please Select Customer.');
 			result = false;
 			return;
-		}   
+		}
 		if (this.hotelBookingObj.NetPayableAmt == 0 || Library.isNullOrZero(this.hotelBookingObj.NetPayableAmt)) {
 			this.Notification.Warning('Total Payable Amount Can Not Zero.');
 			result = false;
 			return;
-		} 
-		 
+		}
+
 		var validDetails = 0;
-			this.hotelBookingDetailObj.forEach(item => {
-				if (!Library.isNullOrZero(item.NameofPerson)) {
-					if (Library.isNullOrZero(item.NameofPerson)) {
-						this.Notification.Warning('Please Enter Event Name.');
-						result = false;
-						return;
-					}
-					if (Library.isNullOrZero(item.HotelName)) {
-						this.Notification.Warning('Please Enter Hotel Name.');
-						result = false;
-						return;
-					}
-					if (Library.isNullOrZero(item.RoomFare) || item.RoomFare== 0) {
-						this.Notification.Warning('Please Enter Service Charge Value.');
-						result = false;
-						return;
-					}
-					if (Library.isNullOrZero(item.TotalPayableAmt) || item.TotalPayableAmt== 0) {
-						this.Notification.Warning('Total Amount does not Zero.');
-						result = false;
-						return;
-					}
-					validDetails += 1;
-				}
-				else {
-					this.Notification.Warning('Please Enter Name of Person.');
+		this.hotelBookingDetailObj.forEach(item => {
+			if (!Library.isNullOrZero(item.NameofPerson)) {
+				if (Library.isNullOrZero(item.NameofPerson)) {
+					this.Notification.Warning('Please Enter Event Name.');
 					result = false;
 					return;
 				}
-			});
+				if (Library.isNullOrZero(item.HotelName)) {
+					this.Notification.Warning('Please Enter Hotel Name.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.RoomFare) || item.RoomFare == 0) {
+					this.Notification.Warning('Please Enter Service Charge Value.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.TotalPayableAmt) || item.TotalPayableAmt == 0) {
+					this.Notification.Warning('Total Amount does not Zero.');
+					result = false;
+					return;
+				}
+				validDetails += 1;
+			}
+			else {
+				this.Notification.Warning('Please Enter Name of Person.');
+				result = false;
+				return;
+			}
+		});
 
 		return result;
 	}
-	EditItem(item) {		
-		this.hotelBookingObj = JSON.parse(JSON.stringify(item)); 
+	EditItem(item) {
+		this.hotelBookingObj = JSON.parse(JSON.stringify(item));
 		this.hotelBookingObj.TransactionDate = moment(new Date(this.hotelBookingObj.TransactionDate)).format(Common.SQLDateFormat);
 		this.transactionCommonService.getHotelDetailsByTransactionCode(this.hotelBookingObj.TransactionCode)
-		.subscribe(
-			data => this.setHotelEdit(data),
-			error => this.Notification.Error(error)
-		);	 
+			.subscribe(
+				data => this.setHotelEdit(data),
+				error => this.Notification.Error(error)
+			);
 	}
 	setHotelEdit(Data: any) {
 		debugger
 		Data.forEach(element => {
 			element.CheckInDate = moment(new Date(element.CheckInDate)).format(Common.SQLDateFormat);
 			element.CheckOutDate = moment(new Date(element.CheckOutDate)).format(Common.SQLDateFormat);
-			if(element.isCancel == true)element.isCancel=true;
-		 
+			if (element.isCancel == true) element.isCancel = true;
+
 		});
 		this.hotelBookingDetailObj = Data;
 		this.sumOfTotalValue = Common.calculateTotal(this.hotelBookingDetailObj, "TotalPayableAmt");
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.hotelBookingDetailObj, "CancellationCharge");
 		document.getElementById('hotelBookingEntry_tab').click();
 	}
-	ResetModel() { 
+	ResetModel() {
 		this.hotelBookingObj = new HotelBookMaster();
 		this.hotelBookingObj.TransactionDate = moment().format(Common.SQLDateFormat);
 		this.sumOfTotalValue = 0;
 		this.sumofTotalCancellationCharge = 0;
 		this.setNewDetails();
-	} 
+	}
 	//DROP DOWN 
 
 	getRoomTypeList() {
@@ -202,9 +210,9 @@ export class HotelBooking implements OnInit {
 		this.roomTypeList = data;
 		this.Notification.LoadingRemove();
 	}
-	  
-	 
-	 
+
+
+
 	GETCustomerLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getcustomerList()
@@ -297,11 +305,11 @@ export class HotelBooking implements OnInit {
 
 	addDetailsNew(value, event) {
 		this.addNewColumnForDetail();
-		setTimeout(() => this.selectNext(value, event), 500) 
-	}   
+		setTimeout(() => this.selectNext(value, event), 500)
+	}
 	addNewColumnForDetail() {
 		var hotelBookingDetail = new HotelBookDetail();
-		hotelBookingDetail.CheckInDate = moment().format(Common.SQLDateFormat); 
+		hotelBookingDetail.CheckInDate = moment().format(Common.SQLDateFormat);
 		this.hotelBookingDetailObj.push(hotelBookingDetail);
 	}
 	selectNext(key, e): void {
@@ -323,16 +331,16 @@ export class HotelBooking implements OnInit {
 	}
 	// Calculation
 	CalculateServicePertageValue(obj) {
-		obj.ServiceChargePercent = (Number( Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)) * 100) /
-									 Number(Library.isUndefinedOrNullOrZeroReturn0(obj.RoomFare));
+		obj.ServiceChargePercent = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)) * 100) /
+			Number(Library.isUndefinedOrNullOrZeroReturn0(obj.RoomFare));
 		obj.ServiceChargePercent = Number(obj.ServiceChargePercent).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
 	}
 
 	CalculateServiceChargeValue(obj) {
-		obj.ServiceChargeValue = ((  Number(Library.isUndefinedOrNullOrZeroReturn0(obj.NoOfDay))*
-								Number(Library.isUndefinedOrNullOrZeroReturn0(obj.RoomFare)) ) * 
-								(Number(obj.ServiceChargePercent) / 100));
+		obj.ServiceChargeValue = ((Number(Library.isUndefinedOrNullOrZeroReturn0(obj.NoOfDay)) *
+			Number(Library.isUndefinedOrNullOrZeroReturn0(obj.RoomFare))) *
+			(Number(obj.ServiceChargePercent) / 100));
 
 		obj.ServiceChargeValue = Number(obj.ServiceChargeValue).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
@@ -340,43 +348,43 @@ export class HotelBooking implements OnInit {
 	CalculateTotalPayableAmount(obj) {
 		debugger
 		this.sumOfTotalValue = 0;
-		obj.TotalPayableAmt =(  Number(Library.isUndefinedOrNullOrZeroReturn0(obj.NoOfDay))
-								*Number(Library.isUndefinedOrNullOrZeroReturn0(obj.RoomFare)) ) +
-							  Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)) - 
-							  Number(Library.isUndefinedOrNullOrZeroReturn0(obj.DiscountValue));
+		obj.TotalPayableAmt = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.NoOfDay))
+			* Number(Library.isUndefinedOrNullOrZeroReturn0(obj.RoomFare))) +
+			Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)) -
+			Number(Library.isUndefinedOrNullOrZeroReturn0(obj.DiscountValue));
 		this.getpayableAmount();
 	}
 	getpayableAmount() {
 		this.sumOfTotalValue = Common.calculateTotal(this.hotelBookingDetailObj, "TotalPayableAmt");
-		this.hotelBookingObj.NetPayableAmt = this.sumOfTotalValue ;
-		
+		this.hotelBookingObj.NetPayableAmt = this.sumOfTotalValue;
+
 	}
-	CalculeCancelationAmount(obj){ 
+	CalculeCancelationAmount(obj) {
 		this.getCancelationAmount(obj);
 	}
-	isCheckCancel(obj){ 
-		obj.IsCancel = true;  
-		this.getCancelationAmount(obj);	 
+	isCheckCancel(obj) {
+		obj.IsCancel = true;
+		this.getCancelationAmount(obj);
 	}
-	getCancelationAmount(obj){ 
+	getCancelationAmount(obj) {
 		obj.TotalPayableAmt = Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)) +
-							  Number(Library.isUndefinedOrNullOrZeroReturn0(obj.CancellationCharge));
+			Number(Library.isUndefinedOrNullOrZeroReturn0(obj.CancellationCharge));
 		this.sumOfTotalValue = Common.calculateTotal(this.hotelBookingDetailObj, "TotalPayableAmt");
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.hotelBookingDetailObj, "CancellationCharge");
 		this.hotelBookingObj.NetPayableAmt = this.sumOfTotalValue;
 	}
-	isUnCheckCancel(obj){
+	isUnCheckCancel(obj) {
 		debugger
-		obj.IsCancel = false; 
-		obj.CancellationCharge=0; 
+		obj.IsCancel = false;
+		obj.CancellationCharge = 0;
 		obj.TotalPayableAmt = Number(Library.isUndefinedOrNullOrZeroReturn0(obj.RegistrationCharge))
-							+ Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)) -
-		 Number(Library.isUndefinedOrNullOrZeroReturn0(obj.DiscountAmount));
+			+ Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)) -
+			Number(Library.isUndefinedOrNullOrZeroReturn0(obj.DiscountAmount));
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.hotelBookingDetailObj, "CancellationCharge");
 		this.sumOfTotalValue = Common.calculateTotal(this.hotelBookingDetailObj, "TotalPayableAmt");
-		this.hotelBookingObj.NetPayableAmt = this.sumOfTotalValue; 
-	
+		this.hotelBookingObj.NetPayableAmt = this.sumOfTotalValue;
+
 	}
 
 }

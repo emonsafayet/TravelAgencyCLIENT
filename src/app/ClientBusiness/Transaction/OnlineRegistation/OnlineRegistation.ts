@@ -17,7 +17,7 @@ import { faFan } from '@fortawesome/free-solid-svg-icons';
 
 //
 declare var moment: any;
-declare  var $:any;
+declare var $: any;
 @Component({
 	templateUrl: 'OnlineRegistation.html'
 })
@@ -43,7 +43,7 @@ export class OnlineRegistation implements OnInit {
 
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
-		this.authGuard.hasUserThisMenuPrivilege(this.user);	
+		this.authGuard.hasUserThisMenuPrivilege(this.user);
 		this.Notification.LoadingWithMessage('Loading...');
 		this.setNewDetails();
 		this.GETCustomerLIST();
@@ -81,7 +81,7 @@ export class OnlineRegistation implements OnInit {
 		var details = JSON.stringify(this.regDetailsObj);
 
 		this.regObj.OnlineRegistrationDetail = Library.getBase64(details);
-		 
+
 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.saveOnlineRegisationList(this.regObj).subscribe(
@@ -154,7 +154,7 @@ export class OnlineRegistation implements OnInit {
 		this.setNewDetails();
 	}
 	EditItem(item) {
-		this.regObj = JSON.parse(JSON.stringify(item));	
+		this.regObj = JSON.parse(JSON.stringify(item));
 		this.regObj.TransactionDate = moment(new Date(this.regObj.TransactionDate)).format(Common.SQLDateFormat);
 
 		this.transactionCommonService.getOnlineRegistrationDetailsByTransactionCode(this.regObj.TransactionCode)
@@ -169,14 +169,14 @@ export class OnlineRegistation implements OnInit {
 		debugger
 		Data.forEach(element => {
 			element.EvenDate = moment(new Date(element.EvenDate)).format(Common.SQLDateFormat);
-			if(element.isCancel == true)element.isCancel=true;
-		 
+			if (element.isCancel == true) element.isCancel = true;
+
 		});
 		this.regDetailsObj = Data;
 		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
 		document.getElementById('onlineRegEntry_tab').click();
-	} 
+	}
 	onCurrencyChange(item) {
 
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
@@ -193,7 +193,7 @@ export class OnlineRegistation implements OnInit {
 
 	addDetailsNew(value, event) {
 		this.addNewColumnForDetail();
-		setTimeout(() => this.selectNext(value, event), 500) 
+		setTimeout(() => this.selectNext(value, event), 500)
 	}
 
 	addNewColumnForDetail() {
@@ -307,59 +307,66 @@ export class OnlineRegistation implements OnInit {
 		this.getpayableAmount();
 	}
 	// Calculartion
-	CalculateServicePertageValue(obj) {
-		obj.ServiceChargePercent = (Number(obj.ServiceChargeValue) * 100) / Number(obj.RegistrationCharge);
+	CalculateServiceValue(obj) {
+		debugger
+		obj.ServiceChargePercent =  (Number(obj.ServiceChargeValue) * 100) / Number(obj.RegistrationCharge);
 		obj.ServiceChargePercent = Number(obj.ServiceChargePercent).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
 	}
 
-	CalculateServiceChargeValue(obj) {
-		obj.ServiceChargeValue = (Number(obj.RegistrationCharge) * (Number(obj.ServiceChargePercent) / 100))
-		obj.ServiceChargeValue = Number(obj.ServiceChargeValue).toFixed(2);
+	CalculateServiceChargeValue(obj) { 
+		obj.ServiceChargeValue = Number((Number(obj.RegistrationCharge) * (Number(obj.ServiceChargePercent) / 100))).toFixed(2); 
 		this.CalculateTotalPayableAmount(obj);
 	}
 
-	CalculateTotalPayableAmount(obj) {
-		this.sumOfTotalValue = 0
+	CalculateTotalPayableAmount(obj) { 
+		this.sumOfTotalValue = 0;
 		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) - Number(obj.DiscountAmount);
 		this.getpayableAmount();
 	}
 	getpayableAmount() {
 		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
-		this.regObj.NetPayableAmt = this.sumOfTotalValue 
+		this.regObj.NetPayableAmt = this.sumOfTotalValue;
 		// + Number(this.regObj.CardChargeAmount) *Number(Library.isNullOrZero(this.regObj.CurrencyRate) ? 1 : this.regObj.CurrencyRate);
-	}
-	CalculeCancelationAmount(obj){
-		debugger
+	} 
+	CalculeCancelationAmount(obj) { 
 		this.getCancelationAmount(obj);
 	}
-	isCheckCancel(obj){
+	isCheckCancel(obj) {
 		debugger
-		obj.IsCancel = true;  
+		obj.IsCancel = true;
 		this.getCancelationAmount(obj);
 
-	 
-	}
-	getCancelationAmount(obj){
-		obj.TotalPayableAmt =  Number(obj.ServiceChargeValue) + Number(obj.CancellationCharge);
 
-		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");		
+	}
+	getCancelationAmount(obj) {
+		obj.TotalPayableAmt = Number(obj.ServiceChargeValue) + Number(obj.CancellationCharge);
+
+		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
 
 		this.regObj.NetPayableAmt = this.sumOfTotalValue;
 	}
-	isUnCheckCancel(obj){
+	isUnCheckCancel(obj) {
 		debugger
-		obj.IsCancel = false; 
-		obj.CancellationCharge=0; 
-		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) -Number(obj.DiscountAmount);
+		obj.IsCancel = false;
+		obj.CancellationCharge = 0;
+		obj.TotalPayableAmt = Number(obj.RegistrationCharge) + Number(obj.ServiceChargeValue) - Number(obj.DiscountAmount);
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.regDetailsObj, "CancellationCharge");
 		this.sumOfTotalValue = Common.calculateTotal(this.regDetailsObj, "TotalPayableAmt");
 		this.regObj.NetPayableAmt = this.sumOfTotalValue;
 		//+this.regObj.CardChargeAmount;
-	
+
 	}
-	 
+	isNumberKey(evt) {
+		var charCode = (evt.which) ? evt.which : evt.keyCode;
+		if (charCode != 46 && charCode > 31
+			&& (charCode < 48 || charCode > 57))
+			return false;
+
+		return true;
+	}
+
 }
