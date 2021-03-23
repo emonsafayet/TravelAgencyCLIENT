@@ -66,6 +66,7 @@ import { AdvancePaymentClearance } from "../ClientBusiness/Transaction/AdvancePa
 import { CollectionReport } from "../Report/CollectionReport/CollectionReport";
 import { ServiceReport } from "../Report/ServiceReport/ServiceReport";
 import { DueReport } from "../Report/DueReport/DueReport";
+import {  Report} from "../Report/Report/Report";
 
 
 export const AdminRoutes: Routes = [
@@ -132,6 +133,7 @@ export const AdminRoutes: Routes = [
 	{ path: 'report/business/travel/service/report', component: ServiceReport },
 	{ path: 'report/business/travel/collection/report', component: CollectionReport },
 	{ path: 'report/business/travel/due/report', component: DueReport },
+	{ path: 'report/business/travel/statement/Report', component: Report },
 
 
 ];

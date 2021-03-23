@@ -28,16 +28,20 @@ export class DueReport implements OnInit {
 		private transactionCommonService: TransactionCommonService, private rptService: RptService) { }
 
 	ngOnInit() {
+		this.user = this.userService.getLoggedUser();
+		this.authGuard.hasUserThisMenuPrivilege(this.user);
+		this.Notification.LoadingWithMessage('Loading...');
 		this.ReportModelObj.FromDate = moment().format(Common.previousMonthFirstDay(this.ReportModelObj.ToDate));
 		this.ReportModelObj.ToDate = moment().format(Common.SQLDateFormat);
 		this.getServiceTransactionDueList();
+		
+		this.Notification.LoadingRemove();
 	}
 	LoadRptServiceDue(){
 		this.ServiceTransactionDueDetailsListObj=[];
 		this.getServiceTransactionDueList();
 	}
 	getServiceTransactionDueList() {
-		debugger
 		this.Notification.LoadingWithMessage('Loading...');
 		setTimeout(() => {
 			this.rptService.GetServiceTransactionDueCollectionList(this.ReportModelObj.FromDate)

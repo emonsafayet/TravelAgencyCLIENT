@@ -1,0 +1,85 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><i class="fa fa-home" aria-hidden="true"></i> </li>
+        <li class="breadcrumb-item active">Report</li>
+        <li class="breadcrumb-item active">Statement</li>
+        <li class="breadcrumb-item active">Report</li>
+    </ol>
+</nav>
+<ul class="nav nav-tabs">
+    <li (click)="getReportList()" class="active"><a data-toggle="tab" class="hoverlink" href="#statementReportList"
+            id="statementReportList_tab">Statement Report</a></li>
+    <li> <a data-toggle="tab" class="hoverlink" href="#MonitoringReportList" id="MonitoringReportList_tab"> Monitoring
+            Reports</a>
+    </li>
+</ul>
+
+<div class="tab-content" style="background-color: white;">
+    <!-- Statement Report List -->
+    <div id="statementReportList" class="tab-pane in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Report</span>
+                                        <select class="form-control"  [(ngModel)]="ReportModelObj.ReportName">
+                                            <option selected value="0">SELECT</option>
+                                            <ng-container *ngFor="let info  of reportObj">
+                                                <option value="{{info.ReportName}}">
+                                                    {{info?.ReportName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">From Date</span>
+                                        <input type="date" data-date="ReportModelObj.FromDate"
+                                            [(ngModel)]="ReportModelObj.FromDate" data-date-format="DD-MM-YYYY"
+                                            class="form-control width-190 form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">To Date</span>
+                                        <input type="date" data-date="ReportModelObj.ToDate"
+                                            [(ngModel)]="ReportModelObj.ToDate" data-date-format="DD-MM-YYYY"
+                                            class="form-control width-190 form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <button (click)="PrintReport(ReportModelObj)" type="button" class="btn btn-success">
+                                     Print   <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monitoring Report List -->
+    <div id="MonitoringReportList" class="tab-pane">
+
+    </div>
+</div>
