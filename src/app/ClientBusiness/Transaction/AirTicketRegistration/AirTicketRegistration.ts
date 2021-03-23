@@ -114,14 +114,14 @@ export class AirTicketRegistration implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.SaveUpdateAirTicketRegistration(this.airTicketregObj).subscribe(
 			(data) => this.setAirticketReg(data),
-			(error) => this.Notification.Error(error)
+			(error) => this.showError(error)
 		);
 	}
 	setAirticketReg(Data: any) {
-		if (Data.ID > 0) this.Notification.Success('Saved Successfully.');
-		else {
-			this.Notification.LoadingRemove();
-		}
+		if (Data.ID == 0) this.Notification.Success('Air Ticket Saved Successfully.');
+		else this.Notification.Success('Air Ticket Update Successfully.');
+		this.Notification.LoadingRemove();
+
 		document.getElementById('airTicketRegEntry_tab').click();
 		this.ResetModel();
 		this.GetAirTicketList("");
@@ -245,6 +245,10 @@ export class AirTicketRegistration implements OnInit {
 		});
 
 		return result;
+	}
+	showError(error) {
+		this.Notification.Error(error);
+		this.Notification.LoadingRemove();
 	}
 	//DROP DOWN 
 
