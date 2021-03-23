@@ -133,7 +133,7 @@
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of customerList; let i = index">
                                                 <option value="{{item.CustomerCode}}">
-                                                    {{item.CustomerCode}}-{{item?.CustomerName}}</option>
+                                                    {{item.CustomerCode}} | {{item?.CustomerName}}</option>
                                             </ng-container>
                                         </select>
                                     </div>
