@@ -224,7 +224,7 @@ export class OnlineRegistation implements OnInit {
 	//DROP DOWN	 
 	GETCustomerLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.clientBusinessService.getcustomerList()
+		this.clientBusinessService.getDropDownCustomerList()
 			.subscribe(
 				data => this.setCustomerLIST(data),
 				error => this.showError(error)

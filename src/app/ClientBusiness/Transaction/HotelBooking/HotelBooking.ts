@@ -205,27 +205,25 @@ export class HotelBooking implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
-	setRoomTypeList(data) {
-		debugger
+	setRoomTypeList(data) { 
 		this.roomTypeList = data;
 		this.Notification.LoadingRemove();
-	}
-
-
+	} 
 
 	GETCustomerLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.clientBusinessService.getcustomerList()
+		this.clientBusinessService.getDropDownCustomerList()
 			.subscribe(
 				data => this.setCustomerLIST(data),
 				error => this.Notification.Error(error)
 			);
 	}
-	setCustomerLIST(data) {
-		this.customerList = data;
+	setCustomerLIST(data) { 
+		this.customerList = data; 
 		this.Notification.LoadingRemove();
 
-	}
+	} 
+
 	GETCurrencyList() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.clientBusinessService.getCurrencyList()
@@ -291,7 +289,6 @@ export class HotelBooking implements OnInit {
 
 	}
 	onCurrencyChange(item) {
-
 		var RateItem = this.activeCurrencyRateList.filter(c => c.Currency == item)[0];
 		if (Library.isNullOrEmpty(RateItem)) this.hotelBookingObj.CurrencyRate = 0;
 		else this.hotelBookingObj.CurrencyRate = RateItem.Rate;

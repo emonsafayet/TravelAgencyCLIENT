@@ -164,14 +164,9 @@
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Customer</span>
-                                        <select class="form-control" [(ngModel)]="airTicketregObj.CustomerCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">
-                                                    {{item.CustomerCode}} | {{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
+                                        <span class="input-group-addon">Customer</span>                                     
+                                        <ng-select [items]="customerList" bindLabel="CustomerName"  bindValue="CustomerCode" [(ngModel)]="airTicketregObj.CustomerCode">                                            
+                                        </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">

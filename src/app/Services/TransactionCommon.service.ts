@@ -49,6 +49,8 @@ export class TransactionCommonService {
 
 	saveOrUpdateVisaRegistation(visaRegObj: any) { return this.masterService.post(`client/business/travel/transaction/Visa/Registation/save/update`, visaRegObj); }
 
+	getVisaRegDetailsByTransactionCode(transactionCode: string) { return this.masterService.get("client/business/travel/transaction/Visa/Registration/details/by/transactionCode/" + transactionCode); }
+
 	/*END VISA Registation */
 
 	/*START Air ticket */

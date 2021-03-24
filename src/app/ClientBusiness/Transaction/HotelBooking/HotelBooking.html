@@ -10,7 +10,7 @@
     </ol>
 </nav>
 <ul class="nav nav-tabs">
-    <li (click)=getHotelBookingList()><a data-toggle="tab" class="hoverlink" href="#hotelBookingList"
+    <li (click)="getHotelBookingList()"><a data-toggle="tab" class="hoverlink" href="#hotelBookingList"
             id="onlineRegList_tab">Hotel Booking List</a>
     </li>
     <li class="active"> <a data-toggle="tab" class="hoverlink" href="#hotelBookingEntry" id="hotelBookingEntry_tab">
@@ -44,8 +44,9 @@
                                     </tr>
                                     <tr>
                                         <th class="width-1p text-center">SN#</th>
-                                        <th class="width-10p">Transaction Code</th>
-                                        <th class="width-10p">Transaction Date</th>
+                                        <th class="width-10p ">Transaction Code</th>
+                                        <th class="width-6p">Transaction Date</th>
+                                        <th class="width-20p">Customer</th>
                                         <th class="width-10p">Card Info</th>
                                         <th class="width-10p">Currency</th>
                                         <th class="width-5p">Total Payable Amount</th>
@@ -55,12 +56,17 @@
                                         <th class="width-2p text-center">Print</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of hotelBookingList; let i = index">
+                                <tbody class="font-size-12">
+                                    <tr *ngFor="let item of hotelBookingList | searchFilter : SearchHotelBookingList; let i = index">
                                         <td class="text-right"> {{i+1}} </td>
                                         <td class="text-left  width-10p"> {{item?.TransactionCode}} </td>
-                                        <td class="text-left  width-10p"> {{item?.TransactionDate | date: 'dd MMM
+                                        <td class="text-left  width-6p"> {{item?.TransactionDate | date: 'dd MMM
                                             yyyy'}} </td>
+                                        <td class="text-left  width-20p">
+                                            Name :  {{item?.CustomerName}}
+                                        <br> Mobile No : {{item?.MobileNo}}
+                                        <br> Address : {{item?.CustomerAddress}}
+                                        </td>
                                         <td class="text-left  width-10p"> {{item?.CardCode}} </td>
                                         <td class="text-left  width-10p">
                                             <div class="row">
@@ -84,7 +90,7 @@
                                         <td class="text-center width-5p">
                                             <button class="btn btn-info" (click)="PrintHotelBooking(item)">
                                                 Print
-                                                <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
+                                                <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -129,13 +135,9 @@
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">Customer</span>
-                                        <select class="form-control" [(ngModel)]="hotelBookingObj.CustomerCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">
-                                                    {{item.CustomerCode}} | {{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
+                                        <ng-select [items]="customerList" bindLabel="CustomerName"
+                                            bindValue="CustomerCode" [(ngModel)]="hotelBookingObj.CustomerCode">
+                                        </ng-select>
                                     </div>
                                 </div>
                             </div>

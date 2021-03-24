@@ -9,8 +9,103 @@
         <li class="breadcrumb-item active">Registation</li>
     </ol>
 </nav>
+<ul class="nav nav-tabs">
+    <li (click)="GETVisaTegLIST()"><a data-toggle="tab" class="hoverlink" href="#visaRegistrationList" id="visaRegistrationList_tab">Visa
+            Registration List</a>
+    </li>
+    <li class="active"> <a data-toggle="tab" class="hoverlink" href="#visaRegistrationEntry"
+            id="visaRegistrationEntry_tab">
+            Visa Registration Entry</a>
+    </li>
+</ul>
 <div class="tab-content" style="background-color: white;">
-    <div class="tab-pane fade in active">
+    <!-- TAB Visa Registration  List | 1st TAB-->
+    <div id="visaRegistrationList" class="tab-pane">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="hoverlink" (click)="GETVisaTegLIST()"><b>VISA REGISTRATION LIST</b> <i
+                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+                        <div class="right">
+                            <button type="button" class="btn-toggle-collapse"><i
+                                    class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p4 custom-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="15">
+                                            <input class="form-control form-control-sm" placeholder="Search"
+                                                type="text"  [(ngModel)]="SearchVisaRegList">
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-2p">Transaction Code</th>
+                                        <th class="width-10p text-center">Transaction Date</th>
+                                        <th class="width-10p text-center">Customer</th>
+                                        <th class="width-10p text-center">Card</th>
+                                        <th class="width-10p text-center">Currency</th>
+                                        <th class="width-15p text-center">Sales Ref</th>
+                                        <th class="width-10p text-center">Total Payable</th>
+                                        <th class="width-2p text-center">Status</th>
+                                        <th class="width-2p text-center">Action</th>
+                                        <th class="width-2p text-center">Print</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-size-12">
+                                    <tr *ngFor="let item of visaRegList | searchFilter : SearchVisaRegList; let i = index">
+
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left  width-10p"> {{item?.TransactionCode}} </td>
+                                        <td class="text-left  width-6p"> {{item?.TransactionDate | date: 'dd MMM
+                                            yyyy'}} </td>
+                                        <td class="text-left  width-20p">
+                                            Name : {{item?.CustomerName}}
+                                            <br> Mobile No : {{item?.MobileNo}}
+                                            <br> Address : {{item?.CustomerAddress}}
+                                        </td>
+                                        <td class="text-left  width-10p"> {{item?.CardCode}} </td>
+                                        <td class="text-left  width-10p">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Currency: {{item?.Currency}}
+                                                    <br>Rate:<i> {{item?.CurrencyRate}} </i>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td class="text-left width-5p"> {{item?.SalesStaffName}} </td>
+                                        <td class="text-left width-5p"> {{item?.NetPayableAmt}} </td>
+
+                                        <td class="text-left width-10p"> {{item?.FullName}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.IsFinalLocked" class="text-success">Locked</span>
+                                            <span *ngIf="!item?.IsFinalLocked" class="text-danger">UnLock</span>
+                                        </td>
+                                        <td (click)="EditItem(item)" title="Click to Edit the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i>
+                                        </td>
+                                        <td class="text-center width-5p">
+                                            <button class="btn btn-info" (click)="PrintVisaReg(item)">
+                                                Print
+                                                <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TAB Visa Registration  Entry | 2nd TAB-->
+    <div id="visaRegistrationEntry" class="tab-pane fade in active">
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel">
@@ -25,78 +120,31 @@
                             <div class="col-md-12">
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Visa Code </span>
-                                        <input readonly [(ngModel)]="visaRegObj.VisaCode" class="form-control"
+                                        <span class="input-group-addon">Transaction Code </span>
+                                        <input readonly [(ngModel)]="visaMasterObj.TransactionCode" class="form-control"
                                             type="text">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Registion Date</span>
-                                        <input type="date" data-date="" [attr.data-date]="visaRegObj.VisaRegDate"
+                                        <span class="input-group-addon">Transaction Date</span>
+                                        <input type="date" data-date="" [attr.data-date]="visaMasterObj.TransactionDate"
                                             data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
-                                            [(ngModel)]="visaRegObj.VisaRegDate" />
+                                            [(ngModel)]="visaMasterObj.TransactionDate" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Customer</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.CustomerCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
+                                        <ng-select [items]="customerList" bindLabel="CustomerName"
+                                            bindValue="CustomerCode" [(ngModel)]="visaMasterObj.CustomerCode">
+                                        </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Company</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.CompanyCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of companyList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Visa Type</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.VisaType">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of visaTypeList; let i = index">
-                                                <option value="{{item.VisaTypeCode}}">{{item?.VisaTypeName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Visa Country</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.VisaCountry">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of countryList; let i = index">
-                                                <option value="{{item.CountryCode}}">{{item?.CountryName}}</option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Passport No</span>
-                                        <input [(ngModel)]="visaRegObj.PassportNo" type="text" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
                                         <span class="input-group-addon">Card</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.CardID">
+                                        <select class="form-control" [(ngModel)]="visaMasterObj.CardCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of cardList; let i = index">
                                                 <option value="{{item.CardID}}">{{item?.CardID}}>> {{item?.CardName}}
@@ -105,7 +153,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="row">
@@ -113,7 +160,7 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Currency</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.Currency"
+                                        <select class="form-control" [(ngModel)]="visaMasterObj.Currency"
                                             (change)="onCurrencyChange($event.target.value)">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of currencyList; let i = index">
@@ -125,47 +172,14 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Curency Rate</span>
-                                        <input [(ngModel)]="visaRegObj.CurrencyRate" type="text" class="form-control"
-                                            readonly />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Visa Fees</span>
-                                        <input [(ngModel)]="visaRegObj.VisaFee" type="text" class="form-control"
-                                            (ngModelChange)="updateTotalPayable()" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Service Charge</span>
-                                        <input [(ngModel)]="visaRegObj.ServiceCharge" type="number"
-                                            (ngModelChange)="updateTotalPayable()" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Govt. TAX</span>
-                                        <input [(ngModel)]="visaRegObj.GovtTax" type="number" class="form-control"
-                                            (ngModelChange)="updateTotalPayable()" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Total Payable</span>
-                                        <input [(ngModel)]="visaRegObj.TotalPayable" type="number" class="form-control"
+                                        <input [(ngModel)]="visaMasterObj.CurrencyRate" type="text" class="form-control"
                                             readonly />
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Sales Reference</span>
-                                        <select class="form-control" [(ngModel)]="visaRegObj.SalesStaffCode">
+                                        <select class="form-control" [(ngModel)]="visaMasterObj.SalesReferenceCode">
                                             <option selected value="0">SELECT..</option>
                                             <ng-container *ngFor="let item of salesStaffList; let i = index">
                                                 <option value="{{item.EmployeeCode}}">
@@ -176,154 +190,203 @@
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Remarks</span>
-                                        <textarea [(ngModel)]="visaRegObj.Remark" class="form-control"
-                                            rows="3"></textarea>
+                                        <span class="input-group-addon">Net Payable</span>
+                                        <input [(ngModel)]="visaMasterObj.NetPayableAmt" type="number"
+                                            class="form-control" readonly />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3 mt-3">
-                                <button *ngIf="visaRegObj?.ID == 0" (click)="saveVisaReg()" type="button"
-                                    class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
-                                <button *ngIf="visaRegObj?.ID > 0" (click)="saveVisaReg()" type="button"
-                                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
-                                <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
-                                        class="fas fa-redo-alt"></i> Reset</button>
-                            </div>
-                            <div class="col-md-3 mt-3">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Is Group:</span>
-                                    <i *ngIf="visaRegObj?.isGroup" (click)="visaRegObj.isGroup = false"
-                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                        aria-hidden="true"></i>
-                                    <i *ngIf="! visaRegObj?.isGroup" (click)="visaRegObj.isGroup = true"
-                                        class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="visaMasterObj.Remark" class="form-control"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Final Lock:</span>
+                                        <i *ngIf="visaMasterObj?.IsFinalLocked"
+                                            (click)="visaMasterObj.IsFinalLocked = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! visaMasterObj?.IsFinalLocked"
+                                            (click)="visaMasterObj.IsFinalLocked = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="visaMasterObj?.isActive" (click)="visaMasterObj.isActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! visaMasterObj?.isActive" (click)="visaMasterObj.isActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 mt-3">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Is Active:</span>
-                                    <i *ngIf="visaRegObj?.isActive" (click)="visaRegObj.isActive = false"
-                                        class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                        aria-hidden="true"></i>
-                                    <i *ngIf="! visaRegObj?.isActive" (click)="visaRegObj.isActive = true"
-                                        class="fa fa-square-o font-size-35 ml-3 text-success" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- --list -->
-                <div class="panel">
-                    <div class="panel-heading">
-                        <span class="hoverlink" (click)="GETVisaTegLIST()"><b>VISA REGISTRATION LIST</b> <i
-                                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
-
-                        <span class="label label-primary ml-2 hoverPointer">Report</span>
-                        <span class="label label-primary ml-2 hoverPointer">PRIMARY</span>
-                        <div class="right">
-                            <button type="button" class="btn-toggle-collapse"><i
-                                    class="lnr lnr-chevron-up"></i></button>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-fixed">
-                            <table class="table table-bordered table-p4 custom-table-hover">
-                                <thead>
-                                    <tr>
-                                        <th colspan="15">
-                                            <input class="form-control form-control-sm" placeholder="Search" type="text"
-                                                [(ngModel)]="SearchVisaRegList">
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="width-1p text-center">SN#</th>
-                                        <th class="width-2p">Visa Code</th>
-                                        <th class="width-10p text-center">Visa Reg. Date</th>
-                                        <th class="width-20p text-center">Customer</th>
-                                        <th class="width-5p text-center">Visa Type</th>
-                                        <th class="width-5p text-center">Visa Country</th>
-                                        <th class="width-5p text-center">Passport No</th>
-                                        <th class="width-15p text-center">Card No</th>
-                                        <th class="width-10p text-center">Currency</th>
-                                        <th class="width-10p text-center">Fees</th>
-                                        <th class="width-2p text-center">Total Payable</th>
-                                        <th class="width-15p text-center">Sales Ref</th>
-                                        <th class="width-1p text-center">Is Group</th>
-                                        <th class="width-2p text-center">Status</th>
-                                        <th class="width-2p text-center">Action</th>
-                                        <th class="width-2p text-center">Print</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="font-size-12"
-                                        *ngFor="let item of visaRegList | searchFilter : SearchVisaRegList; let i = index">
-                                        <td class="text-right"> {{i+1}} </td>
-                                        <td class="text-left"> {{item?.VisaCode}} </td>
-                                        <td class="text-left"> {{item?.VisaRegDate | date: 'dd MMM yyyy' }}</td>
-                                        <td class="text-left">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Customer : {{item?.CustomerName}}
-                                                    <br>Company: <i> {{item?.CompanyName}}</i>
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                        <td class="text-left"> {{item?.VisaTypeName}} </td>
-                                        <td class="text-left"> {{item?.CountryName}} </td>
-                                        <td class="text-left"> {{item?.PassportNo}} </td>
-                                        <td class="text-left">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Card Name: {{item?.CardName}}
-                                                    <br> Card No: <i> {{item?.CardID}} </i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-left">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Currency: {{item?.CurrencyName}}
-                                                    <br> Rate <i>{{item?.CurrencyRate}} </i>
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                        <td class="text-left">
-                                            Visa Fee: <b> {{item?.VisaFee}}</b> , Govt Fee: <i> <b>{{item?.GovtTax}}
-                                                </b> </i>
-                                            , Service Charge: <i> <b> {{item?.ServiceCharge}}% </b> </i>
-                                        </td>
-                                        <td class="text-left"> {{item?.TotalPayable}} </td>
-                                        <td class="text-left">{{item?.SalesStaffCode}}-{{item?.SalesStaffName}} </td>
-                                        <td class="text-center">
-                                            <span *ngIf="item?.isGroup" class="text-success">Yes</span>
-                                            <span *ngIf="! item?.isGroup" class="text-danger">No</span>
-                                        </td>
-                                        <td class="text-center">
-                                            <span *ngIf="item?.isActive" class="text-success">Active</span>
-                                            <span *ngIf="! item?.isActive" class="text-danger">In-Active</span>
-                                        </td>
-
-                                        <td (click)="EditItem(item)" title="Click to Edit the item."
-                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
-                                        <td class="text-center width-5p">
-                                            <button class="btn btn-info" (click)="PrintVisaReg(item)">
-                                                Print
-                                                <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="panel">
+            <div class="panel-heading btn-toggle-collapse">
+                <span><b>DETAILS</b> </span>
+                <div class="right">
+                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn btn-success" (click)="addDetailsNew('enter', $event)"><i class="fa fa-plus"
+                                aria-hidden="true"></i>Add NEW
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p4 custom-table-hover font-size-11">
+                                <thead>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-10p text-left">Name of Person</th>
+                                        <th class="width-10p text-left">VisaType</th>
+                                        <th class="width-10p text-left">VisaCountry</th>
+                                        <th class="width-10p text-left">PassportNo</th>
+                                        <th class="width-10p text-left">CardChargeAmount</th>
+                                        <th class="width-10p text-left">VisaFee</th>
+                                        <th class="width-10p text-left">GovtTax</th>
+                                        <th class="width-10p text-left">Service Charge(%)</th>
+                                        <th class="width-10p text-left">Service Charge Amount</th>
+                                        <th class="width-10p text-left">Total Amount</th>
+                                        <th class="width-p text-left">X</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-size-12">
+                                    <tr *ngFor="let item of visaDetailsObj; let i = index">
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left">
+                                            <input type="text"
+                                                class="form-control form-control-sm text-left font-size-11"
+                                                [(ngModel)]="item.NameofPerson">
+                                        </td>
+                                        <td class="text-left">
+                                            <div class="input-group">
+                                                <select class="form-control form-control-sm text-right font-size-11"
+                                                    [(ngModel)]="item.VisaType">
+                                                    <option selected value="0">SELECT</option>
+                                                    <ng-container *ngFor="let info  of visaTypeList">
+                                                        <option value="{{info.VisaTypeCode}}">
+                                                            {{info?.VisaTypeName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            <div class="input-group">
+                                                <select class="form-control form-control-sm text-right font-size-11"
+                                                    [(ngModel)]="item.VisaCountry">
+                                                    <option selected value="0">SELECT</option>
+                                                    <ng-container *ngFor="let info  of countryList">
+                                                        <option value="{{info.CountryCode}}">
+                                                            {{info?.CountryName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="text" class="form-control form-control-sm text-left"
+                                                [(ngModel)]="item.PassportNo">
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="text" (keypress)="isNumberKey($event)"
+                                                class="form-control form-control-sm text-left"
+                                                [(ngModel)]="item.CardChargeAmount" (click)="selectTarget($event)">
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="text" (keypress)="isNumberKey($event)"
+                                                class="form-control form-control-sm text-left"
+                                                (input)="CalculateTotalPayableAmount(item)" [(ngModel)]="item.VisaFee"
+                                                (click)="selectTarget($event)">
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="text" (keypress)="isNumberKey($event)"
+                                                class="form-control form-control-sm text-left"
+                                                (input)="CalculateTotalPayableAmount(item)" [(ngModel)]="item.GovtTax"
+                                                (click)="selectTarget($event)">
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="text" (keypress)="isNumberKey($event)"
+                                                class="form-control form-control-sm text-left"
+                                                (input)="CalculateServiceChargeValue(item)"
+                                                [(ngModel)]="item.ServiceChargePercent" (click)="selectTarget($event)">
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="text" (keypress)="isNumberKey($event)"
+                                                class="form-control form-control-sm text-left"
+                                                (input)="CalculateServicePertageValue(item)"
+                                                [(ngModel)]="item.ServiceChargeValue" (click)="selectTarget($event)">
+                                        </td>
+                                        <td class="text-left">
+                                            <input type="text" readonly class="form-control form-control-sm text-left"
+                                                [(ngModel)]="item.TotalPayableAmt">
+                                        </td>
+                                        <td (click)="removeDetails(i)"> <i class="fa fa-trash text-danger"
+                                                aria-hidden="true"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                                Total=
+                                            </span>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                                {{sumOfTotalValue| number:'1.0-0' }}
+                                            </span>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mt-3">
+                        <button *ngIf="visaMasterObj?.ID == 0" (click)="saveVisaReg()" type="button"
+                            class="btn btn-success"><i class="fa fa-plus"></i> Save</button>
+                        <button *ngIf="visaMasterObj?.ID > 0" (click)="saveVisaReg()" type="button"
+                            class=" btn btn-success ml-2"><i class="fa fa-plus"></i> Update</button>
+                        <button type="button" (click)="ResetModel()" class="btn btn-info ml-2"><i
+                                class="fas fa-redo-alt"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>

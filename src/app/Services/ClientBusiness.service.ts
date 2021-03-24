@@ -87,6 +87,7 @@ export class ClientBusinessService {
 	saveUpdateCustomer(customerTypeObj: any) { return this.masterService.post(`client/business/travel/customer/save/update`, customerTypeObj); }
 
 	getcustomerList() { return this.masterService.get("client/business/travel/customer/list"); }
+	getDropDownCustomerList() { return this.masterService.get("client/business/travel/customer/dropDown/list"); }
 	/*END Customer */
 
 
