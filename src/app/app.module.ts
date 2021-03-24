@@ -10,7 +10,7 @@ import { AuthGuard } from './authGuard.guard';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { Pipe, PipeTransform } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; 
 // ng-select
 import { NgSelectModule } from '@ng-select/ng-select';
 

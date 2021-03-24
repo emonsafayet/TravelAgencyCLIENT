@@ -14,6 +14,7 @@ import { Common } from "../../../library/common";
 import { OnlineRegistationMasterModelDTO, OnlineRegistationDetailModelDTO } from '../../../Classes/Transaction/OnlineRegistationModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFan } from '@fortawesome/free-solid-svg-icons';
+//Dropdown Serach  
 
 //
 declare var moment: any;
@@ -101,6 +102,11 @@ export class OnlineRegistation implements OnInit {
 	validateModel() {
 		var result = true;
 		try {
+			if (Library.isNuLLorUndefined(this.regObj.TransactionDate) || this.regObj.TransactionDate == "") {
+				this.Notification.Warning('Please Select Transaction Date.');
+				result = false;
+				return;
+			}
 			if (Library.isNuLLorUndefined(this.regObj.CustomerCode) || this.regObj.CustomerCode == "0") {
 				this.Notification.Warning('Please Select Customer.');
 				result = false;
