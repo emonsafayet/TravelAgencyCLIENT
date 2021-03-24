@@ -378,15 +378,15 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input class="font-size-10" type="date" data-date=""
+                                                    <input  type="date" data-date=""
                                                         [attr.data-date]="item.TravelDate" data-date-format="dd-MM-YYYY"
-                                                        class="form-control width-115 font-size-11 form-control-sm"
+                                                        class="form-control width-115 font-size-11 form-control-sm font-size-10"
                                                         [(ngModel)]="item.TravelDate" />
                                                 </td>
                                                 <td>
-                                                    <input class="font-size-10" type="date" data-date=""
+                                                    <input type="date" data-date=""
                                                         [attr.data-date]="item.ReturnDate" data-date-format="dd-MM-YYYY"
-                                                        class="form-control width-115 font-size-11 form-control-sm"
+                                                        class="form-control width-115 font-size-11 form-control-sm font-size-10"
                                                         [(ngModel)]="item.ReturnDate" />
                                                 </td>
                                                 <td>
@@ -415,7 +415,8 @@
                                                 <td>
                                                     <input class="width-10p" type="text"
                                                         class="form-control form-control-sm text-right font-size-10"
-                                                        [(ngModel)]="item.ComissionChargePercent" (keypress)="isNumberKey($event)"
+                                                        [(ngModel)]="item.ComissionChargePercent"
+                                                        (keypress)="isNumberKey($event)"
                                                         (input)="CalculateComissionChargePercentValue(item)"
                                                         (keyup.enter)="addDetailsNew('enter', $event)"
                                                         (click)="selectTarget($event)">
@@ -599,16 +600,17 @@
                                     <table class="table table-bordered table-p4 custom-table-hover font-size-11">
                                         <thead>
                                             <tr>
-                                                <th class="width-20p">Name of Person</th>
-                                                <th class="width-20p">Airlines</th>
+                                                <th class="width-15p">Name of Person</th>
+                                                <th class="width-15p">Airlines</th>
                                                 <th class="width-10p">Ticket No</th>
                                                 <th class="width-10p">SeatType</th>
-                                                <th class="width-10p">Base Fare</th>
-                                                <th class="width-10p">Govt. Tax</th>
-                                                <th class="width-10p">Service Charge</th>
-                                                <th class="width-10p">Is forward</th>
-                                                <th class="width-10p">Change Date</th>
-                                                <th class="width-10p">ChangePenalty</th>
+                                                <th class="width-8p">Base Fare</th>
+                                                <th class="width-7p">Govt. Tax</th>
+                                                <th class="width-8p">Service Charge</th>
+                                                <th class="width-6p">Is forward</th>
+                                                <th class="width-8p">Change Date</th>
+                                                <th class="width-8p">ChangePenalty</th>
+                                                <th class="width-8p">Provider Penalty</th>
                                                 <th class="width-10p">Total Amount</th>
                                             </tr>
                                         </thead>
@@ -676,16 +678,23 @@
                                                         <input type="date" data-date=""
                                                             [attr.data-date]="item.ChangeDate"
                                                             data-date-format="dd-MM-YYYY"
-                                                            class="form-control width-190 form-control-sm"
+                                                            class="form-control width-115 form-control-sm font-size-10"
                                                             [(ngModel)]="item.ChangeDate" />
-
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="number"
+                                                    <input class="width-8p" type="text"                                                        
                                                         class="form-control form-control-sm text-right"
                                                         [(ngModel)]="item.ChangePenalty"
-                                                        (input)="CalculateTotalPayableWithForwardingChargeAmount(item,$event)"
+                                                        (keypress)="isNumberKey($event)"
+                                                        (input)="CalculateTotalPayableWithForwardingChargeAmount(item)"
+                                                        (click)="selectTarget($event)" [disabled]="! item?.IsForward">
+                                                </td>
+                                                <td>
+                                                    <input class="width-8p" type="text"
+                                                        (keypress)="isNumberKey($event)"
+                                                        class="form-control form-control-sm text-right"
+                                                        [(ngModel)]="item.ProviderPenalty"
                                                         (click)="selectTarget($event)" [disabled]="! item?.IsForward">
                                                 </td>
                                                 <td>
@@ -697,6 +706,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -840,10 +850,11 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input class="width-10p" type="number"
+                                                    <input class="width-10p" type="text"
                                                         class="form-control form-control-sm text-right"
                                                         [(ngModel)]="item.CancellationCharge"
-                                                        (input)="CalculateTotalPayableCancellationChargeAmount(item,$event)"
+                                                        (keypress)="isNumberKey($event)"
+                                                        (input)="CalculateTotalPayableCancellationChargeAmount(item)"
                                                         (click)="selectTarget($event)" [disabled]="! item?.IsCancel">
                                                 </td>
                                                 <td>

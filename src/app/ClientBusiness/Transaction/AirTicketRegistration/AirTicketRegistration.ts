@@ -72,7 +72,7 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 	isNumberKey(evt) {
-		debugger
+
 		var charCode = (evt.which) ? evt.which : evt.keyCode;
 		if (charCode != 46 && charCode > 31
 			&& (charCode < 48 || charCode > 57)) {
@@ -165,7 +165,7 @@ export class AirTicketRegistration implements OnInit {
 			);
 	}
 	setAirticketRegEdit(Data: any) {
-		debugger
+
 		Data.forEach(element => {
 			element.TravelDate = moment(new Date(element.TravelDate)).format(Common.SQLDateFormat);
 			element.ReturnDate = moment(new Date(element.ReturnDate)).format(Common.SQLDateFormat);
@@ -193,7 +193,7 @@ export class AirTicketRegistration implements OnInit {
 		this.getpayableAmount();
 	}
 	validateModel() {
-		debugger
+
 		var result = true
 		if (Library.isNuLLorUndefined(this.airTicketregObj.CustomerCode) || this.airTicketregObj.CustomerCode == "0") {
 			this.Notification.Warning('Please Select Customer.');
@@ -368,7 +368,7 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 	PrintAirTicketReg(obj) {
-		debugger
+
 		var airTicketRegCode = obj.TransactionCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/GetAirTicketRegistrationByAirTicketRegCode?airticketRegCode=${airTicketRegCode}`, "_blank");
 	}
@@ -397,13 +397,13 @@ export class AirTicketRegistration implements OnInit {
 		e.target.select();
 	}
 	// Calculation
-	CalculateComissionChargeValue(obj) { 
+	CalculateComissionChargeValue(obj) {
 		obj.ComissionChargePercent = (Number(obj.Comission) * 100) / Number(obj.BaseFare);
 		obj.ComissionChargePercent = Number(obj.ComissionChargePercent).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
 	}
 
-	CalculateComissionChargePercentValue(obj){
+	CalculateComissionChargePercentValue(obj) {
 		obj.Comission = (Number(obj.BaseFare) * (Number(obj.ComissionChargePercent) / 100))
 		obj.Comission = Number(obj.Comission).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
@@ -414,14 +414,14 @@ export class AirTicketRegistration implements OnInit {
 		obj.ServiceChargePercent = Number(obj.ServiceChargePercent).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
 	}
-	
+
 	CalculateServicePertageValue(obj) {
 		obj.ServiceChargeValue = (Number(obj.BaseFare) * (Number(obj.ServiceChargePercent) / 100));
 		this.CalculateTotalPayableAmount(obj);
 	}
 
 	CalculateTotalPayableAmount(obj) {
-	 
+
 		this.sumOfTotalValue = 0
 		obj.TotalPayableAmt = Number(obj.BaseFare) + Number(obj.GovTax) + Number(obj.ServiceChargeValue) - Number(obj.DiscountValue);
 		this.getpayableAmount();
@@ -429,19 +429,22 @@ export class AirTicketRegistration implements OnInit {
 	getpayableAmount() {
 		this.sumOfTotalValue = Common.calculateTotal(this.airTicketregDetailsObj, "TotalPayableAmt");
 		this.airTicketregObj.NetPayableAmt = this.sumOfTotalValue;
-	} 
+	}
 	CalculateTotalPayableWithForwardingChargeAmount(obj) {
 		obj.TotalPayableAmt = Number(obj.BaseFare.toFixed(2)) + Number(obj.GovTax.toFixed(2)) +
-			Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
+			Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty);
+		obj.TotalPayableAmt = Number(obj.TotalPayableAmt).toFixed(2);
 
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
 		this.forwardairTicketregObj.NetPayableAmt = Number(this.sumOfForwardingTotalValue.toFixed(2));
 
 	}
 	CalculateTotalPayableCancellationChargeAmount(obj) {
+		debugger
 		obj.TotalPayableAmt = Number(obj.ServiceChargeValue.toFixed(2)) +
-			Library.isUndefinedOrNullOrZeroReturn0(Number(obj.Comission.toFixed(2))) +
-			Number(obj.CancellationCharge.toFixed(2)) + Number(obj.ChangePenalty.toFixed(2));
+			Number(obj.Comission.toFixed(2)) +
+			Number(obj.ChangePenalty.toFixed(2)) + Number(obj.CancellationCharge);
+		obj.TotalPayableAmt = Number(obj.TotalPayableAmt).toFixed(2);
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.CancellationList, "TotalPayableAmt");
 		this.cancellingAirTicketregObj.NetPayableAmt = Number(this.sumofTotalCancellationCharge.toFixed(2));
@@ -451,7 +454,7 @@ export class AirTicketRegistration implements OnInit {
 	// AIRTICKET FORWARDING 
 
 	ticketDetail(obj) {
-		debugger
+
 		this.forwardairTicketregObj = new AirTicketRegModelDTO();
 		this.forwardingList = [];
 
@@ -465,7 +468,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 
 	setforwardList(Data: any) {
-		debugger;
+		;
 		this.forwardingList = Data;
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
 
@@ -521,7 +524,7 @@ export class AirTicketRegistration implements OnInit {
 
 	//  Cancellation Air Ticket 
 	CancellationticketDetail(obj) {
-		debugger
+
 		this.cancellingAirTicketregObj = new AirTicketRegModelDTO();
 		this.CancellationList = [];
 
