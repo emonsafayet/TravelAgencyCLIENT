@@ -440,7 +440,7 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 	CalculateTotalPayableCancellationChargeAmount(obj) {
-		debugger
+		
 		obj.TotalPayableAmt = Number(obj.ServiceChargeValue.toFixed(2)) +
 			Number(obj.Comission.toFixed(2)) +
 			Number(obj.ChangePenalty.toFixed(2)) + Number(obj.CancellationCharge);
