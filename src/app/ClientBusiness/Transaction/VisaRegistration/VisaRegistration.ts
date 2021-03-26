@@ -310,8 +310,9 @@ export class VisaRegistration implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	PrintVisaReg(obj)  {
-		var VisaCode = obj.VisaCode;
-		window.open(`${Config.getBaseUrl}TransactionReport/VisaRegistrationPrint?VisaCode=${VisaCode}`, "_blank");
+		var TransactionCode = obj.TransactionCode; 
+		window.open(`${Config.getBaseUrl}TransactionReport/VisaRegistrationPrint?transactionCode=${TransactionCode}`, "_blank");
+		// window.open('../Report/Reports/ReportViewer.aspx', '_newtab');
 	}
 	removeDetails(index: number) {
 		this.visaDetailsObj.splice(index, 1);

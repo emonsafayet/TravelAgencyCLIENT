@@ -193,8 +193,12 @@ export class AirTicketRegistration implements OnInit {
 		this.getpayableAmount();
 	}
 	validateModel() {
-
 		var result = true
+		if (Library.isNuLLorUndefined(this.airTicketregObj.TransactionDate) || this.airTicketregObj.TransactionDate =="") {
+			this.Notification.Warning('Please Select Transaction Date.');
+			result = false;
+			return;
+		}
 		if (Library.isNuLLorUndefined(this.airTicketregObj.CustomerCode) || this.airTicketregObj.CustomerCode == "0") {
 			this.Notification.Warning('Please Select Customer.');
 			result = false;
@@ -233,12 +237,13 @@ export class AirTicketRegistration implements OnInit {
 					this.Notification.Warning('Please Enter Base Fare.');
 					result = false;
 					return;
+				} 
+				debugger
+				if (Library.isUndefinedOrNullOrEmpty(item.ServiceChargeValue)) {
+					this.Notification.Warning('Service Must be Zero or value.');
+					result = false;
+					return;
 				}
-				// if (Library.isNullOrZero(item.GovTax)) {
-				// 	this.Notification.Warning('Please Enter Govt Tax.');
-				// 	result = false;
-				// 	return;
-				// }
 				if (Library.isNullOrZero(item.TotalPayableAmt)) {
 					this.Notification.Warning('Please Enter Total Payable Amount.');
 					result = false;
