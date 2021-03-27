@@ -115,6 +115,110 @@ thead tr:nth-child(1) th {
   vertical-align: middle;
 }
 
+
+
+.rightPanel {
+  position: fixed;
+  top: 36px;
+  height: 96vh;
+  background-color: #FAFAFA;
+  border-left: 1px solid #e1e1e1;
+  width: 70%;
+  z-index: 999;
+  box-shadow: 0 40px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+  .rightPanel .fa {
+    cursor: pointer;
+    font-size: 22px;
+    margin-right: 6px; }
+  .rightPanel .rightPanel-footer {
+    position: absolute;
+    bottom: 22px;
+    width: 100%;
+    padding: 5px 0px;
+    text-align: center;
+    min-height: 40px;
+    background-color: whitesmoke;
+    border-top: 1px solid #e1e1e1; }
+
+.NoFooter .rightPanel-content {
+  max-height: 90vh !important; }
+
+.rightPanel-head {
+  display: block;
+  min-height: 36px;
+  background-color: whitesmoke;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 5px;
+  padding: 5px 10px 5px 30px; }
+  .rightPanel-head .btn {
+    margin-top: -3px; }
+  .rightPanel-head i {
+    margin-top: 5px; }
+
+.rightPanel-content {
+  width: 100%;
+  max-height: 85vh;
+  padding: 10px;
+  overflow: auto; }
+  .rightPanel-content .row {
+    margin-left: 0px;
+    margin-right: 0px; }
+
+.bottomPanel {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  height: 200px;
+  background-color: #FAFAFA;
+  border-left: 1px solid #e1e1e1;
+  border-top: 1px solid #e1e1e1;
+  width: 98%;
+  z-index: 9999; }
+  .bottomPanel .fa {
+    cursor: pointer;
+    font-size: 22px;
+    margin-right: 6px; }
+
+.bottomPanel-head {
+  display: block;
+  background-color: whitesmoke;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 5px; }
+
+.bottomPanel-content {
+  margin: 5px; }
+
+.fa-close {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  cursor: pointer; }
+
+  .rightPanel {
+    right: 0px; }
+
+    .rightPanel-content {
+      max-height: 83vh !important; } }
+  @media (max-width: 720px) {
+    .errorAlert {
+      left: 5px !important;
+      max-width: 360px !important; }
+  
+    .rightPanel {
+      width: 90%;
+      height: 98vh;
+      max-width: 340px;
+      min-height: 760px;
+      background-color: #FAFAFA;
+      border-left: 1px solid #e1e1e1;
+      z-index: 9999;
+      left: 0px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      overflow: auto; 
+    }
+      .rightPanel .rightPanel-footer {
+        bottom: 60px !important; }
+  
 .font-size-8 {
   font-size: 8px !important;
 }

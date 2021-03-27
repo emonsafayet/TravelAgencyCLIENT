@@ -22,8 +22,14 @@ export class Report implements OnInit {
 	user: any;
 	ReportModelObj: ReportModel = new ReportModel();
 	reportObj: any[] = [];
+	cardList: any[] = [];
+	customerList: any[] = [];
+	showCardList: boolean = false;
+	showCustomerList: boolean = false;
+
+
 	constructor(private userService: UserService, private authGuard: AuthGuard,
-		private Notification: NotificationService, private rptService: RptService) { }
+		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService, private rptService: RptService) { }
 
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
@@ -49,19 +55,68 @@ export class Report implements OnInit {
 		this.reportObj = data;
 		this.Notification.LoadingRemove();
 	}
-	PrintReport(obj){ 
-		// validation
-		if (!this.validateModel()) return;
-		window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?ReportName=${obj.ReportName}&FromDate=${obj.FromDate}&ToDate=${obj.ToDate}`, "_blank"); 
+	onReportChange(obj) {
+		this.hideAll();
+		if (obj == "Card Statement") {
+			this.GETCardLIST();
+			this.showCardList = true;
+		}
+		else if (obj == "Customer Due") {
+			this.GETCustomerLIST();
+			this.showCustomerList = true;
+		}
+
 	}
-	validateModel() {	 
+	hideAll() {
+		//clear   list
+		this.cardList  = [];
+		this.customerList  = [];
+
+		//hide 
+		this.showCustomerList = false;
+		this.showCardList = false;
+	}
+	GETCardLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getcardList()
+			.subscribe(
+				data => this.setcardList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setcardList(data) {
+		this.cardList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETCustomerLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.getMRcustomerList()
+			.subscribe(
+				data => this.setCustomerLIST(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setCustomerLIST(data) {
+		this.customerList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	PrintReport(obj) {
+		// validation
+		if (!this.validateModel()) return; 
+		window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?ReportName=${obj.ReportName}&FromDate=${obj.FromDate}&ToDate=${obj.ToDate}&Code=${obj.Code}`, "_blank");
+
+
+	}
+	validateModel() {
 		var result = true
 		if (Library.isNuLLorUndefined(this.ReportModelObj.ReportName) || this.ReportModelObj.ReportName == "0") {
 			this.Notification.Warning('Please Select Report Name.');
 			result = false;
 			return;
-		} 
-	 
+		}
+
 
 		return result;
 	}

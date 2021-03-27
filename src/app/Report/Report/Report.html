@@ -26,7 +26,8 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Report</span>
-                                        <select class="form-control"  [(ngModel)]="ReportModelObj.ReportName">
+                                        <select class="form-control" [(ngModel)]="ReportModelObj.ReportName"
+                                        (change)="onReportChange($event.target.value)">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of reportObj">
                                                 <option value="{{info.ReportName}}">
@@ -38,6 +39,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
@@ -50,6 +52,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
@@ -62,16 +65,59 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <div class="row"  *ngIf="showCardList">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Card</span>
+                                        <select class="form-control" [(ngModel)]="ReportModelObj.Code">
+                                            <option selected value="">SELECT..</option>
+                                            <ng-container *ngFor="let item of cardList; let i = index">
+                                                <option value="{{item.CardID}}">{{item.CardID}}>>{{item?.CardName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row"  *ngIf="showCustomerList">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <select class="form-control"
+                                            [(ngModel)]="ReportModelObj.Code"
+                                            (change)="onChange($event.target.value)">
+                                            <option selected value="">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <button (click)="PrintReport(ReportModelObj)" type="button" class="btn btn-success">
-                                     Print   <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                                        Print <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
                                     </button>
                                 </div>
+                                <!-- <div class="col-md-3 mt-3">
+                                    <button (click)="showReport = true" type="button" class="btn btn-success">
+                                        PRight panel <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                                    </button>
+                                </div> -->
                             </div>
 
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -83,3 +129,17 @@
 
     </div>
 </div>
+
+<!-- <div  *ngIf="showReport" class="rightPanel" style="width: 50%;min-width: 500px;">
+    <div class="rightPanel-head">
+        <i class="fa fa-times-circle fa-close" aria-hidden="true" (click)="showReport = false" title="Close this panel"></i>
+        Right Panel
+    </div>
+    
+    <div class="rightPanel-content">
+
+    </div>
+    <div class="rightPanel-footer">
+        <button class="btnLPL btnLPL-success pull-left ml-2"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+    </div>
+</div> -->
