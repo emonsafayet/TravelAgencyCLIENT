@@ -26,6 +26,9 @@ export class Report implements OnInit {
 	customerList: any[] = [];
 	showCardList: boolean = false;
 	showCustomerList: boolean = false;
+	showFromDate: boolean = false;
+	showToDate: boolean = false;
+	showAsOnDate: boolean = false;
 
 
 	constructor(private userService: UserService, private authGuard: AuthGuard,
@@ -56,25 +59,32 @@ export class Report implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	onReportChange(obj) {
+		debugger
 		this.hideAll();
 		if (obj == "Card Statement") {
 			this.GETCardLIST();
 			this.showCardList = true;
+			this.showFromDate = true;
+			this.showToDate = true;
 		}
 		else if (obj == "Customer Due") {
 			this.GETCustomerLIST();
 			this.showCustomerList = true;
+			this.showAsOnDate=true;
 		}
 
 	}
 	hideAll() {
 		//clear   list
-		this.cardList  = [];
-		this.customerList  = [];
+		this.cardList = [];
+		this.customerList = [];
 
 		//hide 
 		this.showCustomerList = false;
 		this.showCardList = false;
+		this.showFromDate = false;
+		this.showToDate = false;
+		this.showAsOnDate=false;
 	}
 	GETCardLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -103,9 +113,13 @@ export class Report implements OnInit {
 
 	}
 	PrintReport(obj) {
+		debugger
 		// validation
-		if (!this.validateModel()) return; 
-		window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?ReportName=${obj.ReportName}&FromDate=${obj.FromDate}&ToDate=${obj.ToDate}&Code=${obj.Code}`, "_blank");
+		if (!this.validateModel()) return;
+		var objstr = Library.encode(obj);
+		// window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?ReportName=${obj.ReportName}&FromDate=${obj.FromDate}&ToDate=${obj.ToDate}&Code=${obj.Code}`, "_blank");
+		window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?objstr=${objstr}`, "_blank");
+
 
 
 	}

@@ -21,13 +21,13 @@
             <div class="col-sm-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <div class="row">
+                        <div class="row  mt-4">
                             <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Report</span>
                                         <select class="form-control" [(ngModel)]="ReportModelObj.ReportName"
-                                        (change)="onReportChange($event.target.value)">
+                                            (change)="onReportChange($event.target.value)">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of reportObj">
                                                 <option value="{{info.ReportName}}">
@@ -38,11 +38,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row">
+                        </div> 
+                        <div class="row mt-4" *ngIf="showFromDate">
                             <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">From Date</span>
                                         <input type="date" data-date="ReportModelObj.FromDate"
@@ -51,11 +50,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row">
+                        </div> 
+                        <div class="row  mt-4" *ngIf="showToDate">
                             <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">To Date</span>
                                         <input type="date" data-date="ReportModelObj.ToDate"
@@ -64,11 +62,22 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row"  *ngIf="showCardList">
+                        </div> 
+                        <div class="row  mt-4" *ngIf="showAsOnDate">
                             <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">As On Date</span>
+                                        <input type="date" data-date="ReportModelObj.ToDate"
+                                            [(ngModel)]="ReportModelObj.ToDate" data-date-format="DD-MM-YYYY"
+                                            class="form-control width-190 form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row  mt-4" *ngIf="showCardList">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Card</span>
                                         <select class="form-control" [(ngModel)]="ReportModelObj.Code">
@@ -81,15 +90,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row"  *ngIf="showCustomerList">
+                        </div> 
+                        <div class="row  mt-4" *ngIf="showCustomerList">
                             <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-md-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Customer</span>
-                                        <select class="form-control"
-                                            [(ngModel)]="ReportModelObj.Code"
+                                        <select class="form-control" [(ngModel)]="ReportModelObj.Code"
                                             (change)="onChange($event.target.value)">
                                             <option selected value="">SELECT..</option>
                                             <ng-container *ngFor="let item of customerList">
@@ -100,11 +107,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                     
-                        <div class="row">
+                        </div> 
+                        <div class="row  mt-4">
                             <div class="col-md-12">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-md-3">
                                     <button (click)="PrintReport(ReportModelObj)" type="button" class="btn btn-success">
                                         Print <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
                                     </button>
