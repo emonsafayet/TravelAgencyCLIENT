@@ -73,7 +73,7 @@ export class HotelBooking implements OnInit {
 		this.transactionCommonService.GetHotelBooking()
 			.subscribe(
 				data => this.setHotelBookingList(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setHotelBookingList(data) {
@@ -101,18 +101,18 @@ export class HotelBooking implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.SaveUpdateHotelBooking(this.hotelBookingObj).subscribe(
 			(data) => this.setHotelBooking(data),
-			(error) => this.Notification.Error(error)
+			(error) => this.showError(error)
 		);
 
 	}
-	setHotelBooking(Data: any) {
-		debugger
+	setHotelBooking(Data: any) { 
 		if (Data.ID > 0) this.Notification.Success('Update Successfully.');
 		else this.Notification.Success('Save Successfully.');
 		document.getElementById('hotelBookingEntry_tab').click();
 		this.ResetModel();
 		this.Notification.LoadingRemove();
 	}
+	
 
 	validateModel() {
 		var result = true;
@@ -172,7 +172,7 @@ export class HotelBooking implements OnInit {
 		this.transactionCommonService.getHotelDetailsByTransactionCode(this.hotelBookingObj.TransactionCode)
 			.subscribe(
 				data => this.setHotelEdit(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setHotelEdit(Data: any) {
@@ -202,7 +202,7 @@ export class HotelBooking implements OnInit {
 		this.clientBusinessService.GETHotelRoomTypeLIST()
 			.subscribe(
 				data => this.setRoomTypeList(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setRoomTypeList(data) { 
@@ -215,7 +215,7 @@ export class HotelBooking implements OnInit {
 		this.clientBusinessService.getDropDownCustomerList()
 			.subscribe(
 				data => this.setCustomerLIST(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setCustomerLIST(data) { 
@@ -229,7 +229,7 @@ export class HotelBooking implements OnInit {
 		this.clientBusinessService.getCurrencyList()
 			.subscribe(
 				data => this.setCurrencyList(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setCurrencyList(data) {
@@ -241,7 +241,7 @@ export class HotelBooking implements OnInit {
 		this.transactionCommonService.GETSalesStaffLIST()
 			.subscribe(
 				data => this.setSalesStaffLIST(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setSalesStaffLIST(data) {
@@ -254,7 +254,7 @@ export class HotelBooking implements OnInit {
 		this.clientBusinessService.getcardList()
 			.subscribe(
 				data => this.setcardList(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setcardList(data) {
@@ -267,7 +267,7 @@ export class HotelBooking implements OnInit {
 		this.transactionCommonService.GETActiveCurrencyRateLIST()
 			.subscribe(
 				data => this.setActiveCurrencyRateList(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setActiveCurrencyRateList(data) {
@@ -280,7 +280,7 @@ export class HotelBooking implements OnInit {
 		this.clientBusinessService.getProviderList()
 			.subscribe(
 				data => this.setTravelProviderLIST(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setTravelProviderLIST(data) {
@@ -382,6 +382,10 @@ export class HotelBooking implements OnInit {
 		this.sumOfTotalValue = Common.calculateTotal(this.hotelBookingDetailObj, "TotalPayableAmt");
 		this.hotelBookingObj.NetPayableAmt = this.sumOfTotalValue;
 
+	}
+	showError(error) {
+		this.Notification.Error(error);
+		this.Notification.LoadingRemove();
 	}
 
 }

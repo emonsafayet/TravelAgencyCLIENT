@@ -810,8 +810,9 @@
                                             <tr>
                                                 <th class="width-20p">Name of Person</th>
                                                 <th class="width-15p">Service Charge</th>
-                                                <th class="width-15p">Comission Amount</th>
-                                                <th class="width-15p">Penalty Charge</th>
+                                                <th class="width-10p">Comission Amount</th>
+                                                <th class="width-10p">Penalty Charge</th>
+                                                <th class="width-10p">Discount Amount</th>
                                                 <th class="width-8p">Is Cancel</th>
                                                 <th class="width-10p">CancellationCharge</th>
                                                 <th class="width-10p">Total Amount</th>
@@ -832,6 +833,10 @@
                                                 </td>
                                                 <td>
                                                     <input readonly [(ngModel)]="item.ChangePenalty"
+                                                        class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input readonly [(ngModel)]="item.DiscountValue"
                                                         class="form-control">
                                                 </td>
                                                 <td>
@@ -861,6 +866,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>

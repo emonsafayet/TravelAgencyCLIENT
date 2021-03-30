@@ -194,7 +194,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 	validateModel() {
 		var result = true
-		if (Library.isNuLLorUndefined(this.airTicketregObj.TransactionDate) || this.airTicketregObj.TransactionDate =="") {
+		if (Library.isNuLLorUndefined(this.airTicketregObj.TransactionDate) || this.airTicketregObj.TransactionDate == "") {
 			this.Notification.Warning('Please Select Transaction Date.');
 			result = false;
 			return;
@@ -237,7 +237,7 @@ export class AirTicketRegistration implements OnInit {
 					this.Notification.Warning('Please Enter Base Fare.');
 					result = false;
 					return;
-				} 
+				}
 				debugger
 				if (Library.isUndefinedOrNullOrEmpty(item.ServiceChargeValue)) {
 					this.Notification.Warning('Service Must be Zero or value.');
@@ -445,10 +445,10 @@ export class AirTicketRegistration implements OnInit {
 
 	}
 	CalculateTotalPayableCancellationChargeAmount(obj) {
-		
+
 		obj.TotalPayableAmt = Number(obj.ServiceChargeValue.toFixed(2)) +
 			Number(obj.Comission.toFixed(2)) +
-			Number(obj.ChangePenalty.toFixed(2)) + Number(obj.CancellationCharge);
+			Number(obj.ChangePenalty.toFixed(2)) + Number(obj.CancellationCharge)-Number(obj.DiscountValue);
 		obj.TotalPayableAmt = Number(obj.TotalPayableAmt).toFixed(2);
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.CancellationList, "TotalPayableAmt");
@@ -528,8 +528,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 
 	//  Cancellation Air Ticket 
-	CancellationticketDetail(obj) {
-
+	CancellationticketDetail(obj) { 
 		this.cancellingAirTicketregObj = new AirTicketRegModelDTO();
 		this.CancellationList = [];
 

@@ -134,17 +134,8 @@ export class VisaRegistration implements OnInit {
 					this.Notification.Warning('Please Enter Visa Fee Value.');
 					result = false;
 					return;
-				}
-				if (Library.isNullOrZero(item.GovtTax) || item.GovtTax == 0) {
-					this.Notification.Warning('Please Enter Govt. Tax.');
-					result = false;
-					return;
-				}
-				if (Library.isNullOrZero(item.ServiceChargeValue) || item.ServiceChargeValue == 0) {
-					this.Notification.Warning('Please Enter Service Charge Value');
-					result = false;
-					return;
-				}
+				} 
+				
 				validDetails += 1;
 			}
 			else {
