@@ -30,6 +30,7 @@ export class HotelBookDetail  {
 	public CheckOutDate : string;
 	public NoOfDay :  number=0;
 	public CardChargeAmount :  number=0;
+	public BookingRefNo : string;
 	public RoomFare :  number=0;
 	public ServiceChargePercent :  number=0;
 	public ServiceChargeValue : number=0;
