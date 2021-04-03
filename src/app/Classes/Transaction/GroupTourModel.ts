@@ -31,8 +31,7 @@ export class GroupTourCustomerDTO{
 	public UpdatedBy : string;
 	public UpdatedOn : string;
 }
-export class GroupTourMember {
-
+export class GroupTourMemberDTO {
 	public ID : number;
 	public TransactionCode : string;
 	public CustomerCode : string="0";

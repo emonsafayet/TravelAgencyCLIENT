@@ -10,7 +10,7 @@ import { ClientBusinessService } from '../../../Services/ClientBusiness.service'
 import { TransactionCommonService } from '../../../Services/TransactionCommon.service';
 import { Common } from "../../../library/common";
 //Classes
-import { GroupTourMasterDTO,GroupTourCustomerDTO } from '../../../Classes/Transaction/GroupTourModel';
+import { GroupTourMasterDTO,GroupTourCustomerDTO,GroupTourMemberDTO } from '../../../Classes/Transaction/GroupTourModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 declare var moment: any;
@@ -23,7 +23,8 @@ export class GroupTour implements OnInit {
 	groupTourList: any[] = [];
 	groupTourMasterObj: GroupTourMasterDTO = new GroupTourMasterDTO();
 	groupTourCustomerObj: GroupTourCustomerDTO[] = [];
-
+	groupTourParticipentObj: GroupTourMemberDTO[] = [];
+	showEvent:boolean=false;
 	salesStaffList: any[] = [];
 	grouptourinfoList: any[] = [];
 	constructor(private userService: UserService, private authGuard: AuthGuard,
@@ -33,6 +34,8 @@ export class GroupTour implements OnInit {
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
+		this.setNewCustomerDetails();
+		//this.setNewParticipentDetails();
 		this.groupTourMasterObj.TransactionDate = moment().format(Common.SQLDateFormat);
 		this.GETSalesStaffLIST();
 		this.GETCustomerLIST();
@@ -49,6 +52,25 @@ export class GroupTour implements OnInit {
 	addCustomerDetailsNew(value, event) {
 		this.addNewColumnForCustomerDetail();
 		setTimeout(() => this.selectNext(value, event), 500)
+	} 
+	removeCustomerDetails(index: number){
+		this.groupTourCustomerObj.splice(index, 1);
+	}
+	//Participent
+	setNewParticipentDetails() {
+		this.groupTourParticipentObj = []; 
+		this.addNewColumnForParticipentDetail();
+	}
+	addParticipentDetailsNew(value, event){
+		this.addNewColumnForParticipentDetail();
+		setTimeout(() => this.selectNext(value, event), 500)
+	}
+	addNewColumnForParticipentDetail() {
+		var details = new GroupTourMemberDTO(); 
+		this.groupTourParticipentObj.push(details);
+	}
+	removeparticipentDetails(index: number){
+		this.groupTourParticipentObj.splice(index, 1);
 	}
 	selectNext(key, e): void {
 		if (key == 'enter') {
@@ -87,4 +109,9 @@ export class GroupTour implements OnInit {
 
 	}
 
+	// Tour Event Break Down
+
+	addEventNew(){
+		this.showEvent=true;
+	}
 }
