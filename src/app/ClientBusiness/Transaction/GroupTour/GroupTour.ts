@@ -164,6 +164,9 @@ export class GroupTour implements OnInit {
 		this.addNewColumnForVisaDetail();
 		setTimeout(() => this.selectNext(value, event), 500)
 	}
+	removeVisaDetails(index: number){
+		this.groupTourVisaObj.splice(index, 1);
+	}
 	//End Visa End
 
 	//Start Airticket Details
@@ -178,6 +181,9 @@ export class GroupTour implements OnInit {
 	addAirticketDetailsNew(value, event) {
 		this.addNewColumnForAirticketDetail();
 		setTimeout(() => this.selectNext(value, event), 500)
+	}
+	removeAirticketDetails(index: number){
+		this.groupTourAirticketObj.splice(index, 1);
 	}
 	//End Airticket 
 
@@ -194,6 +200,9 @@ export class GroupTour implements OnInit {
 		this.addNewColumnForHotelBookingDetail();
 		setTimeout(() => this.selectNext(value, event), 500)
 	}
+	removeHotelBoolingDetails(index: number){
+		this.groupTourHotelBookingObj.splice(index, 1);
+	}
 	//End Hotel Booling
 
 	//Start Total Tour Package
@@ -208,6 +217,9 @@ export class GroupTour implements OnInit {
 	addTourPackageDetailsNew(value, event) {
 		this.addNewColumnForTourPakageDetail();
 		setTimeout(() => this.selectNext(value, event), 500)
+	}
+	removeTourPackageDetails(index: number){
+		this.groupTourTotalPackageObj.splice(index, 1);
 	}
 	//End Total Tour Package
 
@@ -270,6 +282,7 @@ export class GroupTour implements OnInit {
 		this.Notification.LoadingRemove();
 	}
 	//End Event Details Drop Down
+	
 	showError(error) {
 		this.Notification.Error(error);
 		this.Notification.LoadingRemove();
