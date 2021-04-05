@@ -120,6 +120,7 @@ export class Common {
 
 
     public static calculateTotal(Data: any[], parameterName: string) {
+        debugger;
         var total = 0;
         if (Library.getLength(Data) == 0) return 0;
         for (var x = 0; x < Data.length; x++) {

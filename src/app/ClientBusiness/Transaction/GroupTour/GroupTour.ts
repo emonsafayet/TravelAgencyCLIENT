@@ -11,8 +11,7 @@ import { TransactionCommonService } from '../../../Services/TransactionCommon.se
 import { Common } from "../../../library/common";
 //Classes
 import {
-	GroupTourMasterDTO, GroupTourCustomerDTO, GroupTourMemberDTO,
-	GroupTourVisaDTO, GroupTourAirticketDTO, GroupTourHotelBookingDTO, GroupTourTotalPackage
+	GroupTourMasterDTO, GroupTourCustomerDTO, GroupTourMemberDTO, GroupTourEventDetailDTO
 } from '../../../Classes/Transaction/GroupTourModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
@@ -30,14 +29,16 @@ export class GroupTour implements OnInit {
 	filtercustomerList: any[] = [];
 	groupTourList: any[] = [];
 	roomTypeList: any[] = [];
+	serviceList: any[] = [];
+	ParticipantList: any[] = [];
+
+	sumTotalDetailsAmt: any = 0;
 
 	groupTourMasterObj: GroupTourMasterDTO = new GroupTourMasterDTO();
 	groupTourCustomerObj: GroupTourCustomerDTO[] = [];
 	groupTourParticipentObj: GroupTourMemberDTO[] = [];
-	groupTourVisaObj: GroupTourVisaDTO[] = [];
-	groupTourAirticketObj: GroupTourAirticketDTO[] = [];
-	groupTourHotelBookingObj: GroupTourHotelBookingDTO[] = [];
-	groupTourTotalPackageObj: GroupTourTotalPackage[] = [];
+
+	groupTourEventDetailDTO: GroupTourEventDetailDTO[] = [];
 
 	showEvent: boolean = false;
 	salesStaffList: any[] = [];
@@ -49,13 +50,126 @@ export class GroupTour implements OnInit {
 	ngOnInit() {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
+		this.ParticipantList = [];
 		this.setNewCustomerDetails();
-		//this.setNewParticipentDetails();
+
 		this.groupTourMasterObj.TransactionDate = moment().format(Common.SQLDateFormat);
 		this.GETSalesStaffLIST();
 		this.GETCustomerLIST();
+		this.getServiceList();
 		this.Notification.LoadingRemove();
 	}
+	saveUpdateGroupTour() {
+		if (this.groupTourMasterObj.ID > 0)
+			this.groupTourMasterObj.UpdatedBy = this.user.EmployeeCode;
+		else this.groupTourMasterObj.CreatedBy = this.user.EmployeeCode;
+
+		//validation
+		if (!this.validationModel()) return;
+
+		var cus = JSON.stringify(this.groupTourCustomerObj);
+		var pars = JSON.stringify(this.groupTourParticipentObj);
+		var details = JSON.stringify(this.groupTourEventDetailDTO);
+
+		this.groupTourMasterObj.customers = Library.getBase64(cus);
+		this.groupTourMasterObj.participants = Library.getBase64(pars);
+		this.groupTourMasterObj.eventDetails = Library.getBase64(details);
+
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.saveUpdateGroupTour(this.groupTourMasterObj).subscribe(
+			(data) => this.setGroupTour(data),
+			(error) => this.showError(error)
+		);
+
+	}
+	setGroupTour(Data: any) {
+		if (Data.ID > 0) this.Notification.Success('Save Successfully.');
+		else this.Notification.Success('update Successfully.');
+		document.getElementById('GroupTourEntry_tab').click();
+		this.ResetMasterModel();
+		this.Notification.LoadingRemove();
+	}
+
+	validationModel() {
+		var result = true;
+		if (Library.isNuLLorUndefined(this.groupTourMasterObj.TransactionDate)) {
+			this.Notification.Warning('Please Select Transaction date.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.groupTourMasterObj.TourName)) {
+			this.Notification.Warning('Please Enter Name of Tour.');
+			result = false;
+			return;
+		}
+		if (Library.isNuLLorUndefined(this.groupTourMasterObj.TourStartDate)) {
+			this.Notification.Warning('Please Select Tour Start Date.');
+			result = false;
+			return;
+		}
+		// if (Library.isNuLLorUndefined(this.groupTourMasterObj.TourEndDate)) {
+		// 	this.Notification.Warning('Please Select Tour End Date.');
+		// 	result = false;
+		// 	return;
+		// }
+		// if (Library.isNuLLorUndefined(this.groupTourMasterObj.NoofDays)) {
+		// 	this.Notification.Warning('Please Enter No of Days.');
+		// 	result = false;
+		// 	return;
+		// }
+		// if (Library.isNuLLorUndefined(this.groupTourMasterObj.NoofParticipent)) {
+		// 	this.Notification.Warning('Please Enter No of Participant.');
+		// 	result = false;
+		// 	return;
+		// }
+		var validCustomerDetails = 0;
+		this.groupTourCustomerObj.forEach(item => {
+			if (!Library.isNullOrZero(item.CustomerCode)) {
+				if (item.CustomerCode == "0" || Library.isNullOrZero(item.CustomerCode)) {
+					this.Notification.Warning('Please Select Customer.');
+					result = false;
+					return;
+				}
+				validCustomerDetails += 1;
+			}
+			else {
+				this.Notification.Warning('Please  Select Customer.');
+				result = false;
+				return;
+			}
+		});
+		var validParticipentDetails = 0;
+		this.groupTourParticipentObj.forEach(item => {
+			if (!Library.isNullOrZero(item.CustomerCode)) {
+				if (item.CustomerCode == "0" || Library.isNullOrZero(item.CustomerCode)) {
+					this.Notification.Warning('Please Select Customer.');
+					result = false;
+					return;
+				}
+				if (Library.isNullOrZero(item.NameofParticipent)) {
+					this.Notification.Warning('Please Enter Name of Participant.');
+					result = false;
+					return;
+				}
+				validParticipentDetails += 1;
+			}
+			else {
+				this.Notification.Warning('Please  Select Customer.');
+				result = false;
+				return;
+			}
+		});
+		return result;
+	}
+
+	ResetMasterModel() {
+		this.groupTourMasterObj = new GroupTourMasterDTO();
+		this.groupTourMasterObj.TransactionDate = moment().format(Common.SQLDateFormat);
+		this.setNewCustomerDetails();
+		this.setNewParticipentDetails();
+	}
+
+	//Customer
 	setNewCustomerDetails() {
 		this.groupTourCustomerObj = [];
 		this.addNewColumnForCustomerDetail();
@@ -78,9 +192,32 @@ export class GroupTour implements OnInit {
 		this.addNewColumnForParticipentDetail();
 	}
 	addParticipentDetailsNew(value, event) {
+		debugger
+		if (!this.validationForCustomerSelection()) return;
 		this.filterCustomers();
 		this.addNewColumnForParticipentDetail();
-		setTimeout(() => this.selectNext(value, event), 500)
+		setTimeout(() => this.selectNext(value, event), 500);
+	}
+	validationForCustomerSelection() {
+		var result = true;
+		//validation
+		var validDetails = 0;
+		this.groupTourCustomerObj.forEach(item => {
+			if (!Library.isNullOrZero(item.CustomerCode)) {
+				if (Library.isNullOrZero(item.CustomerCode)) {
+					this.Notification.Warning('Please Select Customer Code.');
+					result = false;
+					return;
+				}
+				validDetails += 1;
+			}
+			else {
+				this.Notification.Warning('Please Select Customer Code.');
+				result = false;
+				return;
+			}
+		});
+		return result;
 	}
 	addNewColumnForParticipentDetail() {
 		var details = new GroupTourMemberDTO();
@@ -144,96 +281,51 @@ export class GroupTour implements OnInit {
 		const first = this.customerList;
 		const second = this.groupTourCustomerObj;
 		this.filtercustomerList = first.filter(x => second.map(y => y.CustomerCode).includes(x.CustomerCode));
-
 	}
 
 	// Tour Event Break Down
 	onCustomerChange(obj) {
 		this.filterCustomers();
 	}
-	//Start visa Details
-	setNewVisaDetails() {
-		this.groupTourVisaObj = [];
-		this.addNewColumnForVisaDetail();
+	//Start Tour Event Details
+	setNewTourEventDetails() {	
+		this.addNewColumnForTourEventDetail();
 	}
-	addNewColumnForVisaDetail() {
-		var details = new GroupTourVisaDTO();
-		this.groupTourVisaObj.push(details);
+	addNewColumnForTourEventDetail() {
+		var details = new GroupTourEventDetailDTO();
+		this.groupTourEventDetailDTO.push(details);
 	}
-	addVisaDetailsNew(value, event) {
-		this.addNewColumnForVisaDetail();
-		setTimeout(() => this.selectNext(value, event), 500)
-	}
-	removeVisaDetails(index: number){
-		this.groupTourVisaObj.splice(index, 1);
-	}
-	//End Visa End
 
-	//Start Airticket Details
-	setNewAirticketDetails() {
-		this.groupTourAirticketObj = [];
-		this.addNewColumnForAirticketDetail();
-	}
-	addNewColumnForAirticketDetail() {
-		var details = new GroupTourAirticketDTO();
-		this.groupTourAirticketObj.push(details);
-	}
-	addAirticketDetailsNew(value, event) {
-		this.addNewColumnForAirticketDetail();
+	addTourEventDetailsNew(value, event) {
+		console.log(this.groupTourEventDetailDTO);
+		this.addNewColumnForTourEventDetail();
 		setTimeout(() => this.selectNext(value, event), 500)
 	}
-	removeAirticketDetails(index: number){
-		this.groupTourAirticketObj.splice(index, 1);
+	removeTourEventDetails(index: number) {
+		this.groupTourEventDetailDTO.splice(index, 1);
+		this.sumTotalDetailsAmt = Common.calculateTotal(this.groupTourEventDetailDTO, "TotalPayableamt");
+		this.CalculateCustomerNetPayableAmount();
 	}
-	//End Airticket 
+	onCustomerChangeForParticipantFilter(obj) {
+		//this.ParticipantList
+		obj['ParticipantList'] = this.groupTourParticipentObj.filter(i => i.CustomerCode == obj.CustomerCode);
 
-	//Start Hotel Booking
-	setNewHotelBookingDetails() {
-		this.groupTourHotelBookingObj = [];
-		this.addNewColumnForHotelBookingDetail();
 	}
-	addNewColumnForHotelBookingDetail() {
-		var details = new GroupTourHotelBookingDTO();
-		this.groupTourHotelBookingObj.push(details);
-	}
-	addhotelBookingDetailsNew(value, event) {
-		this.addNewColumnForHotelBookingDetail();
-		setTimeout(() => this.selectNext(value, event), 500)
-	}
-	removeHotelBoolingDetails(index: number){
-		this.groupTourHotelBookingObj.splice(index, 1);
-	}
-	//End Hotel Booling
-
-	//Start Total Tour Package
-	setNewTourPackageDetails() {
-		this.groupTourTotalPackageObj = [];
-		this.addNewColumnForTourPakageDetail();
-	}
-	addNewColumnForTourPakageDetail() {
-		var details = new GroupTourTotalPackage();
-		this.groupTourTotalPackageObj.push(details);
-	}
-	addTourPackageDetailsNew(value, event) {
-		this.addNewColumnForTourPakageDetail();
-		setTimeout(() => this.selectNext(value, event), 500)
-	}
-	removeTourPackageDetails(index: number){
-		this.groupTourTotalPackageObj.splice(index, 1);
-	}
-	//End Total Tour Package
+	//End  Event Break Down	 
 
 	addEventNew() {
-		this.showEvent = true;
-		this.LoadDropDown();
-		this.filterCustomers();
-		this.showEventItemList();
-	}
-	showEventItemList() {
-		this.setNewVisaDetails();
-		this.setNewAirticketDetails();
-		this.setNewHotelBookingDetails();
-		this.setNewTourPackageDetails();
+		var result = true;
+		if (this.groupTourParticipentObj.length == 0) {
+			this.Notification.Warning('Please Enter At Least One Participant');
+			result = false;
+			return;
+		}
+		else {
+			this.showEvent = true;
+			this.LoadDropDown();
+			this.filterCustomers();
+			this.setNewTourEventDetails();
+		}
 	}
 	LoadDropDown() {
 		this.getCountryList();
@@ -281,8 +373,21 @@ export class GroupTour implements OnInit {
 		this.roomTypeList = data;
 		this.Notification.LoadingRemove();
 	}
+	getServiceList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getTravelProductServiceList()
+			.subscribe(
+				data => this.setServiceList(data),
+				(error) => this.showError(error)
+			);
+	}
+	setServiceList(data) {
+		this.serviceList = data;
+		console.log(data);
+		this.Notification.LoadingRemove();
+	}
 	//End Event Details Drop Down
-	
+
 	showError(error) {
 		this.Notification.Error(error);
 		this.Notification.LoadingRemove();
@@ -295,4 +400,150 @@ export class GroupTour implements OnInit {
 		}
 		return true;
 	}
+
+	selectTarget(e) {
+		e.target.select();
+	}
+	//Details Save And Validation 
+	saveUpdateTourEventDetails() {
+		//validation
+		if (!this.validationEventDetails()) return;
+		console.log(this.groupTourEventDetailDTO);
+		this.showEvent = false;
+	}
+	validationEventDetails() {
+		var result = true;
+		var validDetails = 0;
+		this.groupTourEventDetailDTO.forEach(item => {
+			if (!Library.isNuLLorUndefined(item.ServiceCode)) {
+				if (item.ServiceCode == "0" || Library.isNuLLorUndefined(item.ServiceCode)) {
+					this.Notification.Warning('Please Select Service Code.');
+					result = false;
+					return;
+				}
+				if (item.CustomerCode == "0" || Library.isNuLLorUndefined(item.CustomerCode)) {
+					this.Notification.Warning('Please Select Customer Code.');
+					result = false;
+					return;
+				}
+				if (item.NameofParticipent == "0" || Library.isNuLLorUndefined(item.NameofParticipent)) {
+					this.Notification.Warning('Please Select Name Of Participant.');
+					result = false;
+					return;
+				}
+				//visa validation
+				debugger;
+				if (item.ServiceCode = "PS-0001") {
+					if (item.CountryCode == "0" || Library.isNuLLorUndefined(item.CountryCode)) {
+						this.Notification.Warning('Please Select country for visa registration.');
+						result = false;
+						return;
+					}
+				}
+				//online validation
+				if (item.ServiceCode = "PS-0002") {
+					if (Library.isNullOrZero(item.ServiceCharge)) {
+						this.Notification.Warning('Please Enter service charge for online registration.');
+						result = false;
+						return;
+					}
+				}
+				//air ticket validation
+				if (item.ServiceCode = "PS-0003") {
+					if (item.CountryCode == "0" || Library.isNuLLorUndefined(item.CountryCode)) {
+						this.Notification.Warning('Please Select country for air ticket registration.');
+						result = false;
+						return;
+					}
+					if (item.AirlinesCode == "0" || Library.isNuLLorUndefined(item.AirlinesCode)) {
+						this.Notification.Warning('Please Select Air line for air ticket registration.');
+						result = false;
+						return;
+					}
+					if (Library.isNuLLorUndefined(item.Route)) {
+						this.Notification.Warning('Please Enter Route for air ticket registration.');
+						result = false;
+						return;
+					}
+				}
+				//Hotel booking validation
+				if (item.ServiceCode = "PS-0004") {
+					if (Library.isNuLLorUndefined(item.HotelName)) {
+						this.Notification.Warning('Please Enter hotel name for hotel booking registration.');
+						result = false;
+						return;
+					}
+					if (Library.isNuLLorUndefined(item.RoomType)) {
+						this.Notification.Warning('Please Enter hotel room type for hotel booking registration.');
+						result = false;
+						return;
+					}
+				}
+				if (Library.isNullOrZero(item.MainPrice)) {
+					this.Notification.Warning('Please Enter main price.');
+					result = false;
+					return;
+				}
+				validDetails += 1;
+			}
+			else {
+				this.Notification.Warning('Please Select Service Code.');
+				result = false;
+				return;
+			}
+		});
+		return result;
+	}
+	ResetEventDetailsModel() {
+		this.groupTourEventDetailDTO = [];
+		this.setNewTourEventDetails();
+		this.sumTotalDetailsAmt = 0; 
+	
+	}
+
+	// Calculation
+	CalculateTotalPayableAmount(obj) {
+		this.sumTotalDetailsAmt = 0;
+		obj.TotalPayableamt = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.MainPrice))) +
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.GovtTax))) +
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceCharge))) -
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.Discount)));
+		this.getpayableAmount();
+		this.CalculateCustomerNetPayableAmount();
+	}
+
+	CalculateCustomerNetPayableAmount() {
+		//this.groupTourCustomerObj;
+		var filterCustomer = this.groupTourEventDetailDTO.map(item => item.CustomerCode).filter((value, index, self) => self.indexOf(value) === index);
+
+		filterCustomer.forEach(element => {
+			var SingleCustomerItems = this.groupTourEventDetailDTO.filter(c => c.CustomerCode == element);
+			var selectedCutomer = this.groupTourCustomerObj.filter(i => i.CustomerCode == element)[0];
+			selectedCutomer.NetPayableAmt = 0;
+			SingleCustomerItems.forEach(element => {
+				selectedCutomer.NetPayableAmt = selectedCutomer.NetPayableAmt + Number(element.TotalPayableamt);
+			});
+		});
+	}
+
+	CalculateServiceChargeValue(obj) {
+		obj.ServiceCharge = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.MainPrice))
+			* Number(obj.ServiceParcent)) / 100;
+		obj.ServiceCharge = Number(obj.ServiceCharge).toFixed(2);
+		this.CalculateTotalPayableAmount(obj);
+	}
+	CalculateServicePertageValue(obj) {
+		obj.ServiceParcent = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceCharge)) * 100) /
+			Number(Library.isUndefinedOrNullOrZeroReturn0(obj.MainPrice));
+		obj.ServiceParcent = Number(obj.ServiceParcent).toFixed(2);
+		this.CalculateTotalPayableAmount(obj);
+	}
+
+	getpayableAmount() {
+		this.sumTotalDetailsAmt = Common.calculateTotal(this.groupTourEventDetailDTO, "TotalPayableamt");
+		// this.groupTourCustomerObj. = this.sumOfTotalValue;
+
+	}
+
+
 }

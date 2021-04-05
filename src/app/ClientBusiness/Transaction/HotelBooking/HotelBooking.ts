@@ -146,7 +146,7 @@ export class HotelBooking implements OnInit {
 					return;
 				}
 				if (Library.isNullOrZero(item.RoomFare) || item.RoomFare == 0) {
-					this.Notification.Warning('Please Enter Service Charge Value.');
+					this.Notification.Warning('Please Enter Room Fare Value.');
 					result = false;
 					return;
 				}

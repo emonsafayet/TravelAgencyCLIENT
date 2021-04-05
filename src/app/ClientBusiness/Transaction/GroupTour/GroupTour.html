@@ -126,7 +126,7 @@
                                     </div>
                                     <div class="col-md-3 mt-3">
                                         <div class="input-group">
-                                            <span class="input-group-addon">No of Participent</span>
+                                            <span class="input-group-addon">No of Participant</span>
                                             <input [(ngModel)]="groupTourMasterObj.NoofParticipent" class="form-control"
                                                 type="number">
                                         </div>
@@ -170,9 +170,6 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <!-- <div class="btn btn-success" (click)="addEventNew()"><i class="fa fa-plus"
-                            aria-hidden="true"></i>Add Event
-                    </div> -->
                     <button *ngIf="groupTourMasterObj?.ID == 0" (click)="addEventNew()" type="button"
                         class="btn btn-success"><i class="fa fa-plus"></i>
                         Add Event</button>
@@ -185,7 +182,7 @@
 
             <div class="row">
                 <!-- Customer Details -->
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="panel">
                         <div class="panel-heading btn-toggle-collapse">
                             <span><b>Customer(s)</b> </span>
@@ -205,50 +202,52 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered table-p5 custom-table-hover font-size-11">
-                                <thead>
-                                    <tr>
-                                        <th class="width-19p">Customer</th>
-                                        <th class="width-80p">Net Payable</th>
-                                        <th class="width-1p">X</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of groupTourCustomerObj; let i = index">
-                                        <td class="width-19p">
-                                            <ng-select [items]="customerList" bindLabel="CustomerName"
-                                                (change)="onCustomerChange($event)" bindValue="CustomerCode"
-                                                [(ngModel)]="item.CustomerCode">
-                                            </ng-select>
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p5 custom-table-hover font-size-11">
+                                    <thead>
+                                        <tr>
+                                            <th class="width-19p">Customer</th>
+                                            <th class="width-80p">Net Payable</th>
+                                            <th class="width-1p">X</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of groupTourCustomerObj; let i = index">
+                                            <td class="width-19p">
+                                                <ng-select [items]="customerList" bindLabel="CustomerName"
+                                                    (change)="onCustomerChange($event)" bindValue="CustomerCode"
+                                                    [(ngModel)]="item.CustomerCode">
+                                                </ng-select>
 
-                                        </td>
-                                        <td class="width-80p">
-                                            <input
-                                                class="form-control font-size-20 strong text-left text-success font-weight-bold"
-                                                readonly [(ngModel)]="item.NetPayableAmt" class="form-control"
-                                                type="number">
-                                        </td>
-                                        <td class="text-center width-1p" (click)="removeCustomerDetails(i)"> <i
-                                                class="fa fa-trash text-danger" aria-hidden="true"></i>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td>Total</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                            </td>
+                                            <td class="width-80p">
+                                                <input
+                                                    class="form-control font-size-20 strong text-left text-success font-weight-bold"
+                                                    readonly [(ngModel)]="item.NetPayableAmt" class="form-control"
+                                                    type="number">
+                                            </td>
+                                            <td class="text-center width-1p" (click)="removeCustomerDetails(i)"> <i
+                                                    class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Participent Details-->
-                <div class="col-sm-8">
+                <!-- Participant Details-->
+                <div class="col-sm-9">
                     <div class="panel">
                         <div class="panel-heading btn-toggle-collapse">
-                            <span><b>Participent(s)</b> </span>
+                            <span><b>Participant(s)</b> </span>
                             <div class="right">
                                 <button type="button"><i class="lnr lnr-chevron-up"></i></button>
                             </div>
@@ -265,56 +264,75 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered table-p5 custom-table-hover font-size-11">
-                                <thead>
-                                    <tr>
-                                        <th class="width-10p">Customer</th>
-                                        <th class="width-10p">Name Of Person</th>
-                                        <th class="width-10p">Passport No</th>
-                                        <th class="width-10p">Is Child</th>
-                                        <th class="width-1p">X</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of groupTourParticipentObj; let i = index">
-                                        <td>
-                                            <ng-select [items]="filtercustomerList" bindLabel="CustomerName"
-                                                bindValue="CustomerCode" [(ngModel)]="item.CustomerCode">
-                                            </ng-select>
+                            <div class="table-fixed">
+                                <table class="table table-bordered table-p5 custom-table-hover font-size-11">
+                                    <thead>
+                                        <tr>
+                                            <th class="width-10p">Customer</th>
+                                            <th class="width-10p">Name Of Person</th>
+                                            <th class="width-10p">Passport No</th>
+                                            <th class="width-10p">Is Child</th>
+                                            <th class="width-1p">X</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of groupTourParticipentObj; let i = index">
+                                            <td>
+                                                <ng-select [items]="filtercustomerList" bindLabel="CustomerName"
+                                                    bindValue="CustomerCode" [(ngModel)]="item.CustomerCode">
+                                                </ng-select>
 
-                                        </td>
-                                        <td class="width-10p">
-                                            <input type="text" [(ngModel)]="item.NameofParticipent"
-                                                class="form-control form-control-sm">
-                                        </td>
-                                        <td class="width-10p">
-                                            <input type="text" [(ngModel)]="item.PassportNo"
-                                                class="form-control form-control-sm">
-                                        </td>
-                                        <td class="width-10p">
-                                            <div class="input-group">
-                                                <i *ngIf="item?.IsChild" (click)="item.IsChild = false"
-                                                    class="fa fa-check-square-o font-size-55 ml-3  text-success"
-                                                    aria-hidden="true"></i>
-                                                <i *ngIf="!item?.IsChild" (click)="item.IsChild = true"
-                                                    class="fa fa-square-o font-size-55 ml-3 text-success"
-                                                    aria-hidden="true"></i>
-                                            </div>
-                                        </td>
-                                        <td class="text-center" (click)="removeparticipentDetails(i)"> <i
-                                                class="fa fa-trash text-danger" aria-hidden="true"></i>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </td>
+                                            <td class="width-10p">
+                                                <input type="text" [(ngModel)]="item.NameofParticipent"
+                                                    class="form-control form-control-sm">
+                                            </td>
+                                            <td class="width-10p">
+                                                <input type="text" [(ngModel)]="item.PassportNo"
+                                                    class="form-control form-control-sm">
+                                            </td>
+                                            <td class="width-10p">
+                                                <div class="input-group">
+                                                    <i *ngIf="item?.IsChild" (click)="item.IsChild = false"
+                                                        class="fa fa-check-square-o font-size-55 ml-3  text-success"
+                                                        aria-hidden="true"></i>
+                                                    <i *ngIf="!item?.IsChild" (click)="item.IsChild = true"
+                                                        class="fa fa-square-o font-size-55 ml-3 text-success"
+                                                        aria-hidden="true"></i>
+                                                </div>
+                                            </td>
+                                            <td class="text-center" (click)="removeparticipentDetails(i)"> <i
+                                                    class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mt-3">
+                    <button *ngIf="groupTourMasterObj?.ID == 0" (click)="saveUpdateGroupTour()" type="button"
+                        class="btn btn-success"><i class="fa fa-plus"></i>
+                        Save</button>
+                    <button *ngIf="groupTourMasterObj?.ID > 0" (click)="saveUpdateGroupTour()" type="button"
+                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i>
+                        Update</button>
+                    <!-- <button *ngIf="groupTourMasterObj?.ID > 0" class=" btn btn-info ml-2"
+                        (click)="PrintHotelBooking(hotelBookingObj)">
+                        Print
+                        <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                    </button> -->
+                    <button type="button" (click)="ResetMasterModel()" class="btn btn-info ml-2"><i
+                            class="fas fa-redo-alt"></i> Reset</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div *ngIf="showEvent" class="rightPanel" style="width: 60%;min-width: 500px;">
+<div *ngIf="showEvent" class="rightPanel" style="width: 95%;min-width: 500px;">
     <div class="rightPanel-head">
         <span *ngIf="groupTourMasterObj?.ID == 0">
             <i class="fa fa-times-circle fa-close" aria-hidden="true" (click)="showEvent = false"
@@ -329,11 +347,11 @@
     </div>
 
     <div class="rightPanel-content">
-        <!-- Visa -->
+        <!-- Event Detail -->
         <div class="panel">
             <div class="panel-heading btn-toggle-collapse">
-                <span><b>Visa</b> </span>
-                <span (click)="addVisaDetailsNew('enter', $event)">
+                <span><b>Event Detail</b></span>
+                <span (click)="addTourEventDetailsNew('enter', $event)">
                     <i class="fa fa-plus ml-2 text-success" aria-hidden="true"> </i>
                     Add New
                 </span>
@@ -342,29 +360,52 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="table-fixed">
-                    <table class="table table-bordered table-p5 custom-table-hover font-size-9">
+                    <table class="table table-bordered table-p5 custom-table-hover font-size-11">
                         <thead>
                             <tr>
-                                <th class="width-15p">Customer</th>
-                                <th class="width-20p">Name of Participent</th>
-                                <th class="width-15p">Country</th>
-                                <th class="width-8p">Main Price</th>
-                                <th class="width-5p">Service %</th>
-                                <th class="width-5p">ServiceCharge</th>
+                                <th class="width-10p">Service</th>
+                                <th class="width-10p">Customer</th>
+                                <th class="width-10p">Name of Participant</th>
+                                <th class="width-10p">Provider</th>
+                                <th class="width-10p">Airlines</th>
+                                <th class="width-10p">Country</th>
+                                <th class="width-10p">Route</th>
+                                <th class="width-10p">Hote Name</th>
+                                <th class="width-10p">Room Type</th>
+                                <th class="width-5p">Card Charge Amt</th>
+                                <th class="width-5p">Main Price</th>
+                                <th class="width-5p">Govt Tax</th>
+                                <th class="width-5p">Commision</th>
+                                <th class="width-5p">Service(%)</th>
+                                <th class="width-5p">Service Charge</th>
                                 <th class="width-5p">Discount</th>
-                                <th class="width-10p">TotalPayableamt</th>
+                                <th class="width-5p">Total Payable Amt.</th>
                                 <th class="width-1p">X</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of groupTourVisaObj; let i = index">
-                                <td class="width-15p">
+                            <tr *ngFor="let item of groupTourEventDetailDTO; let i = index">
+                                <td class="width-10p">
                                     <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.CustomerCode">
+                                        <select class="form-control form-control-sm text-right font-size-11"
+                                            [(ngModel)]="item.ServiceCode">
+                                            <option selected value="0">SELECT</option>
+                                            <ng-container *ngFor="let info  of serviceList">
+                                                <option value="{{info.ServiceCode}}">
+                                                    {{info?.ServiceName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="width-10p">
+                                    <div class="input-group">
+                                        <select class="form-control form-control-sm text-right font-size-11"
+                                            (change)="onCustomerChangeForParticipantFilter(item)"
+                                            [(ngModel)]="item.CustomerCode">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of filtercustomerList">
                                                 <option value="{{info.CustomerCode}}">
@@ -374,10 +415,46 @@
                                         </select>
                                     </div>
                                 </td>
-                                <td class="width-20p">
-                                    <input [(ngModel)]="item.NameofParticipent" class="form-control">
+                                <td class="width-10p">
+                                    <div class="input-group">
+                                        <select class="form-control form-control-sm text-right font-size-11"
+                                            [(ngModel)]="item.NameofParticipent">
+                                            <option selected value="0">SELECT</option>
+                                            <ng-container *ngFor="let info  of item?.ParticipantList">
+                                                <option value="{{info.NameofParticipent}}">
+                                                    {{info?.NameofParticipent}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
                                 </td>
                                 <td class="width-15p">
+                                    <div class="input-group">
+                                        <select class="form-control form-control-sm text-right font-size-11"
+                                            [(ngModel)]="item.ProviderCode">
+                                            <option selected value="0">SELECT</option>
+                                            <ng-container *ngFor="let info  of travelProviderList">
+                                                <option value="{{info.ProviderCode}}">
+                                                    {{info?.ProviderName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="width-10p">
+                                    <div class="input-group">
+                                        <select class="form-control form-control-sm text-right font-size-11"
+                                            [(ngModel)]="item.AirlinesCode">
+                                            <option selected value="0">SELECT</option>
+                                            <ng-container *ngFor="let info  of airLineList">
+                                                <option value="{{info.AirlinesCode}}">
+                                                    {{info?.AirlinesName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="width-10p">
                                     <div class="input-group">
                                         <select class="form-control form-control-sm text-right font-size-11"
                                             [(ngModel)]="item.CountryCode">
@@ -391,217 +468,12 @@
                                     </div>
                                 </td>
                                 <td class="width-8p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.MainPrice"
-                                        class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addVisaDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceParcent" class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addVisaDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceCharge" class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.Discount"
-                                        (keyup.enter)="addVisaDetailsNew('enter', $event)" class="form-control">
-                                </td>
-                                <td class="width-10p">
-                                    <input readonly type="text" (keypress)="isNumberKey($event)"
-                                        [(ngModel)]="item.TotalPayableamt" class="form-control">
-                                </td>
-                                <td (click)="removeVisaDetails(i)"> <i class="fa fa-trash text-danger"
-                                    aria-hidden="true"></i>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- Air Ticket -->
-        <div class="panel">
-            <div class="panel-heading btn-toggle-collapse">
-                <span><b>Air Ticket</b></span>
-                <span (click)="addAirticketDetailsNew('enter', $event)">
-                    <i class="fa fa-plus ml-2 text-success" aria-hidden="true"> </i>
-                    Add New
-                </span>
-                <div class="right">
-                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-fixed">
-                    <table class="table table-bordered table-p5 custom-table-hover font-size-11">
-                        <thead>
-                            <tr>
-                                <th class="width-10p">Customer</th>
-                                <th class="width-10p">Name of Participent</th>
-                                <th class="width-10p">Provider</th>
-                                <th class="width-10p">Airlines</th>
-                                <th class="width-10p">Route</th>
-                                <th class="width-5p">Main Price</th>
-                                <th class="width-5p">Govt Tax</th>
-                                <th class="width-5p">Commision</th>
-                                <th class="width-5p">Service(%)</th>
-                                <th class="width-5p">Service Charge</th>
-                                <th class="width-5p">Discount</th>
-                                <th class="width-5p">Total Payable Amt.</th>
-                                <th class="width-1p">X</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of groupTourAirticketObj; let i = index">
-                                <td class="width-15p">
-                                    <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.CustomerCode">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let info  of filtercustomerList">
-                                                <option value="{{info.CustomerCode}}">
-                                                    {{info?.CustomerName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="width-20p">
-                                    <input [(ngModel)]="item.NameofParticipent" class="form-control">
-                                </td>
-                                <td class="width-15p">
-                                    <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.ProviderCode">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let info  of travelProviderList">
-                                                <option value="{{info.ProviderCode}}">
-                                                    {{info?.ProviderName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="width-15p">
-                                    <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.AirlinesCode">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let info  of airLineList">
-                                                <option value="{{info.AirlinesCode}}">
-                                                    {{info?.AirlinesName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="width-8p">
                                     <input type="text" [(ngModel)]="item.Route" class="form-control">
                                 </td>
-                                <td class="width-8p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.MainPrice"
-                                        class="form-control">
-                                </td>
-                                <td class="width-8p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.GovtTax"
-                                        class="form-control">
-                                </td>
-                                <td class="width-8p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.Commision"
-                                        class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addAirticketDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceParcent" class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addAirticketDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceCharge" class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.Discount"
-                                        (keyup.enter)="addAirticketDetailsNew('enter', $event)" class="form-control">
+                                <td class="width-10p">
+                                    <input type="text" [(ngModel)]="item.HotelName" class="form-control">
                                 </td>
                                 <td class="width-10p">
-                                    <input readonly type="text" (keypress)="isNumberKey($event)"
-                                        [(ngModel)]="item.TotalPayableamt" class="form-control">
-                                </td>
-                                <td (click)="removeAirticketDetails(i)"> <i class="fa fa-trash text-danger"
-                                    aria-hidden="true"></i>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- Hotel Booking  -->
-        <div class="panel">
-            <div class="panel-heading btn-toggle-collapse">
-                <span><b>Hotel Booking</b> </span>
-                <span (click)="addhotelBookingDetailsNew('enter', $event)">
-                    <i class="fa fa-plus ml-2 text-success" aria-hidden="true"> </i>
-                    Add New
-                </span>
-                <div class="right">
-                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-fixed">
-                    <table class="table table-bordered table-p5 custom-table-hover font-size-11">
-                        <thead>
-                            <tr>
-                                <th class="width-10p">Customer</th>
-                                <th class="width-10p">Name of Participent</th>
-                                <th class="width-10p">Hotel Name</th>
-                                <th class="width-10p">Provider</th>
-                                <th class="width-10p">RoomType</th>
-                                <th class="width-5p">Main Price</th>
-                                <th class="width-5p">Service(%)</th>
-                                <th class="width-5p">Service Charge</th>
-                                <th class="width-5p">Discount</th>
-                                <th class="width-5p">Total Payable Amt.</th>
-                                <th class="width-p text-left">X</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of groupTourHotelBookingObj; let i = index">
-                                <td class="width-15p">
-                                    <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.CustomerCode">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let info  of filtercustomerList">
-                                                <option value="{{info.CustomerCode}}">
-                                                    {{info?.CustomerName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="width-20p">
-                                    <input [(ngModel)]="item.NameofParticipent" class="form-control">
-                                </td>
-                                <td class="width-20p">
-                                    <input [(ngModel)]="item.HotelName" class="form-control">
-                                </td>
-                                <td class="width-15p">
-                                    <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.ProviderCode">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let info  of travelProviderList">
-                                                <option value="{{info.ProviderCode}}">
-                                                    {{info?.ProviderName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="width-15p">
                                     <div class="input-group">
                                         <select class="form-control form-control-sm text-right font-size-11"
                                             [(ngModel)]="item.RoomType">
@@ -609,135 +481,98 @@
                                             <ng-container *ngFor="let info  of roomTypeList">
                                                 <option value="{{info.RoomTypeCode}}">
                                                     {{info?.RoomTypeName}}
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="width-8p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.MainPrice"
-                                        class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addhotelBookingDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceParcent" class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addhotelBookingDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceCharge" class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.Discount"
-                                        (keyup.enter)="addhotelBookingDetailsNew('enter', $event)" class="form-control">
-                                </td>
-                                <td class="width-10p">
-                                    <input readonly type="text" (keypress)="isNumberKey($event)"
-                                        [(ngModel)]="item.TotalPayableamt" class="form-control">
-                                </td>
-                                <td (click)="removeHotelBoolingDetails(i)"> <i class="fa fa-trash text-danger"
-                                    aria-hidden="true"></i>
-                            </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- Tour Total Package -->
-        <div class="panel">
-            <div class="panel-heading btn-toggle-collapse">
-                <span><b>Tour Package</b> </span>
-                <span (click)="addTourPackageDetailsNew('enter', $event)">
-                    <i class="fa fa-plus ml-2 text-success" aria-hidden="true"> </i>
-                </span>
-                <div class="right">
-                    <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-fixed">
-                    <table class="table table-bordered table-p5 custom-table-hover font-size-11">
-                        <thead>
-                            <tr>
-                                <th class="width-10p">Customer</th>
-                                <th class="width-10p">Provider</th>
-                                <th class="width-5p">Main Price</th>
-                                <th class="width-5p">Service(%)</th>
-                                <th class="width-5p">Service Charge</th>
-                                <th class="width-5p">Discount</th>
-                                <th class="width-5p">Total Payable Amt.</th>
-                                <th class="width-p text-left">X</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of groupTourTotalPackageObj; let i = index">
-                                <td class="width-15p">
-                                    <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.CustomerCode">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let info  of filtercustomerList">
-                                                <option value="{{info.CustomerCode}}">
-                                                    {{info?.CustomerName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="width-15p">
-                                    <div class="input-group">
-                                        <select class="form-control" [(ngModel)]="item.ProviderCode">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let info  of travelProviderList">
-                                                <option value="{{info.ProviderCode}}">
-                                                    {{info?.ProviderName}}
                                                 </option>
                                             </ng-container>
                                         </select>
                                     </div>
                                 </td>
                                 <td class="width-8p">
+                                    <input type="text" (keypress)="isNumberKey($event)" (click)="selectTarget($event)"
+                                        [(ngModel)]="item.CardChargeAmount" class="form-control">
+                                </td>
+                                <td class="width-8p">
                                     <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.MainPrice"
+                                        (click)="selectTarget($event)" (input)="CalculateTotalPayableAmount(item)"
+                                        class="form-control">
+                                </td>
+                                <td class="width-8p">
+                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.GovtTax"
+                                        (click)="selectTarget($event)" (input)="CalculateTotalPayableAmount(item)"
+                                        class="form-control">
+                                </td>
+                                <td class="width-8p">
+                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.Commision"
+                                        (click)="selectTarget($event)" class="form-control">
+                                </td>
+                                <td class="width-5p">
+                                    <input type="text" (keypress)="isNumberKey($event)"
+                                        (keyup.enter)="addTourEventDetailsNew('enter', $event)"
+                                        (input)="CalculateServiceChargeValue(item)" [(ngModel)]="item.ServiceParcent"
+                                        (click)="selectTarget($event)" class="form-control">
+                                </td>
+                                <td class="width-5p">
+                                    <input type="text" (keypress)="isNumberKey($event)"
+                                        (input)="CalculateServicePertageValue(item)"
+                                        (keyup.enter)="addTourEventDetailsNew('enter', $event)"
+                                        (click)="selectTarget($event)" [(ngModel)]="item.ServiceCharge"
                                         class="form-control">
                                 </td>
                                 <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addTourPackageDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceParcent" class="form-control">
-                                </td>
-                                <td class="width-5p">
-                                    <input type="text" (keypress)="isNumberKey($event)"
-                                        (keyup.enter)="addTourPackageDetailsNew('enter', $event)"
-                                        [(ngModel)]="item.ServiceCharge" class="form-control">
-                                </td>
-                                <td class="width-5p">
                                     <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="item.Discount"
-                                        (keyup.enter)="addTourPackageDetailsNew('enter', $event)" class="form-control">
+                                        (input)="CalculateTotalPayableAmount(item)" (click)="selectTarget($event)"
+                                        (keyup.enter)="addTourEventDetailsNew('enter', $event)" class="form-control">
                                 </td>
                                 <td class="width-10p">
                                     <input readonly type="text" (keypress)="isNumberKey($event)"
                                         [(ngModel)]="item.TotalPayableamt" class="form-control">
                                 </td>
-                                <td (click)="removeTourPackageDetails(i)"> <i class="fa fa-trash text-danger"
+                                <td (click)="removeTourEventDetails(i)"> <i class="fa fa-trash text-danger"
                                         aria-hidden="true"></i>
-                                </td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><b>Total </b> </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                        {{sumTotalDetailsAmt| number:'1.0-0' }}
+                                    </span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </div>
+
     </div>
     <div class="rightPanel-footer">
-        <button *ngIf="groupTourMasterObj?.ID == 0" class="btn btn-success pull-left ml-2">
+        <button *ngIf="groupTourMasterObj?.ID == 0" class="btn btn-success pull-left ml-2"
+            (click)="saveUpdateTourEventDetails()">
             <i class="fa fa-floppy-o" aria-hidden="true"></i>
             Save
         </button>
-        <button *ngIf="groupTourMasterObj?.ID > 0" type="button" class=" btn btn-success pull-left ml-2"><i
-                class="fa fa-plus"></i>
+        <button *ngIf="groupTourMasterObj?.ID > 0"   class=" btn btn-success pull-left ml-2"
+            (click)="saveUpdateTourEventDetails()"><i class="fa fa-plus"></i>
             Update
         </button>
+        <button  (click)="ResetEventDetailsModel()" class="btn btn-info pull-left ml-2"><i
+            class="fas fa-redo-alt"></i> Reset</button>
     </div>
 </div>

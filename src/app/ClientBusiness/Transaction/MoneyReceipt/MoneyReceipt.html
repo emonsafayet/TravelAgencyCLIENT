@@ -97,7 +97,7 @@
                                         <td (click)="EditItem(item)" title="Click to Edit the item."
                                             class="hoverPointer text-center"><i class="lnr lnr-pencil"></i></td>
                                         <td class="text-center width-5p">
-                                            <button  class="btn btn-info"  (click)="PrintMR(item)">
+                                            <button class="btn btn-info" (click)="PrintMR(item)">
                                                 Print
                                                 <i class="fa fa-download" aria-hidden="true" style="padding: 2px"></i>
                                             </button>
@@ -126,199 +126,87 @@
                     </div>
                     <div class="panel-body no-padding">
                         <div class="row">
-                            <!-- LEFT SIDE -->
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-6 mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Receipt Code</span>
-                                                <input readonly [(ngModel)]="mrMasterModelDTOObj.ReceiptCode"
-                                                    class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Registion Date</span>
-                                                <input type="date" data-date=""
-                                                    [attr.data-date]="mrMasterModelDTOObj.ReceivedDate"
-                                                    data-date-format="dd-MM-YYYY" class="form-control   form-control-sm"
-                                                    [(ngModel)]="mrMasterModelDTOObj.ReceivedDate" />
-                                            </div>
-                                        </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Receipt Code</span>
+                                        <input readonly [(ngModel)]="mrMasterModelDTOObj.ReceiptCode"
+                                            class="form-control" type="text">
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="col-md-6 mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Customer</span>
-                                                <select class="form-control"
-                                                    [(ngModel)]="mrMasterModelDTOObj.CustomerCode"
-                                                    (change)="onChange($event.target.value)">
-                                                    <option selected value="0">SELECT..</option>
-                                                    <ng-container *ngFor="let item of customerList">
-                                                        <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
-                                                        </option>
-                                                    </ng-container>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Total Paid Amount</span>
-                                                <input readonly [(ngModel)]="mrMasterModelDTOObj.TotalPayableAmount"
-                                                    class="form-control" type="number">
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Registion Date</span>
+                                        <input type="date" data-date=""
+                                            [attr.data-date]="mrMasterModelDTOObj.ReceivedDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control   form-control-sm"
+                                            [(ngModel)]="mrMasterModelDTOObj.ReceivedDate" />
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="col-md-6 mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Is Lock:</span>
-                                                <i *ngIf="mrMasterModelDTOObj?.IsLocked"
-                                                    (click)="mrMasterModelDTOObj.IsLocked = false"
-                                                    class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                    aria-hidden="true"></i>
-                                                <i *ngIf="! mrMasterModelDTOObj?.IsLocked"
-                                                    (click)="mrMasterModelDTOObj.IsLocked = true"
-                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                    aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Is Active:</span>
-                                                <i *ngIf="mrMasterModelDTOObj?.isActive"
-                                                    (click)="mrMasterModelDTOObj.isActive = false"
-                                                    class="fa fa-check-square-o font-size-35 ml-3  text-success"
-                                                    aria-hidden="true"></i>
-                                                <i *ngIf="! mrMasterModelDTOObj?.isActive"
-                                                    (click)="mrMasterModelDTOObj.isActive = true"
-                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
-                                                    aria-hidden="true"></i>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <select class="form-control" [(ngModel)]="mrMasterModelDTOObj.CustomerCode"
+                                            (change)="onChange($event.target.value)">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of customerList">
+                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="col-md-6  mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Remarks</span>
-                                                <textarea [(ngModel)]="mrMasterModelDTOObj.Remark" class="form-control"
-                                                    rows="4"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mt-3">
-                                            <div class="input-group" (click)="selectAllFullPaid(mrInvoiceDetailObj)"
-                                                title="Select/UnSelect All">
-                                                <span class="input-group-addon">Is Full Paid:</span>
-                                                <i *ngIf="isFullPaid"
-                                                    class="fa fa-check-square-o font-size-30 text-success"></i>
-                                                <i *ngIf="!isFullPaid"
-                                                    class="fa fa-square-o font-size-30 text-success"></i>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Total Paid Amount</span>
+                                        <input readonly [(ngModel)]="mrMasterModelDTOObj.TotalPayableAmount"
+                                            class="form-control" type="number">
                                     </div>
                                 </div>
                             </div>
-                            <!-- RIGHT -SIDE -->
-                            <div class="col-md-8">
-                                <div class="col-md-12">
-                                    <div class="panel">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Payment Status Details</h3>
-                                            <!-- <div class="right">
-                                                <button type="button" class="btn-toggle-collapse"><i
-                                                        class="lnr lnr-chevron-up"></i></button>
-
-                                            </div> -->
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="btn btn-success" (click)="addDetailsNew()"><i class="fa fa-plus"
-                                                    aria-hidden="true"></i>Add NEW
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-fixed">
-                                                        <table class="table table-striped">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="text-left width-20p">Payment Type</th>
-                                                                    <th class="text-left width-15p">Receive Amount</th>
-                                                                    <th class="text-left width-15p">Bank Name</th>
-                                                                    <th class="text-left width-15p">Cheque No</th>
-                                                                    <th class="text-left width-15p">Card</th>
-                                                                    <th class="text-left width-15p">POS Transaction No
-                                                                    </th>
-                                                                    <th class="text-left width-15p">TxnNo</th>
-                                                                    <th class="text-center width-2p">Cancel</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr class="font-size-10"
-                                                                    *ngFor="let item of mrPaymentDetailObj; let i = index">
-                                                                    <td class="text-left width-20p">
-                                                                        <select class="form-control  form-control-sm"
-                                                                            [(ngModel)]="item.PaymentType">
-                                                                            <option selected value="0">SELECT..</option>
-                                                                            <ng-container
-                                                                                *ngFor="let itm of PaymentTypeList">
-                                                                                <option value="{{itm.PaymentTypeCode}}">
-                                                                                    {{itm?.PaymentTypeName}}
-                                                                                </option>
-                                                                            </ng-container>
-                                                                        </select>
-                                                                    </td>
-
-                                                                    <td class="text-left  width-15p">
-                                                                        <input type="number"
-                                                                            class="form-control form-control-sm"
-                                                                            [(ngModel)]="item.ReceivedAmount">
-                                                                    </td>
-                                                                    <td class="text-left width-10p">
-                                                                        <select class="form-control form-control-sm"
-                                                                            [(ngModel)]="item.BankName">
-                                                                            <option selected value="0">SELECT..</option>
-                                                                            <ng-container
-                                                                                *ngFor="let itm of bankList; let i = index">
-                                                                                <option value="{{itm.BankCode}}">
-                                                                                    {{itm?.BankName}}</option>
-                                                                            </ng-container>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td class="text-left width-15p">
-                                                                        <input type="text"
-                                                                            class="form-control form-control-sm"
-                                                                            [(ngModel)]="item.ChequeNo">
-                                                                    </td>
-                                                                    <td class="text-left width-15p">
-                                                                        <input type="text"
-                                                                            class="form-control form-control-sm"
-                                                                            [(ngModel)]="item.CardNo">
-                                                                    </td>
-                                                                    <td class="text-left width-15p">
-                                                                        <input type="text"
-                                                                            class="form-control form-control-sm"
-                                                                            [(ngModel)]="item.POSTransactionNo">
-                                                                    </td>
-                                                                    <td class="text-left width-15p">
-                                                                        <input type="text"
-                                                                            class="form-control form-control-sm"
-                                                                            [(ngModel)]="item.TxnNo"
-                                                                            (keyup.enter)="addDetailsNew()">
-                                                                    </td>
-                                                                    <td class="text-center width-2p"
-                                                                        (click)="removeDetails(i)"> <i
-                                                                            class="fa fa-trash text-danger"
-                                                                            aria-hidden="true"></i>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Lock:</span>
+                                        <i *ngIf="mrMasterModelDTOObj?.IsLocked"
+                                            (click)="mrMasterModelDTOObj.IsLocked = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! mrMasterModelDTOObj?.IsLocked"
+                                            (click)="mrMasterModelDTOObj.IsLocked = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
                                     </div>
                                 </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Is Active:</span>
+                                        <i *ngIf="mrMasterModelDTOObj?.isActive"
+                                            (click)="mrMasterModelDTOObj.isActive = false"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! mrMasterModelDTOObj?.isActive"
+                                            (click)="mrMasterModelDTOObj.isActive = true"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group" (click)="selectAllFullPaid(mrInvoiceDetailObj)"
+                                        title="Select/UnSelect All">
+                                        <span class="input-group-addon">Is Full Paid:</span>
+                                        <i *ngIf="isFullPaid"
+                                            class="fa fa-check-square-o font-size-30 text-success"></i>
+                                        <i *ngIf="!isFullPaid" class="fa fa-square-o font-size-30 text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-3  mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Remarks</span>
+                                        <textarea [(ngModel)]="mrMasterModelDTOObj.Remark" class="form-control"
+                                            rows="2"></textarea>
+                                    </div>
+                                </div>                               
                             </div>
                         </div>
                     </div>
@@ -422,6 +310,99 @@
                 </div>
             </div>
         </div>
+        <!-- Start Payment Details -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Payment Status Details</h3>
+                        <!-- <div class="right">
+                        <button type="button" class="btn-toggle-collapse"><i
+                                class="lnr lnr-chevron-up"></i></button>
+
+                    </div> -->
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn btn-success" (click)="addDetailsNew()"><i class="fa fa-plus"
+                                aria-hidden="true"></i>Add NEW
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-fixed">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left width-20p">Payment Type</th>
+                                                <th class="text-left width-15p">Receive Amount</th>
+                                                <th class="text-left width-15p">Bank Name</th>
+                                                <th class="text-left width-15p">Cheque No</th>
+                                                <th class="text-left width-15p">Card</th>
+                                                <th class="text-left width-15p">POS Transaction No
+                                                </th>
+                                                <th class="text-left width-15p">TxnNo</th>
+                                                <th class="text-center width-2p">Cancel</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="font-size-10"
+                                                *ngFor="let item of mrPaymentDetailObj; let i = index">
+                                                <td class="text-left width-20p">
+                                                    <select class="form-control  form-control-sm"
+                                                        [(ngModel)]="item.PaymentType">
+                                                        <option selected value="0">SELECT..</option>
+                                                        <ng-container *ngFor="let itm of PaymentTypeList">
+                                                            <option value="{{itm.PaymentTypeCode}}">
+                                                                {{itm?.PaymentTypeName}}
+                                                            </option>
+                                                        </ng-container>
+                                                    </select>
+                                                </td>
+
+                                                <td class="text-left  width-15p">
+                                                    <input type="number" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.ReceivedAmount">
+                                                </td>
+                                                <td class="text-left width-10p">
+                                                    <select class="form-control form-control-sm"
+                                                        [(ngModel)]="item.BankName">
+                                                        <option selected value="0">SELECT..</option>
+                                                        <ng-container *ngFor="let itm of bankList; let i = index">
+                                                            <option value="{{itm.BankCode}}">
+                                                                {{itm?.BankName}}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                </td>
+                                                <td class="text-left width-15p">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.ChequeNo">
+                                                </td>
+                                                <td class="text-left width-15p">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.CardNo">
+                                                </td>
+                                                <td class="text-left width-15p">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.POSTransactionNo">
+                                                </td>
+                                                <td class="text-left width-15p">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.TxnNo" (keyup.enter)="addDetailsNew()">
+                                                </td>
+                                                <td class="text-center width-2p" (click)="removeDetails(i)"> <i
+                                                        class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <!-- END Service Payment Details -->
 
         <div class="row">
