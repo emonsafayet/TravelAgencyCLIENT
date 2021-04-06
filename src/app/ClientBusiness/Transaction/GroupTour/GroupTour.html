@@ -10,7 +10,7 @@
     </ol>
 </nav>
 <ul class="nav nav-tabs">
-    <li><a data-toggle="tab" class="hoverlink" href="#GroupTourList" id="GroupTourList_tab">Group Tour
+    <li (click)="getGroupTourList()" ><a data-toggle="tab" class="hoverlink" href="#GroupTourList" id="GroupTourList_tab">Group Tour
             List</a></li>
     <li class="active">
         <a data-toggle="tab" class="hoverlink" href="#GroupTourEntry" id="GroupTourEntry_tab">Group Tour Entry</a>
@@ -227,7 +227,7 @@
 
         <div class="row">
             <!-- Customer Details -->
-            <div class="col-sm-3">
+            <div class="col-sm-5">
                 <div class="panel">
                     <div class="panel-heading btn-toggle-collapse">
                         <span><b>Customer(s)</b> </span>
@@ -294,7 +294,7 @@
                 </div>
             </div>
             <!-- Participant Details-->
-            <div class="col-sm-9">
+            <div class="col-sm-7">
                 <div class="panel">
                     <div class="panel-heading btn-toggle-collapse">
                         <span><b>Participant(s)</b> </span>
@@ -381,7 +381,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="showEvent" class="rightPanel" style="width: 95%;min-width: 500px;">
+<div *ngIf="showEvent" class="rightPanel" style="width: 80%;min-width: 500px;">
     <div class="rightPanel-head">
         <span *ngIf="groupTourMasterObj?.ID == 0">
             <i class="fa fa-times-circle fa-close" aria-hidden="true" (click)="showEvent = false"

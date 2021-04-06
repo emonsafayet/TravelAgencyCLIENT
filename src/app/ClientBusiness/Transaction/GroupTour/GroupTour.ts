@@ -190,8 +190,6 @@ export class GroupTour implements OnInit {
 			);
 	}
 	setGroupTourEdit(Data: any) {
-
-		console.log(Data);
 		this.groupTourCustomerObj = Data["groupTourCustomer"];
 		this.groupTourParticipentObj = Data["groupTourMember"];
 		this.groupTourEventDetailDTO = Data["groupTourDetails"];
@@ -364,6 +362,7 @@ export class GroupTour implements OnInit {
 		}
 		else {
 			this.showEvent = true;
+			this.groupTourEventDetailDTO = [];
 			this.LoadDropDown();
 			this.filterCustomers();
 			this.setNewTourEventDetails();
