@@ -10,324 +10,373 @@
     </ol>
 </nav>
 <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" class="hoverlink" href="#GroupTourList" id="GroupTourList_tab">Group Tour
+    <li><a data-toggle="tab" class="hoverlink" href="#GroupTourList" id="GroupTourList_tab">Group Tour
             List</a></li>
-    <li><a data-toggle="tab" class="hoverlink" href="#GroupTourEntry" id="GroupTourEntry_tab">Group Tour Entry</a></li>
+    <li class="active">
+        <a data-toggle="tab" class="hoverlink" href="#GroupTourEntry" id="GroupTourEntry_tab">Group Tour Entry</a>
+    </li>
 
 </ul>
 <div class="tab-content" style="background-color: white;">
-    <!-- TAB LIST ; 1st TAB-->
-    <div id="GroupTourList" class="tab-pane fade in active">
-        <div class="panel">
-            <div class="panel-body">
-                <div class="table-fixed">
-                    <table class="table table-bordered table-p5 custom-table-hover">
-                        <thead>
-                            <tr>
-                                <th colspan="12"> </th>
-                            </tr>
-                            <tr>
-                                <th class="width-1p text-center">SN#</th>
-                                <th class="width-15p text-left">Code | Tour Date</th>
-                                <th class="width-2p text-center">No of Person</th>
-                                <th class="width-15p text-center">Customer | Company</th>
-                                <th class="width-15p text-center">Package </th>
-                                <th class="width-10p text-center">Currency</th>
-                                <th class="width-1p text-center">Service Charge</th>
-                                <th class="width-15p text-center">Card </th>
-                                <th class="width-10p text-center">Sales Reference</th>
-                                <th class="width-2p text-center">Remarks</th>
-                                <th class="width-1p text-center">Status</th>
-                                <th class="width-2p text-center">Action</th>
-                            </tr>
-                        </thead>
+    <!-- TAB LIST | 1st TAB-->
+    <div id="GroupTourList" class="tab-pane">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p5 custom-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="15">
+                                            <input class="form-control form-control-sm" placeholder="Search" type="text"
+                                                [(ngModel)]="SearchGroupTourList">
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="width-1p text-center">SN#</th>
+                                        <th class="width-15p text-left">Transaction Code</th>
+                                        <th class="width-15p text-left">Transaction Date</th>
+                                        <th class="width-2p text-center">Tour Name</th>
+                                        <th class="width-15p text-center">Tour Start Date</th>
+                                        <th class="width-15p text-center">Tour End Date </th>
+                                        <th class="width-10p text-center">NoofDays</th>
+                                        <th class="width-1p text-center">NoofNight</th>
+                                        <th class="width-15p text-center">NoofParticipent </th>
+                                        <th class="width-15p text-center">IsFinalLocked </th>
+                                        <th class="width-10p text-center">Sales Reference</th>
+                                        <th class="width-10p text-center">Prepared By</th>
+                                        <th class="width-2p text-center">Action</th>
+                                        <th class="width-2p text-center">Cancellation</th>
+                                        <th class="width-2p text-center">Print</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-size-12">
+                                    <tr
+                                        *ngFor="let item of grouptourList | searchFilter : SearchGroupTourList; let i = index">
+                                        <td class="text-right"> {{i+1}} </td>
+                                        <td class="text-left  width-10p"> {{item?.TransactionCode}} </td>
+                                        <td class="text-left  width-6p"> {{item?.TransactionDate | date: 'dd MMM
+                                            yyyy'}} </td>
+                                        <td class="text-left  width-20p"> {{item?.TourName}}
+                                        </td>
+                                        <td class="text-left  width-6p"> {{item?.TourStartDate | date: 'dd MMM
+                                            yyyy'}} </td>
+                                        <td class="text-left  width-6p"> {{item?.TourEndDate | date: 'dd MMM
+                                            yyyy'}} </td>
+                                        <td class="text-left width-5p"> {{item?.NoofDays}} </td>
+                                        <td class="text-left width-10p"> {{item?.NoofNight}} </td>
+                                        <td class="text-left width-10p"> {{item?.NoofParticipent}} </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item?.IsFinalLocked" class="text-success">Locked</span>
+                                            <span *ngIf="!item?.IsFinalLocked" class="text-danger">UnLock</span>
+                                        </td>
+                                        <td class="text-left width-10p"> {{item?.SalesStaff}} </td>
+                                        <td class="text-left width-10p"> {{item?.PreparedBy}} </td>
 
-                    </table>
+                                        <td (click)="EditItem(item)" title="Click to Edit the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i>
+                                        </td>
+                                        <td (click)="cancellation(item)" title="Click to Cancel the item."
+                                            class="hoverPointer text-center"><i class="lnr lnr-pencil"></i>
+                                        </td>
+                                        <td class="text-center width-5p">
+                                            <button class="btn btn-info" (click)="PrintGroupTour(item)">
+                                                Print
+                                                <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
-    <!-- TAB Entry ; 2nd TAB-->
-    <div id="GroupTourEntry" class="tab-panel fade">
-        <div class="tab-panel fade in active">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel">
-                        <div class="panel-heading btn-toggle-collapse">
-                            <span><b>Master</b> </span>
-                            <div class="right">
-                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+    <!-- TAB Entry | 2nd TAB-->
+    <div id="GroupTourEntry" class="tab-panel fade in active">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Master</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12  mt-3">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Transaction Code</span>
+                                        <input readonly [(ngModel)]="groupTourMasterObj.TransactionCode"
+                                            class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Transaction Date</span>
+                                        <input type="date" data-date=""
+                                            [attr.data-date]="groupTourMasterObj.TransactionDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="groupTourMasterObj.TransactionDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Tour Name</span>
+                                        <input [(ngModel)]="groupTourMasterObj.TourName" class="form-control"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Tour Start Date</span>
+                                        <input type="date" data-date=""
+                                            [attr.data-date]="groupTourMasterObj.TourStartDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="groupTourMasterObj.TourStartDate" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12  mt-3">
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Transaction Code</span>
-                                            <input readonly [(ngModel)]="groupTourMasterObj.TransactionCode"
-                                                class="form-control" type="text">
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Tour End Date</span>
+                                        <input type="date" data-date=""
+                                            [attr.data-date]="groupTourMasterObj.TourEndDate"
+                                            data-date-format="dd-MM-YYYY" class="form-control width-190 form-control-sm"
+                                            [(ngModel)]="groupTourMasterObj.TourEndDate" />
                                     </div>
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Transaction Date</span>
-                                            <input type="date" data-date=""
-                                                [attr.data-date]="groupTourMasterObj.TransactionDate"
-                                                data-date-format="dd-MM-YYYY"
-                                                class="form-control width-190 form-control-sm"
-                                                [(ngModel)]="groupTourMasterObj.TransactionDate" />
-                                        </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">No of Days</span>
+                                        <input [(ngModel)]="groupTourMasterObj.NoofDays" class="form-control"
+                                            type="number">
                                     </div>
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Tour Name</span>
-                                            <input [(ngModel)]="groupTourMasterObj.TourName" class="form-control"
-                                                type="text">
-                                        </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">No of Night</span>
+                                        <input [(ngModel)]="groupTourMasterObj.NoofNight" class="form-control"
+                                            type="number">
                                     </div>
-                                    <div class="col-md-3 mt-3">
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">No of Participant</span>
+                                        <input [(ngModel)]="groupTourMasterObj.NoofParticipent" class="form-control"
+                                            type="number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Sales Reference</span>
+                                        <select class="form-control"
+                                            [(ngModel)]="groupTourMasterObj.SalesReferenceCode">
+                                            <option selected value="0">SELECT..</option>
+                                            <ng-container *ngFor="let item of salesStaffList; let i = index">
+                                                <option value="{{item.EmployeeCode}}">{{item?.FullName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
                                         <div class="input-group">
-                                            <span class="input-group-addon">Tour Start Date</span>
-                                            <input type="date" data-date=""
-                                                [attr.data-date]="groupTourMasterObj.TourStartDate"
-                                                data-date-format="dd-MM-YYYY"
-                                                class="form-control width-190 form-control-sm"
-                                                [(ngModel)]="groupTourMasterObj.TourStartDate" />
+                                            <span class="input-group-addon">Is Final Locked</span>
+                                            <i *ngIf="groupTourMasterObj?.IsFinalLocked"
+                                                (click)="groupTourMasterObj.IsFinalLocked = false"
+                                                class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                aria-hidden="true"></i>
+                                            <i *ngIf="! groupTourMasterObj?.IsFinalLocked"
+                                                (click)="groupTourMasterObj.IsFinalLocked = true"
+                                                class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                aria-hidden="true"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Tour End Date</span>
-                                            <input type="date" data-date=""
-                                                [attr.data-date]="groupTourMasterObj.TourEndDate"
-                                                data-date-format="dd-MM-YYYY"
-                                                class="form-control width-190 form-control-sm"
-                                                [(ngModel)]="groupTourMasterObj.TourEndDate" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">No of Days</span>
-                                            <input [(ngModel)]="groupTourMasterObj.NoofDays" class="form-control"
-                                                type="number">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">No of Night</span>
-                                            <input [(ngModel)]="groupTourMasterObj.NoofNight" class="form-control"
-                                                type="number">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">No of Participant</span>
-                                            <input [(ngModel)]="groupTourMasterObj.NoofParticipent" class="form-control"
-                                                type="number">
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button *ngIf="groupTourMasterObj?.ID == 0" (click)="addEventNew()" type="button"
+                    class="btn btn-success"><i class="fa fa-plus"></i>
+                    Add Event</button>
+                <button *ngIf="groupTourMasterObj?.ID > 0" (click)="updateEventNew()" type="button"
+                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i>
+                    Update Event</button>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Customer Details -->
+            <div class="col-sm-3">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Customer(s)</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn btn-success" (click)="addCustomerDetailsNew('enter', $event)"><i
+                                        class="fa fa-plus" aria-hidden="true"></i>Add NEW
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Sales Reference</span>
-                                            <select class="form-control"
-                                                [(ngModel)]="groupTourMasterObj.SalesReferenceCode">
-                                                <option selected value="0">SELECT..</option>
-                                                <ng-container *ngFor="let item of salesStaffList; let i = index">
-                                                    <option value="{{item.EmployeeCode}}">{{item?.FullName}}</option>
-                                                </ng-container>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 mt-3">
-                                        <div class="input-group">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p5 custom-table-hover font-size-11">
+                                <thead>
+                                    <tr>
+                                        <th class="width-19p">Customer</th>
+                                        <th class="width-80p">Net Payable</th>
+                                        <th class="width-1p">X</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of groupTourCustomerObj; let i = index">
+                                        <td class="width-19p">
+                                            <ng-select [items]="customerList" bindLabel="CustomerName"
+                                                (change)="onCustomerChange($event)" bindValue="CustomerCode"
+                                                [(ngModel)]="item.CustomerCode">
+                                            </ng-select>
+
+                                        </td>
+                                        <td class="width-80p">
+                                            <input
+                                                class="form-control font-size-20 strong text-left text-success font-weight-bold"
+                                                readonly [(ngModel)]="item.NetPayableAmt" class="form-control"
+                                                type="number">
+                                        </td>
+                                        <td class="text-center width-1p" (click)="removeCustomerDetails(i)"> <i
+                                                class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td> <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                                Total </span>
+                                        </td>
+                                        <td>
+                                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                                {{sumofTotalCustomerNetPayableAmount| number:'1.0-0' }}
+                                            </span>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Participant Details-->
+            <div class="col-sm-9">
+                <div class="panel">
+                    <div class="panel-heading btn-toggle-collapse">
+                        <span><b>Participant(s)</b> </span>
+                        <div class="right">
+                            <button type="button"><i class="lnr lnr-chevron-up"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn btn-success" (click)="addParticipentDetailsNew('enter', $event)"><i
+                                        class="fa fa-plus" aria-hidden="true"></i>Add NEW
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-fixed">
+                            <table class="table table-bordered table-p5 custom-table-hover font-size-11">
+                                <thead>
+                                    <tr>
+                                        <th class="width-10p">Customer</th>
+                                        <th class="width-10p">Name Of Person</th>
+                                        <th class="width-10p">Passport No</th>
+                                        <th class="width-10p">Is Child</th>
+                                        <th class="width-1p">X</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of groupTourParticipentObj; let i = index">
+                                        <td>
+                                            <ng-select [items]="filtercustomerList" bindLabel="CustomerName"
+                                                bindValue="CustomerCode" [(ngModel)]="item.CustomerCode">
+                                            </ng-select>
+
+                                        </td>
+                                        <td class="width-10p">
+                                            <input type="text" [(ngModel)]="item.NameofParticipent"
+                                                class="form-control form-control-sm">
+                                        </td>
+                                        <td class="width-10p">
+                                            <input type="text" [(ngModel)]="item.PassportNo"
+                                                class="form-control form-control-sm">
+                                        </td>
+                                        <td class="width-10p">
                                             <div class="input-group">
-                                                <span class="input-group-addon">Is Final Locked</span>
-                                                <i *ngIf="groupTourMasterObj?.IsFinalLocked"
-                                                    (click)="groupTourMasterObj.IsFinalLocked = false"
-                                                    class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                                <i *ngIf="item?.IsChild" (click)="item.IsChild = false"
+                                                    class="fa fa-check-square-o font-size-55 ml-3  text-success"
                                                     aria-hidden="true"></i>
-                                                <i *ngIf="! groupTourMasterObj?.IsFinalLocked"
-                                                    (click)="groupTourMasterObj.IsFinalLocked = true"
-                                                    class="fa fa-square-o font-size-35 ml-3 text-success"
+                                                <i *ngIf="!item?.IsChild" (click)="item.IsChild = true"
+                                                    class="fa fa-square-o font-size-55 ml-3 text-success"
                                                     aria-hidden="true"></i>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        </td>
+                                        <td class="text-center" (click)="removeparticipentDetails(i)"> <i
+                                                class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button *ngIf="groupTourMasterObj?.ID == 0" (click)="addEventNew()" type="button"
-                        class="btn btn-success"><i class="fa fa-plus"></i>
-                        Add Event</button>
-                    <button *ngIf="groupTourMasterObj?.ID > 0" type="button" class=" btn btn-success ml-2"><i
-                            class="fa fa-plus"></i>
-                        Update Event</button>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Customer Details -->
-                <div class="col-sm-3">
-                    <div class="panel">
-                        <div class="panel-heading btn-toggle-collapse">
-                            <span><b>Customer(s)</b> </span>
-                            <div class="right">
-                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="btn btn-success" (click)="addCustomerDetailsNew('enter', $event)"><i
-                                            class="fa fa-plus" aria-hidden="true"></i>Add NEW
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-fixed">
-                                <table class="table table-bordered table-p5 custom-table-hover font-size-11">
-                                    <thead>
-                                        <tr>
-                                            <th class="width-19p">Customer</th>
-                                            <th class="width-80p">Net Payable</th>
-                                            <th class="width-1p">X</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of groupTourCustomerObj; let i = index">
-                                            <td class="width-19p">
-                                                <ng-select [items]="customerList" bindLabel="CustomerName"
-                                                    (change)="onCustomerChange($event)" bindValue="CustomerCode"
-                                                    [(ngModel)]="item.CustomerCode">
-                                                </ng-select>
-
-                                            </td>
-                                            <td class="width-80p">
-                                                <input
-                                                    class="form-control font-size-20 strong text-left text-success font-weight-bold"
-                                                    readonly [(ngModel)]="item.NetPayableAmt" class="form-control"
-                                                    type="number">
-                                            </td>
-                                            <td class="text-center width-1p" (click)="removeCustomerDetails(i)"> <i
-                                                    class="fa fa-trash text-danger" aria-hidden="true"></i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td>Total</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Participant Details-->
-                <div class="col-sm-9">
-                    <div class="panel">
-                        <div class="panel-heading btn-toggle-collapse">
-                            <span><b>Participant(s)</b> </span>
-                            <div class="right">
-                                <button type="button"><i class="lnr lnr-chevron-up"></i></button>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="btn btn-success" (click)="addParticipentDetailsNew('enter', $event)"><i
-                                            class="fa fa-plus" aria-hidden="true"></i>Add NEW
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-fixed">
-                                <table class="table table-bordered table-p5 custom-table-hover font-size-11">
-                                    <thead>
-                                        <tr>
-                                            <th class="width-10p">Customer</th>
-                                            <th class="width-10p">Name Of Person</th>
-                                            <th class="width-10p">Passport No</th>
-                                            <th class="width-10p">Is Child</th>
-                                            <th class="width-1p">X</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of groupTourParticipentObj; let i = index">
-                                            <td>
-                                                <ng-select [items]="filtercustomerList" bindLabel="CustomerName"
-                                                    bindValue="CustomerCode" [(ngModel)]="item.CustomerCode">
-                                                </ng-select>
-
-                                            </td>
-                                            <td class="width-10p">
-                                                <input type="text" [(ngModel)]="item.NameofParticipent"
-                                                    class="form-control form-control-sm">
-                                            </td>
-                                            <td class="width-10p">
-                                                <input type="text" [(ngModel)]="item.PassportNo"
-                                                    class="form-control form-control-sm">
-                                            </td>
-                                            <td class="width-10p">
-                                                <div class="input-group">
-                                                    <i *ngIf="item?.IsChild" (click)="item.IsChild = false"
-                                                        class="fa fa-check-square-o font-size-55 ml-3  text-success"
-                                                        aria-hidden="true"></i>
-                                                    <i *ngIf="!item?.IsChild" (click)="item.IsChild = true"
-                                                        class="fa fa-square-o font-size-55 ml-3 text-success"
-                                                        aria-hidden="true"></i>
-                                                </div>
-                                            </td>
-                                            <td class="text-center" (click)="removeparticipentDetails(i)"> <i
-                                                    class="fa fa-trash text-danger" aria-hidden="true"></i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 mt-3">
-                    <button *ngIf="groupTourMasterObj?.ID == 0" (click)="saveUpdateGroupTour()" type="button"
-                        class="btn btn-success"><i class="fa fa-plus"></i>
-                        Save</button>
-                    <button *ngIf="groupTourMasterObj?.ID > 0" (click)="saveUpdateGroupTour()" type="button"
-                        class=" btn btn-success ml-2"><i class="fa fa-plus"></i>
-                        Update</button>
-                    <!-- <button *ngIf="groupTourMasterObj?.ID > 0" class=" btn btn-info ml-2"
+        </div>
+        <div class="row">
+            <div class="col-md-3 mt-3">
+                <button *ngIf="groupTourMasterObj?.ID == 0" (click)="saveUpdateGroupTour()" type="button"
+                    class="btn btn-success"><i class="fa fa-plus"></i>
+                    Save</button>
+                <button *ngIf="groupTourMasterObj?.ID > 0" (click)="saveUpdateGroupTour()" type="button"
+                    class=" btn btn-success ml-2"><i class="fa fa-plus"></i>
+                    Update</button>
+                <!-- <button *ngIf="groupTourMasterObj?.ID > 0" class=" btn btn-info ml-2"
                         (click)="PrintHotelBooking(hotelBookingObj)">
                         Print
                         <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
                     </button> -->
-                    <button type="button" (click)="ResetMasterModel()" class="btn btn-info ml-2"><i
-                            class="fas fa-redo-alt"></i> Reset</button>
-                </div>
+                <button type="button" (click)="ResetMasterModel()" class="btn btn-info ml-2"><i
+                        class="fas fa-redo-alt"></i> Reset</button>
             </div>
         </div>
     </div>
@@ -366,28 +415,30 @@
                     <table class="table table-bordered table-p5 custom-table-hover font-size-11">
                         <thead>
                             <tr>
-                                <th class="width-10p">Service</th>
-                                <th class="width-10p">Customer</th>
-                                <th class="width-10p">Name of Participant</th>
-                                <th class="width-10p">Provider</th>
-                                <th class="width-10p">Airlines</th>
-                                <th class="width-10p">Country</th>
-                                <th class="width-10p">Route</th>
-                                <th class="width-10p">Hote Name</th>
-                                <th class="width-10p">Room Type</th>
-                                <th class="width-5p">Card Charge Amt</th>
-                                <th class="width-5p">Main Price</th>
-                                <th class="width-5p">Govt Tax</th>
-                                <th class="width-5p">Commision</th>
-                                <th class="width-5p">Service(%)</th>
-                                <th class="width-5p">Service Charge</th>
-                                <th class="width-5p">Discount</th>
-                                <th class="width-5p">Total Payable Amt.</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Service</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Customer</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Name of Participant
+                                </th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Provider</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Airlines</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Country</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Route</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Hote Name</th>
+                                <th class="width-10p" style="font-size: 12px;font-weight:bold;">Room Type</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Card Charge Amt</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Main Price</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Govt Tax</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Commision</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Service(%)</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Service Charge</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Discount</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Total Payable Amt.
+                                </th>
                                 <th class="width-1p">X</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of groupTourEventDetailDTO; let i = index">
+                            <tr style="font-size: 11px;" *ngFor="let item of groupTourEventDetailDTO; let i = index">
                                 <td class="width-10p">
                                     <div class="input-group">
                                         <select class="form-control form-control-sm text-right font-size-11"
@@ -403,7 +454,7 @@
                                 </td>
                                 <td class="width-10p">
                                     <div class="input-group">
-                                        <select class="form-control form-control-sm text-right font-size-11"
+                                        <select class="form-control form-control-sm text-right font-size-9"
                                             (change)="onCustomerChangeForParticipantFilter(item)"
                                             [(ngModel)]="item.CustomerCode">
                                             <option selected value="0">SELECT</option>
@@ -417,7 +468,7 @@
                                 </td>
                                 <td class="width-10p">
                                     <div class="input-group">
-                                        <select class="form-control form-control-sm text-right font-size-11"
+                                        <select class="form-control form-control-sm text-right font-size-9"
                                             [(ngModel)]="item.NameofParticipent">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of item?.ParticipantList">
@@ -428,9 +479,9 @@
                                         </select>
                                     </div>
                                 </td>
-                                <td class="width-15p">
+                                <td class="width-10p">
                                     <div class="input-group">
-                                        <select class="form-control form-control-sm text-right font-size-11"
+                                        <select class="form-control form-control-sm text-right font-size-9"
                                             [(ngModel)]="item.ProviderCode">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of travelProviderList">
@@ -443,7 +494,7 @@
                                 </td>
                                 <td class="width-10p">
                                     <div class="input-group">
-                                        <select class="form-control form-control-sm text-right font-size-11"
+                                        <select class="form-control form-control-sm text-right font-size-9"
                                             [(ngModel)]="item.AirlinesCode">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of airLineList">
@@ -456,7 +507,7 @@
                                 </td>
                                 <td class="width-10p">
                                     <div class="input-group">
-                                        <select class="form-control form-control-sm text-right font-size-11"
+                                        <select class="form-control form-control-sm text-right font-size-9"
                                             [(ngModel)]="item.CountryCode">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of countryList">
@@ -475,7 +526,7 @@
                                 </td>
                                 <td class="width-10p">
                                     <div class="input-group">
-                                        <select class="form-control form-control-sm text-right font-size-11"
+                                        <select class="form-control form-control-sm text-right font-size-9"
                                             [(ngModel)]="item.RoomType">
                                             <option selected value="0">SELECT</option>
                                             <ng-container *ngFor="let info  of roomTypeList">
@@ -568,11 +619,131 @@
             <i class="fa fa-floppy-o" aria-hidden="true"></i>
             Save
         </button>
-        <button *ngIf="groupTourMasterObj?.ID > 0"   class=" btn btn-success pull-left ml-2"
+        <button *ngIf="groupTourMasterObj?.ID > 0" class=" btn btn-success pull-left ml-2"
             (click)="saveUpdateTourEventDetails()"><i class="fa fa-plus"></i>
             Update
         </button>
-        <button  (click)="ResetEventDetailsModel()" class="btn btn-info pull-left ml-2"><i
-            class="fas fa-redo-alt"></i> Reset</button>
+        <button (click)="ResetEventDetailsModel()" class="btn btn-info pull-left ml-2"><i class="fas fa-redo-alt"></i>
+            Reset</button>
+    </div>
+</div>
+
+<div *ngIf="showCancellationForm" class="rightPanel" style="width: 60%;min-width: 500px;">
+    <div class="rightPanel-head">
+        <span>
+            <i class="fa fa-times-circle fa-close" aria-hidden="true" (click)="showCancellationForm = false"
+                title="Close this panel"></i>
+            Event Cancellation
+        </span>
+    </div>
+    <div class="rightPanel-content">
+        <!-- Event Detail -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-fixed">
+                    <table class="table table-bordered table-p5 custom-table-hover font-size-11">
+                        <thead>
+                            <tr>
+                                <th class="width-15" style="font-size: 12px;font-weight:bold;">Service</th>
+                                <th class="width-15" style="font-size: 12px;font-weight:bold;">Customer</th>
+                                <th class="width-15" style="font-size: 12px;font-weight:bold;">Name of Participant
+                                </th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Card Charge Amt</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Main Price</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Govt Tax</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Commision</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Service Charge</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Discount</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">isCancel</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Cancellation Amount</th>
+                                <th class="width-5p" style="font-size: 12px;font-weight:bold;">Total Payable Amt.
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="font-size-12" *ngFor="let item of groupTourEventDetailDTO">
+                                <td>
+                                    <input readonly [(ngModel)]="item.ServiceCode" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.CustomerCode" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.NameofParticipent" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.CardChargeAmount" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.MainPrice" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.GovtTax" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.Commision" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.ServiceCharge" class="form-control">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.Discount" class="form-control">
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <i *ngIf="item?.IsCancel" (click)="isUnCheckCancel(item)"
+                                            class="fa fa-check-square-o font-size-35 ml-3  text-success"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="! item?.IsCancel" (click)="isCheckCancel(item)"
+                                            class="fa fa-square-o font-size-35 ml-3 text-success"
+                                            aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="width-10p" type="text" class="form-control form-control-sm text-right"
+                                        [(ngModel)]="item.CancelationCharge" (keypress)="isNumberKey($event)"
+                                        (input)="CalculateCancelationCharge(item)" (click)="selectTarget($event)"
+                                        [disabled]="! item?.IsCancel">
+                                </td>
+                                <td>
+                                    <input readonly [(ngModel)]="item.TotalPayableamt" class="form-control">
+                                </td>
+
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td> 
+                                <td></td> 
+                                <td>
+                                    <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                        TOTAL
+                                    </span>
+                                </td>
+                                <td></td>
+                                <td></td> 
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td> <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                        {{sumTotalDetailsAmt| number:'1.0-0' }}
+                                    </span>
+
+                                </td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rightPanel-footer">
+        <button class=" btn btn-success pull-left ml-2" (click)="UpdateForCancellation()"><i class="fa fa-plus"></i>
+            Update
+        </button>
     </div>
 </div>

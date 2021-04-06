@@ -86,6 +86,8 @@ export class TransactionCommonService {
 
 	GetGroupTourList() { return this.masterService.get("client/business/travel/transaction/group/tour/list"); }
 
+	GetGroupTourDetailsbyTransactionCode(TransactionCode: string) { return this.masterService.get("client/business/travel/transaction/group/tour/by/transaction/Code/" + TransactionCode); }
+	updateGroupTourCancellation(obj: any) { return this.masterService.post(`client/business/travel/transaction/group/tour/cancellation`, obj); }
 	// END GROUP TOUR 
 
 	//START HOLIDAY PACKAGE TOUR

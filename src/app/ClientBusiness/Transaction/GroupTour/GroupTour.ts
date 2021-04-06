@@ -33,16 +33,20 @@ export class GroupTour implements OnInit {
 	ParticipantList: any[] = [];
 
 	sumTotalDetailsAmt: any = 0;
+	sumofTotalCustomerNetPayableAmount: any = 0;
 
 	groupTourMasterObj: GroupTourMasterDTO = new GroupTourMasterDTO();
 	groupTourCustomerObj: GroupTourCustomerDTO[] = [];
 	groupTourParticipentObj: GroupTourMemberDTO[] = [];
+	cancellingGroupTourRegObj: GroupTourMasterDTO = new GroupTourMasterDTO();
 
 	groupTourEventDetailDTO: GroupTourEventDetailDTO[] = [];
-
+	grouptourList: any[] = [];
 	showEvent: boolean = false;
+	showCancellationForm: boolean = false;
 	salesStaffList: any[] = [];
 	grouptourinfoList: any[] = [];
+	SearchGroupTourList: string = '';
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService, private transactionCommonService: TransactionCommonService) { }
 
@@ -52,12 +56,26 @@ export class GroupTour implements OnInit {
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 		this.ParticipantList = [];
 		this.setNewCustomerDetails();
-
+		this.getGroupTourList();
 		this.groupTourMasterObj.TransactionDate = moment().format(Common.SQLDateFormat);
 		this.GETSalesStaffLIST();
 		this.GETCustomerLIST();
 		this.getServiceList();
 		this.Notification.LoadingRemove();
+	}
+	//GET LIST
+	getGroupTourList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.transactionCommonService.GetGroupTourList()
+			.subscribe(
+				data => this.setGroupTourList(data),
+				(error) => this.showError(error)
+			);
+	}
+	setGroupTourList(data) {
+		this.grouptourList = data;
+		this.Notification.LoadingRemove();
+
 	}
 	saveUpdateGroupTour() {
 		if (this.groupTourMasterObj.ID > 0)
@@ -161,12 +179,36 @@ export class GroupTour implements OnInit {
 		});
 		return result;
 	}
+	EditItem(item) {
+		this.groupTourMasterObj = JSON.parse(JSON.stringify(item));
+		this.groupTourMasterObj.TransactionDate = moment(new Date(this.groupTourMasterObj.TransactionDate)).format(Common.SQLDateFormat);
 
+		this.transactionCommonService.GetGroupTourDetailsbyTransactionCode(this.groupTourMasterObj.TransactionCode)
+			.subscribe(
+				data => this.setGroupTourEdit(data),
+				(error) => this.showError(error)
+			);
+	}
+	setGroupTourEdit(Data: any) {
+
+		console.log(Data);
+		this.groupTourCustomerObj = Data["groupTourCustomer"];
+		this.groupTourParticipentObj = Data["groupTourMember"];
+		this.groupTourEventDetailDTO = Data["groupTourDetails"];
+		this.groupTourMasterObj.TourStartDate = moment(new Date(this.groupTourMasterObj.TourStartDate)).format(Common.SQLDateFormat);
+		this.groupTourMasterObj.TourEndDate = moment(new Date(this.groupTourMasterObj.TourEndDate)).format(Common.SQLDateFormat);
+
+		this.sumofTotalCustomerNetPayableAmount = Common.calculateTotal(this.groupTourCustomerObj, "NetPayableAmt");
+		this.filterCustomers();
+		document.getElementById('GroupTourEntry_tab').click();
+
+	}
 	ResetMasterModel() {
 		this.groupTourMasterObj = new GroupTourMasterDTO();
 		this.groupTourMasterObj.TransactionDate = moment().format(Common.SQLDateFormat);
 		this.setNewCustomerDetails();
 		this.setNewParticipentDetails();
+		this.setNewTourEventDetails();
 	}
 
 	//Customer
@@ -192,7 +234,7 @@ export class GroupTour implements OnInit {
 		this.addNewColumnForParticipentDetail();
 	}
 	addParticipentDetailsNew(value, event) {
-		debugger
+
 		if (!this.validationForCustomerSelection()) return;
 		this.filterCustomers();
 		this.addNewColumnForParticipentDetail();
@@ -288,7 +330,7 @@ export class GroupTour implements OnInit {
 		this.filterCustomers();
 	}
 	//Start Tour Event Details
-	setNewTourEventDetails() {	
+	setNewTourEventDetails() {
 		this.addNewColumnForTourEventDetail();
 	}
 	addNewColumnForTourEventDetail() {
@@ -326,6 +368,15 @@ export class GroupTour implements OnInit {
 			this.filterCustomers();
 			this.setNewTourEventDetails();
 		}
+	}
+	updateEventNew() {
+		this.showEvent = true;
+		this.LoadDropDown();
+		this.filterCustomers();
+		this.groupTourEventDetailDTO.forEach(element => {
+			this.onCustomerChangeForParticipantFilter(element);
+		});
+		this.sumTotalDetailsAmt = Common.calculateTotal(this.groupTourEventDetailDTO, "TotalPayableamt");
 	}
 	LoadDropDown() {
 		this.getCountryList();
@@ -407,8 +458,7 @@ export class GroupTour implements OnInit {
 	//Details Save And Validation 
 	saveUpdateTourEventDetails() {
 		//validation
-		if (!this.validationEventDetails()) return;
-		console.log(this.groupTourEventDetailDTO);
+		//	if (!this.validationEventDetails()) return; 
 		this.showEvent = false;
 	}
 	validationEventDetails() {
@@ -431,59 +481,61 @@ export class GroupTour implements OnInit {
 					result = false;
 					return;
 				}
-				//visa validation
-				debugger;
-				if (item.ServiceCode = "PS-0001") {
-					if (item.CountryCode == "0" || Library.isNuLLorUndefined(item.CountryCode)) {
-						this.Notification.Warning('Please Select country for visa registration.');
-						result = false;
-						return;
-					}
-				}
-				//online validation
-				if (item.ServiceCode = "PS-0002") {
-					if (Library.isNullOrZero(item.ServiceCharge)) {
-						this.Notification.Warning('Please Enter service charge for online registration.');
-						result = false;
-						return;
-					}
-				}
-				//air ticket validation
-				if (item.ServiceCode = "PS-0003") {
-					if (item.CountryCode == "0" || Library.isNuLLorUndefined(item.CountryCode)) {
-						this.Notification.Warning('Please Select country for air ticket registration.');
-						result = false;
-						return;
-					}
-					if (item.AirlinesCode == "0" || Library.isNuLLorUndefined(item.AirlinesCode)) {
-						this.Notification.Warning('Please Select Air line for air ticket registration.');
-						result = false;
-						return;
-					}
-					if (Library.isNuLLorUndefined(item.Route)) {
-						this.Notification.Warning('Please Enter Route for air ticket registration.');
-						result = false;
-						return;
-					}
-				}
-				//Hotel booking validation
-				if (item.ServiceCode = "PS-0004") {
-					if (Library.isNuLLorUndefined(item.HotelName)) {
-						this.Notification.Warning('Please Enter hotel name for hotel booking registration.');
-						result = false;
-						return;
-					}
-					if (Library.isNuLLorUndefined(item.RoomType)) {
-						this.Notification.Warning('Please Enter hotel room type for hotel booking registration.');
-						result = false;
-						return;
-					}
-				}
 				if (Library.isNullOrZero(item.MainPrice)) {
 					this.Notification.Warning('Please Enter main price.');
 					result = false;
 					return;
 				}
+				/*
+					//visa validation 
+					if (item.ServiceCode = "PS-0001") {
+						if (item.CountryCode == "0" || Library.isNuLLorUndefined(item.CountryCode)) {
+							this.Notification.Warning('Please Select country for visa registration.');
+							result = false;
+							return;
+						}
+					}
+					//online validation
+					if (item.ServiceCode = "PS-0002") {
+						if (Library.isNullOrZero(item.ServiceCharge)) {
+							this.Notification.Warning('Please Enter service charge for online registration.');
+							result = false;
+							return;
+						}
+					}
+					//air ticket validation
+					if (item.ServiceCode = "PS-0003") {
+						if (item.CountryCode == "0" || Library.isNuLLorUndefined(item.CountryCode)) {
+							this.Notification.Warning('Please Select country for air ticket registration.');
+							result = false;
+							return;
+						}
+						if (item.AirlinesCode == "0" || Library.isNuLLorUndefined(item.AirlinesCode)) {
+							this.Notification.Warning('Please Select Air line for air ticket registration.');
+							result = false;
+							return;
+						}
+						if (Library.isNuLLorUndefined(item.Route)) {
+							this.Notification.Warning('Please Enter Route for air ticket registration.');
+							result = false;
+							return;
+						}
+					}
+					//Hotel booking validation
+					if (item.ServiceCode = "PS-0004") {
+						if (Library.isNuLLorUndefined(item.HotelName)) {
+							this.Notification.Warning('Please Enter hotel name for hotel booking registration.');
+							result = false;
+							return;
+						}
+						if (Library.isNuLLorUndefined(item.RoomType)) {
+							this.Notification.Warning('Please Enter hotel room type for hotel booking registration.');
+							result = false;
+							return;
+						}
+					}
+				*/
+
 				validDetails += 1;
 			}
 			else {
@@ -497,11 +549,62 @@ export class GroupTour implements OnInit {
 	ResetEventDetailsModel() {
 		this.groupTourEventDetailDTO = [];
 		this.setNewTourEventDetails();
-		this.sumTotalDetailsAmt = 0; 
-	
+		this.sumTotalDetailsAmt = 0;
+
 	}
 
+	/* Group Tour Cancellation*/
+	cancellation(obj) {
+		this.showCancellationForm = true;
+		this.transactionCommonService.GetGroupTourDetailsbyTransactionCode(obj.TransactionCode)
+			.subscribe(
+				data => this.setGroupTourEventDetailsForCancellationForom(data),
+				(error) => this.showError(error)
+			);
+	}
+	setGroupTourEventDetailsForCancellationForom(Data: any) {
+		this.groupTourEventDetailDTO = Data["groupTourDetails"];
+		this.getpayableAmount()
+	}
+	UpdateForCancellation() {
+		this.groupTourMasterObj.UpdatedBy = this.user.EmployeeCode;
+		//update customer netAmount 
+		console.log(this.groupTourCustomerObj);
+		var details = JSON.stringify(this.groupTourEventDetailDTO);
+		this.groupTourMasterObj.eventDetails = Library.getBase64(details);
+		this.transactionCommonService.updateGroupTourCancellation(this.groupTourMasterObj)
+			.subscribe(
+				data => this.setupdateGroupTourCancellation(data),
+				(error) => this.showError(error)
+			);
+	}
+	setupdateGroupTourCancellation(Data: any) {
+		this.showCancellationForm = false;
+		this.Notification.Warning(Data);
+	}
+	isCheckCancel(obj) {
+		obj.IsCancel = true;
+		this.CalculateCancelationCharge(obj);
+	}
+
+	isUnCheckCancel(obj) {
+		obj.IsCancel = false;
+		obj.CancelationCharge = 0;
+		obj.TotalPayableamt = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.MainPrice))) +
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.GovtTax))) +
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceCharge))) -
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.Discount)));
+		this.getpayableAmount();
+	}
 	// Calculation
+	CalculateCancelationCharge(obj) {
+		this.sumTotalDetailsAmt = 0;
+		obj.TotalPayableamt = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceCharge))) +
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.Commision))) +
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.CancelationCharge))) -
+			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.Discount)));
+		this.getpayableAmount();
+	}
 	CalculateTotalPayableAmount(obj) {
 		this.sumTotalDetailsAmt = 0;
 		obj.TotalPayableamt = (Number(Library.isUndefinedOrNullOrZeroReturn0(obj.MainPrice))) +
@@ -513,7 +616,6 @@ export class GroupTour implements OnInit {
 	}
 
 	CalculateCustomerNetPayableAmount() {
-		//this.groupTourCustomerObj;
 		var filterCustomer = this.groupTourEventDetailDTO.map(item => item.CustomerCode).filter((value, index, self) => self.indexOf(value) === index);
 
 		filterCustomer.forEach(element => {
@@ -524,6 +626,7 @@ export class GroupTour implements OnInit {
 				selectedCutomer.NetPayableAmt = selectedCutomer.NetPayableAmt + Number(element.TotalPayableamt);
 			});
 		});
+		this.sumofTotalCustomerNetPayableAmount = Common.calculateTotal(this.groupTourCustomerObj, "NetPayableAmt");
 	}
 
 	CalculateServiceChargeValue(obj) {
@@ -538,12 +641,7 @@ export class GroupTour implements OnInit {
 		obj.ServiceParcent = Number(obj.ServiceParcent).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
 	}
-
 	getpayableAmount() {
 		this.sumTotalDetailsAmt = Common.calculateTotal(this.groupTourEventDetailDTO, "TotalPayableamt");
-		// this.groupTourCustomerObj. = this.sumOfTotalValue;
-
 	}
-
-
 }
