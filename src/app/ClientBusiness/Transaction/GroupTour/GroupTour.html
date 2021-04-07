@@ -370,11 +370,11 @@
                 <button *ngIf="groupTourMasterObj?.ID > 0" (click)="saveUpdateGroupTour()" type="button"
                     class=" btn btn-success ml-2"><i class="fa fa-plus"></i>
                     Update</button>
-                <!-- <button *ngIf="groupTourMasterObj?.ID > 0" class=" btn btn-info ml-2"
-                        (click)="PrintHotelBooking(hotelBookingObj)">
+                <button *ngIf="groupTourMasterObj?.ID > 0" class=" btn btn-info ml-2"
+                        (click)="PrintGroupTour(groupTourMasterObj)">
                         Print
                         <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
-                    </button> -->
+                    </button>
                 <button type="button" (click)="ResetMasterModel()" class="btn btn-info ml-2"><i
                         class="fas fa-redo-alt"></i> Reset</button>
             </div>
