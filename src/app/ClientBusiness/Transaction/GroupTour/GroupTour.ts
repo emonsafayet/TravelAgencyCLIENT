@@ -15,6 +15,7 @@ import {
 } from '../../../Classes/Transaction/GroupTourModel';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { Config } from 'src/app/config';
 
 declare var moment: any;
 @Component({
@@ -62,6 +63,10 @@ export class GroupTour implements OnInit {
 		this.GETCustomerLIST();
 		this.getServiceList();
 		this.Notification.LoadingRemove();
+	}
+	PrintGroupTour(obj){
+		var transactionCode = obj.TransactionCode;
+		window.open(`${Config.getBaseUrl}TransactionReport/GroupTour?TransactionCode=${transactionCode}`, "_blank");
 	}
 	//GET LIST
 	getGroupTourList() {
