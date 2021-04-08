@@ -437,8 +437,7 @@ export class GroupTour implements OnInit {
 			);
 	}
 	setServiceList(data) {
-		this.serviceList = data;
-		console.log(data);
+		this.serviceList = data; 
 		this.Notification.LoadingRemove();
 	}
 	//End Event Details Drop Down

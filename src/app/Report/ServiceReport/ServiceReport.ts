@@ -54,7 +54,7 @@ export class ServiceReport implements OnInit {
 		this.rptService.getServiceTransactionDetail(this.ReportModelObj.FromDate,this.ReportModelObj.ToDate,obj.ServiceCode)
 			.subscribe(
 				data => this.ServiceTransactionDetail(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	ServiceTransactionDetail(data) {
@@ -68,5 +68,8 @@ export class ServiceReport implements OnInit {
 	PrintSeriveDetailsByServiceCode(obj){ 
 		window.open(`${Config.getBaseUrl}TransactionReport/GetSeriveDetails?ServiceCode=${obj.ServiceCode}&FromDate=${this.ReportModelObj.FromDate}&ToDate=${this.ReportModelObj.ToDate}`, "_blank"); 
 	}
-
+	showError(error) {
+		this.Notification.Error(error);
+		this.Notification.LoadingRemove();
+	}
 }
