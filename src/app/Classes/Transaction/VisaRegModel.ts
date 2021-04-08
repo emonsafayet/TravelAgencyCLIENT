@@ -26,6 +26,7 @@ export class VisaDetailDTO{
 	public TransactionCode : string;
 	public NameofPerson : string;
 	public VisaType : string="0";
+	public ProviderCode : string="0";
 	public VisaCountry : string="0";
 	public PassportNo : string;
 	public CardChargeAmount : number=0;

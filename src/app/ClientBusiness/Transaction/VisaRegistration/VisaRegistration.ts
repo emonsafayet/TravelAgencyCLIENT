@@ -30,6 +30,7 @@ export class VisaRegistration implements OnInit {
 	visaTypeList: any[] = [];
 	salesStaffList: any[] = [];
 	activeCurrencyRateList: any[] = [];
+	travelProviderList: any[] = [];
 	countryList: any[] = [];
 	cardList: any[] = [];
 	SearchVisaRegList: string = '';
@@ -49,7 +50,8 @@ export class VisaRegistration implements OnInit {
 		this.GETCardLIST();
 		this.getCountryList();
 		this.GETActiveCurrencyRateLIST();
-		this.GETVisaTypeLIST();	 
+		this.GETVisaTypeLIST();
+		this.GetTravelProviderList();
 		this.Notification.LoadingRemove();
 	}
 	isNumberKey(evt) {
@@ -86,7 +88,7 @@ export class VisaRegistration implements OnInit {
 		document.getElementById('visaRegistrationEntry_tab').click();
 		this.ResetModel();
 		this.Notification.LoadingRemove();
-	 
+
 	}
 	ResetModel() {
 		this.visaMasterObj = new VisaMasterDTO();
@@ -134,8 +136,8 @@ export class VisaRegistration implements OnInit {
 					this.Notification.Warning('Please Enter Visa Fee Value.');
 					result = false;
 					return;
-				} 
-				
+				}
+
 				validDetails += 1;
 			}
 			else {
@@ -183,10 +185,10 @@ export class VisaRegistration implements OnInit {
 			);
 
 	}
-	setVisaRegEdit(Data: any) {  
+	setVisaRegEdit(Data: any) {
 		this.visaDetailsObj = Data;
 		this.sumOfTotalValue = Common.calculateTotal(this.visaDetailsObj, "TotalPayableAmt");
-		 document.getElementById('visaRegistrationEntry_tab').click();
+		document.getElementById('visaRegistrationEntry_tab').click();
 	}
 	GETVisaTegLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -279,7 +281,18 @@ export class VisaRegistration implements OnInit {
 	setVisaTypeLIST(data) {
 		this.visaTypeList = data;
 		this.Notification.LoadingRemove();
-
+	}
+	GetTravelProviderList() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getProviderList()
+			.subscribe(
+				data => this.setTravelProviderList(data),
+				error => this.Notification.Error(error)
+			);
+	}
+	setTravelProviderList(data) {
+		this.travelProviderList = data;
+		this.Notification.LoadingRemove();
 	}
 
 	onCurrencyChange(item) {
@@ -300,8 +313,8 @@ export class VisaRegistration implements OnInit {
 		this.countryList = data;
 		this.Notification.LoadingRemove();
 	}
-	PrintVisaReg(obj)  {
-		var TransactionCode = obj.TransactionCode; 
+	PrintVisaReg(obj) {
+		var TransactionCode = obj.TransactionCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/VisaRegistrationPrint?transactionCode=${TransactionCode}`, "_blank");
 		// window.open('../Report/Reports/ReportViewer.aspx', '_newtab');
 	}
@@ -311,8 +324,8 @@ export class VisaRegistration implements OnInit {
 	}
 	//Calculation
 	CalculateServiceChargeValue(obj) {
-		obj.ServiceChargeValue =  Number(Library.isUndefinedOrNullOrZeroReturn0(obj.VisaFee)) 
-		*	(Number(obj.ServiceChargePercent) / 100);
+		obj.ServiceChargeValue = Number(Library.isUndefinedOrNullOrZeroReturn0(obj.VisaFee))
+			* (Number(obj.ServiceChargePercent) / 100);
 
 		obj.ServiceChargeValue = Number(obj.ServiceChargeValue).toFixed(2);
 		this.CalculateTotalPayableAmount(obj);
@@ -334,7 +347,7 @@ export class VisaRegistration implements OnInit {
 		this.sumOfTotalValue = 0;
 		//VisaFee+GovtTax+ServiceChargeValue
 		obj.TotalPayableAmt = Number(Library.isUndefinedOrNullOrZeroReturn0(obj.VisaFee))
-			+ Number(Library.isUndefinedOrNullOrZeroReturn0(obj.GovtTax)) + 
+			+ Number(Library.isUndefinedOrNullOrZeroReturn0(obj.GovtTax)) +
 			(Number(Library.isUndefinedOrNullOrZeroReturn0(obj.ServiceChargeValue)));
 
 		this.getpayableAmount();

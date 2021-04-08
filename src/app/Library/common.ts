@@ -92,18 +92,11 @@ export class Common {
         }
         return months;
     }
-
-
-
-
     public static removeDuplicates(myArr, prop) {
         return myArr.filter((obj, pos, arr) => {
             return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
         });
     }
-
-
-
     public static removeNull(myArr, prop) {
         for (var x = 0; x < myArr.length; x++) {
             if (myArr[x].prop == null) myArr.splice(x, 1);
@@ -111,16 +104,11 @@ export class Common {
         return myArr;
     }
 
-
-
     public static generateParameterName(parameterName: string, num: number) {
         var parameterName = parameterName + num;
         return parameterName;
     }
-
-
     public static calculateTotal(Data: any[], parameterName: string) {
-        debugger;
         var total = 0;
         if (Library.getLength(Data) == 0) return 0;
         for (var x = 0; x < Data.length; x++) {
@@ -128,14 +116,9 @@ export class Common {
         }
         return total;
     }
-
-
-
     public static getDatepickerValue(datepicker: string) {
         return Library.getDatePart($(datepicker).val(), 0);
     }
-
-
     public static setGroupRowReturnTotal(Data: any[], PropertyName: string, TotalPropertyName: string): number {
         Data = Library.sortArray(Data, PropertyName);
         var TotalValue = 0;
@@ -146,7 +129,6 @@ export class Common {
         }
         return TotalValue;
     }
-
 
     public static setGroupRow(Data: any[], PropertyName: string) {
         Data = Library.sortArrayAsc(Data, PropertyName);

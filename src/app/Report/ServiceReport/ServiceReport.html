@@ -51,32 +51,55 @@
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="text-left width-10p">Service</th>
-                        <th class="text-left width-20p">Service Count & Amount</th>
-                        <th class="text-left width-20p">Business Client</th>
-                        <th class="text-left width-20p">Corporate Client</th>
-                        <th class="text-left width-20p">Other Client</th>
+                        <th class="text-left width-19p">Service Name</th>
+                        <th class="text-left width-10p"> Total Number</th>
+                        <th class="text-left width-10p">Service Amount</th>
+                        <th class="text-left width-10p">Business Client Service Count</th>
+                        <th class="text-left width-10p">Business Client Service Amount</th>
+                        <th class="text-left width-10p">Corporate Client Service Count</th>
+                        <th class="text-left width-10p">Corporate Client Service Amount</th>
+                        <th class="text-left width-10p">Other Client Service Count</th>
+                        <th class="text-left width-5p">Other Client Service Amount</th>
+                        <th class="text-left width-5p">Print</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of ServiceTransactionListObj;let i=index">
                         <td class="text-right width-1p "> {{i+1}} </td>
-                        <td class="text-left width-10p"
-                            (click)="getServiceTransactionDetail(item)">
+                        <td class="text-left width-19p" (click)="getServiceTransactionDetail(item)">
                             {{item?.ServiceName}} </td>
 
-                        <td class="text-left width-20p"> Count: {{item?.NoOfService}}
-                            <br> <strong> Amount : {{item?.TotalServiceAmt}} </strong>
+                        <td class="text-left width-10p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.NoOfService}}
+                        </td>
+                        <td class="text-left width-10p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.TotalServiceAmt}}
                         </td>
 
-                        <td class="text-left width-20p"> Count : {{item?.BusinessClient}}
-                            <br> <strong>Amount :{{item?.BusinessClientValue}}</strong>
+                        <td class="text-left width-10p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.BusinessClient}}
                         </td>
-                        <td class="text-left width-20p">Count: {{item?.CorporateClient}}
-                            <br> <strong> Amount :{{item?.CorporateClientValue}} </strong>
+                        <td class="text-left width-10p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.BusinessClientValue}}
                         </td>
-                        <td class="text-left width-20p">Count : {{item?.OtherClient}}
-                            <br> <strong> Amount :{{item?.OtherClientValue}} </strong>
+                        <td class="text-left width-10p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.CorporateClient}}
+
+                        </td>
+                        <td class="text-left width-10p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.CorporateClientValue}}
+                        </td>
+                        <td class="text-left width-10p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.OtherClient}}
+                        </td>
+                        <td class="text-left width-5p" (click)="getServiceTransactionDetail(item)">
+                            {{item?.OtherClientValue}}
+                        </td>
+                        <td class="text-left width-5p" (click)="getServiceTransactionDetail(item)">
+                            <button class="btn btn-info" (click)="PrintSeriveDetailsByServiceCode(item)">
+                                Print
+                                <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                            </button>
                         </td>
 
                     </tr>
@@ -87,7 +110,8 @@
 </div>
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"><b> Service Detail With Customer-{{serviceName}} </b> <i class="glyphicon glyphicon-download"></i> </span>
+        <span class="hoverlink"><b> Service Detail With Customer-{{serviceName}} </b> <i
+                class="glyphicon glyphicon-download"></i> </span>
         <div class="right">
             <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
         </div>
@@ -103,25 +127,29 @@
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="width-20p">Registration Info</th>
+                        <th class="width-10p">Registration Code </th>
+                        <th class="width-10p">Registration Date </th>
                         <th class="width-20p text-center">Customer Type</th>
                         <th class="width-20p text-center">Customer Info</th>
-                        <th class="width-20p text-center">Service Description & Amount</th> 
+                        <th class="width-10p text-center">Service Description </th>
+                        <th class="width-10p text-center">Service Amount</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of ServiceTransactionDetailObj;let i=index">
                         <td class="text-right width-1p "> {{i+1}} </td>
-                        <td class="text-left width-20p"> Code: {{item?.RegistrationCode}}
-                            <br> Date : {{item?.RegistationDate | date:'dd MMM yy'}}
+                        <td class="text-left width-10p"> {{item?.RegistrationCode}}
+                        </td>
+                        <td class="text-left width-10p"> {{item?.RegistationDate | date:'dd MMM yy'}}
                         </td>
                         <td class="text-left width-20p">{{item?.TypeName}} </td>
                         <td class="text-left width-20p"> Code : {{item?.CustomerCode}}
                             <br> <strong>Name :{{item?.CustomerName}}</strong>
-                        </td> 
+                        </td>
 
-                        <td class="text-left width-20p">Count : {{item?.ServiceDescription}}
-                            <br> <strong> Amount :{{item?.ServiceAmount}} </strong>
+                        <td class="text-left width-10p"> {{item?.ServiceDescription}}
+                        </td>
+                        <td class="text-left width-10p"> Amount :{{item?.ServiceAmount}}
                         </td>
 
                     </tr>
@@ -129,4 +157,4 @@
             </table>
         </div>
     </div>
-</div> 
+</div>

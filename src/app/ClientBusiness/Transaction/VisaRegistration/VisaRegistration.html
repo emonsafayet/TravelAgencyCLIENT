@@ -264,12 +264,13 @@
                                         <th class="width-10p text-left">VisaType</th>
                                         <th class="width-10p text-left">VisaCountry</th>
                                         <th class="width-10p text-left">PassportNo</th>
-                                        <th class="width-10p text-left">CardChargeAmount</th>
-                                        <th class="width-10p text-left">VisaFee</th>
-                                        <th class="width-10p text-left">GovtTax</th>
-                                        <th class="width-10p text-left">Service Charge(%)</th>
-                                        <th class="width-10p text-left">Service Charge Amount</th>
-                                        <th class="width-10p text-left">Total Amount</th>
+                                        <th class="width-10p text-left">Provider</th>
+                                        <th class="width-6p text-left">CardChargeAmount</th>
+                                        <th class="width-6p text-left">VisaFee</th>
+                                        <th class="width-6p text-left">GovtTax</th>
+                                        <th class="width-6p text-left">Service Charge(%)</th>
+                                        <th class="width-6p text-left">Service Charge Amount</th>
+                                        <th class="width-6p text-left">Total Amount</th>
                                         <th class="width-p text-left">X</th>
                                     </tr>
                                 </thead>
@@ -310,6 +311,18 @@
                                         <td class="text-left">
                                             <input type="text" class="form-control form-control-sm text-left"
                                                 [(ngModel)]="item.PassportNo">
+                                        </td>
+                                        <td class="width-10p">
+                                            <div class="input-group">
+                                                <select class="form-control" [(ngModel)]="item.ProviderCode">
+                                                    <option selected value="0">SELECT</option>
+                                                    <ng-container *ngFor="let info  of travelProviderList">
+                                                        <option value="{{info.ProviderCode}}">
+                                                            {{info?.ProviderName}}
+                                                        </option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
                                         </td>
                                         <td class="text-left">
                                             <input type="text" (keypress)="isNumberKey($event)"
