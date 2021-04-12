@@ -108,6 +108,23 @@
                                 </div>
                             </div>
                         </div> 
+                        <div class="row  mt-4" *ngIf="showProvierList">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Provider</span>
+                                        <select class="form-control" [(ngModel)]="ReportModelObj.Code"
+                                            (change)="onChange($event.target.value)">
+                                            <option selected value="">SELECT..</option>
+                                            <ng-container *ngFor="let item of providerList">
+                                                <option value="{{item.ProviderCode}}">{{item?.ProviderName}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
                         <div class="row  mt-4">
                             <div class="col-md-12">
                                 <div class="col-md-3">

@@ -24,8 +24,10 @@ export class Report implements OnInit {
 	reportObj: any[] = [];
 	cardList: any[] = [];
 	customerList: any[] = [];
+	providerList: any[] = [];
 	showCardList: boolean = false;
 	showCustomerList: boolean = false;
+	showProvierList: boolean = false;
 	showFromDate: boolean = false;
 	showToDate: boolean = false;
 	showAsOnDate: boolean = false;
@@ -70,7 +72,13 @@ export class Report implements OnInit {
 		else if (obj == "Customer Due") {
 			this.GETCustomerLIST();
 			this.showCustomerList = true;
-			this.showAsOnDate=true;
+			this.showAsOnDate = true;
+		}
+		else if (obj == "Provider Statement") {
+			this.GETProvierLIST();
+			this.showProvierList = true;
+			this.showFromDate = true;
+			this.showToDate = true;
 		}
 
 	}
@@ -78,13 +86,15 @@ export class Report implements OnInit {
 		//clear   list
 		this.cardList = [];
 		this.customerList = [];
+		this.providerList = [];
 
 		//hide 
 		this.showCustomerList = false;
+		this.showProvierList = false;
 		this.showCardList = false;
 		this.showFromDate = false;
 		this.showToDate = false;
-		this.showAsOnDate=false;
+		this.showAsOnDate = false;
 	}
 	GETCardLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
@@ -96,6 +106,19 @@ export class Report implements OnInit {
 	}
 	setcardList(data) {
 		this.cardList = data;
+		this.Notification.LoadingRemove();
+
+	}
+	GETProvierLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getProviderList()
+			.subscribe(
+				data => this.setProviderList(data),
+				(error) => this.showError(error)
+			);
+	}
+	setProviderList(data) {
+		this.providerList = data;
 		this.Notification.LoadingRemove();
 
 	}
@@ -133,6 +156,10 @@ export class Report implements OnInit {
 
 
 		return result;
+	}
+	showError(error) {
+		this.Notification.Error(error);
+		this.Notification.LoadingRemove();
 	}
 
 }
