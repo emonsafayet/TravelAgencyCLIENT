@@ -31,6 +31,8 @@ export class AirTicketRegistration implements OnInit {
 
 	forwardingList: any[] = [];
 	CancellationList: any[] = [];
+	airTicketregistaionForForwardingList: any[] = [];
+	airTicketregistaionForCancelList: any[] = [];
 
 	customerList: any[] = [];
 	currencyList: any[] = [];
@@ -448,7 +450,7 @@ export class AirTicketRegistration implements OnInit {
 
 		obj.TotalPayableAmt = Number(obj.ServiceChargeValue.toFixed(2)) +
 			Number(obj.Comission.toFixed(2)) +
-			Number(obj.ChangePenalty.toFixed(2)) + Number(obj.CancellationCharge)-Number(obj.DiscountValue);
+			Number(obj.ChangePenalty.toFixed(2)) + Number(obj.CancellationCharge) - Number(obj.DiscountValue);
 		obj.TotalPayableAmt = Number(obj.TotalPayableAmt).toFixed(2);
 
 		this.sumofTotalCancellationCharge = Common.calculateTotal(this.CancellationList, "TotalPayableAmt");
@@ -457,23 +459,32 @@ export class AirTicketRegistration implements OnInit {
 	}
 
 	// AIRTICKET FORWARDING 
+	onCustomerChangeForForwarding(obj) {
+		if (obj != undefined) {
+			this.airTicketregistaionForForwardingList = [];
+			this.forwardairTicketregObj.TransactionCode = "0";
+			this.airTicketregistaionForForwardingList = this.airTicketregistaionList.filter(i => i.CustomerCode == obj.CustomerCode);
+			this.forwardingList = [];
+			this.forwardairTicketregObj.NetPayableAmt = 0;
+			this.sumOfForwardingTotalValue = 0;
+		}
+	}
 
 	ticketDetail(obj) {
-
 		this.forwardairTicketregObj = new AirTicketRegModelDTO();
 		this.forwardingList = [];
+		this.sumOfForwardingTotalValue = 0;
 
+		if (obj == "0") return null;
 		this.forwardairTicketregObj = this.airTicketregistaionList.filter(i => i.TransactionCode == obj)[0];
 		this.transactionCommonService.getAirTicketDetailsByTransactionCode(this.forwardairTicketregObj.TransactionCode)
 			.subscribe(
 				data => this.setforwardList(data),
 				error => this.Notification.Error(error)
 			);
-
 	}
 
 	setforwardList(Data: any) {
-		;
 		this.forwardingList = Data;
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
 
@@ -528,7 +539,20 @@ export class AirTicketRegistration implements OnInit {
 	}
 
 	//  Cancellation Air Ticket 
-	CancellationticketDetail(obj) { 
+
+	onCustomerChangeForCancel(obj) {
+		if (obj != undefined) {
+			this.airTicketregistaionForCancelList = [];
+			this.cancellingAirTicketregObj.TransactionCode = "0";
+			this.airTicketregistaionForCancelList = this.airTicketregistaionList.filter(i => i.CustomerCode == obj.CustomerCode);
+			this.CancellationList = [];
+			this.cancellingAirTicketregObj.NetPayableAmt = 0;
+			this.sumofTotalCancellationCharge = 0;
+		}
+	}
+
+
+	CancellationticketDetail(obj) {
 		this.cancellingAirTicketregObj = new AirTicketRegModelDTO();
 		this.CancellationList = [];
 

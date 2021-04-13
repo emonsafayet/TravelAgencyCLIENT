@@ -351,8 +351,7 @@ export class GroupTour implements OnInit {
 		this.sumTotalDetailsAmt = Common.calculateTotal(this.groupTourEventDetailDTO, "TotalPayableamt");
 		this.CalculateCustomerNetPayableAmount();
 	}
-	onCustomerChangeForParticipantFilter(obj) {
-		//this.ParticipantList
+	onCustomerChangeForParticipantFilter(obj) { 
 		obj['ParticipantList'] = this.groupTourParticipentObj.filter(i => i.CustomerCode == obj.CustomerCode);
 
 	}

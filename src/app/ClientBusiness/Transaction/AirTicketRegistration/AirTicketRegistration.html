@@ -164,8 +164,9 @@
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Customer</span>                                     
-                                        <ng-select [items]="customerList" bindLabel="CustomerName"  bindValue="CustomerCode" [(ngModel)]="airTicketregObj.CustomerCode">                                            
+                                        <span class="input-group-addon">Customer</span>
+                                        <ng-select [items]="customerList" bindLabel="CustomerName"
+                                            bindValue="CustomerCode" [(ngModel)]="airTicketregObj.CustomerCode">
                                         </ng-select>
                                     </div>
                                 </div>
@@ -373,14 +374,14 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input  type="date" data-date=""
-                                                        [attr.data-date]="item.TravelDate" data-date-format="dd-MM-YYYY"
+                                                    <input type="date" data-date="" [attr.data-date]="item.TravelDate"
+                                                        data-date-format="dd-MM-YYYY"
                                                         class="form-control width-115 font-size-11 form-control-sm font-size-10"
                                                         [(ngModel)]="item.TravelDate" />
                                                 </td>
                                                 <td>
-                                                    <input type="date" data-date=""
-                                                        [attr.data-date]="item.ReturnDate" data-date-format="dd-MM-YYYY"
+                                                    <input type="date" data-date="" [attr.data-date]="item.ReturnDate"
+                                                        data-date-format="dd-MM-YYYY"
                                                         class="form-control width-115 font-size-11 form-control-sm font-size-10"
                                                         [(ngModel)]="item.ReturnDate" />
                                                 </td>
@@ -549,24 +550,27 @@
                             <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
+                                        <span class="input-group-addon">Customer</span>
+                                        <ng-select (change)="onCustomerChangeForForwarding($event)"
+                                            [items]="customerList" bindLabel="CustomerName" bindValue="CustomerCode"
+                                            [(ngModel)]="forwardairTicketregObj.CustomerCode">
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mt-3">
+                                    <div class="input-group">
                                         <span class="input-group-addon">Transaction Code</span>
-                                        <select class="form-control" (change)="ticketDetail($event.target.value)">
+                                        <select class="form-control" (change)="ticketDetail($event.target.value)" >
                                             <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let item of airTicketregistaionList">
+                                            <ng-container *ngFor="let item of airTicketregistaionForForwardingList">
                                                 <option value="{{item.TransactionCode}}">{{item?.TransactionCode}}
                                                 </option>
                                             </ng-container>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon text-left">Customer</span>
-                                        <input readonly class="form-control strong text-left"
-                                            [(ngModel)]="forwardairTicketregObj.CustomerName" class="form-control"
-                                            type="text">
-                                    </div>
-                                </div>
+
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span
@@ -678,7 +682,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input class="width-8p" type="text"                                                        
+                                                    <input class="width-8p" type="text"
                                                         class="form-control form-control-sm text-right"
                                                         [(ngModel)]="item.ChangePenalty"
                                                         (keypress)="isNumberKey($event)"
@@ -686,8 +690,7 @@
                                                         (click)="selectTarget($event)" [disabled]="! item?.IsForward">
                                                 </td>
                                                 <td>
-                                                    <input class="width-8p" type="text"
-                                                        (keypress)="isNumberKey($event)"
+                                                    <input class="width-8p" type="text" (keypress)="isNumberKey($event)"
                                                         class="form-control form-control-sm text-right"
                                                         [(ngModel)]="item.ProviderPenalty"
                                                         (click)="selectTarget($event)" [disabled]="! item?.IsForward">
@@ -758,26 +761,26 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12"> 
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Transaction Code</span>
-                                        <select class="form-control"
-                                            (change)="CancellationticketDetail($event.target.value)">
-                                            <option selected value="0">SELECT</option>
-                                            <ng-container *ngFor="let item of airTicketregistaionList">
-                                                <option value="{{item.TransactionCode}}">{{item?.TransactionCode}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
+                                        <span class="input-group-addon">Customer</span>
+                                        <ng-select (change)="onCustomerChangeForCancel($event)"
+                                            [items]="customerList" bindLabel="CustomerName" bindValue="CustomerCode"
+                                            [(ngModel)]="cancellingAirTicketregObj.CustomerCode">
+                                        </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon text-left">Customer</span>
-                                        <input readonly class="form-control strong text-left"
-                                            [(ngModel)]="cancellingAirTicketregObj.CustomerName" class="form-control"
-                                            type="text">
+                                        <span class="input-group-addon">Transaction Code</span>
+                                        <select class="form-control" (change)="CancellationticketDetail($event.target.value)" >
+                                            <option selected value="0">SELECT</option>
+                                            <ng-container *ngFor="let item of airTicketregistaionForCancelList">
+                                                <option value="{{item.TransactionCode}}">{{item?.TransactionCode}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
