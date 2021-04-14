@@ -49,6 +49,7 @@
                         <th class="width-10p text-center">Invoice Amount</th>
                         <th class="width-10p text-center">Paid Amount</th>
                         <th class="width-10p text-center">Due Amount</th>
+                        <th class="width-5p text-center">Print</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,9 +57,15 @@
                         <td class="text-right width-1p"> {{i+1}} </td>
                         <td class="text-left width-20p" (click)="getServiceTransactionDetail(item)">
                             {{item?.ServiceName}} </td>
-                        <td class="text-right width-20p"> {{item?.InvoiceAmount}} </td>
-                        <td class="text-right width-20p"> {{item?.PaidAmount}} </td>
-                        <td class="text-right width-20p">{{item?.DueAmount}}
+                        <td class="text-right width-20p" (click)="getServiceTransactionDetail(item)"> {{item?.InvoiceAmount}} </td>
+                        <td class="text-right width-20p" (click)="getServiceTransactionDetail(item)"> {{item?.PaidAmount}} </td>
+                        <td class="text-right width-20p" (click)="getServiceTransactionDetail(item)">{{item?.DueAmount}}
+                        </td>
+                        <td class="text-left width-5p" (click)="getServiceTransactionDetail(item)">
+                            <button class="btn btn-info" (click)="PrintDue(item)">
+                                Print
+                                <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                            </button>
                         </td>
                     </tr>
                 </tbody>

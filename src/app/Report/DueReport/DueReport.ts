@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '../../authGuard.guard';
 import { UserService } from '../../Services/User.service';
 import { NotificationService } from "../../Services/Notification.service";
-
+import { Config } from 'src/app/config';
 //Service  
 import { UserAccessService } from "../../Services/UserAccess.service";
 import { Library } from 'src/app/library/library';
@@ -71,6 +71,10 @@ export class DueReport implements OnInit {
    ServiceTransactionDetail(data) {
 	   this.ServiceTransactionDueDetailsListObj = data;
 	   this.Notification.LoadingRemove(); 
+   }
+   PrintDue(obj){
+	window.open(`${Config.getBaseUrl}TransactionReport/GetDueStatusASONDetails?ServiceCode=${obj.ServiceCode}&FromDate=${this.ReportModelObj.FromDate}`, "_blank");  
+
    }
 
 }
