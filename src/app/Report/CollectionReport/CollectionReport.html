@@ -31,11 +31,10 @@
 </div>
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"  ><b>Advance Collection</b> <i
-                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+        <span class="hoverlink"><b>Advance Collection</b> <i class="fa fa-refresh ml-2 text-success"
+                aria-hidden="true"></i></span>
         <div class="right">
-            <button type="button" class="btn-toggle-collapse"><i
-                    class="lnr lnr-chevron-up"></i></button>
+            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
         </div>
     </div>
     <div class="panel-body">
@@ -44,21 +43,21 @@
                 <thead>
                     <tr>
                         <th colspan="15">
-                            <input class="form-control form-control-sm" placeholder="Search" type="text" >
+                            <input class="form-control form-control-sm" placeholder="Search" type="text">
                         </th>
                     </tr>
                     <tr>
                         <th class="text-center width-1p text-center">SN#</th>
                         <th class="text-center width-20p">Customer Code</th>
                         <th class="text-center width-20p text-center">Customer Name</th>
-                        <th class="text-center width-20p text-center">Advance Amount</th> 
+                        <th class="text-center width-20p text-center">Advance Amount</th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <tr *ngFor="let item of CustomerAdvanceCollectionObj;let i=index">
                         <td class="text-right width-1p "> {{i+1}} </td>
-                        <td class="text-left  width-20p" > {{item?.CustomerCode}} </td>  
+                        <td class="text-left  width-20p"> {{item?.CustomerCode}} </td>
                         <td class="text-right width-20p"> {{item?.CustomerName}} </td>
                         <td class="text-right width-20p"> {{item?.AdvanceAmt}} </td>
                     </tr>
@@ -69,11 +68,10 @@
 </div>
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"  ><b>Collection Report</b> <i
-                class="fa fa-refresh ml-2 text-success" aria-hidden="true"></i></span>
+        <span class="hoverlink"><b>Collection Report</b> <i class="fa fa-refresh ml-2 text-success"
+                aria-hidden="true"></i></span>
         <div class="right">
-            <button type="button" class="btn-toggle-collapse"><i
-                    class="lnr lnr-chevron-up"></i></button>
+            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
         </div>
     </div>
     <div class="panel-body">
@@ -82,25 +80,32 @@
                 <thead>
                     <tr>
                         <th colspan="15">
-                            <input class="form-control form-control-sm" placeholder="Search" type="text" >
+                            <input class="form-control form-control-sm" placeholder="Search" type="text">
                         </th>
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
                         <th class="width-20p">Service Name</th>
                         <th class="width-20p text-center">Payable Amount</th>
-                        <th class="width-20p text-center">Paid Amount</th> 
+                        <th class="width-10p text-center">Paid Amount</th>
+                        <th class="width-5p text-center">Print</th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <tr *ngFor="let item of ServiceTransactionCollectionListObj;let i=index">
                         <td class="text-right width-1p "> {{i+1}} </td>
-                        <td class="text-left width-20p"
-                            (click)="getServiceTransactionCollectionDetail(item)">
-                            {{item?.ServiceName}} </td>  
-                        <td class="text-right width-20p"> {{item?.Payableamount}} </td>
-                        <td class="text-right width-20p"> {{item?.PaidAmount}} </td>
+                        <td class="text-left width-20p" (click)="getServiceTransactionCollectionDetail(item)">
+                            {{item?.ServiceName}} </td>
+                        <td class="text-right width-20p" (click)="getServiceTransactionCollectionDetail(item)"> {{item?.Payableamount}} </td>
+                        <td class="text-right width-10p" (click)="getServiceTransactionCollectionDetail(item)"> {{item?.PaidAmount}} </td>
+                        <td class="text-center width-5p" (click)="getServiceTransactionCollectionDetail(item)">
+                            <button class="btn btn-info"
+                                (click)="PrintServiceTransactionCollectionDetailsByServiceCode(item)">
+                                Print
+                                <i class="fa fa-print" aria-hidden="true" style="padding: 2px"></i>
+                            </button>
+                        </td>
 
                     </tr>
                 </tbody>
@@ -110,10 +115,9 @@
 </div>
 <div class="panel mt-3">
     <div class="panel-heading">
-        <span class="hoverlink"  ><b>Collection Detail With Customer-{{serviceName}}</b> </span> 
+        <span class="hoverlink"><b>Collection Detail With Customer-{{serviceName}}</b> </span>
         <div class="right">
-            <button type="button" class="btn-toggle-collapse"><i
-                    class="lnr lnr-chevron-up"></i></button>
+            <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
         </div>
     </div>
     <div class="panel-body">
@@ -122,30 +126,34 @@
                 <thead>
                     <tr>
                         <th colspan="15">
-                            <input class="form-control form-control-sm" placeholder="Search" type="text" >
+                            <input class="form-control form-control-sm" placeholder="Search" type="text">
                         </th>
                     </tr>
                     <tr>
                         <th class="width-1p text-center">SN#</th>
-                        <th class="width-20p">Registration Info</th> 
-                        <th class="width-20p text-center">Customer Info</th>
-                        <th class="width-20p text-center">Invoice Code</th> 
-                        <th class="width-20p text-center">Due Amount</th> 
-                        <th class="width-20p text-center">Paid Amount</th> 
+                        <th class="width-10p">Registration Code</th>
+                        <th class="width-10p">Registration Date</th>
+                        <th class="width-10p text-center">Customer Code</th>
+                        <th class="width-10p text-center">Customer Name</th>
+                        <th class="width-10p text-center">Invoice Code</th>
+                        <th class="width-10p text-center">Due Amount</th>
+                        <th class="width-10p text-center">Paid Amount</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of ServiceTransactionCollectionDetailListObj;let i=index">
                         <td class="text-right width-1p "> {{i+1}} </td>
-                        <td class="text-left width-20p"> Code: {{item?.ReceiptCode}}
-                            <br> Date : {{item?.ReceivedDate | date:'dd MMM yy'}}
-                        </td> 
-                        <td class="text-left width-20p"> Code : {{item?.CustomerCode}}
-                            <br> <strong>Name :{{item?.CustomerName}}</strong>
-                        </td> 
-                        <td class="text-left width-20p"> {{item?.InvoiceID}} </td> 
-                        <td class="text-right width-20p">{{item?.DueAmount}} </td>
-                        <td class="text-right width-20p">{{item?.PaidAmount}}</td>
+                        <td class="text-left width-10p"> {{item?.ReceiptCode}}
+                        </td>
+                        <td class="text-left width-10p"> {{item?.ReceivedDate | date:'dd MMM yy'}}
+                        </td>
+                        <td class="text-left width-10p"> {{item?.CustomerCode}}
+                        </td>
+                        <td class="text-left width-10p"> {{item?.CustomerName}}
+                        </td>
+                        <td class="text-left width-10p"> {{item?.InvoiceID}} </td>
+                        <td class="text-right width-10p">{{item?.DueAmount}} </td>
+                        <td class="text-right width-10p">{{item?.PaidAmount}}</td>
                     </tr>
                 </tbody>
             </table>

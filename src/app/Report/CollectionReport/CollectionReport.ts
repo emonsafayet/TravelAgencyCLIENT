@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '../../authGuard.guard';
 import { UserService } from '../../Services/User.service';
 import { NotificationService } from "../../Services/Notification.service";
-
+import { Config } from 'src/app/config';
 //Service  
 import { UserAccessService } from "../../Services/UserAccess.service";
 import { Library } from 'src/app/library/library';
@@ -77,5 +77,8 @@ export class CollectionReport implements OnInit {
 	setCustomerAdvanceCollectionList(data) {
 		this.CustomerAdvanceCollectionObj = data;
 		this.Notification.LoadingRemove(); 
+	}
+	PrintServiceTransactionCollectionDetailsByServiceCode(obj){
+		window.open(`${Config.getBaseUrl}TransactionReport/GetSeriveCollectionDetails?ServiceCode=${obj.ServiceCode}&FromDate=${this.ReportModelObj.FromDate}&ToDate=${this.ReportModelObj.ToDate}`, "_blank"); 
 	}
 }
