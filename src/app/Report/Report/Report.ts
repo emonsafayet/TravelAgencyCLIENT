@@ -74,6 +74,10 @@ export class Report implements OnInit {
 			this.showCustomerList = true;
 			this.showAsOnDate = true;
 		}
+		else if (obj == "Cutomser Statement") {
+			this.GETCustomerLIST();
+			this.showCustomerList = true; 
+		}
 		else if (obj == "Provider Statement") {
 			this.GETProvierLIST();
 			this.showProvierList = true;

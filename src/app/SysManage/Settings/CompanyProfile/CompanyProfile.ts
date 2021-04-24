@@ -26,12 +26,11 @@ export class CompanyProfile implements OnInit {
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService) { }
 
-	ngOnInit() {
-		this.url=Config.getBaseUrl;
-		this.url=this.url+"File/Image/Logo.jpg";
+	ngOnInit() {		
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
-		// this.companyObj.OpeningDate = moment().format(Common.SQLDateFormat);
+		this.url=Config.getBaseUrl;
+		this.url=this.url+"File/Image/Logo.jpg"; 
 
 		this.Notification.LoadingWithMessage('Loading...');
 		this.getCompanyProfileList();
