@@ -31,8 +31,7 @@ export class DueReport implements OnInit {
 		this.user = this.userService.getLoggedUser();
 		this.authGuard.hasUserThisMenuPrivilege(this.user);
 		this.Notification.LoadingWithMessage('Loading...');
-		this.ReportModelObj.FromDate = moment().format(Common.previousMonthFirstDay(this.ReportModelObj.ToDate));
-		this.ReportModelObj.ToDate = moment().format(Common.SQLDateFormat);
+		this.ReportModelObj.FromDate = moment().format(Common.SQLDateFormat); 
 		this.getServiceTransactionDueList();
 		
 		this.Notification.LoadingRemove();

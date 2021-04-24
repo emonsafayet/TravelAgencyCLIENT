@@ -21,6 +21,7 @@ export class MRInvoiceDetailModel{
 	public ServiceCode : string="";
 	public DueAmount : number=0;
 	public PaidAmount : number=0;
+	public RefundAmount : number=0;
 	public Remark : string="";
 	public CreatedBy : string="";
 	public CreatedOn : string="";

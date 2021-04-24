@@ -262,6 +262,23 @@ export class MoneyReceipt implements OnInit {
 		}
 		return result;
 	}
+	CheckRefunAmount(item) { 	
+		item.forEach(element => { 
+			try {
+				element.RefundAmount = parseInt(element.RefundAmount)
+				if (Library.isUndefinedOrNullOrZero(element.RefundAmount <= element.PaidAmount)) {
+					element.RefundAmount = 0;
+					this.Notification.Warning('Refund Amount Must Be Equal Or Less Than Paid Amount.'); 
+					return;
+				}
+			}
+			catch (e) {
+				this.Notification.Warning('Please Enter Refund Amount.');
+				return false;
+			}
+		});
+	}
+	
 	selectAllFullPaid(mrInvoiceObj) {
 		debugger
 		if (mrInvoiceObj.length > 0) {
@@ -295,5 +312,8 @@ export class MoneyReceipt implements OnInit {
 		var receiptCode = obj.ReceiptCode;
 		var customerCode=obj.CustomerCode;
 		window.open(`${Config.getBaseUrl}TransactionReport/MoneyReceipt?receiptCode=${receiptCode}&customerCode=${customerCode}`, "_blank");
+	}
+	selectTarget(e) {
+		e.target.select();
 	}
 }

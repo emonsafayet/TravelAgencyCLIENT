@@ -206,7 +206,7 @@
                                         <textarea [(ngModel)]="mrMasterModelDTOObj.Remark" class="form-control"
                                             rows="2"></textarea>
                                     </div>
-                                </div>                               
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -236,10 +236,12 @@
                                                 <th class="text-left width-6p">Invoice ID</th>
                                                 <th class="text-left width-8p">Invoice Date</th>
                                                 <th class="text-left width-10p">Service Description</th>
-                                                <th class="text-left width-8p">Invoice Amount</th>
-                                                <th class="text-left width-8p">Pre-Paid Amount</th>
-                                                <th class="text-left width-8p">Due Amount</th>
-                                                <th class="text-left width-8p">Payable Amount</th>
+                                                <th class="text-left width-5p">Invoice Amount</th>
+                                                <th class="text-left width-5p">Pre-Paid Amount</th>
+                                                <th class="text-left width-5p">Due Amount</th>
+                                                <th class="text-left width-5p">Paid Amount</th>
+                                                <th class="text-left width-5p">Refund Amount</th>
+                                                <th class="text-left width-5p">Refund Remarks</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -257,7 +259,7 @@
                                                     <input readonly type="text" class="form-control form-control-sm"
                                                         [(ngModel)]="item.InvoiceID">
                                                 </td>
-                                                <td class="text-left width-8p">
+                                                <td class="text-left width-5p">
                                                     <input readonly type="text" class="form-control form-control-sm"
                                                         [(ngModel)]="item.InvoiceDate ">
                                                 </td>
@@ -266,44 +268,56 @@
                                                     <input readonly type="text" class="form-control form-control-sm"
                                                         [(ngModel)]="item.ServiceDescription">
                                                 </td>
-                                                <td class="text-left width-8p">
+                                                <td class="text-left width-5p">
                                                     <input readonly type="text" class="form-control form-control-sm"
                                                         [(ngModel)]="item.InvoiceAmount">
                                                 </td>
-                                                <td class="text-left width-8p">
+                                                <td class="text-left width-5p">
                                                     <input readonly type="text" class="form-control form-control-sm"
                                                         [(ngModel)]="item.PrePaidAmount">
                                                 </td>
-                                                <td class="text-left width-8p">
+                                                <td class="text-left width-5p">
                                                     <input readonly type="text" class="form-control form-control-sm"
                                                         [(ngModel)]="item.DueAmount">
                                                 </td>
-                                                <td class="text-left width-8p">
-                                                    <input type="text"
+                                                <td class="text-left width-5p">
+                                                    <input type="text" (click)="selectTarget($event)"
                                                         class="form-control form-control-sm font-size-16 strong text-right"
                                                         (input)="CalculateTotalPayableValue(mrInvoiceDetailObj)"
                                                         [(ngModel)]="item.PaidAmount"
                                                         oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                                 </td>
+                                                <td class="text-left width-5p">
+                                                    <input type="text"
+                                                        class="form-control form-control-sm font-size-16 strong text-right"
+                                                        (input)="CheckRefunAmount(mrInvoiceDetailObj)"
+                                                        [(ngModel)]="item.RefundAmount" (click)="selectTarget($event)"
+                                                        oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                                                </td>
+                                                <td class="text-left width-5p">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        [(ngModel)]="item.Remark">
+                                                </td>
+
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong> Total</strong> </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><strong> {{sumOfTotalAmount| number:'1.0-0' }}
+                                                    </strong></td>
+
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table>
-                                    <tfoot>
-                                        <tr>
-                                            <td class="width-240" colspan="8"></td>
-                                            <td class="width-800 right"><strong> Total</strong> </td>
-                                            <td class="width-120 right"><strong> {{sumOfTotalAmount| number:'1.0-0' }}
-                                                </strong></td>
-
-                                        </tr>
-                                    </tfoot>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -333,9 +347,11 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-left width-20p">Payment Type</th>
-                                                <th class="text-left width-15p">Receive Amount</th>
+                                                <th class="text-left width-5p">Advance Code</th>
+                                                <th class="text-left width-10p">UnAdjusted Balance</th>
+                                                <th class="text-left width-10p">Receive Amount</th>
                                                 <th class="text-left width-15p">Bank Name</th>
-                                                <th class="text-left width-15p">Cheque No</th>
+                                                <th class="text-left width-10p">Cheque No</th>
                                                 <th class="text-left width-15p">Card</th>
                                                 <th class="text-left width-15p">POS Transaction No
                                                 </th>
@@ -357,10 +373,23 @@
                                                         </ng-container>
                                                     </select>
                                                 </td>
-
-                                                <td class="text-left  width-15p">
-                                                    <input type="number" class="form-control form-control-sm"
+                                                <td class="text-left width-10p">
+                                                    <select class="form-control form-control-sm"
+                                                        [(ngModel)]="item.BankName">
+                                                        <option selected value="0">SELECT..</option>
+                                                        <ng-container *ngFor="let itm of bankList; let i = index">
+                                                            <option value="{{itm.BankCode}}">
+                                                                {{itm?.BankName}}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                </td>
+                                                <td class="text-left  width-5p">
+                                                    <input readonly type="number" class="form-control form-control-sm"
                                                         [(ngModel)]="item.ReceivedAmount">
+                                                </td>
+                                                <td class="text-left  width-10p">
+                                                    <input type="number" class="form-control form-control-sm"
+                                                    (click)="selectTarget($event)"  [(ngModel)]="item.ReceivedAmount">
                                                 </td>
                                                 <td class="text-left width-10p">
                                                     <select class="form-control form-control-sm"
@@ -372,7 +401,7 @@
                                                         </ng-container>
                                                     </select>
                                                 </td>
-                                                <td class="text-left width-15p">
+                                                <td class="text-left width-10p">
                                                     <input type="text" class="form-control form-control-sm"
                                                         [(ngModel)]="item.ChequeNo">
                                                 </td>
