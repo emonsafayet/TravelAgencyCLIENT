@@ -285,7 +285,7 @@
                                                 <td class="text-left width-5p">
                                                     <input type="text"
                                                         class="form-control form-control-sm font-size-16 strong text-right"
-                                                        (input)="CheckRefunAmount(mrInvoiceDetailObj)"
+                                                        (input)="CheckRefunAmount(item)"
                                                         [(ngModel)]="item.RefundAmount" (click)="selectTarget($event)"
                                                         oninput="this.value=this.value.replace(/[^0-9]/g,'');">
                                                 </td>
@@ -359,7 +359,7 @@
                                                 *ngFor="let item of mrPaymentDetailObj; let i = index">
                                                 <td class="text-left width-20p">
                                                     <select class="form-control  form-control-sm"
-                                                        [(ngModel)]="item.PaymentType">
+                                                        [(ngModel)]="item.PaymentType"   (change)="onChangePayment(mrPaymentDetailObj,item)">
                                                         <option selected value="0">SELECT..</option>
                                                         <ng-container *ngFor="let itm of PaymentTypeList">
                                                             <option value="{{itm.PaymentTypeCode}}">
@@ -370,21 +370,21 @@
                                                 </td>
                                                 <td class="text-left width-10p">
                                                     <select class="form-control form-control-sm"
-                                                        [(ngModel)]="item.BankName">
+                                                        [(ngModel)]="item.AdvanceCode" (change)="onChangeAdvance(mrPaymentDetailObj,item)">
                                                         <option selected value="0">SELECT..</option>
-                                                        <ng-container *ngFor="let itm of bankList; let i = index">
-                                                            <option value="{{itm.BankCode}}">
-                                                                {{itm?.BankName}}</option>
+                                                        <ng-container *ngFor="let itm of item?.advancceList; let i = index">
+                                                            <option value="{{itm.AdvanceCode}}">
+                                                                {{itm?.AdvanceCode}},AdvanceAmount- {{itm?.AdvanceAmount}},AdjustedAmount- {{itm?.AdjustedAmount}},UnAdjustedBalance- {{itm?.UnAdjustedBalance}}</option>
                                                         </ng-container>
                                                     </select>
                                                 </td>
                                                 <td class="text-left  width-5p">
-                                                    <input readonly type="number" class="form-control form-control-sm"
-                                                        [(ngModel)]="item.ReceivedAmount">
+                                                    <input readonly type="number" class="form-control form-control-sm" 
+                                                    [(ngModel)]="item.UnAdjustedBalance">
                                                 </td>
                                                 <td class="text-left  width-10p">
                                                     <input type="number" class="form-control form-control-sm"
-                                                        (click)="selectTarget($event)"
+                                                        (click)="selectTarget($event)"  (input)="CheckReceivedAmount(item)"
                                                         [(ngModel)]="item.ReceivedAmount">
                                                 </td>
                                                 <td class="text-left width-10p">

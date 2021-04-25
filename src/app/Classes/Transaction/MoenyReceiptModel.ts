@@ -31,6 +31,8 @@ export class MRInvoiceDetailModel{
 export class MRPaymentDetailModel{
 	public ID : number;
 	public ReceiptCode : string;
+	public AdvanceCode : string="0";
+	public UnAdjustedBalance:number=0;
 	public PaymentType : string="0";
 	public ReceivedAmount : number;
 	public BankName : string;

@@ -70,6 +70,7 @@ export class TransactionCommonService {
 	GetHotelBooking() { return this.masterService.get("client/business/travel/transaction/hotel/booking/list"); }
 
 	SaveUpdateHotelBooking(hotelBookingObj: any) { return this.masterService.post(`client/business/travel/transactionSeat/hotel/booking/save/update`, hotelBookingObj); }
+
 	getHotelDetailsByTransactionCode(transactionCode: string) { return this.masterService.get("client/business/travel/transaction/hotel/booking/details/by/transactionCode/" + transactionCode); }
 
 	/*END  Hotel Booking  */
@@ -87,6 +88,7 @@ export class TransactionCommonService {
 	GetGroupTourList() { return this.masterService.get("client/business/travel/transaction/group/tour/list"); }
 
 	GetGroupTourDetailsbyTransactionCode(TransactionCode: string) { return this.masterService.get("client/business/travel/transaction/group/tour/by/transaction/Code/" + TransactionCode); }
+
 	updateGroupTourCancellation(obj: any) { return this.masterService.post(`client/business/travel/transaction/group/tour/cancellation`, obj); }
 	// END GROUP TOUR 
 
@@ -116,10 +118,12 @@ export class TransactionCommonService {
 	saveUpdateMoenyReceipt(mrReceiptObj: any) { return this.masterService.post(`client/business/travel/transaction/money/receipt/save/update`, mrReceiptObj); }
 
 	getMRList(fromDate: string, toDate: string): any { return this.masterService.get(`client/business/travel/transaction/money/receipt/list/${fromDate}/${toDate}`); }
- 
+
 	getMoneyReceiptInvoiceAndPaymentDetailsDetail(receiptCode: any, customerCode: any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/payment/detail/code/${receiptCode}/${customerCode}`); }
 
 	getMRcustomerList() { return this.masterService.get("client/business/travel/MR/customer/list"); }
+
+	GetCustomerAdvanceAmount(customerCode:string) { return this.masterService.get(`client/business/travel/money/receipt/customer/advance/amount/${customerCode}`); }
 	//END Money Receipt 
 	/*Start Advance Clearance*/
 	getAdvancePaymentNotClearanceList() { return this.masterService.get(`client/business/travel/advance/payment/clearance/list`); }
