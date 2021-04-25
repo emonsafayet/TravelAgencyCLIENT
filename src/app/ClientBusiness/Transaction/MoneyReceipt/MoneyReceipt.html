@@ -146,14 +146,9 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Customer</span>
-                                        <select class="form-control" [(ngModel)]="mrMasterModelDTOObj.CustomerCode"
-                                            (change)="onChange($event.target.value)">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
-                                                </option>
-                                            </ng-container>
-                                        </select>
+                                        <ng-select [items]="customerList" bindLabel="CustomerName"
+                                            bindValue="CustomerCode" [(ngModel)]="mrMasterModelDTOObj.CustomerCode">
+                                        </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -389,7 +384,8 @@
                                                 </td>
                                                 <td class="text-left  width-10p">
                                                     <input type="number" class="form-control form-control-sm"
-                                                    (click)="selectTarget($event)"  [(ngModel)]="item.ReceivedAmount">
+                                                        (click)="selectTarget($event)"
+                                                        [(ngModel)]="item.ReceivedAmount">
                                                 </td>
                                                 <td class="text-left width-10p">
                                                     <select class="form-control form-control-sm"

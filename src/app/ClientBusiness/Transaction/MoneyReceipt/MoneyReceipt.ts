@@ -59,7 +59,7 @@ export class MoneyReceipt implements OnInit {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.getMRList(fromDate, toDate).subscribe(
 			data => this.setMRList(data),
-			error => this.Notification.Error(error)
+			(error) => this.showError(error)
 		);
 	}
 	setMRList(data) {
@@ -71,20 +71,18 @@ export class MoneyReceipt implements OnInit {
 		debugger
 		this.mrMasterModelDTOObj = JSON.parse(JSON.stringify(item));
 		this.mrMasterModelDTOObj.ReceivedDate = moment(new Date(this.mrMasterModelDTOObj.ReceivedDate)).format(Common.SQLDateFormat);
-
-		this.transactionCommonService.getMoneyReceiptPaymentDetailByReceiptCode(this.mrMasterModelDTOObj.ReceiptCode)
+ 
+		this.transactionCommonService.getMoneyReceiptInvoiceAndPaymentDetailsDetail(this.mrMasterModelDTOObj.ReceiptCode, this.mrMasterModelDTOObj.CustomerCode)
 			.subscribe(
-				data => this.mrPaymentDetailObj = (data),
-				error => this.Notification.Error(error)
-			);
-
-		this.transactionCommonService.getMoneyReceiptInvoiceDetailByReceiptCode(this.mrMasterModelDTOObj.ReceiptCode, this.mrMasterModelDTOObj.CustomerCode)
-			.subscribe(
-				data => this.mrInvoiceDetailObj = (data),
-				error => this.Notification.Error(error)
-			);
-		document.getElementById('MREntry_tab').click();
-
+				data => this.setDetails(data), 
+				(error) => this.showError(error)
+			);	
+	}
+	setDetails(Data:any){
+		this.mrPaymentDetailObj=Data["MRPaymentDetail"];
+		this.mrInvoiceDetailObj=Data["MRInvoiceDetail"];
+		document.getElementById('MREntry_tab').click(); 
+		this.calculateSumOfTotalPaidAmount(this.mrInvoiceDetailObj);
 
 	}
 	ResetMoneyReceiptModel() {
@@ -112,7 +110,7 @@ export class MoneyReceipt implements OnInit {
 		this.transactionCommonService.saveUpdateMoenyReceipt(this.mrMasterModelDTOObj)
 			.subscribe(
 				data => this.setsaveResult(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 
 	}
@@ -163,7 +161,7 @@ export class MoneyReceipt implements OnInit {
 		this.transactionCommonService.getMRcustomerList()
 			.subscribe(
 				data => this.setCustomerLIST(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setCustomerLIST(data) {
@@ -181,7 +179,7 @@ export class MoneyReceipt implements OnInit {
 		this.transactionCommonService.getServiceListByCustomerCode(customerCode)
 			.subscribe(
 				data => this.setServicelist(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setServicelist(data) {
@@ -193,7 +191,7 @@ export class MoneyReceipt implements OnInit {
 		this.clientBusinessService.getPaymentTypeList()
 			.subscribe(
 				data => this.setPaymentTypeList(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setPaymentTypeList(data) {
@@ -226,7 +224,7 @@ export class MoneyReceipt implements OnInit {
 		this.clientBusinessService.GetBankList()
 			.subscribe(
 				data => this.setBankList(data),
-				error => this.Notification.Error(error)
+				(error) => this.showError(error)
 			);
 	}
 	setBankList(data) {
@@ -315,5 +313,9 @@ export class MoneyReceipt implements OnInit {
 	}
 	selectTarget(e) {
 		e.target.select();
+	}
+	showError(error) {
+		this.Notification.Error(error);
+		this.Notification.LoadingRemove();
 	}
 }

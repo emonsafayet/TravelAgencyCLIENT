@@ -116,11 +116,8 @@ export class TransactionCommonService {
 	saveUpdateMoenyReceipt(mrReceiptObj: any) { return this.masterService.post(`client/business/travel/transaction/money/receipt/save/update`, mrReceiptObj); }
 
 	getMRList(fromDate: string, toDate: string): any { return this.masterService.get(`client/business/travel/transaction/money/receipt/list/${fromDate}/${toDate}`); }
-
-
-	getMoneyReceiptPaymentDetailByReceiptCode(receiptCode: any) { return this.masterService.get("client/business/travel/money/receipt/payment/detail/code/" + receiptCode); }
-
-	getMoneyReceiptInvoiceDetailByReceiptCode(receiptCode: any, customerCode: any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/detail/code/${receiptCode}/${customerCode}`); }
+ 
+	getMoneyReceiptInvoiceAndPaymentDetailsDetail(receiptCode: any, customerCode: any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/payment/detail/code/${receiptCode}/${customerCode}`); }
 
 	getMRcustomerList() { return this.masterService.get("client/business/travel/MR/customer/list"); }
 	//END Money Receipt 
