@@ -241,7 +241,7 @@ export class MoneyReceipt implements OnInit {
 		debugger
 		obj.forEach(element => {
 			if (element.ReceiptCode == item.ReceiptCode) {
-				if (item.PaymentType == "PT-0007" && this.mrMasterModelDTOObj != null)
+				if (item.PaymentType == "PT-0009" && this.mrMasterModelDTOObj != null)
 					this.GetCustomerAdvanceAmount(this.mrMasterModelDTOObj.CustomerCode, item);
 				else item['advancceList'] = null;
 			}
