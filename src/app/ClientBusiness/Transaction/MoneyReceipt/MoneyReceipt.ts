@@ -173,9 +173,10 @@ export class MoneyReceipt implements OnInit {
 		this.Notification.LoadingRemove();
 
 	}
-	onChange(customerCode) {
+	onChange(obj) {
+		debugger
 		this.mrInvoiceDetailObj = [];
-		this.GetServiceListByCustomerCode(customerCode);
+		this.GetServiceListByCustomerCode(obj.CustomerCode);
 		this.mrMasterModelDTOObj.TotalPayableAmount = 0;
 	}
 	GetServiceListByCustomerCode(customerCode) {
