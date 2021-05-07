@@ -128,7 +128,7 @@ export class Report implements OnInit {
 	}
 	GETCustomerLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.transactionCommonService.getMRcustomerList()
+		this.transactionCommonService.getReportCustomerList()
 			.subscribe(
 				data => this.setCustomerLIST(data),
 				error => this.Notification.Error(error)

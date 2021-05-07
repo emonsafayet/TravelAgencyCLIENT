@@ -122,6 +122,8 @@ export class TransactionCommonService {
 	getMoneyReceiptInvoiceAndPaymentDetailsDetail(receiptCode: any, customerCode: any) { return this.masterService.get(`client/business/travel/money/receipt/invoice/payment/detail/code/${receiptCode}/${customerCode}`); }
 
 	getMRcustomerList() { return this.masterService.get("client/business/travel/MR/customer/list"); }
+	
+	getReportCustomerList() { return this.masterService.get("client/business/travel/report/customer/list"); }
 
 	GetCustomerAdvanceAmount(customerCode:string) { return this.masterService.get(`client/business/travel/money/receipt/customer/advance/amount/${customerCode}`); }
 	//END Money Receipt 
