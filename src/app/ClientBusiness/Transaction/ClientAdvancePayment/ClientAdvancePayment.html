@@ -44,16 +44,11 @@
                                             data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
                                             [(ngModel)]="clientAdvceObj.AdvanceDate" />
                                     </div>
-                                </div>
-                                <div class="col-md-3">
+                                </div>                                 
+                                <div class="col-md-3 mt-3">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Company</span>
-                                        <select class="form-control" [(ngModel)]="clientAdvceObj.CompanyCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of companyList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
-                                            </ng-container>
-                                        </select>
+                                        <span class="input-group-addon">Cheque No</span>
+                                        <input [(ngModel)]="clientAdvceObj.ChequeNo" class="form-control" type="number">
                                     </div>
                                 </div>
 
@@ -64,12 +59,9 @@
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Customer</span>
-                                        <select class="form-control" [(ngModel)]="clientAdvceObj.CustomerCode">
-                                            <option selected value="0">SELECT..</option>
-                                            <ng-container *ngFor="let item of customerList; let i = index">
-                                                <option value="{{item.CustomerCode}}">{{item?.CustomerName}}
-                                            </ng-container>
-                                        </select>
+                                        <ng-select [items]="customerList" bindLabel="CustomerName"
+                                            bindValue="CustomerCode" [(ngModel)]="clientAdvceObj.CustomerCode">
+                                        </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -85,7 +77,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Bank</span>
@@ -96,25 +87,19 @@
                                             </ng-container>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Cheque No</span>
-                                        <input [(ngModel)]="clientAdvceObj.ChequeNo" class="form-control" type="number">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                                </div>                                
                                 <div class="col-md-3  mt-3">
-                                    <div class="input-group">
+                                    <div class="input-group mt-3">
                                         <span class="input-group-addon">Cheque Clearing Date</span>
                                         <input type="date" data-date="" [attr.data-date]="clientAdvceObj.ClearingDate"
                                             data-date-format="DD-MM-YYYY" class="form-control width-190 form-control-sm"
                                             [(ngModel)]="clientAdvceObj.ClearingDate" />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="col-md-3 mt-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">Remarks</span>
@@ -188,6 +173,8 @@
                                                 <th class="width-5p text-center">Advance Code/Date</th>
                                                 <th class="width-10p">Company</th>
                                                 <th class="width-2p">Amount</th>
+                                                <th class="width-2p">AdjustedAmount</th>
+                                                <th class="width-2p">UnAdjustedAmount</th>
                                                 <th class="width-2p">Payment Type</th>
                                                 <th class="width-2p">Bank</th>
                                                 <th class="width-2p">Cheque No</th>
@@ -205,12 +192,13 @@
                                                     <br>Adv. Date : {{item?.AdvanceDate | date: 'dd MMM yyyy' }}
 
                                                 </td>
-
                                                 <td class="width-10p text-left">
                                                     Company : {{item?.CompanyName}}
                                                     <br> Customer : {{item?.CustomerName}}
                                                 </td>
                                                 <td class="width-2p text-left"> {{item?.Amount}} </td>
+                                                <td class="width-2p text-left"> {{item?.AdjustedAmount}} </td>
+                                                <td class="width-2p text-left"> {{item?.UnAdjustedAmount}} </td>
                                                 <td class="width-2p text-left"> {{item?.PaymentTypeName}} </td>
                                                 <td class="width-2p text-left"> {{item?.BankName}} </td>
                                                 <td class="width-2p text-left"> {{item?.ChequeNo}} </td>
@@ -218,7 +206,7 @@
                                                     <span *ngIf="item?.isClear" class="text-success">Yes</span>
                                                     <span *ngIf="! item?.isClear" class="text-danger">Not Yet</span>
                                                 </td>
-                                                <td class="width-5p text-left">   {{item?.ClearingDate | date: 'dd MMM yyyy' }}
+                                                <td class="width-5p text-left"> {{item?.ClearingDate | date: 'dd MMM yyyy' }}
                                                 </td>
                                                 <td class="text-center">
                                                     <span *ngIf="item?.isActive" class="text-success">Active</span>

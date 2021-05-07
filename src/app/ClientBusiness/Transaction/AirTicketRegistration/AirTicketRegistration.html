@@ -606,6 +606,7 @@
                                                 <th class="width-8p">Base Fare</th>
                                                 <th class="width-7p">Govt. Tax</th>
                                                 <th class="width-8p">Service Charge</th>
+                                                <th class="width-5p">Discount</th>
                                                 <th class="width-6p">Is forward</th>
                                                 <th class="width-8p">Change Date</th>
                                                 <th class="width-8p">ChangePenalty</th>
@@ -662,6 +663,11 @@
 
                                                 </td>
                                                 <td>
+                                                    <input readonly [(ngModel)]="item.DiscountValue"
+                                                        class="form-control">
+
+                                                </td>
+                                                <td>
 
                                                     <div class="input-group">
                                                         <i *ngIf="item?.IsForward" (click)="isUnCheckForward(item)"
@@ -704,6 +710,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>

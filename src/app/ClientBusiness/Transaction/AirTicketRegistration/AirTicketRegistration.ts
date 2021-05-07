@@ -439,7 +439,7 @@ export class AirTicketRegistration implements OnInit {
 	}
 	CalculateTotalPayableWithForwardingChargeAmount(obj) {
 		obj.TotalPayableAmt = Number(obj.BaseFare.toFixed(2)) + Number(obj.GovTax.toFixed(2)) +
-			Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty);
+			Number(obj.ServiceChargeValue.toFixed(2)) + Number(obj.ChangePenalty)- Number(obj.DiscountValue);
 		obj.TotalPayableAmt = Number(obj.TotalPayableAmt).toFixed(2);
 
 		this.sumOfForwardingTotalValue = Common.calculateTotal(this.forwardingList, "TotalPayableAmt");
