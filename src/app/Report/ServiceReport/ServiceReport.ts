@@ -23,6 +23,10 @@ export class ServiceReport implements OnInit {
 	ReportModelObj: ReportModel = new ReportModel();
 	ServiceTransactionListObj: any[] = [];
 	ServiceTransactionDetailObj: any[] = [];
+	sumOfTotalServiceValue:number=0; 
+	sumOfTotalBusinessServiceValue:number=0; 
+	sumOfTotalOtherClientServiceValue:number=0;
+	sumOfTotalServiceAmountValue:number=0;
 	serviceName : string="";
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService,
@@ -41,10 +45,13 @@ export class ServiceReport implements OnInit {
 				error => this.Notification.Error(error)
 			);
 	}
-	setServiceTransactionList(data) {
+	setServiceTransactionList(data) { 
 		this.ServiceTransactionListObj = data;
 		this.Notification.LoadingRemove();
-		console.log(this.ServiceTransactionListObj);
+	    this.sumOfTotalServiceValue = Common.calculateTotal(data, "TotalServiceAmt");
+	    this.sumOfTotalBusinessServiceValue = Common.calculateTotal(data, "BusinessClientValue");
+	    this.sumOfTotalOtherClientServiceValue = Common.calculateTotal(data, "OtherClientValue");
+	
 	}
 	getServiceTransactionDetail(obj) {
 		 this.serviceName="";
@@ -59,6 +66,8 @@ export class ServiceReport implements OnInit {
 	}
 	ServiceTransactionDetail(data) {
 		this.ServiceTransactionDetailObj = data;
+		this.sumOfTotalServiceAmountValue = Common.calculateTotal(data, "ServiceAmount");
+	
 		this.Notification.LoadingRemove(); 
 	}
 	LoadRptService(){
@@ -72,4 +81,5 @@ export class ServiceReport implements OnInit {
 		this.Notification.Error(error);
 		this.Notification.LoadingRemove();
 	}
+	
 }

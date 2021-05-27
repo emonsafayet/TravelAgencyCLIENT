@@ -23,6 +23,12 @@ export class DueReport implements OnInit {
 	ServiceTransactionDueListObj: any[] = [];
 	ServiceTransactionDueDetailsListObj: any[] = [];
 	serviceName : string="";
+	sumOfTotalDueAmounteValue:number=0;
+	sumOfTotalPaidAmountValue:number=0;
+	sumOfTotalInvoiceAmountValue:number=0;
+	sumOfTotalDetailsInvoiceAmountValue:number=0;
+	sumOfTotalDetailsDueAmounteValue:number=0;
+	sumOfTotalDetailsPaidAmountValue:number=0;
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService,
 		private transactionCommonService: TransactionCommonService, private rptService: RptService) { }
@@ -53,6 +59,9 @@ export class DueReport implements OnInit {
 	}
 	setServiceTransactionDueList(data) {
 		this.ServiceTransactionDueListObj = data;
+		this.sumOfTotalInvoiceAmountValue = Common.calculateTotal(data, "InvoiceAmount");
+		this.sumOfTotalPaidAmountValue = Common.calculateTotal(data, "PaidAmount");
+	    this.sumOfTotalDueAmounteValue = Common.calculateTotal(data, "DueAmount");
 		this.Notification.LoadingRemove(); 
 	}
 
@@ -69,6 +78,9 @@ export class DueReport implements OnInit {
    }
    ServiceTransactionDetail(data) {
 	   this.ServiceTransactionDueDetailsListObj = data;
+	   this.sumOfTotalDetailsInvoiceAmountValue = Common.calculateTotal(data, "InvoiceAmount");
+	   this.sumOfTotalDetailsPaidAmountValue = Common.calculateTotal(data, "PaidAmount");
+	   this.sumOfTotalDetailsDueAmounteValue = Common.calculateTotal(data, "DueAmount");
 	   this.Notification.LoadingRemove(); 
    }
    PrintDue(obj){

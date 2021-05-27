@@ -69,6 +69,27 @@
                         </td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td></td> 
+                        <td  class="text-right width-20p">
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalInvoiceAmountValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                        <td  class="text-right width-20p">
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalPaidAmountValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                        <td  class="text-right width-20p">
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalDueAmounteValue| number:'1.0-0' }}
+                            </span>
+                        </td> 
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -113,6 +134,30 @@
                         <td class="text-right width-10p">{{item?.DueAmount}}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td> 
+                        <td>
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalDetailsInvoiceAmountValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalDetailsPaidAmountValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalDetailsDueAmounteValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

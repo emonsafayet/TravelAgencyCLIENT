@@ -18,30 +18,36 @@ declare var moment: any;
 	templateUrl: 'CollectionReport.html'
 })
 export class CollectionReport implements OnInit {
-	user: any; 
+	user: any;
 	ReportModelObj: ReportModel = new ReportModel();
-	ServiceTransactionCollectionListObj:any[]=[];
-	ServiceTransactionCollectionDetailListObj:any[]=[];
-	CustomerAdvanceCollectionObj:any[]=[];
-	serviceName:string="";
+	ServiceTransactionCollectionListObj: any[] = [];
+	ServiceTransactionCollectionDetailListObj: any[] = [];
+	CustomerAdvanceCollectionObj: any[] = [];
+	sumOfTotalAdvanceValue: number = 0;
+	sumOfTotalPayableValue: number = 0;
+	sumOfTotalPaidAmountValue: number = 0;
+	sumOfTotalDetailsPaidAmountValue: number = 0;
+	sumOfTotalDetailsDueAmountValue: number = 0;
+
+	serviceName: string = "";
 	constructor(private userService: UserService, private authGuard: AuthGuard,
 		private Notification: NotificationService, private clientBusinessService: ClientBusinessService,
 		private transactionCommonService: TransactionCommonService, private rptService: RptService) { }
 
 	ngOnInit() {
-		this.ReportModelObj.FromDate = moment().format(Common.previousMonthFirstDay(this.ReportModelObj.ToDate));		
+		this.ReportModelObj.FromDate = moment().format(Common.previousMonthFirstDay(this.ReportModelObj.ToDate));
 		this.ReportModelObj.ToDate = moment().format(Common.SQLDateFormat);
 		this.getServiceTransactionCollectionList();
 		this.getCustomerAdvanceCollectionList();
 	}
-	LoadRptService(){
-		this.ServiceTransactionCollectionDetailListObj=[];
+	LoadRptService() {
+		this.ServiceTransactionCollectionDetailListObj = [];
 		this.getServiceTransactionCollectionList();
 		this.getCustomerAdvanceCollectionList();
 	}
-	getServiceTransactionCollectionList(){
+	getServiceTransactionCollectionList() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.rptService.GetServiceTransactionCollectionSummaryList(this.ReportModelObj.FromDate,this.ReportModelObj.ToDate)
+		this.rptService.GetServiceTransactionCollectionSummaryList(this.ReportModelObj.FromDate, this.ReportModelObj.ToDate)
 			.subscribe(
 				data => this.setServiceTransactionCollectionList(data),
 				error => this.Notification.Error(error)
@@ -49,26 +55,30 @@ export class CollectionReport implements OnInit {
 	}
 	setServiceTransactionCollectionList(data) {
 		this.ServiceTransactionCollectionListObj = data;
-		this.Notification.LoadingRemove(); 
+		this.sumOfTotalPayableValue = Common.calculateTotal(data, "Payableamount");
+		this.sumOfTotalPaidAmountValue = Common.calculateTotal(data, "PaidAmount");
+		this.Notification.LoadingRemove();
 	}
-	getServiceTransactionCollectionDetail(obj){
-		this.serviceName="";
-		this.ServiceTransactionCollectionDetailListObj=[];
-		this.serviceName = obj.ServiceName; 
+	getServiceTransactionCollectionDetail(obj) {
+		this.serviceName = "";
+		this.ServiceTransactionCollectionDetailListObj = [];
+		this.serviceName = obj.ServiceName;
 		this.Notification.LoadingWithMessage('Loading...');
-		this.rptService.GetTransactionCollectionDetailsByServiceCode(this.ReportModelObj.FromDate,this.ReportModelObj.ToDate,obj.ServiceCode)
+		this.rptService.GetTransactionCollectionDetailsByServiceCode(this.ReportModelObj.FromDate, this.ReportModelObj.ToDate, obj.ServiceCode)
 			.subscribe(
 				data => this.setTransactionCollectionDetail(data),
 				error => this.Notification.Error(error)
 			);
 	}
-	setTransactionCollectionDetail(data){
+	setTransactionCollectionDetail(data) {
 		this.ServiceTransactionCollectionDetailListObj = data;
-		this.Notification.LoadingRemove(); 
+		this.sumOfTotalDetailsDueAmountValue = Common.calculateTotal(data, "DueAmount");
+		this.sumOfTotalDetailsPaidAmountValue = Common.calculateTotal(data, "PaidAmount");
+		this.Notification.LoadingRemove();
 	}
-	getCustomerAdvanceCollectionList(){
+	getCustomerAdvanceCollectionList() {
 		this.Notification.LoadingWithMessage('Loading...');
-		this.rptService.GetCustomerAdvanceList(this.ReportModelObj.FromDate,this.ReportModelObj.ToDate)
+		this.rptService.GetCustomerAdvanceList(this.ReportModelObj.FromDate, this.ReportModelObj.ToDate)
 			.subscribe(
 				data => this.setCustomerAdvanceCollectionList(data),
 				error => this.Notification.Error(error)
@@ -76,9 +86,10 @@ export class CollectionReport implements OnInit {
 	}
 	setCustomerAdvanceCollectionList(data) {
 		this.CustomerAdvanceCollectionObj = data;
-		this.Notification.LoadingRemove(); 
+		this.sumOfTotalAdvanceValue = Common.calculateTotal(data, "AdvanceAmt");
+		this.Notification.LoadingRemove();
 	}
-	PrintServiceTransactionCollectionDetailsByServiceCode(obj){
-		window.open(`${Config.getBaseUrl}TransactionReport/GetSeriveCollectionDetails?ServiceCode=${obj.ServiceCode}&FromDate=${this.ReportModelObj.FromDate}&ToDate=${this.ReportModelObj.ToDate}`, "_blank"); 
+	PrintServiceTransactionCollectionDetailsByServiceCode(obj) {
+		window.open(`${Config.getBaseUrl}TransactionReport/GetSeriveCollectionDetails?ServiceCode=${obj.ServiceCode}&FromDate=${this.ReportModelObj.FromDate}&ToDate=${this.ReportModelObj.ToDate}`, "_blank");
 	}
 }

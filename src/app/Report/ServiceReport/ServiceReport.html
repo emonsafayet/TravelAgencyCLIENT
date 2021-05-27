@@ -104,6 +104,33 @@
 
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalServiceValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                        <td></td>
+                        <td>
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalBusinessServiceValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalOtherClientServiceValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -121,7 +148,7 @@
             <table class="table table-bordered table-p4 custom-table-hover">
                 <thead>
                     <tr>
-                        <th colspan="6">
+                        <th colspan="10">
                             <input class="form-control form-control-sm" placeholder="Search" type="text">
                         </th>
                     </tr>
@@ -149,11 +176,25 @@
 
                         <td class="text-left width-10p"> {{item?.ServiceDescription}}
                         </td>
-                        <td class="text-left width-10p"> Amount :{{item?.ServiceAmount}}
+                        <td class="text-left width-10p"> {{item?.ServiceAmount}}
                         </td>
 
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td> <span class="font-size-20 strong text-right text-success font-weight-bold">
+                                {{sumOfTotalServiceAmountValue| number:'1.0-0' }}
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
