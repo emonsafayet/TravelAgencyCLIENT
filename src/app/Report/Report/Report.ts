@@ -76,11 +76,17 @@ export class Report implements OnInit {
 		}
 		else if (obj == "Cutomser Statement") {
 			this.GETCustomerLIST();
-			this.showCustomerList = true; 
+			this.showCustomerList = true;
 		}
 		else if (obj == "Provider Statement") {
 			this.GETProvierLIST();
 			this.showProvierList = true;
+			this.showFromDate = true;
+			this.showToDate = true;
+		}
+		else if (obj == "Customer Collection Summary") {
+			this.GETCustomerLIST();
+			this.showCustomerList = true;
 			this.showFromDate = true;
 			this.showToDate = true;
 		}
@@ -145,10 +151,7 @@ export class Report implements OnInit {
 		if (!this.validateModel()) return;
 		var objstr = Library.encode(obj);
 		// window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?ReportName=${obj.ReportName}&FromDate=${obj.FromDate}&ToDate=${obj.ToDate}&Code=${obj.Code}`, "_blank");
-		window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?objstr=${objstr}`, "_blank");
-
-
-
+		window.open(`${Config.getBaseUrl}TransactionReport/StatementReport?objstr=${objstr}`, "_blank"); 
 	}
 	validateModel() {
 		var result = true
@@ -156,9 +159,7 @@ export class Report implements OnInit {
 			this.Notification.Warning('Please Select Report Name.');
 			result = false;
 			return;
-		}
-
-
+		} 
 		return result;
 	}
 	showError(error) {

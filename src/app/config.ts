@@ -6,16 +6,16 @@ import { Common } from './library/common';
 
 export class Config {  
     // Local Hosting
-    // public static get API_URL(): string { return "http://localhost:81/api/api/"; } 
-    // public static get getBaseUrl(): string { return "http://localhost:81/api/"; }
+    public static get API_URL(): string { return "http://localhost:81/api/api/"; } 
+    public static get getBaseUrl(): string { return "http://localhost:81/api/"; }
 
     // LIVE SERVER -->> Travel Tech
     // public static get API_URL(): string { return "http://103.231.162.170:81/api/api/"; }
     // public static get getBaseUrl(): string { return "http://103.231.162.170:81/api/"; }  
 
     // // LOCAL SERVER
-    public static get API_URL(): string {return "http://localhost:62600/api/"; } 
-    public static get getBaseUrl(): string {return "http://localhost:62600/"; }
+    // public static get API_URL(): string {return "http://localhost:62600/api/"; } 
+    // public static get getBaseUrl(): string {return "http://localhost:62600/"; }
 
 
     public static get getBaseUrlERP(): string { return "https://www.lplmis.com/#/ERP/"; }
