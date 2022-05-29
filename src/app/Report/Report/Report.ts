@@ -25,9 +25,11 @@ export class Report implements OnInit {
 	cardList: any[] = [];
 	customerList: any[] = [];
 	providerList: any[] = [];
+	serviceList : any[] = [];
 	showCardList: boolean = false;
 	showCustomerList: boolean = false;
 	showProvierList: boolean = false;
+	showServicerList: boolean = false;
 	showFromDate: boolean = false;
 	showToDate: boolean = false;
 	showAsOnDate: boolean = false;
@@ -60,8 +62,7 @@ export class Report implements OnInit {
 		this.reportObj = data;
 		this.Notification.LoadingRemove();
 	}
-	onReportChange(obj) {
-		debugger
+	onReportChange(obj) { 
 		this.hideAll();
 		if (obj == "Card Statement") {
 			this.GETCardLIST();
@@ -90,6 +91,18 @@ export class Report implements OnInit {
 			this.showFromDate = true;
 			this.showToDate = true;
 		}
+		else if (obj == "Income Flow Summary") {
+			this.GETServiceLIST();
+			this.showServicerList = true;
+			this.showFromDate = true;
+			this.showToDate = true;
+		}
+		else if (obj == "Income Flow Details") {
+			this.GETServiceLIST();
+			this.showServicerList = true;
+			this.showFromDate = true;
+			this.showToDate = true;
+		}
 
 	}
 	hideAll() {
@@ -97,6 +110,8 @@ export class Report implements OnInit {
 		this.cardList = [];
 		this.customerList = [];
 		this.providerList = [];
+		this.serviceList = [];
+
 
 		//hide 
 		this.showCustomerList = false;
@@ -132,6 +147,19 @@ export class Report implements OnInit {
 		this.Notification.LoadingRemove();
 
 	}
+	GETServiceLIST() {
+		this.Notification.LoadingWithMessage('Loading...');
+		this.clientBusinessService.getTravelProductServiceList()
+			.subscribe(
+				data => this.setServiceList(data),
+				(error) => this.showError(error)
+			);
+	}
+	setServiceList(data) {
+		this.serviceList = data;
+		this.Notification.LoadingRemove();
+
+	}
 	GETCustomerLIST() {
 		this.Notification.LoadingWithMessage('Loading...');
 		this.transactionCommonService.getReportCustomerList()
@@ -145,8 +173,7 @@ export class Report implements OnInit {
 		this.Notification.LoadingRemove();
 
 	}
-	PrintReport(obj) {
-		debugger
+	PrintReport(obj) { 
 		// validation
 		if (!this.validateModel()) return;
 		var objstr = Library.encode(obj);
